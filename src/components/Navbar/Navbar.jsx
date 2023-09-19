@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import Image from 'next/image'
 import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
+import SearchBar from './SearchBar'
 
 function Navbar() {
   const navToggleRef = useRef()
@@ -14,7 +15,6 @@ function Navbar() {
 
   return (
 <header className="header bg-black text-white">
-  <nav className="nav container">
     <div className="nav__data">
         <div className="logo">
                 <Image
@@ -29,6 +29,7 @@ function Navbar() {
         <i className="ri-close-line nav__toggle-close" />
       </div>
     </div>
+  <nav className="nav  ">
     {/*=============== NAV MENU ===============*/}
     <div className="nav__menu"  ref={navMenuRef}>
       <ul className="nav__list">
@@ -47,6 +48,9 @@ function Navbar() {
       </ul>
     </div>
   </nav>
+    <div className="searchBar">
+      <SearchBar/>
+    </div>
 </header>
 
   )

@@ -3,6 +3,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
+console.log(inter)
 
 export const metadata = {
   title: 'Create Next App',
