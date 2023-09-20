@@ -3,9 +3,23 @@ import React, { useRef } from 'react'
 import Image from 'next/image'
 import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
+import { BiMenu,BiX,BiSolidCart,BiSearchAlt,BiSolidUser } from "react-icons/bi";
 import SearchBar from './SearchBar'
 
 function Navbar() {
+  const dropdownItems = [
+    {
+      title:"Technical",
+      dropLink:  [{title:"mobile",icon:"webdev",links:[{name:"pro player",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},{title:"computer",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},{title:"smart watch",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]}],
+      
+    },
+    {
+      title:"Gaming",
+      dropLink:  [{title:"pro player",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},{title:"webdev",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},{title:"webdev",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]}],
+
+    },
+  ];
+
   const navToggleRef = useRef()
   const navMenuRef = useRef()
   const showMenu = () => {
@@ -14,44 +28,46 @@ function Navbar() {
   }
 
   return (
-<header className="header bg-black text-white">
-    <div className="nav__data">
+<header className="header">
+  <nav className="nav container">
+  <div className="nav__data">
         <div className="logo">
                 <Image
             src={logo}
-            width={80}
-            height={80}
+            width={50}
+            height={50}
             alt="logo"
             /> 
         </div>
-      <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
-        <i className="ri-menu-line nav__toggle-menu" />
-        <i className="ri-close-line nav__toggle-close" />
-      </div>
+
+          
+        <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
+          <BiMenu className="nav__toggle-menu"/>
+          <BiX className='nav__toggle-close'/>
+        </div>
+
     </div>
-  <nav className="nav  ">
     {/*=============== NAV MENU ===============*/}
-    <div className="nav__menu"  ref={navMenuRef}>
+    <div className="nav__menu" id="nav-menu" ref={navMenuRef}>
       <ul className="nav__list">
         <li>
           <a href="#" className="nav__link">
-            home
+            Home
           </a>
         </li>
-        {/*=============== DROPDOWN 1 ===============*/}
-          <Dropdown/>
-        {/*=============== DROPDOWN 2 ===============*/}
-          <Dropdown/>
+        {/*=============== DROPDOWNs ===============*/}
+       { dropdownItems.map((item,index)=><Dropdown key={index} title={item.title} dropLink={item.dropLink}/>)}
 
-        {/*=============== DROPDOWN 3 ===============*/}
-          <Dropdown/>
       </ul>
     </div>
-  </nav>
-    <div className="searchBar">
-      <SearchBar/>
+    <div className="lsc flex justify-center items-center p-4">
+     <BiSolidCart className='w-8 h-8 mx-2 text-color'/>
+     <BiSearchAlt className='w-8 h-8 mx-2 text-color'/>
+     <BiSolidUser className='w-8 h-8 mx-2 text-color'/>
     </div>
+  </nav>
 </header>
+
 
   )
 }

@@ -6,10 +6,10 @@
     --header-height: 3.5rem;
     /*========== Colors ==========*/
     /*Color mode HSL(hue, saturation, lightness)*/
-    --first-color: hsl(220, 68%, 54%);
+    --first-color: #333;
     --first-color-lighten: hsl(220, 68%, 97%);
-    --title-color: hsl(220, 48%, 28%);
-    --text-color: hsl(220, 12%, 45%);
+    --title-color: #333;
+    --text-color: hsl(220, 5%, 37%);
     --body-color: hsl(220, 100%, 99%);
     /*========== Font and typography ==========*/
     /*.5rem = 8px | 1rem = 16px ...*/
@@ -24,6 +24,9 @@
     --z-tooltip: 10;
     --z-fixed: 100;
   }
+  .text-color{
+    color: #333;
+  }
 
   * {
     box-sizing: border-box;
@@ -35,6 +38,7 @@
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     background-color: var(--body-color);
+
     color: var(--text-color);
   }
   
@@ -84,20 +88,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  .nav__logo {
-    display: inline-flex;
-    align-items: center;
-    column-gap: 0.25rem;
-    color: var(--title-color);
-    font-weight: var(--font-semi-bold);
-    transition: color 0.3s;
-  }
-  .nav__logo i {
-    font-size: 1.25rem;
-  }
-  .nav__logo:hover {
-    color: var(--first-color);
-  }
+
   .nav__toggle {
     position: relative;
     width: 32px;
