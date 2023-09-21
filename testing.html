@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Cursor X-axis Scroll</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        .scroll-container {
+            width: 200%;
+            height: 100vh;
+            white-space: nowrap;
+        }
+        .content {
+            width: 50%;
+            height: 100%;
+            display: inline-block;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container" id="scrollContainer">
+        <div class="content">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatibus id repellendus sequi. Molestias harum non est exercitationem. Consectetur tempora architecto repellendus? 
+
+    </div>
+        <div class="content">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatibus id repellendus sequi. Molestias harum non est exercitationem. Consectetur tempora architecto repellendus? Assumenda mollitia, dolorum illo id nobis iste sunt doloremque ex amet, ratione architecto 
+
+    </div>
+        <div class="content">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatibus id repellendus sequi. Molestias harum non est exercitationem. Consectetur tempora architecto repellendus? Assumenda mollitia, dolorum illo id nobis iste sunt doloremque ex amet, ratione architecto voluptatibus? Ipsam, dicta. Saepe quod tempora quasi distinctio rerum eius eaque iste veniam ab mollitia repudiandae deserunt temporibus nam iusto enim inventore voluptates laudantium esse, corrupti atque repellendus nesciunt ratione. Iste veritatis quis repellendus cumque. Consequatur dignissimos doloribus voluptates ad dolore illum? Magnam excepturi mollitia omnis, doloribus cumque officiis maxime perferendis tenetur aliquid temporibus harum, modi nihil, ea debitis blanditiis id deleniti totam quos! Libero itaque odit vitae impedit sunt! Officia iste et necessitatibus ullam maiores. Adipisci ipsam enim deserunt cupiditate, hic mollitia qui unde quo dolorem repellendus veniam amet quidem, magni a consequatur cumque. Corporis accusantium voluptatibus placeat consequuntur. Soluta esse maxime illum ex autem vero harum possimus, odit ipsam reprehenderit voluptate odio at necessitatibus, voluptatum illo, facere iste. Ab eius, impedit, nemo tempore velit nulla molestias autem nobis sunt dolores perferendis quo cumque iure iste ullam saepe. Expedita non dolorem molestias adipisci aliquam numquam enim id saepe qui atque eligendi obcaecati similique, consectetur provident eos suscipit fuga rem? Veritatis id rem in reprehenderit repellendus?
+
+    </div>
+    <script>
+        const scrollContainer = document.getElementById('scrollContainer');
+        let isScrolling = false;
+        let startX;
+
+        scrollContainer.addEventListener('mousedown', (e) => {
+            isScrolling = true;
+            startX = e.clientX;
+        });
+
+        scrollContainer.addEventListener('mouseup', () => {
+            isScrolling = false;
+        });
+
+        scrollContainer.addEventListener('mousemove', (e) => {
+            if (!isScrolling) return;
+            const deltaX = e.clientX - startX;
+            scrollContainer.scrollLeft -= deltaX;
+            startX = e.clientX;
+        });
+    </script>
+</body>
+</html>

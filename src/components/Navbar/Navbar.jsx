@@ -60,7 +60,7 @@ function Navbar() {
 
       </ul>
     </div>
-    <div className="lsc flex justify-center items-center p-4 relative left-20">
+    <div className="lsc flex justify-center items-center p-4  ">
      <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
      <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
      <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/>
