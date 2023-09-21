@@ -28,9 +28,9 @@ function Navbar() {
   }
 
   return (
-<header className="header">
+<header className="header fixed top-0 left-0 w-full flex justify-evenly">
   <nav className="nav container">
-  <div className="nav__data">
+  <div className="nav__data h-full flex justify-between items-center">
         <div className="logo">
                 <Image
             src={logo}
@@ -56,7 +56,7 @@ function Navbar() {
           </a>
         </li>
         {/*=============== DROPDOWNs ===============*/}
-       { dropdownItems.map((item,index)=><Dropdown key={index} title={item.title} dropLink={item.dropLink}/>)}
+       { dropdownItems.map((item,index)=><Dropdown key={index}  title={item.title} dropLink={item.dropLink}/>)}
 
       </ul>
     </div>

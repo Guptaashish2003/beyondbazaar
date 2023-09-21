@@ -36,7 +36,7 @@ function dropdown({title,dropLink}) {
     <div className="dropdown__container">
       <div className="dropdown__content">
 
-       {dropLink.map((items)=><div className="dropdown__group">
+       {dropLink.map((items,index)=><div key={index} className="dropdown__group">
           <div className="dropdown__icon">
           <BiSolidHeartCircle style={{width:"50px", height:"50px"}}/>
           </div>
