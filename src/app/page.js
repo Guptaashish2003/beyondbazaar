@@ -1,5 +1,6 @@
 import Category from '@/components/Category/Category'
-import Herosection from '@/components/HeroSection/Herosection'
+import Herosection from '@/components/HeroSection/HeroSection'
+import Footer from '@/components/footer/Footer'
 
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <>
     <Herosection/>
     <Category/>
+    <Footer/>
     </>
   )
 }
