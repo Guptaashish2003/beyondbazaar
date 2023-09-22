@@ -54,6 +54,34 @@ html {
     text-decoration: none;
   }
 
+  /* ===========================underLine animation==========================  */
+  .line-animate {
+    position: relative;
+  }
+  
+  .line-animate::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    border-radius: 4px;
+    background-color: var(--first-color);
+    bottom: 0;
+    left: 0;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+  }
+  
+  .line-animate:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+  .line-animated::before {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
 /* =================================nav bar======================================  */
   /*=============== HEADER ===============*/
   .header {
@@ -316,5 +344,7 @@ html {
 /* height: calc(100vh - var(--header-height)); */
 /* height: 100%; */
 }
+
+
   
 
