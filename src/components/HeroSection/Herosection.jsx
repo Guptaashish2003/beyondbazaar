@@ -7,32 +7,27 @@ import hero3 from "@/assets/hero3.jpg"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 function HeroSection() {
-  const sliderImages = [hero1,hero2,hero3]
- 
+  const sliderImage = [hero1,hero2,hero3]
   return (
-    <div className="swiper-container">
-      <Swiper
-        loop={true}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: true,
-        }}
-        navigation={true}
-        pagination={true}
-        className="swiper-wrapper"
-      >
-        {sliderImages.map((img, index) => (
-          <SwiperSlide key={index} className="swiper-slide">
-            <Image
-              src={img}
-              alt={`Slide ${index + 1}`}
-              className="swiper-image"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
-  );
+   <>
+   <Swiper
+       loop={true}
+      slidesPerView={1}
+      className='w-full hero-hieght'
+          >
+      {sliderImage.map((img,index)=><SwiperSlide key={index} className='w-full h-full'>
+        <Image
+          src={img}
+          style={{objectFit: "cover"}}
+          alt="hero image"
+          className='cursor-pointer w-full h-full'
+        />
+      </SwiperSlide>)}
+      
+ 
+    </Swiper>
+   </>
+  )
 }
 
 export default HeroSection
