@@ -42,8 +42,8 @@ function dropdown({title,dropLink}) {
           </div>
           <span className="dropdown__title">{items.title}</span>
           <ul className="dropdown__list">
-        {items.links.map((link)=><li>
-              <a href={link.url} className="dropdown__link">
+        {items.links.map((link,index)=><li key={index}>
+              <a  href={link.url} className="dropdown__link">
                 {link.name}
               </a>
             </li>)}
