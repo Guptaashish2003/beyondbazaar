@@ -1,4 +1,4 @@
-import Category from '@/components/Category/Category'
+import Category from '@/components/Categorys/Category'
 import Herosection from '@/components/HeroSection/HeroSection'
 import Productcard from '@/components/ProductCards/Productcard'
 import FeatureCard from '@/components/featureCard/FeatureCard'
@@ -12,7 +12,7 @@ export default function Home() {
     <>
     <Herosection/>
     <Category/>
-    <h1 className='p-8 text-5xl font-bold uppercase text-center'>Select Your Category</h1>
+    <h2 className='p-8 text-5xl font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
     <Productcard/>
     <Productcard border={"black"}/>
