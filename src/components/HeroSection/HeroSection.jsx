@@ -24,7 +24,7 @@ function HeroSection() {
       {sliderImage.map((img,index)=><SwiperSlide key={index} className='w-full h-full'>
         <Image
           src={img}
-          style={{objectFit: "cover"}}
+          style={{objectFit: "cover" }}
           alt="hero image"
           className='cursor-pointer w-full h-full'
         />
