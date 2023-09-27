@@ -4,7 +4,7 @@ import Productcard from '@/components/ProductCards/Productcard'
 import FeatureCard from '@/components/featureCard/FeatureCard'
 import miilogo from '@/assets/miilogo.png'
 import { GiScooter } from "react-icons/gi";
-import { BsClockHistory } from "react-icons/bs";
+import ProductPage from '@/components/singleProduct/ProductPage'
 import { TbPigMoney } from "react-icons/tb";
 import Image from 'next/image'
 import Clothingcard from '@/components/ProductCards/Clothingcard'
@@ -38,9 +38,11 @@ export default function Home() {
       <FeatureCard title={'Value-driven'} description={'We provide unbeatable value with affordable, top-quality products.'}>
         <TbPigMoney className='w-full h-full text-black' />
       </FeatureCard>
+    
 
 
     </section>
+      {/* <ProductPage/> */}
     </>
   )
 }
