@@ -7,6 +7,9 @@ import { GiScooter } from "react-icons/gi";
 import { BsClockHistory } from "react-icons/bs";
 import { TbPigMoney } from "react-icons/tb";
 import Image from 'next/image'
+import Clothingcard from '@/components/ProductCards/Clothingcard'
+import productImg from "@/assets/proImg1.jpg"
+import productImgHover from "@/assets/proImg1Hover.jpg"
 export default function Home() {
   return (
     <>
@@ -14,14 +17,15 @@ export default function Home() {
     <Category/>
     <h2 className='p-8 text-5xl font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
-    <Productcard/>
-    <Productcard border={"black"}/>
-    <Productcard animation={true}/>
-    <Productcard animation={true}/>
-    <Productcard  discount={600} />
-    <Productcard discount={600} bgColor={"#e2e1e6"}/>
-    <Productcard />
-    <Productcard addToCart={true}/>
+      <Clothingcard animation={true} img={productImg} hover={productImgHover}/>
+      <Productcard/>
+      <Productcard border={"black"}/>
+      <Productcard animation={true}/>
+      <Productcard animation={true}/>
+      <Productcard  discount={600} />
+      <Productcard discount={600} bgColor={"#e2e1e6"}/>
+      <Productcard />
+      <Productcard addToCart={true}/>
     </div>
     <section className='flex justify-evenly flex-wrap sm:w-full  xl:flex-nowrap'>
       <FeatureCard title={'made in india'} description={"E-commerce in India thrives with a diverse array of 'Made in India' products, embracing local production for online consumers."}>

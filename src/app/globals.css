@@ -27,6 +27,8 @@ html {
     /*========== z index ==========*/
     --z-tooltip: 10;
     --z-fixed: 100;
+    /* swiper pagination css  */
+    --swiper-pagination-color: var(--first-color);
   }
   .text-color{
     color: #333;
@@ -118,7 +120,7 @@ html {
       background-color: var(--body-color);
       position: relative;
       left: 0;
-      top: 2.5rem;
+      /* top: 2.5rem; */
       /* width: 100%; */
       height: calc(100vh - 3.5rem);
       overflow: auto;
@@ -150,7 +152,7 @@ html {
   /* Show menu */
   .show-menu {
     opacity: 1;
-    top: 3.5rem;
+    /* top: 3.5rem; */
     pointer-events: initial;
   }
   
@@ -346,5 +348,15 @@ html {
 }
 
 
-  
-
+@keyframes btn-popup {
+  from{
+    transform: translateY(30%);
+  }
+  to{
+    transform: translateY(0%);
+  }
+}
+    .btn-up{
+      animation-name: btn-popup;
+      animation-duration: 500ms;
+    }
