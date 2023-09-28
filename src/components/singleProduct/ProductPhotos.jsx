@@ -11,9 +11,9 @@ const ProductPhotos = () => {
   const [mainImg, setMainImg] = useState(productImg[0]);
 
   return (
-    <div className="">
+    <div className="mt-24 overflow-hidden relative left-32">
       <div className=" w-1/2 flex  item-center justify-center ">
-    <Image src={mainImg} className="w-[36rem]" />
+    <Image src={mainImg} className="w-[85rem]" />
       </div>
       <div className="w-1/2 flex gap-2 item-center justify-center">
       {productImg.map((img, index) => {
