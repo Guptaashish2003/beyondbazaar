@@ -278,20 +278,21 @@ const Footer = () => {
                   className="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
                   href="/"
                 >
-                  <CiMail className='h-5 w-5 shrink-0 text-gray-900' />
+                  <CiMail className='h-5 w-5 shrink-0 text-gray-900'/>
   
                   <span className="flex-1 text-gray-700">john@doe.com</span>
                 </a>
               </li>
   
-              <li
-                className="flex items-start justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-              >
-                <IoCallOutline className='h-5 w-5 shrink-0 text-gray-900'/>
+              <li>
+                <a
+                  className="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
+                  href="/"
+                >
+                 <IoCallOutline className="h-5 w-5 shrink-0 text-gray-900" />
   
-                <span className="-mt-0.5 flex-1 not-italic text-gray-700">
-                  0000001919
-                </span>
+                  <span className="flex-1 text-gray-700">0123456789</span>
+                </a>
               </li>
   
               <li
