@@ -1,19 +1,17 @@
-import React from 'react'
-import ProductPhotos from './ProductPhotos'
-import ProductDes from './ProductDes'
+import React from "react";
+import ProductPhotos from "./ProductPhotos";
+import ProductDes from "./AboutProduct/ProductDes";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 
 const ProductPage = () => {
   return (
-    <div className='flex justify-center text-center  '>
-        <ProductPhotos/>
-        <section className='w-[50%] mt-24 relative right-32'>
-          
-            <ProductDes title={"Samsung curved display"} para={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima inventore quidem temporibus maiores cum id quo soluta quas doloribus! Vero quo quod labore."}/>
-        </section>
+    <>
+      <div className="flex justify-center text-center  ">
+        <ProductPhotos />
+        <ProductDes />
+      </div>
+    </>
+  );
+};
 
-
-    </div>
-  )
-}
-
-export default ProductPage
+export default ProductPage;

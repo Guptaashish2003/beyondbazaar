@@ -4,7 +4,6 @@ import Productcard from '@/components/ProductCards/Productcard'
 import FeatureCard from '@/components/featureCard/FeatureCard'
 import miilogo from '@/assets/miilogo.png'
 import { GiScooter } from "react-icons/gi";
-import ProductPage from '@/components/singleProduct/ProductPage'
 import { TbPigMoney } from "react-icons/tb";
 import Image from 'next/image'
 import Clothingcard from '@/components/ProductCards/Clothingcard'
