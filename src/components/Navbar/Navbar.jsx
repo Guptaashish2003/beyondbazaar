@@ -30,25 +30,32 @@ function Navbar() {
   return (
 <header className="header fixed top-0 left-0 w-full flex justify-evenly">
   <nav className="nav container">
-  <div className="nav__data h-full flex justify-between items-center">
-        <div className="logo">
-                <Image
-            src={logo}
-            width={50}
-            height={50}
-            alt="logo"
-            /> 
-        </div>
-
-          
-        <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
-          <BiMenu className="nav__toggle-menu"/>
-          <BiX className='nav__toggle-close'/>
-        </div>
+  <div className="nav__data  flex justify-between items-center w-full h-2/3">
+    <div className="search-btn">
+      <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
+    </div>
+    <div className="logo">
+            <Image
+        src={logo}
+        width={50}
+        height={50}
+        alt="logo"
+        /> 
+    </div>
+    <div className="lsc flex justify-center items-center p-4  ">
+        
+        <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
+        <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/>
+    </div>
+    <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
+      <BiMenu className="nav__toggle-menu w-full h-full"/>
+      <BiX className='nav__toggle-close w-full h-full'/>
+    </div>
+        
 
     </div>
     {/*=============== NAV MENU ===============*/}
-    <div className="nav__menu" id="nav-menu" ref={navMenuRef}>
+    <div className="nav__menu " id="nav-menu" ref={navMenuRef}>
       <ul className="nav__list">
         <li>
           <a href="#" className="nav__link">
@@ -60,11 +67,7 @@ function Navbar() {
 
       </ul>
     </div>
-    <div className="lsc flex justify-center items-center p-4  ">
-     <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
-     <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
-     <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/>
-    </div>
+
   </nav>
 </header>
 

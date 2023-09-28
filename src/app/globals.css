@@ -94,7 +94,7 @@ html {
   
   /*=============== NAV ===============*/
   .nav {
-    height: var(--header-height);
+    height: var(--header-height) ;
   }
 
   .nav__toggle {
@@ -115,12 +115,18 @@ html {
   .nav__toggle-close {
     opacity: 0;
   }
+  .nav__menu{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
   @media screen and (max-width: 1118px) {
     .nav__menu {
       background-color: var(--body-color);
       position: relative;
       left: 0;
-      /* top: 2.5rem; */
+      display: block;
+      top: 2.5rem;
       /* width: 100%; */
       height: calc(100vh - 3.5rem);
       overflow: auto;
@@ -135,7 +141,12 @@ html {
     .nav__menu::-webkit-scrollbar-thumb {
       background-color: hsl(220, 12%, 70%);
     }
+    .nav__data{
+      height: 100%;
+    }
   }
+
+
   .nav__link {
     color: var(--title-color);
     font-weight: var(--font-semi-bold);
@@ -236,9 +247,12 @@ html {
   @media screen and (min-width: 1118px) {
     /* Nav */
     .nav {
-      height: calc(var(--header-height) + 2rem);
+      height: calc(var(--header-height) + 4rem);
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem;
+
     }
     .nav__toggle {
       display: none;
@@ -319,7 +333,7 @@ html {
       transform: rotate(180deg);
     }
     .dropdown__item:hover > .dropdown__container {
-      top: 5.5rem;
+      top: 7.5rem;
       opacity: 1;
       pointer-events: initial;
       cursor: initial;
