@@ -13,15 +13,15 @@ const ProductPhotos = () => {
   return (
     <div className="mt-24 overflow-hidden relative left-32">
       <div className=" w-1/2 flex  item-center justify-center ">
-    <Image src={mainImg} className="w-[85rem]" />
+    <Image src={mainImg} className="w-[85rem]  mx-auto" />
       </div>
       <div className="w-1/2 flex gap-2 item-center justify-center">
       {productImg.map((img, index) => {
         return (
-          <Image 
+          <Image  
           src={img} 
           alt="hero image" 
-          className="cursor-pointer w-28 " 
+          className="cursor-pointer w-28 mx-auto max[1090px]:block " 
           onClick={() => setMainImg(productImg[index])}
           />
         );

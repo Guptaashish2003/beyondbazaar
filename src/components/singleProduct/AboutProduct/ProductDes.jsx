@@ -6,7 +6,7 @@ import QuantitySelector from "./QuantitySelector";
 const ProductDes = () => {
   return (
     <div className=" mt-40   ">
-      <div className=" text-bold mr-4">
+      <div className="  ml-4 text-bold mr-4">
         <h1 className="title text-4xl uppercase font-bold text-black">
           Samsung curved display
         </h1>
