@@ -24,6 +24,7 @@ const ProductDes = () => {
           <p>Quantity:</p>
           <QuantitySelector />
         </div>
+        
       </div>
   );
 };

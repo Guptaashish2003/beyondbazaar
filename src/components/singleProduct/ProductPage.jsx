@@ -1,7 +1,7 @@
 import React from "react";
 import ProductPhotos from "./ProductPhotos";
 import ProductDes from "./AboutProduct/ProductDes";
-import { LiaRupeeSignSolid } from "react-icons/lia";
+import ProductDetails from "./AboutProduct/ProductDetails";
 
 const ProductPage = () => {
   return (
@@ -10,6 +10,7 @@ const ProductPage = () => {
         <ProductPhotos />
         <ProductDes />
       </div>
+        <ProductDetails />
     </>
   );
 };
