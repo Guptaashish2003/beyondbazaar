@@ -29,30 +29,26 @@ function Navbar() {
 
   return (
 <header className="header fixed top-0 left-0 w-full flex justify-evenly">
-  <nav className="nav container">
-  <div className="nav__data  flex justify-between items-center w-full h-2/3">
-    <div className="search-btn">
-      <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
-    </div>
-    <div className="logo">
-            <Image
-        src={logo}
-        width={50}
-        height={50}
-        alt="logo"
-        /> 
-    </div>
+  <nav className="nav container ">
+  <div className="nav__data   flex justify-between items-center w-full h-2/3">
     <div className="lsc flex justify-center items-center p-4  ">
-        
-        <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
-        <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/>
+        <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
+        {/* <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
+        <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/> */}
     </div>
+        <div className="logo h-full">
+                <Image
+            src={logo}
+            className='w-full h-full'
+            alt="logo"
+            /> 
+        </div>
+
     <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
       <BiMenu className="nav__toggle-menu w-full h-full"/>
       <BiX className='nav__toggle-close w-full h-full'/>
     </div>
         
-
     </div>
     {/*=============== NAV MENU ===============*/}
     <div className="nav__menu " id="nav-menu" ref={navMenuRef}>

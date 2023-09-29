@@ -374,3 +374,36 @@ html {
       animation-name: btn-popup;
       animation-duration: 500ms;
     }
+
+
+
+/* Cart Animation */
+
+.cartAnimation:hover .cartmotion {
+  animation-name: anmatecart; /* Apply the keyframe animation */
+  animation-duration: 1s;
+  animation-fill-mode: backwards;
+  animation-timing-function: ease-in-out; /* Use "forwards" to keep the final state after animation */
+}
+@keyframes anmatecart {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(500%);
+  }
+}
+
+.orderBounce:hover .arrowAnime{
+  animation: arrowAnime 1s infinite;
+}
+@keyframes arrowAnime {
+  0%, 100% {
+      transform: translateX(-25%);
+      animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+  50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}

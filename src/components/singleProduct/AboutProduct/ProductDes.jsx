@@ -1,32 +1,37 @@
 import React  from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
-import QuantitySelector from "./QuantitySelector";
 import OrderButton from "./OrderButton";
-
+import {AiOutlineShoppingCart} from "react-icons/ai"
+import {FiFastForward} from "react-icons/fi"
 
 const ProductDes = () => {
   return (
-    <div className=" mt-40   ">
-      <div className="  ml-4 text-bold mr-4">
-        <h1 className="title text-4xl uppercase font-bold text-black">
+    <div className=" p-8 mt-40  w-1/2">
+      <div className="  my-4 text-bold mr-4">
+        <h1 className="title text-4xl my-1 font-bold">
           Samsung curved display
         </h1>
-        <p className="para text-center mt-6 text-xl">
+        <p className="para text-center text-base">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odio
           eaque error ullam optio quod corporis.
         </p>
-        <hr className="mt-8 border border-slate-500" />
-        <p className="flex flex-start gap-4 mt-4 text-black text-3xl cursor-text ">
-          <LiaRupeeSignSolid /> 2999
-        </p>
-        <hr className="mt-8 border border-slate-500" />
+        
+          <span className=" my-1 text-[--first-color] font-bold text-xl cursor-text  ">
+          <LiaRupeeSignSolid className="text-[--first-color] inline font-bold" /> <p className="border-b-2 inline border-slate-400 border-solid">2999</p>
+          </span>
+        <hr className="mt-8 border border-slate-200" />
       </div>
-        <div className="mt-4 flex text-2xl gap-4 container mx-auto p-4 ">
+        <div className=" flex text-xl text-black gap-4 container  p-4 ">
           <p>Quantity:</p>
-          <QuantitySelector />
+          <div className="border-2 border-solid border-slate-300 text-2xl">
+            <button className="px-4 py-1">-</button>
+            <span className="px-4 py-1"> 1 </span>
+            <button className="px-4 py-1">+</button>
+          </div>
         </div>
-        <OrderButton cart={"Add To Cart"}/>
-        <OrderButton cart={"Order Now"}/>
+        <OrderButton className="font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl" cart={"Add To Cart"}> <AiOutlineShoppingCart className="cartmotion w-6 h-auto"/></OrderButton>
+        <OrderButton className="font-bold  orderBounce w-11/12 h-12 border-2 border-solid border-slate-400 text-xl bg-black text-white" cart={"Order Now"}> <FiFastForward className="arrowAnime w-6 h-auto"/></OrderButton>
+        {/* <OrderButton cart={"Order Now"}/> */}
 
         
         

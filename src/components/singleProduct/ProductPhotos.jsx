@@ -17,14 +17,12 @@ const ProductPhotos = () => {
   };
 
   return (
-    <div className="mt-24 relative left-32">
-      <div className="w-1/2 flex items-center justify-center">
+    <div className="p-8 mt-24 w-1/2">
+      <div className=" flex items-center justify-center">
         <Image
           src={mainImg}
           alt="Product main image"
-          className="w-[90rem]  h-[25rem] hover:scale-125 transition duration-500 cursor-pointer mx-auto sm:w-96 sm:h-auto lg:w-[90rem] "
-          width={850}
-          height={850}
+          className="w-11/12 h-[90%]  cursor-pointer mx-auto sm:w-96 sm:h-auto lg:w-[90rem] "
         />
       </div>
       <div className="w-1/2 flex gap-4 items-center justify-center">
