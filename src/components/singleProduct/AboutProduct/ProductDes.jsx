@@ -1,6 +1,7 @@
 import React  from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import QuantitySelector from "./QuantitySelector";
+import OrderButton from "./OrderButton";
 
 
 const ProductDes = () => {
@@ -24,6 +25,10 @@ const ProductDes = () => {
           <p>Quantity:</p>
           <QuantitySelector />
         </div>
+        <OrderButton cart={"Add To Cart"}/>
+        <OrderButton cart={"Order Now"}/>
+
+        
         
       </div>
   );
