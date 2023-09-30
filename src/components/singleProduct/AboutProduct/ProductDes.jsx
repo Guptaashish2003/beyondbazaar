@@ -3,6 +3,7 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 import OrderButton from "./OrderButton";
 import {AiOutlineShoppingCart} from "react-icons/ai"
 import {FiFastForward} from "react-icons/fi"
+import SocialMedial from "@/components/SocialMediaIcons/SocialMedial";
 
 const ProductDes = () => {
   return (
@@ -31,7 +32,10 @@ const ProductDes = () => {
         </div>
         <OrderButton className="font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl" cart={"Add To Cart"}> <AiOutlineShoppingCart className="cartmotion w-6 h-auto"/></OrderButton>
         <OrderButton className="font-bold  orderBounce w-11/12 h-12 border-2 border-solid border-slate-400 text-xl bg-black text-white" cart={"Order Now"}> <FiFastForward className="arrowAnime w-6 h-auto"/></OrderButton>
-        {/* <OrderButton cart={"Order Now"}/> */}
+      <div className="flex gap-5 mt-20">
+        <span className="text-xl"> share:</span>
+        <SocialMedial hover={"hover:text-black"} className='gap-4 text-xl' facebook={true} instagram={true} twitter={true} linkedin={true}/>
+      </div>
 
         
         

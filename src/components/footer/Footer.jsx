@@ -7,6 +7,7 @@ import { CiBasketball } from "react-icons/ci";
 import { CiMail } from "react-icons/ci";
 import { IoCallOutline } from "react-icons/io5";
 import { GrLocation } from "react-icons/gr";
+import SocialMedial from '../SocialMediaIcons/SocialMedial';
 
 
 const Footer = () => {
@@ -72,68 +73,8 @@ const Footer = () => {
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
             consequuntur amet culpa cum itaque neque.
           </p>
-  
-          <ul className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
-            <li>
-              <a
-                href="/"
-                rel="noreferrer"
-                target="_blank"
-                className="text-teal-700 transition hover:text-teal-700/75"
-              >
-                <span className="sr-only">Facebook</span>
-                <MdFacebook className='text-2xl'/>
-              </a>
-            </li>
-  
-            <li>
-              <a
-                href="/"
-                rel="noreferrer"
-                target="_blank"
-                className="text-teal-700 transition hover:text-teal-700/75"
-              >
-                <span className="sr-only">Instagram</span>
-                <BsInstagram className='text-2xl'/>
-              </a>
-            </li>
-  
-            <li>
-              <a
-                href="/"
-                rel="noreferrer"
-                target="_blank"
-                className="text-teal-700 transition hover:text-teal-700/75"
-              >
-                <span className="sr-only">Twitter</span>
-                <AiFillTwitterCircle className='text-2xl'/>
-              </a>
-            </li>
-  
-            <li>
-              <a
-                href="/"
-                rel="noreferrer"
-                target="_blank"
-                className="text-teal-700 transition hover:text-teal-700/75"
-              >
-                <span className="sr-only">GitHub</span>
-                <AiOutlineGithub className='text-2xl'/>
-              </a>
-            </li>
-  
-            <li>
-              <a
-                href="/"
-                rel="noreferrer"
-                target="_blank"
-                className="text-teal-700 transition hover:text-teal-700/75"
-              >
-                <span className="sr-only">Dribbble</span>
-                <CiBasketball className='text-2xl'/>
-              </a>
-            </li>
-          </ul>
+          <SocialMedial hover={"hover:text-black"} className='gap-4 mt-8 text-2xl' facebook={true} instagram={true} twitter={true} linkedin={true}/>
+        
         </div>
   
         <div
