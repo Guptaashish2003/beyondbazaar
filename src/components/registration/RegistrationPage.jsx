@@ -2,6 +2,7 @@ import React from 'react'
 import bgRegistration from "@/assets/bgRegistration.jpg"
 import Image from 'next/image'
 import RegistrationContent from "@/assets/RegistrationContent.jpg"
+import  "./ReistrationPage.css"
 
 const RegistrationPage = () => {
   return (
