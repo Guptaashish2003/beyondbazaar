@@ -9,7 +9,7 @@ export default function Home() {
     <>
     <Herosection/>
     <Category/>
-    <h2 className='p-8 text-5xl font-bold uppercase text-center'>Select Your Category</h2>
+    <h2 className='p-8 text-5xl max-md:text-3xl font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
       <Clothingcard animation={true} img={productImg} hover={productImgHover}/>
       <Productcard/>

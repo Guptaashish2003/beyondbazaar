@@ -12,7 +12,7 @@ function Category() {
 
   return (
     <div className="flex flex-col justify-center items-center text-center  ">
-      <h1 className="p-8 text-5xl font-bold uppercase">
+      <h1 className="p-8 text-5xl max-md:text-3xl font-bold uppercase">
         Select Your Category{" "}
       </h1>
       <Swiper

@@ -5,6 +5,7 @@ import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
 import { BiMenu,BiX,BiSolidCart,BiSearchAlt,BiSolidUser } from "react-icons/bi";
 import SearchBar from './SearchBar'
+import Link from 'next/link'
 
 function Navbar() {
   const dropdownItems = [
@@ -31,11 +32,6 @@ function Navbar() {
 <header className="header fixed top-0 left-0 w-full flex justify-evenly">
   <nav className="nav container ">
   <div className="nav__data   flex justify-between items-center w-full h-2/3">
-    <div className="lsc flex justify-center items-center p-4  ">
-        <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
-        {/* <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
-        <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/> */}
-    </div>
         <div className="logo h-full">
                 <Image
             src={logo}
@@ -43,6 +39,11 @@ function Navbar() {
             alt="logo"
             /> 
         </div>
+    <div className="lsc flex justify-center items-center p-4  ">
+        <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
+        <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
+        <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/>
+    </div>
 
     <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
       <BiMenu className="nav__toggle-menu w-full h-full"/>
@@ -54,9 +55,10 @@ function Navbar() {
     <div className="nav__menu " id="nav-menu" ref={navMenuRef}>
       <ul className="nav__list">
         <li>
-          <a href="#" className="nav__link">
+         
+          <Link href="/" className="nav__link">
             Home
-          </a>
+          </Link>
         </li>
         {/*=============== DROPDOWNs ===============*/}
        { dropdownItems.map((item,index)=><Dropdown key={index}  title={item.title} dropLink={item.dropLink}/>)}
