@@ -4,35 +4,32 @@ import img1 from "@/assets/img1.png";
 import img2 from "@/assets/img2.png";
 import img3 from "@/assets/img3.png";
 import img4 from "@/assets/img4.png";
-import { useState } from "react";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import {setSelectedThumbnail} from '../../app/action/index'
 
 const ProductPhotos = () => {
   const productImg = [img1, img2, img3, img4];
-  const [mainImg, setMainImg] = useState(productImg[0]);
-  const [selectedThumbnail, setSelectedThumbnail] = useState(0);
-
-  const handleThumbnailClick = (img, index) => {
-    setMainImg(img);
-    setSelectedThumbnail(index);
-  };
+  const selectedThumbnail = useSelector((state) => state.changeImg);
+  const dispatch = useDispatch();
+  // console.log(selectedThumbnail.selectedThumbnail)
 
   return (
-    <div className="p-8 mt-24 w-1/2">
+    <div className="p-4 mt-4 w-1/2">
       <div className=" flex items-center justify-center">
         <Image
-          src={mainImg}
+          src={productImg[selectedThumbnail.selectedThumbnail]}
           alt="Product main image"
-          className="w-11/12 h-[90%]  cursor-pointer mx-auto sm:w-96 sm:h-auto lg:w-[90rem] "
+          className="w-[80%] h-[80%]  cursor-pointer mx-auto sm:w-96 sm:h-auto lg:w-[90rem] "
         />
       </div>
       <div className="w-1/2 flex gap-4 items-center justify-center">
         {productImg.map((img, index) => (
           <div
-            key={index}
-            className={`cursor-pointer w-28 ml-4  sm:w-36 hover:scale-125 transition duration-500 mt-8 mx-auto max-w-[1090px] block ${
-              selectedThumbnail === index ? 'border-2   border-gray-900' : ''
+          key={index}
+            onClick={() => dispatch(setSelectedThumbnail(index))}
+            className={`cursor-pointer w-28 ml-4  sm:w-36 hover:scale-125 transition duration-500 mt-4 mx-auto max-w-[1090px] block ${index === selectedThumbnail ? 'border-2   border-gray-900' : ''
             }`}
-            onClick={() => handleThumbnailClick(img, index)}
           >
             <Image
               src={img}

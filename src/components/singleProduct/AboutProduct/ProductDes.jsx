@@ -12,7 +12,7 @@ const ProductDes = () => {
   const myState = useSelector((state) => state.incDec);
   const dispatch = useDispatch();
   return (
-    <div className=" p-8 mt-40  w-1/2">
+    <div className=" p-4 mt-4  w-1/2">
       <div className="  my-4 text-bold mr-4">
         <h1 className="title text-4xl my-1 font-bold">
           Samsung curved display
