@@ -29,7 +29,7 @@ function Navbar() {
   }
 
   return (
-<header className="header fixed top-0 left-0 w-full flex justify-evenly">
+<header className="header sticky top-0 left-0 w-full flex justify-evenly">
   <nav className="nav container ">
   <div className="nav__data   flex justify-between items-center w-full h-2/3">
         <div className="logo h-full">

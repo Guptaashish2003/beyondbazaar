@@ -1,11 +1,16 @@
+"use client"
 import React  from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import OrderButton from "./OrderButton";
 import {AiOutlineShoppingCart} from "react-icons/ai"
 import {FiFastForward} from "react-icons/fi"
 import SocialMedial from "@/components/SocialMediaIcons/SocialMedial";
-
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import {incNum,decNum} from '../../../app/action/index'
 const ProductDes = () => {
+  const myState = useSelector((state) => state.incDec);
+  const dispatch = useDispatch();
   return (
     <div className="p-8   w-1/2 max-lg:w-full ">
       <div className="  my-4 text-bold mr-4">
@@ -24,10 +29,17 @@ const ProductDes = () => {
       </div>
         <div className=" flex text-xl text-black gap-4 items-center container  p-4 ">
           <p>Quantity:</p>
+<<<<<<< HEAD
           <div className="border-2 border-solid min-w-[9.625rem] border-slate-300 text-2xl">
             <button className="px-4 py-1">-</button>
             <span className="px-4 py-1"> 1 </span>
             <button className="px-4 py-1">+</button>
+=======
+          <div className="border-2 border-solid border-slate-300 text-2xl">
+            <button onClick= {() => dispatch(decNum())}  className="px-4 py-1">-</button>
+            <span className="px-4 py-1"> {myState} </span>
+            <button  onClick= {() =>dispatch(incNum())} className="px-4 py-1">+</button>
+>>>>>>> 771c2f7e660389cbf22a02e798b1134515f3a32a
           </div>
         </div>
         <OrderButton className="font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl" cart={"Add To Cart"}> <AiOutlineShoppingCart className="cartmotion w-6 h-auto"/></OrderButton>

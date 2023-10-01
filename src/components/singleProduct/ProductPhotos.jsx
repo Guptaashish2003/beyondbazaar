@@ -17,7 +17,7 @@ const ProductPhotos = () => {
   };
 
   return (
-    <div className="p-8 mt-24 w-1/2">
+    <div className="p-8  w-1/2 max-lg:w-full">
       <div className=" flex items-center justify-center">
         <Image
           src={mainImg}
@@ -25,11 +25,11 @@ const ProductPhotos = () => {
           className="w-11/12 h-[90%]  cursor-pointer mx-auto sm:w-96 sm:h-auto lg:w-[90rem] "
         />
       </div>
-      <div className="w-1/2 flex gap-4 items-center justify-center">
+      <div className="w-full min-h-[7rem] flex gap-8 items-center justify-center">
         {productImg.map((img, index) => (
           <div
             key={index}
-            className={`cursor-pointer w-28 ml-4  sm:w-36 hover:scale-125 transition duration-500 mt-8 mx-auto max-w-[1090px] block ${
+            className={`cursor-pointer h-full w-1/6 hover:scale-125 transition duration-500 ${
               selectedThumbnail === index ? 'border-2   border-gray-900' : ''
             }`}
             onClick={() => handleThumbnailClick(img, index)}
@@ -37,8 +37,7 @@ const ProductPhotos = () => {
             <Image
               src={img}
               alt="Product thumbnail"
-              width={200}
-              height={200}
+              className="w-full h-full"
             />
           </div>
         ))}
