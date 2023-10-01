@@ -6,7 +6,7 @@ import img3 from "@/assets/img3.png";
 import img4 from "@/assets/img4.png";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import {setSelectedThumbnail} from '../../app/action/index'
+import {setSelectedThumbnail} from '@/redux/action/index'
 
 const ProductPhotos = () => {
   const productImg = [img1, img2, img3, img4];
