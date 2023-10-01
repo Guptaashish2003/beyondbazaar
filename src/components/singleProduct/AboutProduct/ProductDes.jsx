@@ -12,11 +12,9 @@ const ProductDes = () => {
   const myState = useSelector((state) => state.incDec);
   const dispatch = useDispatch();
   return (
-<<<<<<< HEAD
     <div className=" p-4 mt-4  w-1/2">
-=======
+
     <div className="p-8   w-1/2 max-lg:w-full ">
->>>>>>> 1bb504a3a39dc01d2b027d1d3e276f632d417fec
       <div className="  my-4 text-bold mr-4">
         <h1 className="title text-4xl my-1 font-bold max-lg:text-center">
           Samsung curved display
@@ -33,17 +31,15 @@ const ProductDes = () => {
       </div>
         <div className=" flex text-xl text-black gap-4 items-center container  p-4 ">
           <p>Quantity:</p>
-<<<<<<< HEAD
+
           <div className="border-2 border-solid min-w-[9.625rem] border-slate-300 text-2xl">
             <button className="px-4 py-1">-</button>
             <span className="px-4 py-1"> 1 </span>
             <button className="px-4 py-1">+</button>
-=======
           <div className="border-2 border-solid border-slate-300 text-2xl">
             <button onClick= {() => dispatch(decNum())}  className="px-4 py-1">-</button>
             <span className="px-4 py-1"> {myState} </span>
             <button  onClick= {() =>dispatch(incNum())} className="px-4 py-1">+</button>
->>>>>>> 771c2f7e660389cbf22a02e798b1134515f3a32a
           </div>
         </div>
         <OrderButton className="font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl" cart={"Add To Cart"}> <AiOutlineShoppingCart className="cartmotion w-6 h-auto"/></OrderButton>
@@ -56,7 +52,10 @@ const ProductDes = () => {
         
         
       </div>
+    </div>
+  </div>
   );
 };
+
 
 export default ProductDes;
