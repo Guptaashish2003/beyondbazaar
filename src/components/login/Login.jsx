@@ -17,10 +17,9 @@ const Login = () => {
             </p>
 
             <form action="" className="flex flex-col gap-4">
-              <input
-                className="p-2 mt-8 rounded-xl border"
+            <input
+                className="w-full px-8 py-2 rounded-md mt-2 font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                 type="email"
-                name="email"
                 placeholder="Email"
               />
               <div className="relative">

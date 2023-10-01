@@ -12,7 +12,6 @@ const ProductPhotos = () => {
   const productImg = [img1, img2, img3, img4];
   const selectedThumbnail = useSelector((state) => state.changeImg);
   const dispatch = useDispatch();
-  // console.log(selectedThumbnail.selectedThumbnail)
 
   return (
     <div className="p-4 mt-4 w-1/2">

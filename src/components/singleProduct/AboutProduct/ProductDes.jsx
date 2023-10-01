@@ -12,34 +12,45 @@ const ProductDes = () => {
   const myState = useSelector((state) => state.incDec);
   const dispatch = useDispatch();
   return (
+<<<<<<< HEAD
     <div className=" p-4 mt-4  w-1/2">
+=======
+    <div className="p-8   w-1/2 max-lg:w-full ">
+>>>>>>> 1bb504a3a39dc01d2b027d1d3e276f632d417fec
       <div className="  my-4 text-bold mr-4">
-        <h1 className="title text-4xl my-1 font-bold">
+        <h1 className="title text-4xl my-1 font-bold max-lg:text-center">
           Samsung curved display
         </h1>
-        <p className="para text-center text-base">
+        <p className="para text-center text-base ">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odio
           eaque error ullam optio quod corporis.
         </p>
         
-          <span className=" my-1 text-[--first-color] font-bold text-xl cursor-text  ">
-          <LiaRupeeSignSolid className="text-[--first-color] inline font-bold" /> <p className="border-b-2 inline border-slate-400 border-solid">2999</p>
+          <span className="inline-block my-1 text-[--first-color] font-bold text-xl cursor-text max-lg:my-3">
+          <LiaRupeeSignSolid className="text-[--first-color] inline font-bold" /> <p className="border-b-2 inline border-slate-400 border-solid ">2999</p>
           </span>
         <hr className="mt-8 border border-slate-200" />
       </div>
-        <div className=" flex text-xl text-black gap-4 container  p-4 ">
+        <div className=" flex text-xl text-black gap-4 items-center container  p-4 ">
           <p>Quantity:</p>
+<<<<<<< HEAD
+          <div className="border-2 border-solid min-w-[9.625rem] border-slate-300 text-2xl">
+            <button className="px-4 py-1">-</button>
+            <span className="px-4 py-1"> 1 </span>
+            <button className="px-4 py-1">+</button>
+=======
           <div className="border-2 border-solid border-slate-300 text-2xl">
             <button onClick= {() => dispatch(decNum())}  className="px-4 py-1">-</button>
             <span className="px-4 py-1"> {myState} </span>
             <button  onClick= {() =>dispatch(incNum())} className="px-4 py-1">+</button>
+>>>>>>> 771c2f7e660389cbf22a02e798b1134515f3a32a
           </div>
         </div>
         <OrderButton className="font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl" cart={"Add To Cart"}> <AiOutlineShoppingCart className="cartmotion w-6 h-auto"/></OrderButton>
         <OrderButton className="font-bold  orderBounce w-11/12 h-12 border-2 border-solid border-slate-400 text-xl bg-black text-white" cart={"Order Now"}> <FiFastForward className="arrowAnime w-6 h-auto"/></OrderButton>
       <div className="flex gap-5 mt-20">
         <span className="text-xl"> share:</span>
-        <SocialMedial hover={"hover:text-black"} className='gap-4 text-xl' facebook={true} instagram={true} twitter={true} linkedin={true}/>
+        <SocialMedial hover={"hover:text-black"} className='gap-4 text-xl' facebook={"https://www.facebook.com/"} instagram={true} twitter={true} linkedin={true}/>
       </div>
 
         
