@@ -12,9 +12,9 @@ const CartDetail = () => {
     <div className="flex ml-4 mr-4 border-2 border-solid mt-3 border-slate-300 justify-self-auto w-11/12 h-[13rem] p-4">
       <Image src={productImg} alt="Product image" className="w-[20%] h-full " />
       <div className="flex flex-col ml-2 h-[11rem] justify-end gap-3">
-        <MdModeEdit className="cursor-pointer"/>
-        <MdDelete className="cursor-pointer"/>
-        <AiOutlineHeart className="cursor-pointer transition-colors hover:text-red-700 "/>
+        <MdModeEdit className="hover:scale-125 duration-300 cursor-pointer"/>
+        <MdDelete className="hover:scale-125 duration-300 cursor-pointer"/>
+        <AiOutlineHeart className="hover:scale-125 duration-300 cursor-pointer transition-colors hover:text-red-700 "/>
       </div>
       <div className=" text-black pl-1">
         <p className="font-bold">Lorem ipsum dolor sit amet</p>
