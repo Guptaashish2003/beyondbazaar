@@ -73,7 +73,7 @@ const Footer = () => {
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
             consequuntur amet culpa cum itaque neque.
           </p>
-          <SocialMedial hover={"hover:text-black"} className='gap-4 mt-8 text-2xl' facebook={true} instagram={true} twitter={true} linkedin={true}/>
+          <SocialMedial hover={"hover:text-black"} className='gap-4 mt-8 text-2xl' facebook={'https://www.facebook.com/'} instagram={'https://www.facebook.com/'} twitter={'https://www.facebook.com/'} linkedin={'https://www.facebook.com/'}/>
         
         </div>
   

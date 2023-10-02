@@ -4,10 +4,7 @@ import ProductPage from '@/components/singleProduct/ProductPage'
 
 const page = () => {
   return (
-    <Provider store={store}>
       <ProductPage/>
-    </Provider>   
-    
   )
 }
 

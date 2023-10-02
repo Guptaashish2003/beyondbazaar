@@ -1,12 +1,12 @@
 import React from "react";
 import ProductPhotos from "./ProductPhotos";
-import ProductDes from "./AboutProduct/ProductDes";
-import ProductDetails from "./AboutProduct/ProductDetails";
+import ProductDes from "./ProductDes";
+import ProductDetails from "./ProductDetails";
 
 const ProductPage = () => {
   return (
     <>
-      <div className="flex mt-20 justify-center flex-wrap  p-4">
+      <div className="flex  justify-center flex-wrap  p-4">
         <ProductPhotos />
         <ProductDes />
       </div>
