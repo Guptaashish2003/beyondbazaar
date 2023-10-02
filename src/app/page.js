@@ -4,7 +4,10 @@ import Productcard from '@/components/ProductCards/Productcard'
 import Clothingcard from '@/components/ProductCards/Clothingcard'
 import productImg from "@/assets/proImg1.jpg"
 import productImgHover from "@/assets/proImg1Hover.jpg"
-export default function Home() {
+// import store from './store'
+
+
+export default function Home(){
   return (
     <>
     <Herosection/>
