@@ -4,8 +4,6 @@ import ShoppingCart from '@/components/shoppingCart/ShoppingCart'
 const page = () => {
   return (
     <ShoppingCart/>
-    
-
   )
 }
 
