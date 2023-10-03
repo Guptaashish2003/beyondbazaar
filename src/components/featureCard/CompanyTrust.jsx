@@ -11,6 +11,7 @@ const CompanyTrust = () => {
     <section className='flex justify-evenly items-center  flex-wrap sm:w-full  xl:flex-nowrap'>
       <FeatureCard title={'made in india'} description={"E-commerce in India thrives with a diverse array of 'Made in India' products, embracing local production for online consumers."}>
         <Image src={miilogo} className='w-full h-full text-black object-contain'/>
+        
       </FeatureCard>
 
       <FeatureCard title={'Fast Delivery'} description={'Orders to metro cities reach in 5-7 working days'}>

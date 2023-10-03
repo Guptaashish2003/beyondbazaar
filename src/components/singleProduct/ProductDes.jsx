@@ -14,7 +14,7 @@ const ProductDes = () => {
   return (
     <div className="p-8   w-1/2 max-lg:w-full ">
       <div className="  my-4 text-bold mr-4">
-        <h1 className="title text-4xl my-1 font-bold max-lg:text-center">
+        <h1 className="title text-4xl capitalize my-1 font-bold max-lg:text-center">
           Samsung curved display
         </h1>
         <p className="para text-center text-base ">

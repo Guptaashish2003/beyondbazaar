@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from 'react'
+import React, { useRef,useState,useEffect } from 'react'
 import Image from 'next/image'
 import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
@@ -8,6 +8,28 @@ import SearchBar from './SearchBar'
 import Link from 'next/link'
 
 function Navbar() {
+  const [show, setShow] = useState("translate-y-0");
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const controlNavbar = () => {
+    if (window.scrollY > 200) {
+        if (window.scrollY > lastScrollY ) {
+            setShow("-translate-y-[120px]");
+        } else {
+            setShow("shadow-sm");
+        }
+    } else {
+        setShow("translate-y-0");
+    }
+    setLastScrollY(window.scrollY);
+};
+
+useEffect(() => {
+    window.addEventListener("scroll", controlNavbar);
+    return () => {
+        window.removeEventListener("scroll", controlNavbar);
+    };
+}, [lastScrollY]);
+
   const dropdownItems = [
     {
       title:"Technical",
@@ -29,7 +51,7 @@ function Navbar() {
   }
 
   return (
-<header className="header sticky top-0 left-0 w-full flex justify-evenly">
+<header className={`header sticky top-0 left-0 w-full flex justify-evenly ${show}`}>
   <nav className="nav container ">
   <div className="nav__data   flex justify-between items-center w-full h-2/3">
         <div className="logo h-full">
