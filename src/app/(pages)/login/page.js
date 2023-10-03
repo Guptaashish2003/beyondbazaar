@@ -8,18 +8,17 @@ import SubmitButton from "@/components/Form/SubmitButton";
 
 const Login = () => {
   return (
-    <div>
-      <section className="bg-black min-h-[--nav-space] flex items-center justify-center">
+      <section className="bg-image min-h-[--nav-space] max-md:items-center flex items-start justify-center">
         {/* <!-- login container --> */}
-        <div className="bg-white flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+        <div className="bg-white flex mt-16 rounded-2xl max-md:m-4 shadow-lg max-w-3xl p-5 items-center">
           {/* <!-- form --> */}
-          <div className="md:w-1/2 px-8 md:px-16">
-            <h2 className="font-bold text-2xl text-[--first-color]">Login</h2>
+          <div className="md:w-1/2 px-8 md:px-16 ">
+            <h2 className="font-bold text-center text-2xl text-[--first-color]">Login</h2>
             <p className="text-xs mt-4 text-[--first-color]">
               If you are already a member, easily log in
             </p>
 
-            <form  className="flex flex-col gap-4">
+            <form  className="flex flex-col gap-4 py-2">
               <InputBtn type='email' placeholder="Email" className='px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'/>
               <div className="relative">
                 <InputBtn placeholder="Password" type='text'className='px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'/>
@@ -61,13 +60,12 @@ const Login = () => {
           <div className="md:block hidden w-1/2">
             <Image
             src={loginp}
-            className="rounded-2xl"
+            className="rounded-2xl w-full h-full"
             />
                 
           </div>
         </div>
       </section>
-    </div>
   );
 };
 

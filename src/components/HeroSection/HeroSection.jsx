@@ -19,7 +19,7 @@ function HeroSection() {
         disableOnInteraction: false,
       }}
       modules={[Autoplay]}
-      className='w-full hero-hieght'
+      className='w-full'
           >
       {sliderImage.map((img,index)=><SwiperSlide key={index} className='w-full h-full'>
         <Image

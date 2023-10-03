@@ -4,7 +4,7 @@ function InputBtn({type="text", placeholder="Enter Your Detail",name="",classNam
     const id = useId()
   return (
     <>
-    <label htmlFor={id}>{label}</label>
+    {label && <label htmlFor={id}>{label}</label>}
    <input
     id={id}
     ref={ref}

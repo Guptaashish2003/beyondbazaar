@@ -11,10 +11,6 @@ import { FiUserPlus } from "react-icons/fi";
 const RegistrationPage = () => {
   return (
     <>   
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
-      rel="stylesheet"
-    />
     <div className="max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
       <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
         <div>
@@ -100,39 +96,6 @@ const RegistrationPage = () => {
               'url("https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg")'
           }}
         />
-      </div>
-    </div>
-    <div
-      className="REMOVE-THIS-ELEMENT-IF-YOU-ARE-USING-THIS-PAGE hidden treact-popup fixed inset-0 flex items-center justify-center"
-      style={{ backgroundColor: "rgba(0,0,0,0.3)" }}
-    >
-      <div className="max-w-lg p-8 sm:pb-4 bg-white rounded shadow-lg text-center sm:text-left">
-        <h3 className="text-xl sm:text-2xl font-semibold mb-6 flex flex-col sm:flex-row items-center">
-          <div className="bg-green-200 p-2 rounded-full flex items-center mb-4 sm:mb-0 sm:mr-2">
-            <FiUserPlus/>
-          </div>
-          Free TailwindCSS Component Kit!
-        </h3>
-        <p>
-          I recently released Treact, a <span className="font-bold">free</span>{" "}
-          TailwindCSS Component Kit built with React.
-        </p>
-        <p className="mt-2">
-          It has 52 different UI components, 7 landing pages, and 8 inner pages
-          prebuilt. And they are customizable!
-        </p>
-        <div className="mt-8 pt-8 sm:pt-4 border-t -mx-8 px-8 flex flex-col sm:flex-row justify-end leading-relaxed">
-          <button className="close-treact-popup px-8 py-3 sm:py-2 rounded border border-gray-400 hover:bg-gray-200 transition duration-300">
-            Close
-          </button>
-          <a
-            className="font-bold mt-4 sm:mt-0 sm:ml-4 px-8 py-3 sm:py-2 rounded bg-purple-700 text-gray-100 hover:bg-purple-900 transition duration-300 text-center"
-            href="https://treact.owaiskhan.me"
-            target="_blank"
-          >
-            See Treact
-          </a>
-        </div>
       </div>
     </div>
   </>
