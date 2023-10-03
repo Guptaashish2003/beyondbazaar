@@ -9,7 +9,7 @@ import Image from "next/image";
 const CartDetail = () => {
 
   return (
-    <div className="flex ml-4 mr-4 border-2 border-solid mt-3 border-slate-300 justify-self-auto w-11/12 h-[13rem] p-4">
+    <div className="flex ml-4 mr-4 border-2 border-solid mt-3 border-slate-300 justify-self-auto lg:w-11/12 h-[13rem] p-4">
       <Image src={productImg} alt="Product image" className="w-[20%] h-full " />
       <div className="flex flex-col ml-2 h-[11rem] justify-end gap-3">
         <MdModeEdit className="hover:scale-125 duration-300 cursor-pointer"/>
