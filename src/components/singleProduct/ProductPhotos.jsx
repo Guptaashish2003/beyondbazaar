@@ -5,7 +5,7 @@ import img2 from "@/assets/img2.png";
 import img3 from "@/assets/img3.png";
 import img4 from "@/assets/img4.png";
 import { useState,useEffect,useRef } from "react";
-// Import Swiper React components
+import FullScreenImage from "./FullScreenImage";
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -21,6 +21,17 @@ const ProductPhotos = () => {
   const [selectedThumbnail, setSelectedThumbnail] = useState(productImg[0])
   const [screenWidth, setScreenWidth] = useState(true);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [showFullScreen, setShowFullScreen] = useState(false);
+  const [fullscreenImageSrc, setFullscreenImageSrc] = useState('');
+
+  const openFullScreen = (imgSrc) => {
+    setFullscreenImageSrc(imgSrc);
+    setShowFullScreen(true);
+  };
+
+  const closeFullScreen = () => {
+    setShowFullScreen(false);
+  };
   
 
 useEffect(() => {
@@ -60,8 +71,9 @@ useEffect(() => {
             >
               <Image
                 src={img}
+                onClick={() => openFullScreen(img)}
                 alt="Product thumbnail"
-                className="w-full h-full rounded-lg"
+                className="w-full cursor-pointer h-full rounded-lg"
               />
             </SwiperSlide>
           ))}
@@ -96,6 +108,41 @@ useEffect(() => {
         ))}
       </Swiper>
       </div>
+      {showFullScreen && (
+        <div>
+
+          <FullScreenImage src={fullscreenImageSrc} alt="Product thumbnail" onClose={closeFullScreen} />
+          <div className="max-lg:hidden">
+      <Swiper
+        onSwiper={setThumbsSwiper}
+        loop={true}
+        spaceBetween={10}
+        slidesPerView={4}
+        freeMode={true}
+        watchSlidesProgress={true}
+        modules={[FreeMode, Navigation, Thumbs]}
+        className='mySwiper w-full h-32 flex gap-7 items-center justify-center'
+      >
+        {productImg.map((img, index) => (
+          <SwiperSlide
+            key={index}
+            className={`cursor-pointer w-7 rounded-md ${
+              selectedThumbnail === productImg[index] ? 'border-2 border-gray-900' : ''
+            }` }
+            onClick={()=>setSelectedThumbnail(productImg[index])}
+          >
+            <Image
+              src={img}
+              alt="Product thumbnail"
+              className="w-full h-full rounded-lg object-contain"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      </div>
+        </div>
+        
+      )}
     </div>
   );
 
