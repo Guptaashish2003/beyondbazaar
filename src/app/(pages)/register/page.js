@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import loginp from "@/assets/loginp.jpg";
 import Image from 'next/image'
@@ -5,8 +6,26 @@ import InputBtn from "@/components/Form/InputBtn";
 import { AiFillEye } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import SubmitButton from "@/components/Form/SubmitButton";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 const RegistrationPage = () => {
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+        .required('Email is required')
+        .email('Email is invalid')
+});
+const formOptions = { resolver: yupResolver(validationSchema) };
+
+
+const { register, handleSubmit, reset, formState } = useForm(formOptions);
+const { errors } = formState;
+
+function onSubmit(data) {
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(data, null, 4));
+    return false;
+}
   return (
       <section className="bg-image min-h-[--nav-space] max-md:items-center  flex items-start justify-center">
         {/* <!-- login container --> */}
@@ -16,6 +35,7 @@ const RegistrationPage = () => {
             <h2 className="font-bold text-center capitalize text-2xl text-[--first-color]">Register</h2>
 
             <SubmitButton
+              
                 value="Login Up with Google"
                 className="bg-white border py-2 w-full flex-row-reverse rounded-lg mt-5 text-sm hover:scale-105 duration-300 text-[--first-color]"
               >
@@ -39,6 +59,7 @@ const RegistrationPage = () => {
                 <AiFillEye  className=" absolute top-1/2 right-3 -translate-y-1/2"/>
               </div>
               <SubmitButton
+              onSubmit={handleSubmit(onSubmit)}
                 value="Register"
                 type="submit"
                 className='bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300'
