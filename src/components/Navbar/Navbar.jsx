@@ -4,7 +4,6 @@ import Image from 'next/image'
 import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
 import { BiMenu,BiX,BiSolidCart,BiSearchAlt,BiSolidUser } from "react-icons/bi";
-import SearchBar from './SearchBar'
 import Link from 'next/link'
 
 function Navbar() {
