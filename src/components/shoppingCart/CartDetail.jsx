@@ -9,40 +9,48 @@ import Image from "next/image";
 const CartDetail = () => {
 
   return (
-    <div className="flex ml-4 mr-4 border-2 border-solid mt-3 border-slate-300 justify-self-auto lg:w-11/12 h-[13rem] p-4">
-      <Image src={productImg} alt="Product image" className="w-[20%] h-full " />
-      <div className="flex flex-col ml-2 h-[11rem] justify-end gap-3">
-        <MdModeEdit className="hover:scale-125 duration-300 cursor-pointer"/>
-        <MdDelete className="hover:scale-125 duration-300 cursor-pointer"/>
-        <AiOutlineHeart className="hover:scale-125 duration-300 cursor-pointer transition-colors hover:text-red-700 "/>
-      </div>
-      <div className=" text-black pl-1">
-        <p className="font-bold">Lorem ipsum dolor sit amet</p>
-        <p>Color : White/Pink</p>
-        <p>Size : White/Pink</p>
-        <p>In Stock</p>
-      </div>
-      <div className="pl-2 ml-auto text-black">
-        <h2 className="font-bold ">Price</h2>
-        <p> 500 </p>
-      </div>
-      <div className=" ml-auto w-[5.5rem] flex flex-col text-center text-black ">
-        <p className="font-bold">Quantity</p>
-        <div className="border-2 border-solid border-slate-300 ">
-          <button className="px-2 py-1">
-            -
-          </button>
-          <span className="px-1 py-1">0</span>
-          <button  className="px-2 py-1">
-            +
-          </button>
+    <div className="flex flex-col border-y-2 border-solid mt-3 border-slate-300 p-6 max-sm:p-2 relative">
+      <div className="flex justify-center items-start max-sm:items-center">
+        <div className="w-32 h-full">
+          <Image src={productImg} alt="Product image" className="w-full h-full object-contain" />
         </div>
+
+        <div className="flex justify-between  p-4 w-full max-sm:flex-col max-sm:items-start max-sm:gap-y-2">
+          <div className="text-[--first-color] pl-1">
+            <p className="font-bold">Lorem ipsum dolor sit amet</p>
+            <p className="font-bold">₹ 500</p>
+            <p>Color : White/Pink</p>
+            <p>Size : White/Pink</p>
+            <p>In Stock</p>
+          </div>
+          <div className="pl-2 max-sm:hidden">
+            <h2 className="font-bold ">Price</h2>
+            <p> 500 </p>
+          </div>
+          <div className="flex flex-col text-center max-sm:w-full  max-sm:justify-between max-sm:flex-row">
+            <p className="font-bold">Quantity</p>
+            <div className="border-2 border-solid border-slate-300 ">
+              <button className="px-3 py-1">
+                -
+              </button>
+              <span className="px-2 py-1">0</span>
+              <button  className="px-3 py-1">
+                +
+              </button>
+            </div>
+          </div>
+          <total className="flex flex-col text-left  pl-2 max-sm:hidden">
+            <p className="font-bold">Total</p>
+            <p>50000</p>
+          </total>
+        </div>
+
       </div>
-      <total className="flex flex-col ml-auto text-left text-black pl-2">
-        <p className="font-bold">Total</p>
-        <p>50000</p>
-      </total>
-      <hr className="py-3" />
+      <div className="flex justify-end gap-6 ">
+        <MdModeEdit className="hover:scale-125 duration-300 cursor-pointer max-sm:hidden"/>
+        <MdDelete className="rounded-full max-sm:text-white max-sm:p-1 max-sm:text-xl max-sm:bg-[--first-color] hover:scale-125 duration-300 cursor-pointer max-sm:absolute max-sm:top-6 max-sm:left-1"/>
+        <AiOutlineHeart className="hover:scale-125 duration-300 cursor-pointer transition-colors hover:text-red-700 max-sm:absolute max-sm:top-6 max-sm:right-4"/>
+      </div>
     </div>
   );
 };

@@ -1,17 +1,17 @@
 import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import SubmitButton from "../Form/SubmitButton";
 const PriceCheckOut = () => {
   return (
-    <section className="flex  max-sm:w-10/12 mt-3 flex-col bg-gray-300 max-sm:w-full justify-start lg:w- border-solid border-slate-400 border-2 h-full p-4 mx-5">
+    <section className="flex  flex-col justify-start border-solid  border-y-2  p-4 mt-16">
       <p className="py-1"> Enter Promo Code</p>
       <div className="flex justify-between  py-2 gap-1">
-        <input type="text" placeholder="Promo Code" className="w-2/3 p-2" />
-        <button
-          type="button"
-          className="text-white w-1/3 hover:scale-105 duration-300 cursor-pointer bg-black"
-        >
-          Apply
-        </button>
+        <input type="text" placeholder="Promo Code" className="w-2/3 p-2 border-solid  border-2" />
+        <SubmitButton
+        type="button"
+        className="text-white w-1/3 hover:scale-105 duration-300 cursor-pointer bg-black"
+        value="Apply"
+        />
       </div>
       <div class="flex gap-2 flex-col">
         <div class="flex justify-between">

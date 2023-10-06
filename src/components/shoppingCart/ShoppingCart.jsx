@@ -8,20 +8,22 @@ import CartDetail from "./CartDetail";
 const ShoppingCart = () => {
   return (
     <>
-      <div className="flex  py-3 justify-center text-3xl gap-4 align-center text-black">
+      <section className="flex flex-col ">
+        <div className="flex gap-3 justify-center align-center text-3xl my-4">
         <HiOutlineShoppingBag />
         <p>My Bag</p>
-      </div>
-      <hr />
-      <div className="flex w-full flex-wrap sm:justify-center justify-between h-[100%] ">
-        <div className="lg:w-2/3">
-          <CartDetail />
-          <CartDetail />
-          <CartDetail />
         </div>
-        <div class="h-full border-l border-gray-400"></div>
-        <PriceCheckOut />
-      </div>
+        <div className="flex w-full flex-wrap  justify-between h-[100%] flex-wap">
+          <div className="w-[60%] max-lg:w-full max-lg:px-20 max-md:px-5 "> 
+            <CartDetail />
+            <CartDetail />
+            <CartDetail />
+          </div>
+          <div className="w-[35%] px-10 max-lg:w-full max-lg:px-20 max-md:px-5">
+            <PriceCheckOut />
+          </div>
+        </div>
+      </section> 
     </>
   );
 };
