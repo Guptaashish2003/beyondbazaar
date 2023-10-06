@@ -75,7 +75,7 @@ useEffect(() => {
           ))}
     
         </Swiper>
-        <div className={`w-16 h-16 max-lg:w-8 max-lg:h-8 absolute right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full cursor-pointer`} onClick={openFullScreen}>
+        <div className={`w-16 h-16 max-lg:w-8 max-lg:h-8 fixed right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full cursor-pointer`} onClick={openFullScreen}>
           {showFullScreen?<AiFillCloseCircle className="w-[90%] h-[90%]"/>:<TbZoomPan className="w-[90%] h-[90%]"/>}
         </div>
       </div>
