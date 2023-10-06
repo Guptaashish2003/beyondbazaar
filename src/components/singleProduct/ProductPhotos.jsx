@@ -7,6 +7,7 @@ import img4 from "@/assets/img4.png";
 import { useState,useEffect,useRef } from "react";
 import FullScreenImage from "./FullScreenImage";
 import { TbZoomPan } from 'react-icons/tb';
+import { AiFillCloseCircle } from 'react-icons/ai';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -45,7 +46,7 @@ useEffect(() => {
 
   return (
     <div className="flex w-1/2 max-lg:w-full flex-col gap-y-2 ">
-      <div className={showFullScreen?"absolute top-0 right-0 ":` w-11/12 mx-auto relative` }>
+      <div className={showFullScreen?"absolute top-0 right-0 w-screen h-screen bg-white z-[1000]":` w-11/12 mx-auto relative` }>
         <Swiper
           style={{
             '--swiper-navigation-color': '#333',
@@ -62,20 +63,20 @@ useEffect(() => {
           {productImg.map((img, index) => (
             <SwiperSlide
               key={index}
-              className="flex items-center justify-center p-2"
+              className="flex items-center justify-center p-2 "
             >
               <Image
                 src={img}
                 onClick={() => openFullScreen(img)}
                 alt="Product thumbnail"
-                className="w-full cursor-pointer h-full rounded-lg"
+                className="w-full cursor-pointer h-full rounded-lg object-contain"
               />
             </SwiperSlide>
           ))}
     
         </Swiper>
-        <div className={`w-16 h-16 absolute right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full`} onClick={openFullScreen}>
-          <TbZoomPan className="w-[90%] h-[90%]"/>
+        <div className={`w-16 h-16 absolute right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full cursor-pointer`} onClick={openFullScreen}>
+          {showFullScreen?<AiFillCloseCircle className="w-[90%] h-[90%]"/>:<TbZoomPan className="w-[90%] h-[90%]"/>}
         </div>
       </div>
       <div className="max-lg:hidden  ">
