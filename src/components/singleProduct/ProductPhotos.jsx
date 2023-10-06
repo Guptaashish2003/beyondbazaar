@@ -6,6 +6,7 @@ import img3 from "@/assets/img3.png";
 import img4 from "@/assets/img4.png";
 import { useState,useEffect,useRef } from "react";
 import FullScreenImage from "./FullScreenImage";
+import { TbZoomPan } from 'react-icons/tb';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -22,17 +23,12 @@ const ProductPhotos = () => {
   const [screenWidth, setScreenWidth] = useState(true);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [showFullScreen, setShowFullScreen] = useState(false);
-  const [fullscreenImageSrc, setFullscreenImageSrc] = useState('');
 
   const openFullScreen = (imgSrc) => {
-    setFullscreenImageSrc(imgSrc);
-    setShowFullScreen(true);
+    setShowFullScreen(!showFullScreen);
+    console.log(showFullScreen)
   };
 
-  const closeFullScreen = () => {
-    setShowFullScreen(false);
-  };
-  
 
 useEffect(() => {
   const width = window.innerWidth;
@@ -48,8 +44,8 @@ useEffect(() => {
 }, [screenWidth]);
 
   return (
-    <div className="flex w-1/2 max-lg:w-full flex-col gap-y-2">
-      <div className="w-11/12   mx-auto">
+    <div className="flex w-1/2 max-lg:w-full flex-col gap-y-2 ">
+      <div className={showFullScreen?"absolute top-0 right-0 ":` w-11/12 mx-auto relative` }>
         <Swiper
           style={{
             '--swiper-navigation-color': '#333',
@@ -57,7 +53,6 @@ useEffect(() => {
             '--swiper-pagination-color': '#333',
           }}
           loop={true}
-          spaceBetween={10}
           navigation={screenWidth}
           pagination={screenWidth}
           thumbs={{swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null}}
@@ -79,8 +74,11 @@ useEffect(() => {
           ))}
     
         </Swiper>
+        <div className={`w-16 h-16 absolute right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full`} onClick={openFullScreen}>
+          <TbZoomPan className="w-[90%] h-[90%]"/>
+        </div>
       </div>
-      <div className="max-lg:hidden">
+      <div className="max-lg:hidden  ">
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
@@ -108,7 +106,7 @@ useEffect(() => {
         ))}
       </Swiper>
       </div>
-      {showFullScreen && (
+      {/* {showFullScreen && (
         <div>
 
           <FullScreenImage src={fullscreenImageSrc} alt="Product thumbnail" onClose={closeFullScreen} />
@@ -142,7 +140,7 @@ useEffect(() => {
       </div>
         </div>
         
-      )}
+      )} */}
     </div>
   );
 
