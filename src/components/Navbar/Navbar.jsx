@@ -1,7 +1,7 @@
 "use client"
 import React, { useRef,useState,useEffect } from 'react'
 import Image from 'next/image'
-import logo from "@/assets/logo.png"
+import logo from "@/assets/logo.jpg"
 import Dropdown from './dropdown'
 import { BiMenu,BiX,BiSolidCart,BiSearchAlt,BiSolidUser } from "react-icons/bi";
 import Link from 'next/link'
@@ -56,14 +56,14 @@ useEffect(() => {
         <div className="logo h-full">
                 <Image
             src={logo}
-            className='w-full h-full'
+            className='w-full h-full object-contain'
             alt="logo"
             /> 
         </div>
     <div className="lsc flex justify-center items-center p-4  ">
         <BiSearchAlt className='w-8 h-8 mx-2 text-color cursor-pointer'/>
-        <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/>
-        <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer'/>
+        {/* <BiSolidCart className='w-8 h-8 mx-2 text-color cursor-pointer '/> */}
+        <BiSolidUser className='w-8 h-8 mx-2 text-color cursor-pointer  max-[1117]:bg-black'/>
     </div>
 
     <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
@@ -74,6 +74,7 @@ useEffect(() => {
     </div>
     {/*=============== NAV MENU ===============*/}
     <div className="nav__menu " id="nav-menu" ref={navMenuRef}>
+
       <ul className="nav__list">
         <li>
          
