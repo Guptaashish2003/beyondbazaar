@@ -7,12 +7,12 @@ const ProductSchema = new mongoose.Schema({
     productSlug : String,
     productPrice : Number,
     productQuantity : Number,
-    productFeatured : Boolean,
-    productCategory: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Categories',
-        required: true
-    },
+    productAvailable : Boolean,
+    // productCategory: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Categories',
+    //     required: true
+    // },
 
 },{timestamps : true});
 

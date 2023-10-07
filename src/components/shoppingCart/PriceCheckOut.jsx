@@ -3,7 +3,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import SubmitButton from "../Form/SubmitButton";
 const PriceCheckOut = () => {
   return (
-    <section className="flex  flex-col justify-start border-solid  border-y-2  p-4 mt-16">
+    <section className= "flex  flex-col justify-center border-solid  border-y-2  p-4 mt-16">
+      <h1 className="font-bold text-black m-auto text-2xl mb-2">Order Summary</h1>
       <p className="py-1"> Enter Promo Code</p>
       <div className="flex justify-between  py-2 gap-1">
         <input type="text" placeholder="Promo Code" className="w-2/3 p-2 border-solid  border-2" />
@@ -13,7 +14,7 @@ const PriceCheckOut = () => {
         value="Apply"
         />
       </div>
-      <div class="flex gap-2 flex-col">
+      <div class="flex gap-2 flex-col justify-evenly">
         <div class="flex justify-between">
           <p>Shipping Cost</p>
           <p>40</p>
