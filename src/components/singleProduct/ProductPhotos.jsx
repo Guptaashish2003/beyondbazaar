@@ -5,7 +5,6 @@ import img2 from "@/assets/img2.png";
 import img3 from "@/assets/img3.png";
 import img4 from "@/assets/img4.png";
 import { useState,useEffect,useRef } from "react";
-import FullScreenImage from "./FullScreenImage";
 import { TbZoomPan } from 'react-icons/tb';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -25,7 +24,7 @@ const ProductPhotos = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [showFullScreen, setShowFullScreen] = useState(false);
 
-  const openFullScreen = (imgSrc) => {
+  const openFullScreen = () => {
     setShowFullScreen(!showFullScreen);
     console.log(showFullScreen)
   };
@@ -45,8 +44,8 @@ useEffect(() => {
 }, [screenWidth]);
 
   return (
-    <div className="flex w-1/2 max-lg:w-full flex-col gap-y-2 ">
-      <div className={showFullScreen?"absolute top-0 right-0 w-screen h-screen bg-white z-[1000]":` w-11/12 mx-auto relative` }>
+    <div className={showFullScreen?"absolute top-0 right-0 w-screen h-screen flex bg-white z-[1000]":"flex w-1/2 max-lg:w-full flex-col gap-y-2 "}>
+      <div className={`mx-auto relative ${showFullScreen?"w-3/4":"w-11/12"}` }>
         <Swiper
           style={{
             '--swiper-navigation-color': '#333',
@@ -75,11 +74,11 @@ useEffect(() => {
           ))}
     
         </Swiper>
-        <div className={`w-16 h-16 max-lg:w-8 max-lg:h-8 fixed right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full cursor-pointer`} onClick={openFullScreen}>
+        <div className={`w-16 h-16 max-lg:w-8 max-lg:h-8 absolute right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full cursor-pointer`} onClick={openFullScreen}>
           {showFullScreen?<AiFillCloseCircle className="w-[90%] h-[90%]"/>:<TbZoomPan className="w-[90%] h-[90%]"/>}
         </div>
       </div>
-      <div className="max-lg:hidden  ">
+      <div className={`max-lg:hidden ${showFullScreen?"w-3/12 h-full flex border-2 ":" h-32"}`}>
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
@@ -88,12 +87,12 @@ useEffect(() => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className='mySwiper w-full h-32 flex gap-7 items-center justify-center'
+        className='mySwiper w-full h-32 my-auto flex gap-7 items-center justify-center'
       >
         {productImg.map((img, index) => (
           <SwiperSlide
             key={index}
-            className={`cursor-pointer w-7 rounded-md ${
+            className={`cursor-pointer w-7  inline-block rounded-md ${
               selectedThumbnail === productImg[index] ? 'border-2 border-gray-900' : ''
             }` }
             onClick={()=>setSelectedThumbnail(productImg[index])}
@@ -107,41 +106,7 @@ useEffect(() => {
         ))}
       </Swiper>
       </div>
-      {/* {showFullScreen && (
-        <div>
-
-          <FullScreenImage src={fullscreenImageSrc} alt="Product thumbnail" onClose={closeFullScreen} />
-          <div className="max-lg:hidden">
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        loop={true}
-        spaceBetween={10}
-        slidesPerView={4}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className='mySwiper w-full h-32 flex gap-7 items-center justify-center'
-      >
-        {productImg.map((img, index) => (
-          <SwiperSlide
-            key={index}
-            className={`cursor-pointer w-7 rounded-md ${
-              selectedThumbnail === productImg[index] ? 'border-2 border-gray-900' : ''
-            }` }
-            onClick={()=>setSelectedThumbnail(productImg[index])}
-          >
-            <Image
-              src={img}
-              alt="Product thumbnail"
-              className="w-full h-full rounded-lg object-contain"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      </div>
-        </div>
-        
-      )} */}
+     
     </div>
   );
 
