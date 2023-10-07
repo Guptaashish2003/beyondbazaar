@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import NextAuth from "next-auth"
+import GoogleProvider from "next-auth/providers/google";
 import loginp from "@/assets/loginp.jpg";
 import Image from "next/image";
 import InputBtn from "@/components/Form/InputBtn";
