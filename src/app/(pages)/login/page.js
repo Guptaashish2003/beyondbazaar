@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import {React,useState} from "react";
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import loginp from "@/assets/loginp.jpg";

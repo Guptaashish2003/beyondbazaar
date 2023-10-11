@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-
+import { NextResponse } from 'next/server'
 const UserSchema = new mongoose.Schema(
   {
     name: {
@@ -59,7 +59,7 @@ const UserSchema = new mongoose.Schema(
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password") || !this.password) {
-    next();
+    return NextResponse.next()
   }
   
 
