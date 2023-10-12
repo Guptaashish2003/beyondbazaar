@@ -66,7 +66,7 @@ useEffect(() => {
             /> 
         </div>
     <div className="lsc flex justify-center items-center p-4 gap-2 ">
-      <div className='absolute right-0 left-0 mx-auto w-1/3 flex justify-center '>
+      <div className='absolute right-0 left-0 mx-auto w-1/3 flex justify-center max-md:w-1/2 max-lg:w-1/2'>
           <div className="input-box" ref={searchRef} >
             <InputBtn type="text" placeholder="Search..." className='relative p-4 outline-none border-none h-4/5 w-full  rounded-md text-xl font-bold bg-white border  border-gray-200 focus:border-gray-400 '/>
             <span className="absolute h-full top-0 left-0 w-16 rounded-md flex justify-center bg-white">
@@ -76,11 +76,11 @@ useEffect(() => {
             </div>
       </div>
 
-      <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center'>
+      <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
         <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
       </div>
-      <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center'>
-        <BiSolidUser className='w-[75%] h-[75%] text-inherit cursor-pointer  max-[1117]:bg-black'/>
+      <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
+        <BiSolidUser className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
       </div>
     </div>
 

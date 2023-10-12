@@ -27,7 +27,7 @@ html {
   --font-semi-bold: 600;
   /*========== z index ==========*/
   --z-tooltip: 10;
-  --z-fixed: 100;
+  --z-fixed: 40;
   /* nav space  */
   --nav-space: calc(100vh - var(--header-height));
   /* swiper pagination css  */
@@ -132,6 +132,9 @@ a {
 }
 
 @media screen and (max-width: 1118px) {
+  .hidden-nav-icon{
+    display: none;
+  }
   .nav__menu {
     background-color: var(--body-color);
     position: relative;
