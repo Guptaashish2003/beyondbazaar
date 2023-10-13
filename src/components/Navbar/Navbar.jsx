@@ -10,7 +10,9 @@ import InputBtn from '../Form/InputBtn'
 
 function Navbar() {
   const [show, setShow] = useState("translate-y-0");
+  const [hide, setHide] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+
   const controlNavbar = () => {
     if (window.scrollY > 200) {
         if (window.scrollY > lastScrollY ) {
@@ -29,7 +31,7 @@ useEffect(() => {
     return () => {
         window.removeEventListener("scroll", controlNavbar);
     };
-}, [lastScrollY]);
+}, [lastScrollY,hide]);
 
   const dropdownItems = [
     {
@@ -46,17 +48,16 @@ useEffect(() => {
 
   const navToggleRef = useRef()
   const navMenuRef = useRef()
-  const searchRef = useRef()
   const showMenu = () => {
     navMenuRef.current.classList.toggle('show-menu')
     navToggleRef.current.classList.toggle('show-icon')
   }
 
+
   return (
     <>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"></link>
 <header className={`header sticky top-0 left-0 w-full flex justify-evenly ${show}`}>
-  <nav className="nav container ">
+  <nav className="nav w-full p-2 ">
   <div className="nav__data   flex justify-between items-center w-full h-2/3">
         <div className="logo h-full">
                 <Image
@@ -66,13 +67,14 @@ useEffect(() => {
             /> 
         </div>
     <div className="lsc flex justify-center items-center p-4 gap-2 ">
-      <div className='absolute right-0 left-0 mx-auto w-1/3 flex justify-center max-md:w-1/2 max-lg:w-1/2'>
-          <div className="input-box" ref={searchRef} >
-            <InputBtn type="text" placeholder="Search..." className='relative p-4 outline-none border-none h-4/5 w-full  rounded-md text-xl font-bold bg-white border  border-gray-200 focus:border-gray-400 '/>
-            <span className="absolute h-full top-0 left-0 w-16 rounded-md flex justify-center bg-white">
-              <BiSolidSearch className="search-icon" onClick={()=>{searchRef.current.classList.add("open")}}/>
-            </span>
-            <AiFillCloseCircle className="close-icon !text-5xl" onClick={()=>{searchRef.current.classList.remove("open")}}/>
+      <div className={`absolute right-0 left-0 mx-auto w-1/3 flex justify-center max-md:w-1/2 max-lg:w-1/2 max-sm:w-5/6 ` }>
+      {hide?<div className='bg-blor'></div>:""}
+            <div className={`input-box z-10 ${hide?"mobile-search open !ml-0 !mt-5 ":""}`}  >
+              <InputBtn type="text" placeholder="Search..." className='relative p-4 outline-none border-none h-4/5 w-full  rounded-md text-xl font-bold bg-white border  border-gray-200 focus:border-gray-400 '/>
+              <span className="absolute h-[90%] top-0 left-0 w-16 rounded-md flex justify-center bg-white">
+                <BiSolidSearch className="cursor-pointer search-icon" onClick={()=>{setHide(true)}}/>
+              </span>
+              <AiFillCloseCircle className={`cursor-pointer close-icon !text-5xl mobile-search`} onClick={()=>{setHide(false)}}/>
             </div>
       </div>
 
