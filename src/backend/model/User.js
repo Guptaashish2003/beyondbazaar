@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { NextResponse } from 'next/server'
-const UserSchema = new mongoose.Schema(
+import jwt from "jsonwebtoken";
+
+
+const UserSchema = new mongoose.Schema( 
   {
     name: {
       type: String,
@@ -67,8 +70,19 @@ UserSchema.pre("save", async function (next) {
 });
 
 
-
-
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
+
+
+UserSchema.methods.getSignedToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+}
+
+//checking password
+
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+}
 
 export default User;
