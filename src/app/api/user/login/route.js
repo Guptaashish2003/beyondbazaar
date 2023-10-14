@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import User from "@/backend/model/User";
-import jwtToken from "@/backend/utils/jwtToken";
+// import jwtToken from "@/backend/utils/jwtToken";
 
 await connectDB();
 
@@ -28,7 +28,16 @@ export async function POST(request) {
             });
         }
         console.log("gfhgghgyuyyfyj",user)
+        const getSignedTokenn = await user.getSignedToken(password);
+        console.log("gfhgghgyuyyfyj",getSignedTokenn)
+        if(!getSignedTokenn){
+            return new NextResponse({
+              status: 400,
+              statusText: "Invalid email or password",
+            });
+        }
         const PasswordMatch = await user.matchPassword(password);
+        console.log("gfhgghgyuyyfyj",PasswordMatch)
         if(!PasswordMatch){
             return new NextResponse({
               status: 400,
@@ -37,7 +46,7 @@ export async function POST(request) {
         }
         return NextResponse.json({name:"nnnn",data: user}, { status: 200});
 
-        jwtToken(user, 200, "Login Success", NextResponse);
+        // jwtToken(user, 200, "Login Success", NextResponse);
 
         
     } catch (error) {

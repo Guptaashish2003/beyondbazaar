@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 
 
 const UserSchema = new mongoose.Schema( 
+  
   {
     name: {
       type: String,
@@ -70,7 +71,6 @@ UserSchema.pre("save", async function (next) {
 });
 
 
-const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
 
 UserSchema.methods.getSignedToken = function () {
@@ -85,4 +85,5 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 }
 
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
 export default User;
