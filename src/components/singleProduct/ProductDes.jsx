@@ -32,7 +32,7 @@ const ProductDes = () => {
       </div>
       <div className=" flex text-xl text-black gap-4 items-center container  p-4 ">
         <p>Quantity:</p>
-        <div className="border-2 border-solid border-slate-300 text-2xl">
+        <div className="flex border-2 border-solid border-slate-300 text-2xl">
           <button onClick={() => dispatch(decNum())} className="px-4 py-1">
             -
           </button>

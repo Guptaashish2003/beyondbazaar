@@ -2,7 +2,8 @@ import {cookies} from "next/headers"
 import { NextResponse } from "next/server";
 
 
-const sendTOken = (user, statusCode,msg, res) => {
+const jwtToken = (user, statusCode,msg, res) => {
+    
     const token = user.getSignedToken()
     res.status(statusCode).json({ success: true, token })
     const cookieOptions = {
@@ -22,4 +23,4 @@ const sendTOken = (user, statusCode,msg, res) => {
 
 }
 
-export default sendTOken
+export default jwtToken;
