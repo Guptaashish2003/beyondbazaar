@@ -14,8 +14,9 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import 'swiper/css/pagination';
+import 'swiper/css/grid';
 // import required modules
-import { FreeMode, Navigation, Thumbs,Pagination } from 'swiper/modules';
+import { FreeMode, Navigation, Thumbs,Pagination,Grid } from 'swiper/modules';
 
 const ProductPhotos = () => {
   const productImg = [img1, img2, img3, img4,img1,img4];
@@ -44,8 +45,8 @@ useEffect(() => {
 }, [screenWidth]);
 
   return (
-    <div className={showFullScreen?"absolute top-0 right-0 w-screen h-screen flex bg-white z-[1000]":"flex w-1/2 max-lg:w-full flex-col gap-y-2 "}>
-      <div className={`mx-auto relative ${showFullScreen?"w-3/4":"w-11/12"}` }>
+    <div className={showFullScreen?"fixed top-0 right-0 w-screen h-screen flex bg-white z-[1000]":"flex w-1/2 max-lg:w-full flex-col gap-y-2 "}>
+      <div className={`mx-auto relative ${showFullScreen?"w-3/4 ":"w-11/12"}` }>
         <Swiper
           style={{
             '--swiper-navigation-color': '#333',
@@ -82,17 +83,20 @@ useEffect(() => {
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
+        grid={showFullScreen?{
+          rows: 2,
+        }:false}
         spaceBetween={10}
         slidesPerView={4}
         freeMode={true}
         watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className='mySwiper w-full h-32 my-auto flex gap-7 items-center justify-center'
+        modules={[FreeMode, Navigation, Thumbs,Grid]}
+        className={`mySwiper w-full  my-auto flex gap-7 items-center justify-center ${showFullScreen?" ":"h-32"}  `}
       >
         {productImg.map((img, index) => (
           <SwiperSlide
             key={index}
-            className={`cursor-pointer w-7  inline-block rounded-md ${
+            className={`cursor-pointer  ${showFullScreen?"!h-32 !w-3/12":"w-7"}  inline-block rounded-md ${
               selectedThumbnail === productImg[index] ? 'border-2 border-gray-900' : ''
             }` }
             onClick={()=>setSelectedThumbnail(productImg[index])}
