@@ -974,6 +974,11 @@ mongodb@5.9.0:
   optionalDependencies:
     "@mongodb-js/saslprep" "^1.1.0"
 
+mongoose-simple-slugify@^1.2.11:
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/mongoose-simple-slugify/-/mongoose-simple-slugify-1.2.11.tgz#00f022605ef4350404c96ae0b847ebcc6bbb773b"
+  integrity sha512-wiW8qMKXZQ1trWi0T5a9RUoAbyGbhWKaZqVgFvV4RP2nNPJ+cwHclVdBEn4unAyguECh2tbksL2SH2sAG8861A==
+
 mongoose@^7.6.0:
   version "7.6.1"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-7.6.1.tgz#39e4d25af26d0399468d4c0ac7373c4a8a838e3e"

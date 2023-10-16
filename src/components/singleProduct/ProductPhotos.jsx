@@ -4,6 +4,7 @@ import img1 from "@/assets/img1.png";
 import img2 from "@/assets/img2.png";
 import img3 from "@/assets/img3.png";
 import img4 from "@/assets/img4.png";
+import miilogo from "@/assets/miilogo.png";
 import { useState,useEffect,useRef } from "react";
 import { TbZoomPan } from 'react-icons/tb';
 import { AiFillCloseCircle } from 'react-icons/ai';
@@ -19,7 +20,7 @@ import 'swiper/css/grid';
 import { FreeMode, Navigation, Thumbs,Pagination,Grid } from 'swiper/modules';
 
 const ProductPhotos = () => {
-  const productImg = [img1, img2, img3, img4,img1,img4];
+  const productImg = [img1, img2, img3, img4, img1, img2, img3];
   const [selectedThumbnail, setSelectedThumbnail] = useState(productImg[0])
   const [screenWidth, setScreenWidth] = useState(true);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -84,11 +85,11 @@ useEffect(() => {
         onSwiper={setThumbsSwiper}
         loop={true}
         grid={showFullScreen?{
-          rows: 2,
+          rows:productImg.length
         }:false}
         spaceBetween={10}
-        slidesPerView={4}
-        freeMode={true}
+        slidesPerView={showFullScreen?1:productImg.length}
+        freeMode={false}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs,Grid]}
         className={`mySwiper w-full  my-auto flex gap-7 items-center justify-center ${showFullScreen?" ":"h-32"}  `}
@@ -96,7 +97,7 @@ useEffect(() => {
         {productImg.map((img, index) => (
           <SwiperSlide
             key={index}
-            className={`cursor-pointer  ${showFullScreen?"!h-32 !w-3/12":"w-7"}  inline-block rounded-md ${
+            className={`cursor-pointer  ${showFullScreen?"!h-28 !w-3/12":"w-7"}  inline-block rounded-md ${
               selectedThumbnail === productImg[index] ? 'border-2 border-gray-900' : ''
             }` }
             onClick={()=>setSelectedThumbnail(productImg[index])}

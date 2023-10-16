@@ -14,9 +14,9 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <hr className="mt-12 border border-slate-500 mr-40 ml-40" />
-      <section className="bg-white shadow  mt-4">
-        <div className="container flex flex-start p-6 mx-auto text-gray-600 capitalize dark:text-gray-300">
+      <hr className="mt-12 border border-slate-500 mx-auto w-[80%]" />
+      <section className="bg-white shadow w-[80%] mx-auto overflow-hidden mt-4">
+        <div className="container flex flex-start p-6 lg:ml-4  text-gray-600 capitalize dark:text-gray-300">
           <a
             className={`text-gray-800 cursor-pointer  border-b-2 mx-1.5 sm:mx-6 ${
               showDescription ? "border-blue-500" : "border-transparent"
@@ -34,14 +34,14 @@ const ProductDetails = () => {
             Specification
           </a>
         </div>
-          <div className="p-6  mt-4 mx-auto sm:mx-6  text-gray-600 dark:text-gray-500">
+          <div className="p-6 mt-4 lg:ml-4 text-gray-600 dark:text-gray-500">
             {showDescription ? (
-              <div className="lg:ml-28">
+              <div className="lg:ml-4">
                 <h2 className="text-2xl font-semibold ">Description</h2>
                 <p>Insert your description text here.</p>
               </div>
             ) : (
-              <div className="lg:ml-28">
+              <div className="lg:ml-4">
                 <h2 className="text-2xl  font-semibold">Specification</h2>
                 <p>Insert your specification text here.</p>
               </div>
