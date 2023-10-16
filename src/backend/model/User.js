@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 
 
 const UserSchema = new mongoose.Schema( 
+  
   {
     name: {
       type: String,
@@ -23,6 +24,11 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Please provide your password"],
       minlength: [6, "Password cannot be less than 6 characters"],
       select: false,
+    },
+    phoneNo: {
+      type: Number,
+      minlength: [10, "Phone number cannot be less than 10 numbers"],
+      maxlength: [10, "Phone number cannot be more than 10 numbers"],      
     },
 
     role: {
@@ -70,19 +76,19 @@ UserSchema.pre("save", async function (next) {
 });
 
 
-const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
 
-UserSchema.methods.getSignedToken = function () {
+UserSchema.method("getSignedToken", async function getSignedToken(password) {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
-}
+});
 
 //checking password
 
-UserSchema.methods.matchPassword = async function (enteredPassword) {
+UserSchema.method("matchPassword", async function matchPassword(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
-}
+});
 
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
 export default User;

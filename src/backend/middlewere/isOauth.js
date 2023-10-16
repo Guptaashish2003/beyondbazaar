@@ -1,11 +1,8 @@
 import jwt from "jsonwebtoken"
 import { NextResponse } from "next/server";
-import User from "../models/userModel.js"
+import User from "@/backend/model/User";
 
-
-export const dynamic = "force-dynamic"
-
-const AuthCheck = async req => {
+const isOauth = async req => {
   try {
     const token = req.headers.get("Authorization")?.split(" ")[1]
     if (!token) {
@@ -14,17 +11,14 @@ const AuthCheck = async req => {
         { status: 400 }
       );
     }
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET_KEY ?? "default_secret_dumbScret"
-    )
+    const decoded =  jwt.verify(token,process.env.JWT_SECRET_KEY )
     if (!decoded) {
       return NextResponse.json(
         { success: false, message:"Invalid Token , You are not Authorized"  },
         { status: 400 }
       );
     }
-
+    
     const user = await User.findOne({ _id: decoded.id })
     if (!user) {
       return NextResponse.json(
@@ -32,8 +26,9 @@ const AuthCheck = async req => {
         { status: 400 }
       );
     }
+  
     req.user = user
-    return NextResponse.next()
+    return user
   } catch (error) {
     return NextResponse.json(
       { success: false, message: error.message },
@@ -42,4 +37,4 @@ const AuthCheck = async req => {
   }
 }
 
-export default AuthCheck
+export default isOauth
