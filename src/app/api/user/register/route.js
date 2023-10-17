@@ -13,23 +13,25 @@ export async function POST(request) {
         password,
         name,
         } = data;
-        // if (!isMatch(password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")) {
-        //     return new NextResponse({
-        //       status: 400,
-        //       statusText: "Invalid password",
-        //     });
-        // if(!isMatch(email, "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")) {
-        //     return new NextResponse({
-        //       status: 400,
-        //       statusText: "Invalid email",
-        //     });
-        // }
-        if(!email ){
+        if (!email || !password || !name) {
+            return new NextResponse({
+              status: 400,
+              statusText: "Invalid Input",
+            });
+        }
+      
+
+        if (!isMatch(password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")) {
+            return new NextResponse({
+              status: 400,
+              statusText: "Invalid password",
+            });
+        }
+        if(!isMatch(email, "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")) {
             return new NextResponse({
               status: 400,
               statusText: "Invalid email",
             });
-
         }
 
         const user = await User.create({

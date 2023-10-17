@@ -9,7 +9,6 @@ export async function PUT(request) {
     await connectDB();
     try {
         const check =  await isOauth(request);
-         console.log(check)
         if (!check._id) {
             return NextResponse.json(
               { success: false, message: "User Not Found" },
@@ -18,7 +17,11 @@ export async function PUT(request) {
           }
         const data = await request.json();
         const {name, email, password,address,phoneNo} = data;
+        if (!name || !email || !password || !address || !phoneNo) {
+            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        }
         const user = await User.findByIdAndUpdate(check._id, {name, email, password,address,phoneNo});
+
 
         return NextResponse.json({ sucess:true ,message: "Updated-successfully",data:user }, { status: 200 });
         

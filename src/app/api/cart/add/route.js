@@ -14,6 +14,9 @@ export async function POST(request) {
         const userID = check._id;
         const data = await request.json();
         const {  productID, productQuantity } = data;
+        if (!productID || !productQuantity) {
+            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        }
         const productStock = await Product.findById({_id:productID}).select("productQuantity")
         if (productQuantity > productStock.productQuantity) {
             return NextResponse.json({ success: false, message: `limited stock not more than ${productStock.productQuantity}` }, { status: 400 });

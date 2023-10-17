@@ -9,6 +9,9 @@ export async function PUT(request) {
     try {
         const data = await request.json();
         const { _id, categoryName, categoryImage, categoryDescription, categorySlug } = data;
+        if (!_id || !categoryName || !categoryImage || !categoryDescription || !categorySlug) {
+            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        }
         const category = await Category.findByIdAndUpdate(_id, {
             categoryName,
             categoryImage,

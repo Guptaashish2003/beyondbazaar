@@ -9,6 +9,9 @@ export async function DELETE(request) {
     try {
         const data = await request.json();
         const { _id } = data;
+        if (!_id) {
+            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        }
         const category = await Category.findByIdAndDelete(_id);
         return NextResponse.json({ success: true, data: category }, { status: 200 });
 

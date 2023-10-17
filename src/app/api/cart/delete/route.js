@@ -14,6 +14,9 @@ export async function DELETE(request) {
         const userID = check._id;
         const data = await request.json();
         const { productID } = data;
+        if (!productID) {
+            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        }
         const cart = await Cart.findOneAndDelete({  _id:productID,userID });
         return NextResponse.json({ success: true, message: "Deleted from cart", data: cart }, { status: 200 });
     } catch (error) {

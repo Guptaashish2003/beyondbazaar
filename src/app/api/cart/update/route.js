@@ -14,6 +14,9 @@ export async function PUT(request) {
         const userID = check._id;
         const data = await request.json();
         const { productID, productQuantity } = data;
+        if (!productID || !productQuantity) {
+            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        }
         const cart = await Cart.findOneAndUpdate({ userID, _id :productID }, { productQuantity }, { new: true });
         const productStock = await Product.findById({_id:cart.productID}).select("productQuantity")
         console.log(productStock,"productQuantityproductQuantity")

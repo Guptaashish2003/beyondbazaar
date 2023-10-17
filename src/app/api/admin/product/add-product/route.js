@@ -17,6 +17,21 @@ export async function POST(request) {
       productAvailable,
       productCategory,
     } = data;
+    if(
+      !productName ||
+      !productDescription ||
+      !productImage ||
+      !productSlug ||
+      !productPrice ||
+      !productQuantity ||
+      !productAvailable ||
+      !productCategory
+    ) {
+      return NextResponse.json(
+        { success: false, message: "Invalid Input" },
+        { status: 400 }
+      );
+    }
     const product = await Product.create({
       productName,
       productDescription,
