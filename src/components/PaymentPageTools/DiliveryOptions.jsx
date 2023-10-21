@@ -3,7 +3,7 @@ import { GrRadialSelected } from 'react-icons/gr';
 
 const DeliveryOptions = ({ Dtitle, days, charges, isSelected, onClick }) => {
   return (
-    <div className='w-1/2'>
+    <div className='w-[45%] '>
       <div
         className={`border-2 border-gray-400 p-2 flex rounded-md flex-col focus:border-black cursor-pointer relative ${
           isSelected ? 'border-black' : ''

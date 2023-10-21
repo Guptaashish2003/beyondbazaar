@@ -9,7 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-const CreditCardInput = () => {
+const CreditCardInput = ({Price}) => {
     const validationSchema = Yup.object().shape({
         Name: Yup.string().required("Full name is required"),
         card_number: Yup.number()
@@ -41,7 +41,7 @@ const CreditCardInput = () => {
   return (
     <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-wrap gap-3 w-full p-5"
+        className="flex flex-wrap gap-3 w-11/90 p-5"
       >
         <label className="relative w-full flex flex-col">
           <span className="font-bold mb-3">Full Name</span>
@@ -131,7 +131,7 @@ const CreditCardInput = () => {
             type="submit"
             className="bg-gray-500 hover:bg-black text-white font-bold py-2 px-4 rounded"
           >
-            Submit
+            Proceed to Pay {Price}
           </button>
         </div>
       </form>

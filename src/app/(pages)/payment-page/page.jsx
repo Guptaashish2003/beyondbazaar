@@ -15,9 +15,9 @@ const PaymentPage = () => {
   console.log(selectedPaymentOption);
 
   return (
-    <div className="w-1/2 mx-auto">
+    <div className="w-1/2 max-md:w-11/12 mx-auto">
       <h1 className="font-bold my-4 text-base">Delivery method</h1>
-      <section className="flex gap-1">
+      <section className="flex flex-wrap gap-1">
         <DeliveryOptions
           Dtitle={"Standard Delivery"}
           days={"5-7 days"}
@@ -33,9 +33,9 @@ const PaymentPage = () => {
           onClick={() => handleOptionClick("Express Delivery")}
         />
       </section>
-      <hr className="my-3 border border-slate-200" />
+      <hr className="my-3 w-11/12 border border-slate-200" />
       <h1 className="font-bold my-4 text-base">Payment method</h1>
-      <div className="w-full">
+      <div className="w-11/12">
         <section className="flex gap-1 justify-between">
           <PaymentOptions
             paymentOptions="UPI"
@@ -53,7 +53,7 @@ const PaymentPage = () => {
       </div>
       {selectedPaymentOption === "Credit/Debit Card" && <CreditCardInput />}
       {selectedPaymentOption === "UPI" && (
-        <div className="w-full">
+        <div className="w-11/12">
           <UpiInput />
         </div>
         )}

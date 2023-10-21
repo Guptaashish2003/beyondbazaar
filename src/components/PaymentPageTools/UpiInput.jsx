@@ -1,40 +1,12 @@
 import React, { useState } from "react";
 
-const UpiInput = () => {
+const UpiInput = ({Price}) => {
   const [upiId, setUpiId] = useState("");
   const [selectedBank, setSelectedBank] = useState("");
 
   // An array of banks for the dropdown menu
 
-  const banks = [
-    "apl",
-    "yapl",
-    "upi",
-    "boi",
-    "dlb",
-    "indus",
-    "pnb",
-    "sbi",
-    "dbs",
-    "fam",
-    "okhdfcbank",
-    "okaxis",
-    "okicici",
-    "yesg",
-    "fbl",
-    "icici",
-    "jupiteraxis",
-    "ikwik",
-    "jio",
-    "axb",
-    "paytm",
-    "pz",
-    "ybl\nibl\naxl",
-    "icici",
-    "sliceaxis",
-    "tapicici",
-    "zoicici",
-  ];
+  ["apl ","yapl","upi","boi","dlb","indus","pnb","sbi","dbs","fam","okhdfcbank","okaxis","okicici","yesg","fbl","icici","jupiteraxis","ikwik","jio","axb","paytm","pz","ybl\nibl\naxl","icici","sliceaxis","tapicici","zoicici"]
 
   return (
     <div className="p-4">
@@ -54,7 +26,7 @@ const UpiInput = () => {
             type="submit"
             className="bg-gray-500 hover:bg-black text-white font-bold py-2 px-4 rounded"
           >
-            Submit
+            Proceed to Pay {Price}
           </button>
         </span>
     </div>
