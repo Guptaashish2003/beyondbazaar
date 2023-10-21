@@ -2,6 +2,7 @@ import React from "react";
 import ProductPhotos from "./ProductPhotos";
 import ProductDes from "./ProductDes";
 import ProductDetails from "./ProductDetails";
+import ProductReview from "./ProductReview";
 
 const ProductPage = () => {
   return (
@@ -11,6 +12,8 @@ const ProductPage = () => {
         <ProductDes />
       </div>
         <ProductDetails />
+        <ProductReview />
+
     </>
   );
 };
