@@ -1,9 +1,7 @@
 import React from "react";
 import { MdDelete,MdModeEdit } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
-
 import productImg from "@/assets/productImag1.jpg";
-
 import Image from "next/image";
 
 const CartDetail = () => {
@@ -47,8 +45,7 @@ const CartDetail = () => {
 
       </div>
       <div className="flex justify-end gap-6 ">
-        <MdModeEdit className="hover:scale-125 duration-300 cursor-pointer max-sm:hidden"/>
-        <MdDelete className="rounded-full max-sm:text-white max-sm:p-1 max-sm:text-xl max-sm:bg-[--first-color] hover:scale-125 duration-300 cursor-pointer max-sm:absolute max-sm:top-6 max-sm:left-1"/>
+      
         <AiOutlineHeart className="hover:scale-125 duration-300 cursor-pointer transition-colors hover:text-red-700 max-sm:absolute max-sm:top-6 max-sm:right-4"/>
       </div>
     </div>
