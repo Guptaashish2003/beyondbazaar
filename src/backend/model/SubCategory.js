@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose,{plugin} from 'mongoose';
+import slugify from 'mongoose-simple-slugify';
 
 const SubCategorySchema = new mongoose.Schema({
     SubCategoryName : {
@@ -18,9 +19,9 @@ const SubCategorySchema = new mongoose.Schema({
         required : true,
         trim : true
     } ],
-    SubCategorySlug : {
+    slug : {
         type : String,
-        required : true,
+        source : 'SubCategoryName',
         trim : true,
         unique : true,
     },
@@ -29,7 +30,7 @@ const SubCategorySchema = new mongoose.Schema({
         ref : 'Categories',
         required : true
     }
-},{timestamps : true});
+},{timestamps : true}).plugin(slugify);
 
 const SubCategory = mongoose.models.SubCategories || mongoose.model('SubCategories', SubCategorySchema);
 

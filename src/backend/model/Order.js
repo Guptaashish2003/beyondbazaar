@@ -1,6 +1,8 @@
-import mongoose from "mongoose";
+import mongoose,{plugin} from "mongoose";
 import User from "./User";
 import Product from "./Product";
+import slugify from "mongoose-simple-slugify"
+
 
 const OrderSchema = new mongoose.Schema({
     user: {
@@ -18,7 +20,7 @@ const OrderSchema = new mongoose.Schema({
 
         }
     ],
-    shippingAddress: {
+    shippingInfo: {
         fullName: { type: String, required: true },
         address: { type: String, required: true },
         city: { type: String, required: true },
@@ -33,6 +35,12 @@ const OrderSchema = new mongoose.Schema({
         email_address: String,
     },
     itemsPrice: { type: Number, required: true },
+    slug: {
+        type: String,
+        source: 'user',
+        trim: true,
+        unique: true,
+    },
     shippingPrice: { type: Number, required: true },
     taxPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
@@ -40,7 +48,7 @@ const OrderSchema = new mongoose.Schema({
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
-},{timestamps : true});
+},{timestamps : true}).plugin(slugify);
 
 const Order = mongoose.models.Order || mongoose.model("Order", OrderSchema);
 

@@ -1,13 +1,10 @@
-import Category from "@/backend/model/Category";
+import Order from "@/backend/model/Order";
 import { NextResponse } from "next/server";
-import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
+import connectDB from "@/backend/DATABASE/ConnectDB";
 import { outhRoles } from "@/backend/middlewere/outhRoles";
 import isOauth from "@/backend/middlewere/isOauth";
 
-
-// deleting a new category by admin
-
-export async function DELETE(request) {
+export async function GET(request) {
     await connectDB();
     try {
         const  user  = await isOauth(request);
@@ -18,14 +15,13 @@ export async function DELETE(request) {
         if (!role) {
             return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         }
-        const data = await request.json();
-        const { _id } = data;
-        if (!_id) {
-            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        
+        const orders = await Order.find({}).sort({ createdAt: -1 });
+        if (!orders) {
+            return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });
         }
-        const category = await Category.findByIdAndDelete(_id);
-        return NextResponse.json({ success: true, data: category }, { status: 200 });
-
+        const lenOrder = orders.length;
+        return NextResponse.json({ success: true, length: lenOrder, message: "Order Found", data: orders }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });
     }
