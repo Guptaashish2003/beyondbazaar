@@ -24,7 +24,12 @@ export async function GET(request){
         // await SubCategory.deleteMany();
         console.log("all Data deleted...")
         await User.insertMany(userdata)
-        await Product.insertMany(product)
+        // await Product.insertMany(product)
+
+        for (let i = 0; i < product.length; i++) {  //insert product using  for loop by creating a unique slug of the product
+            const element = product[i];
+            await Product.create(element);  
+        }
         // await Category.insertMany(category)
         // await SubCategory.insertMany(subCategory)
         NextResponse.json({success:true,message:"Data added successfully"},{status:200})

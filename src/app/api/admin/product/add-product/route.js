@@ -6,16 +6,15 @@ import isOauth from "@/backend/middlewere/isOauth";
 
 export async function POST(request) {
   await connectDB();
-
   try {
-    // const  user  = await isOauth(request);
-    //     if (!user) {
-    //         return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
-    //     }
-    //     const role =  outhRoles(["admin"], request);
-    //     if (!role) {
-    //         return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
-    //     }
+    const  user  = await isOauth(request);
+        if (!user) {
+            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        }
+        const role =  outhRoles(["admin"], request);
+        if (!role) {
+            return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
+        }
     const data = await request.json();
     const {
       productName,
@@ -23,18 +22,17 @@ export async function POST(request) {
       productImage,
       productPrice,
       productQuantity,
-      productAvailable,
-      productCategory,
+      productAvailable
     } = data;
+
     if(
       !productName ||
       !productDescription ||
       !productImage ||
       !productPrice ||
-      !productQuantity ||
-      !productAvailable ||
-      !productCategory
+      !productQuantity 
     ) {
+
       return NextResponse.json(
         { success: false, message: "Invalid Input" },
         { status: 400 }
@@ -47,9 +45,7 @@ export async function POST(request) {
       productPrice,
       productQuantity,
       productAvailable,
-      productCategory,
     });
-
     return NextResponse.json({ success: true, data: product }, { status: 200 });
   } catch (error) {
     console.log(error);

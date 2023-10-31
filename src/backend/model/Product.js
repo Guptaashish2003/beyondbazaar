@@ -44,6 +44,5 @@ const ProductSchema = new mongoose.Schema(
 ).plugin(slugify);
 
 
-const Product =
-  mongoose.models.Products || mongoose.model('Products', ProductSchema);
+const Product = mongoose.models.Products || mongoose.model('Products', ProductSchema);
 export default Product;
