@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "seeder": "node src/backend/utils/seeder.js",
+    "seeder": "node seeder.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

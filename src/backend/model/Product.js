@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-
+import mongoose,{plugin} from "mongoose";
+import slugify from "mongoose-simple-slugify"
 const ProductSchema = new mongoose.Schema(
   {
     productName: {

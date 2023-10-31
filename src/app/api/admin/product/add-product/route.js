@@ -8,20 +8,19 @@ export async function POST(request) {
   await connectDB();
 
   try {
-    const  user  = await isOauth(request);
-        if (!user) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
-        }
-        const role =  outhRoles(["admin"], request);
-        if (!role) {
-            return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
-        }
+    // const  user  = await isOauth(request);
+    //     if (!user) {
+    //         return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+    //     }
+    //     const role =  outhRoles(["admin"], request);
+    //     if (!role) {
+    //         return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
+    //     }
     const data = await request.json();
     const {
       productName,
       productDescription,
       productImage,
-      productSlug,
       productPrice,
       productQuantity,
       productAvailable,
@@ -45,7 +44,6 @@ export async function POST(request) {
       productName,
       productDescription,
       productImage,
-      productSlug,
       productPrice,
       productQuantity,
       productAvailable,
