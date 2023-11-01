@@ -9,10 +9,10 @@ import product from "@/Data/product.json";
 export async function GET(request){
     await ConnectDB();
     try {
-        const  user  = await isOauth(request);
-        if (!user) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
-        }
+        // const  user  = await isOauth(request);
+        // if (!user) {
+        //     return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        // }
         // const role =  outhRoles(["admin"], request);
         // if (!role) {
         //     return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
