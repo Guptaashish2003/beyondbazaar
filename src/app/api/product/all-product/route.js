@@ -8,7 +8,7 @@ export async function GET(request){
    await connectDB()
    try {
       const product = await Product.find()
-   
+      
       return NextResponse.json({success:true , data:product},{status:200})
       
    } catch (error) {

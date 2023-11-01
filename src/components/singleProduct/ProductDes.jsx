@@ -8,24 +8,23 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
 import { incNum, decNum } from "@/redux/action/index";
 import SubmitButton from "../Form/SubmitButton";
-const ProductDes = () => {
+const ProductDes = ({title,discription,price,className}) => {
   const myState = useSelector((state) => state.incDec);
   const dispatch = useDispatch();
   return (
-    <div className="p-8   w-1/2 max-lg:w-full ">
+    <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
       <div className="  my-4 text-bold mr-4">
         <h1 className="title text-4xl capitalize my-1 font-bold max-lg:text-center">
-          Samsung curved display
+          {title || 'Samsung curved display'}
         </h1>
         <p className="para text-center text-base ">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odio
-          eaque error ullam optio quod corporis.
+          {discription || "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odioerror ullam optio quod corporis"}
         </p>
 
         <span className="inline-block my-1 text-[--first-color] font-bold text-xl cursor-text max-lg:my-3">
           <LiaRupeeSignSolid className="text-[--first-color] inline font-bold" />{" "}
           <p className="border-b-2 inline border-slate-400 border-solid ">
-            2999
+            {price || 2999}
           </p>
         </span>
         <hr className="mt-8 border border-slate-200" />

@@ -5,8 +5,8 @@ import Product from "@/backend/model/Product"
 export async function GET(request,context){
     await connectDB()
     try {
-        const id = context.params.id;
-        const product = await Product.findById(id)
+        const slug = context.params.slug;
+        const product = await Product.findOne({ slug: slug})
         return NextResponse.json({success:true , data:product},{status:200})
     } catch (error) {
         return NextResponse.json({success:false, message:error.message},{status:400})

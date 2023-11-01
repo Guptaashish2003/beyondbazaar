@@ -19,9 +19,9 @@ import 'swiper/css/grid';
 // import required modules
 import { FreeMode, Navigation, Thumbs,Pagination,Grid } from 'swiper/modules';
 
-const ProductPhotos = () => {
-  const productImg = [img1, img2, img3, img4, img1, img2, img3];
-  const [selectedThumbnail, setSelectedThumbnail] = useState(productImg[0])
+const ProductPhotos = ({img}) => {
+  // const img = [img1, img2, img3, img4, img1, img2, img3];
+  const [selectedThumbnail, setSelectedThumbnail] = useState(img[0])
   const [screenWidth, setScreenWidth] = useState(true);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [showFullScreen, setShowFullScreen] = useState(false);
@@ -61,7 +61,7 @@ useEffect(() => {
           modules={[FreeMode, Navigation, Thumbs,Pagination]}
           className="mySwiper2 w-full h-full"
         >
-          {productImg.map((img, index) => (
+          {img.map((img, index) => (
             <SwiperSlide
               key={index}
               className="flex items-center justify-center p-2 "
@@ -70,6 +70,8 @@ useEffect(() => {
                 src={img}
                 onClick={() => openFullScreen(img)}
                 alt="Product thumbnail"
+                height={'500'}
+                width={'600'}
                 className="w-full cursor-pointer h-full rounded-lg object-contain"
               />
             </SwiperSlide>
@@ -85,26 +87,28 @@ useEffect(() => {
         onSwiper={setThumbsSwiper}
         loop={true}
         grid={showFullScreen?{
-          rows:productImg.length
+          rows:img.length
         }:false}
         spaceBetween={10}
-        slidesPerView={showFullScreen?1:productImg.length}
+        slidesPerView={showFullScreen?1:img.length}
         freeMode={false}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs,Grid]}
         className={`mySwiper w-full  my-auto flex gap-7 items-center justify-center ${showFullScreen?" ":"h-32"}  `}
       >
-        {productImg.map((img, index) => (
+        {img.map((img, index) => (
           <SwiperSlide
             key={index}
             className={`cursor-pointer  ${showFullScreen?"!h-28 !w-3/12":"w-7"}  inline-block rounded-md ${
-              selectedThumbnail === productImg[index] ? 'border-2 border-gray-900' : ''
+              selectedThumbnail === img[index] ? 'border-2 border-gray-900' : ''
             }` }
-            onClick={()=>setSelectedThumbnail(productImg[index])}
+            onClick={()=>setSelectedThumbnail(img[index])}
           >
             <Image
               src={img}
               alt="Product thumbnail"
+              height={'500'}
+              width={'600'}
               className="w-full h-full rounded-lg object-contain"
             />
           </SwiperSlide>

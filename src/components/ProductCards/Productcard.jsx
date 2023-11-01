@@ -2,10 +2,12 @@
 "use client"
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import productImg from "@/assets/productImag1.jpg"
-function Productcard({img,title,price,bgColor, addToCart,discount,animation,border}) {
+function Productcard({img,title,price,slug,bgColor, addToCart,discount,animation,border}) {
   const [line, setLine] = useState(false)
   const [imgBlack, setImgBlack] = useState(false)
+  const router = useRouter()
   const addAnimation = () => {
     if (animation) {
       setLine(true)
@@ -18,19 +20,25 @@ function Productcard({img,title,price,bgColor, addToCart,discount,animation,bord
     setImgBlack(false)
     }
   }
-  
+  const moveSingle = () => {
+    router.push(`/single-product/${slug}`)
+  }
   return (
     <>
      <div style={{border:`2px solid ${border}`}} className='w-5/12 lg:w-1/4 sm:w-2/5 md:w-1/3 xl:w-1/5 flex flex-col items-center justify-center p-2 m-2 cursor-pointer' onMouseEnter={addAnimation} onMouseLeave={removeAnimation}>
-      <div className='w-full flex  flex-col items-center justify-center'>
+      <div className='w-full flex  flex-col items-center justify-center' onClick={moveSingle}>
       <div className='flex justify-center items-center relative' style={{backgroundColor:`${bgColor}`}}>
         {imgBlack?<div className='w-full h-full absolute flex justify-center items-center text-white' style={{backgroundColor:"#0b0b0b8c"}}>See More Details...</div>:""}
+        <div className='w-[90%] h-[90%]'>
         <Image
           src={img || productImg}
           alt="Product image"
-          style={{height:"91%"}}
-          className=' w-11/12 object-contain'
+          height={'500'}
+          width={'600'}
+          className='w-full h-full object-contain'
         />
+          
+        </div>
       </div>
       <div className='flex flex-wrap p-3 justify-between w-full text-lg font-bold'>
         <div className={`line-animate card-title max-md:text-sm  overflow-hidden text-ellipsis whitespace-nowrap ${line?"line-animated":""} ${discount?"w-full":"w-1/2"}`} >
