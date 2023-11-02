@@ -1,16 +1,33 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiFastForward } from "react-icons/fi";
 import SocialMedial from "@/components/SocialMediaIcons/SocialMedial";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import { incNum, decNum } from "@/redux/action/index";
 import SubmitButton from "../Form/SubmitButton";
-const ProductDes = ({title,discription,price,className}) => {
-  const myState = useSelector((state) => state.incDec);
-  const dispatch = useDispatch();
+import { toast } from 'react-toastify';
+const ProductDes = ({title,discription,price,stock,className}) => {
+  const [productCount,setProductCount] = useState(0)
+  const increment = () => {
+    if (stock > productCount) {
+      setProductCount(productCount+1)
+      
+    }
+    else{
+      toast.warn('Out Of Stock', { autoClose: 2000})
+
+    }
+  }
+  const decrement = () => {
+    if (productCount > 0) {
+      setProductCount(productCount - 1);
+    }
+    else{
+      toast.warn('somthing was wrong!', { autoClose: 2000})
+
+    }
+  }
+  
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
       <div className="  my-4 text-bold mr-4">
@@ -32,11 +49,11 @@ const ProductDes = ({title,discription,price,className}) => {
       <div className=" flex text-xl text-black gap-4 items-center container  p-4 ">
         <p>Quantity:</p>
         <div className="flex border-2 border-solid border-slate-300 text-2xl">
-          <button onClick={() => dispatch(decNum())} className="px-4 py-1">
+          <button onClick={decrement} className="px-4 py-1">
             -
           </button>
-          <span className="px-4 py-1"> {myState} </span>
-          <button onClick={() => dispatch(incNum())} className="px-4 py-1">
+          <span className="px-4 py-1"> {productCount} </span>
+          <button onClick={increment} className="px-4 py-1">
             +
           </button>
         </div>
@@ -51,7 +68,7 @@ const ProductDes = ({title,discription,price,className}) => {
       <SubmitButton
         className="my-4 font-bold  orderBounce w-11/12 h-12 border-2 border-solid border-slate-400 text-xl bg-black text-white"
         value={"Order Now"}
-      >
+        >
         {" "}
         <FiFastForward className="arrowAnime w-6 h-auto" />
       </SubmitButton>
@@ -65,9 +82,10 @@ const ProductDes = ({title,discription,price,className}) => {
           instagram={"https://www.facebook.com/"}
           twitter={"https://www.facebook.com/"}
           linkedin={"https://www.facebook.com/"}
-        />
+          />
       </div>
     </div>
+  
   );
 };
 

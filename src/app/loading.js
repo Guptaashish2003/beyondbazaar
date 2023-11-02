@@ -12,7 +12,7 @@ export default function Loading() {
         <div id="bottom" className="mask">
           <div className="plane" />
         </div>
-        <p>
+        <p className="mt-4 loading">
           <i>LOADING...</i>
         </p>
       </section>

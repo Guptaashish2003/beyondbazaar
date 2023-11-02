@@ -29,7 +29,7 @@ html {
   --z-tooltip: 10;
   --z-fixed: 40;
   /* nav space  */
-  --nav-space: calc(100vh - var(--header-height));
+  --nav-space: calc(6rem + var(--header-height));
   /* swiper pagination css  */
   --swiper-pagination-color: var(--first-color);
 }
@@ -573,7 +573,7 @@ a {
 #global{
   width:70px;
   margin:auto;
-  margin-top:50px;
+  /* margin-top:50px; */
   position:relative;
   cursor:pointer;
   height:60px;
@@ -646,7 +646,7 @@ a {
   transform: skew(-15deg, 0)
 }
 
-p{
+.loading{
   color:#000000;
   position:absolute;
   left: -3px;

@@ -4,21 +4,25 @@ import ProductDetails from '@/components/singleProduct/ProductDetails'
 import ProductPhotos from '@/components/singleProduct/ProductPhotos'
 import ProductReview from '@/components/singleProduct/ProductReview'
 import { useGetData } from '@/redux/api/useGetData'
-import React from 'react'
 import {notFound} from "next/navigation"
+import React from 'react'
 
 const page = async ({ params }) => {
+  // notFound()
   const { slug } = params;
-  const {data} = await useGetData( `product/single-product/${slug}`)
+  const {data,success} = await useGetData( `product/single-product/${slug}`)
+  if (!data) {
+    return notFound();
+  }
   return (
     <>
-    <div className="flex  justify-center flex-wrap  p-4">
+    <div className="flex  justify-center flex-wrap  p-4 mt-[--nav-space]">
       <ProductPhotos img={data.productImage}/>
-      <ProductDes className="h-96" title={data.productName} discription={data.productDescription} price={data.productPrice}/>
+      <ProductDes className="h-96" title={data.productName} discription={data.productDescription} price={data.productPrice} stock={data.productQuantity}/>
     </div>
       <ProductDetails />
-      <ProductReview />
-
+      <ProductReview className="mt-4"/>
+      
   </>
   )
 }

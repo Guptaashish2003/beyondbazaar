@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google'
 import Footer from '@/components/footer/Footer'
 import CompanyTrust from '@/components/featureCard/CompanyTrust'
 import { Providers } from '@/redux/provider'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -20,6 +22,18 @@ export default function RootLayout({ children }) {
           <CompanyTrust/>
           <Footer/>
         </Providers>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          />
       </body>
     </html>
   )
