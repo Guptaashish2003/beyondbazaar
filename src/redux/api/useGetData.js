@@ -16,6 +16,8 @@ export const useGetDataProtected = async (url) => {
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
+    console.log(config)
+
     const res = await axiosBaseUrl.get(`${url}`, config);
 
     const data = res.data;

@@ -119,6 +119,14 @@ const Footer = () => {
                   Careers
                 </a>
               </li>
+              <li>
+                <a
+                  className="text-gray-700 transition  hover:text-gray-700/75"
+                  href="/"
+                >
+                  About-Us
+                </a>
+              </li>
             </ul>
           </div>
   
@@ -177,18 +185,28 @@ const Footer = () => {
                 </a>
               </li>
   
+          
               <li>
                 <a
-                  className="text-gray-700 transition hover:text-gray-700/75"
+                  className="text-gray-700 transition  hover:text-gray-700/75"
+                  href="/"
+                >
+                  Privacy & Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  className="text-gray-700 transition  hover:text-gray-700/75"
                   href="/"
                 >
                   Support
                 </a>
               </li>
+            
   
               <li>
                 <a
-                  className="group flex justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
+                  className="group flex  gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
                   href="/"
                 >
                   <span
