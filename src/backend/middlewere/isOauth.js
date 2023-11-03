@@ -5,6 +5,7 @@ import User from "@/backend/model/User";
 const isOauth = async req => {
   try {
     const token = req.headers.get("Authorization")?.split(" ")[1]
+
     if (!token) {
       return NextResponse.json(
         { success: false, message: error.message },

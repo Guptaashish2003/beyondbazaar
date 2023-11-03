@@ -18,7 +18,7 @@ const page = async ({ params }) => {
     <>
     <div className="flex  justify-center flex-wrap  p-4 lg:mt-[--nav-spc] mt-12">
       <ProductPhotos img={data.productImage}/>
-      <ProductDes className="h-96" title={data.productName} discription={data.productDescription} price={data.productPrice} stock={data.productQuantity}/>
+      <ProductDes className="h-96" id={data._id} title={data.productName} discription={data.productDescription} price={data.productPrice} stock={data.productQuantity}/>
     </div>
       <ProductDetails />
       <ProductReview className="mt-4"/>

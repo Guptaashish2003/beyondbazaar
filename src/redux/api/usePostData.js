@@ -1,6 +1,10 @@
 import axiosBaseUrl from "@/redux/axiosBaseUrl";
 export const usePostData = async (url, data) => {
-  try {
+    const res = await axiosBaseUrl.post(url,data);
+    return res.data;
+
+};
+export const usePostDataProtected = async (url, data) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: {Authorization: `Bearer ${token}`},
@@ -8,7 +12,4 @@ export const usePostData = async (url, data) => {
     const res = await axiosBaseUrl.post(url,data, config);
     return res.data;
 
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 400 });
-  }
 };

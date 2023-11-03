@@ -9,11 +9,11 @@ export async function POST(request,response) {
   try {
     const data = await request.json();
     const { email, password } = data;
-    
+    console.log(email, password);
     if (!email && !password) {
       return new NextResponse({
         status: 400,
-        statusText: "Invalid email or password",
+        message: "Invalid email or password",
       });
     }
     const user = await User.findOne({ email: email }).select("+password");
@@ -22,7 +22,7 @@ export async function POST(request,response) {
       
       return  NextResponse.json({
         status: 400,
-        statusText: "Invalid email or password",
+        message: "Invalid email or password",
       });
     }
     console.log(data);
@@ -30,7 +30,7 @@ export async function POST(request,response) {
     if (!PasswordMatch) {
       return NextResponse.json({
         status: 400,
-        statusText: "Invalid email or password",
+        message: "Invalid email or password",
       });
     }
     // return NextResponse.json({name:"nnnn",data: "user"}, { status: 200});

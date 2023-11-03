@@ -4,7 +4,7 @@ import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import isOauth from "@/backend/middlewere/isOauth";
 
 
-export async function DELETE(request) {
+export async function DELETE(request,context) {
     await connectDB();
     try {
         const check = await isOauth(request);
@@ -16,6 +16,7 @@ export async function DELETE(request) {
         if (!productID) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
+        console.log(productID)
         const cart = await Cart.findOneAndDelete({  _id:productID,userID });
         return NextResponse.json({ success: true, message: "Deleted from cart", data: cart }, { status: 200 });
     } catch (error) {

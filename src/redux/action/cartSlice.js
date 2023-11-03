@@ -5,7 +5,7 @@ import {
   removeFromCart,
   updateCartItemQty,
 } from "./cartServices";
-const initialState = {cart:[], noOfProduct:0,totalPrice:0};
+const initialState = {isMutation: {success: false},userCart: {cart: []}, noOfProduct:0,totalPrice:0};
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -20,6 +20,7 @@ export const cartSlice = createSlice({
         state.userCart.loading = false;
         state.userCart.error = false;
         state.userCart.cart = action.payload.data;
+        state.noOfProduct = action.payload.quantity;
       })
       .addCase(getUserCart.rejected, (state, action) => {
         state.userCart.loading = false;

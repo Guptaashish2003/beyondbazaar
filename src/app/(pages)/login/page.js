@@ -12,6 +12,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from 'next/navigation'
 import * as Yup from "yup";
+import { usePostData } from "@/redux/api/usePostData";
+import { useGetData } from "@/redux/api/useGetData";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const router = useRouter()
@@ -31,9 +34,22 @@ const Login = () => {
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
 
-  function onSubmit(data) {
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    return false;
+  async function onSubmit(data) {
+    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    const user = await usePostData("/api/user/login", data);
+    if (user.success) {
+      localStorage.setItem("token",user.token);
+      router.push("/")
+      toast.success(user.message,{autoClose: 1000, })
+    }
+    else{
+      console.log(user)
+      router.push("/")
+      toast.error(user.message,{autoClose: 1000, })
+
+    }
+
+    // return false;
   }
   return (
     <section className="bg-image min-h-[--nav-space] lg:mt-[--nav-spc] max-md:items-center flex items-start justify-center">
@@ -129,7 +145,7 @@ const Login = () => {
 
         {/* <!-- image --> */}
         <div className="md:block hidden w-1/2">
-          <Image src={loginp} className="rounded-2xl w-full h-full" />
+          <Image src={loginp} alt="Login hero image" className="rounded-2xl w-full h-full" />
         </div>
       </div>
     </section>

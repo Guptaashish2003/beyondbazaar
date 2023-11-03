@@ -14,23 +14,23 @@ const PriceCheckOut = () => {
         value="Apply"
         />
       </div>
-      <div class="flex gap-2 flex-col justify-evenly">
-        <div class="flex justify-between">
+      <div className="flex gap-2 flex-col justify-evenly">
+        <div className="flex justify-between">
           <p>Shipping Cost</p>
           <p>40</p>
         </div>
 
-        <div class="flex justify-between">
+        <div className="flex justify-between">
           <p>Discount</p>
           <p>40</p>
         </div>
 
-        <div class="flex justify-between">
+        <div className="flex justify-between">
           <p>Tax</p>
           <p>18%</p>
         </div>
 
-        <div class="flex justify-between font-bold py-2 text-xl">
+        <div className="flex justify-between font-bold py-2 text-xl">
           <p>Estimated Total</p>
           <p>40</p>
         </div>

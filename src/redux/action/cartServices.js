@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {  toast } from 'react-toastify';
 import { useGetDataProtected } from "../api/useGetData";
-import { usePostData } from "../api/usePostData";
+import { usePostDataProtected } from "../api/usePostData";
 import { useDeleteData } from "../api/useDeleteData";
 import { useUpdateData } from "../api/useUpdateData";
 
@@ -11,7 +11,8 @@ export const getUserCart = createAsyncThunk(
   "cart/getUserCart",
   async (_, {rejectWithValue}) => {
     try {
-      const res = await useGetDataProtected("/cart/my-cart");
+      const res = await useGetDataProtected("/api/cart/my-cart");
+
       return res;
     } catch (error) {
       // console.log(error);
@@ -31,7 +32,7 @@ export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (body, {rejectWithValue}) => {
     try {
-      const res = await usePostData("/cart/add", body);
+      const res = await usePostDataProtected("/api/cart/add", body);
       toast("Product Added Successfully To Your Cart");
       return res;
     } catch (error) {
@@ -60,7 +61,7 @@ export const removeFromCart = createAsyncThunk(
   "reviews/deleteReview",
   async (cartItemId, {rejectWithValue}) => {
     try {
-      const res = await useDeleteData(`/cart/delete/${cartItemId}`);
+      const res = await useDeleteData(`/api/cart/delete/${cartItemId}`);
       pushNotification("Cart Item Deleted Successfully", "success");
       // console.log(res);
       return res;

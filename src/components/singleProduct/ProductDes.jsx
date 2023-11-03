@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/cartServices";
 const ProductDes = ({id,title,discription,price,stock,className}) => {
-  const [productCount,setProductCount] = useState(0)
+  const [productCount,setProductCount] = useState(1)
   const dispatch = useDispatch()
   const increment = () => {
     if (stock > productCount) {
@@ -32,8 +32,7 @@ const ProductDes = ({id,title,discription,price,stock,className}) => {
   }
   
   const addToCartProduct = () => {
-    console.log('object');
-    dispatch(addToCart({id,productQuantity}))
+    dispatch(addToCart({productID:id,productQuantity:productCount}))
   };
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>

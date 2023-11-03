@@ -8,6 +8,7 @@ export async function POST(request) {
     await connectDB();
     try {
         const check = await isOauth(request);
+        
         if (!check._id) {
             return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
         }
@@ -21,8 +22,12 @@ export async function POST(request) {
         if (productQuantity > productStock.productQuantity) {
             return NextResponse.json({ success: false, message: `limited stock not more than ${productStock.productQuantity}` }, { status: 400 });
         }
-        console.log(productStock,"productQuantityproductQuantity")
-        
+        const updateQuantity = await Cart.find({ userID, productID})
+        if (updateQuantity.length > 0) {
+            updateQuantity[0].productQuantity = productQuantity;
+            await updateQuantity[0].save()
+            return NextResponse.json({ success: true, message: "update Quantity successfully", data: updateQuantity }, { status: 200 });  
+        }
         const cart = await Cart.create({ userID, productID, productQuantity });
         return NextResponse.json({ success: true, message: "Added to cart", data: cart }, { status: 200 });
     } catch (error) {
