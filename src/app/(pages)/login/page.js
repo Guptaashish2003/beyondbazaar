@@ -13,7 +13,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from 'next/navigation'
 import * as Yup from "yup";
 import { usePostData } from "@/redux/api/usePostData";
-import { useGetData } from "@/redux/api/useGetData";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -39,12 +38,12 @@ const Login = () => {
     const user = await usePostData("/api/user/login", data);
     if (user.success) {
       localStorage.setItem("token",user.token);
-      router.push("/")
+      // router.push("/")
       toast.success(user.message,{autoClose: 1000, })
     }
     else{
       console.log(user)
-      router.push("/")
+      // router.push("/")
       toast.error(user.message,{autoClose: 1000, })
 
     }

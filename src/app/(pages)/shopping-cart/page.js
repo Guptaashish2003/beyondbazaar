@@ -6,20 +6,18 @@ import CartDetail from "@/components/shoppingCart/CartDetail";
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserCart } from "@/redux/action/cartServices";
 import Loading from "@/app/loading";
-const ShoppingCart = ({id}) => {
+const ShoppingCart = () => {
   const dispatch = useDispatch()
   const {loading,cart} = useSelector((state) => state.cart.userCart)
   const {noOfProduct} = useSelector((state) => state.cart)
   useEffect(()=>{
     dispatch(getUserCart())
        
-
-  },[dispatch])
+  },[])
   if (loading) {
     return Loading();
   }
   {cart?.map((items)=>console.log(items.productID.productQuantity))}
-
   return (
     <>
       <section className="flex flex-col lg:mt-[--nav-spc] mt-12">

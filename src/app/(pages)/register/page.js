@@ -9,9 +9,12 @@ import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm,SubmitHandler  } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-
+import { usePostData } from '@/redux/api/usePostData';
+import { useRouter } from 'next/navigation'
+import { toast } from "react-toastify";
 
 const RegistrationPage = () => {
+  const router = useRouter()
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -32,9 +35,17 @@ const formOptions = { resolver: yupResolver(validationSchema) };
 const { register, handleSubmit, reset, formState } = useForm(formOptions);
 const { errors } = formState;
 
-function onSubmit(data) {
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(data, null, 4));
-    return false;
+async function onSubmit(data) {
+  const user = await usePostData("/api/user/register", data);
+  if (user.success) {
+    router.push("/")
+    toast.success(user.message,{autoClose: 1000, })
+  }
+  else{
+    router.push("/")
+    toast.error(user.message,{autoClose: 1000, })
+
+  }
 }
   return (
     <section className="bg-image min-h-[--nav-space] mt-[--nav-spc] lg:mt-[--nav-spc] max-md:items-center  flex items-start justify-center ">
@@ -68,7 +79,8 @@ function onSubmit(data) {
           >
             <InputBtn
               type="text"
-              {...register("Name", { required: true, maxLength: 20 })}
+              placeholder="Name"
+              {...register("name", { required: true, maxLength: 20 })}
               className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             />
             <InputBtn
@@ -135,7 +147,7 @@ function onSubmit(data) {
 
         {/* <!-- image --> */}
         <div className="md:block hidden w-1/2">
-          <Image src={loginp} className="rounded-2xl w-full h-full" />
+          <Image src={loginp} alt="register hero image" className="rounded-2xl w-full h-full" />
         </div>
       </div>
     </section>

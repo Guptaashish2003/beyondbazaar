@@ -44,6 +44,8 @@ export const cartSlice = createSlice({
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.isMutation.loading = false;
         state.isMutation.success = action.payload.status === 200 && true;
+        state.noOfProduct = state.noOfProduct - 1;
+        state.userCart.cart = state.userCart.cart.filter((item) => item._id !== action.payload.data._id);
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.isMutation.loading = false;

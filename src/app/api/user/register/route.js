@@ -13,10 +13,13 @@ export async function POST(request) {
         password,
         name,
         } = data;
+        console.log(email,
+            password,
+            name,)
         if (!email || !password || !name) {
             return new NextResponse({
               status: 400,
-              statusText: "Invalid Input",
+              message: "Invalid Input",
             });
         }
       
@@ -33,7 +36,7 @@ export async function POST(request) {
         //       statusText: "Invalid email",
         //     });
         // }
-
+        
         const user = await User.create({
         email,
         password,
@@ -41,7 +44,7 @@ export async function POST(request) {
         });
         console.log(user)
     
-        return NextResponse.json({ success: true,message:"user-Created", data: user }, { status: 200 });
+        return NextResponse.json({ success: true,message:"Register Successfully!", data: user }, { status: 200 });
     } catch (error) {
         return NextResponse.json(
             console.log(error),

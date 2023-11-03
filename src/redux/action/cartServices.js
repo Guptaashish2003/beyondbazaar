@@ -62,8 +62,7 @@ export const removeFromCart = createAsyncThunk(
   async (cartItemId, {rejectWithValue}) => {
     try {
       const res = await useDeleteData(`/api/cart/delete/${cartItemId}`);
-      pushNotification("Cart Item Deleted Successfully", "success");
-      // console.log(res);
+      toast("Cart Item Deleted Successfully", "success");
       return res;
     } catch (error) {
       // console.log("ERROR" + error);

@@ -7,16 +7,18 @@ import Image from "next/image";
 import { removeFromCart } from "@/redux/action/cartServices";
 import { useDispatch } from "react-redux";
 
-const CartDetail = ({id,title,img,price,quantity,stock}) => {
+const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {
   const dispatch = useDispatch()
   const [productQty, setProductQty] = useState(quantity)
   useEffect(()=>{
     console.log("object created..................")
-  },[dispatch])
+  },[cart])
   const deleteProduct = () => {
     dispatch(removeFromCart(id))
   }
-  
+  const updatequantity = () => {
+    
+  }
   return (
     <div className="flex flex-col border-y-2 border-solid mt-3 border-slate-300 p-6 max-sm:p-2 relative">
       <div className="flex justify-center items-start max-sm:items-center">
