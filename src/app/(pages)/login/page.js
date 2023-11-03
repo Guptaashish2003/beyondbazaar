@@ -10,9 +10,11 @@ import { FcGoogle } from "react-icons/fc";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from 'next/navigation'
 import * as Yup from "yup";
 
 const Login = () => {
+  const router = useRouter()
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -34,7 +36,7 @@ const Login = () => {
     return false;
   }
   return (
-    <section className="bg-image min-h-[--nav-space] max-md:items-center flex items-start justify-center">
+    <section className="bg-image min-h-[--nav-space] lg:mt-[--nav-spc] max-md:items-center flex items-start justify-center">
       {/* <!-- login container --> */}
       <div className="bg-white flex mt-16 rounded-2xl max-md:m-4 shadow-lg max-w-3xl p-5 items-center">
         {/* <!-- form --> */}
@@ -93,6 +95,7 @@ const Login = () => {
             <SubmitButton
               value="Login"
               type="submit"
+              onSubmit={handleSubmit(onSubmit)}
               className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
             />
           </form>
@@ -118,7 +121,7 @@ const Login = () => {
             <p>Don't have an account?</p>
             <SubmitButton
               value="Register"
-              onSubmit={handleSubmit(onSubmit)}
+              onClick={()=>router.push("/register")}
               className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
             ></SubmitButton>
           </div>

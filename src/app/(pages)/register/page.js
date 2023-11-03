@@ -37,7 +37,7 @@ function onSubmit(data) {
     return false;
 }
   return (
-    <section className="bg-image min-h-[--nav-space] max-md:items-center  flex items-start justify-center">
+    <section className="bg-image min-h-[--nav-space] mt-[--nav-spc] lg:mt-[--nav-spc] max-md:items-center  flex items-start justify-center ">
       {/* <!-- login container --> */}
       <div className="bg-white mt-16 flex rounded-2xl max-md:m-4 shadow-lg max-w-3xl p-5 items-center">
         {/* <!-- form --> */}

@@ -16,7 +16,7 @@ const page = async ({ params }) => {
   }
   return (
     <>
-    <div className="flex  justify-center flex-wrap  p-4 mt-[--nav-space]">
+    <div className="flex  justify-center flex-wrap  p-4 lg:mt-[--nav-spc] mt-12">
       <ProductPhotos img={data.productImage}/>
       <ProductDes className="h-96" title={data.productName} discription={data.productDescription} price={data.productPrice} stock={data.productQuantity}/>
     </div>

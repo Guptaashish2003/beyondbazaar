@@ -6,8 +6,11 @@ import { FiFastForward } from "react-icons/fi";
 import SocialMedial from "@/components/SocialMediaIcons/SocialMedial";
 import SubmitButton from "../Form/SubmitButton";
 import { toast } from 'react-toastify';
-const ProductDes = ({title,discription,price,stock,className}) => {
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/action/cartServices";
+const ProductDes = ({id,title,discription,price,stock,className}) => {
   const [productCount,setProductCount] = useState(0)
+  const dispatch = useDispatch()
   const increment = () => {
     if (stock > productCount) {
       setProductCount(productCount+1)
@@ -28,6 +31,10 @@ const ProductDes = ({title,discription,price,stock,className}) => {
     }
   }
   
+  const addToCartProduct = () => {
+    console.log('object');
+    dispatch(addToCart({id,productQuantity}))
+  };
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
       <div className="  my-4 text-bold mr-4">
@@ -61,6 +68,7 @@ const ProductDes = ({title,discription,price,stock,className}) => {
       <SubmitButton
         className="my-4 font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl overflow-hidden"
         value={"Add To Cart"}
+        onClick={addToCartProduct}
       >
         {" "}
         <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />

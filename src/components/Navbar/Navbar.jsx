@@ -77,13 +77,16 @@ useEffect(() => {
               <AiFillCloseCircle className={`cursor-pointer close-icon !text-5xl mobile-search`} onClick={()=>{setHide(false)}}/>
             </div>
       </div>
-
-      <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
-        <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
-      </div>
-      <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
-        <BiSolidUser className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
-      </div>
+      <Link href="/shopping-cart">
+        <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
+          <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
+        </div>
+      </Link>
+      <Link href="/login">
+        <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
+          <BiSolidUser className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
+        </div>
+      </Link>
     </div>
 
     <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>

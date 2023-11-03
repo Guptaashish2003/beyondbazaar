@@ -12,8 +12,7 @@ export async function DELETE(request) {
             return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
         }
         const userID = check._id;
-        const data = await request.json();
-        const { productID } = data;
+        const productID = context.params.productID;
         if (!productID) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }

@@ -6,7 +6,7 @@ import CartDetail from "@/components/shoppingCart/CartDetail";
 const ShoppingCart = () => {
   return (
     <>
-      <section className="flex flex-col ">
+      <section className="flex flex-col lg:mt-[--nav-spc] mt-12">
         <div className="flex gap-3 justify-center align-center text-3xl my-4">
         <HiOutlineShoppingBag />
         <p>My Bag</p>
