@@ -4,7 +4,7 @@ import { MdDelete,MdModeEdit } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import productImg from "@/assets/productImag1.jpg";
 import Image from "next/image";
-import { removeFromCart } from "@/redux/action/cartServices";
+import { removeFromCart, updateCartItemQty } from "@/redux/action/cartServices";
 import { useDispatch } from "react-redux";
 
 const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {
@@ -16,8 +16,19 @@ const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {
   const deleteProduct = () => {
     dispatch(removeFromCart(id))
   }
-  const updatequantity = () => {
-    
+  const updatequantity = (action) => {
+    if (action) {
+      if (productQty < stock){
+        dispatch(updateCartItemQty({cartItemId:id,productQuantity:productQty+1}));
+        setProductQty(productQty+1);
+      }
+    }
+    else{
+      if (productQty > 1){ 
+        dispatch(updateCartItemQty({cartItemId:id,productQuantity:productQty-1}));
+        setProductQty(productQty-1);
+      }
+    }
   }
   return (
     <div className="flex flex-col border-y-2 border-solid mt-3 border-slate-300 p-6 max-sm:p-2 relative">
@@ -41,11 +52,11 @@ const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {
           <div className="flex flex-col text-center max-sm:w-full  max-sm:justify-between max-sm:flex-row">
             <p className="font-bold">Quantity</p>
             <div className="border-2 border-solid border-slate-300 ">
-              <button className="px-3 py-1">
+              <button className="px-3 py-1" onClick={()=>updatequantity(false)}>
                 -
               </button>
               <span className="px-2 py-1">{productQty}</span>
-              <button  className="px-3 py-1">
+              <button  className="px-3 py-1" onClick={()=>updatequantity(true)}>
                 +
               </button>
             </div>

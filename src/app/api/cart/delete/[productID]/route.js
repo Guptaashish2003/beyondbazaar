@@ -9,7 +9,7 @@ export async function DELETE(request,context) {
     try {
         const check = await isOauth(request);
         if (!check._id) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+            return NextResponse.json({ success: false, message: "authentication failed" }, { status: 400 });
         }
         const userID = check._id;
         const productID = context.params.productID;

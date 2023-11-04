@@ -9,15 +9,15 @@ export async function PUT(request) {
     try {
         const check = await isOauth(request);
         if (!check._id) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+            return NextResponse.json({ success: false, message: "authentication failed" }, { status: 400 });
         }
         const userID = check._id;
         const data = await request.json();
-        const { productID, productQuantity } = data;
-        if (!productID || !productQuantity) {
+        const { cartItemId, productQuantity } = data;
+        if (!cartItemId || !productQuantity) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
-        const cart = await Cart.findOneAndUpdate({ userID, _id :productID }, { productQuantity }, { new: true });
+        const cart = await Cart.findOneAndUpdate({ userID, _id :cartItemId }, { productQuantity }, { new: true });
         const productStock = await Product.findById({_id:cart.productID}).select("productQuantity")
         console.log(productStock,"productQuantityproductQuantity")
         if (productQuantity > productStock?.productQuantity) {

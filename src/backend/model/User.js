@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import { NextResponse } from 'next/server'
 import jwt from "jsonwebtoken";
-
-
 const UserSchema = new mongoose.Schema( 
   
   {

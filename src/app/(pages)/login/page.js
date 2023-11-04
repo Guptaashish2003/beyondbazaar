@@ -14,9 +14,11 @@ import { useRouter } from 'next/navigation'
 import * as Yup from "yup";
 import { usePostData } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
+import { signIn, useSession } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter()
+  const session = useSession();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -50,6 +52,7 @@ const Login = () => {
 
     // return false;
   }
+  console.log(session)
   return (
     <section className="bg-image min-h-[--nav-space] lg:mt-[--nav-spc] max-md:items-center flex items-start justify-center">
       {/* <!-- login container --> */}
@@ -123,6 +126,7 @@ const Login = () => {
 
           <SubmitButton
             value="Login with Google"
+            onClick={()=>signIn("google")}
             className="bg-white border py-2 w-full flex-row-reverse rounded-lg mt-5 text-sm hover:scale-105 duration-300 text-[--first-color]"
           >
             <FcGoogle className="text-2xl" />

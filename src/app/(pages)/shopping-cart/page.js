@@ -6,9 +6,11 @@ import CartDetail from "@/components/shoppingCart/CartDetail";
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserCart } from "@/redux/action/cartServices";
 import Loading from "@/app/loading";
+import { useRouter } from 'next/navigation'
 const ShoppingCart = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
-  const {loading,cart} = useSelector((state) => state.cart.userCart)
+  const {loading,cart,error} = useSelector((state) => state.cart.userCart)
   const {noOfProduct} = useSelector((state) => state.cart)
   useEffect(()=>{
     dispatch(getUserCart())
@@ -17,7 +19,10 @@ const ShoppingCart = () => {
   if (loading) {
     return Loading();
   }
-  {cart?.map((items)=>console.log(items.productID.productQuantity))}
+  if(error){
+    router.push("/")
+  }
+  
   return (
     <>
       <section className="flex flex-col lg:mt-[--nav-spc] mt-12">
@@ -30,7 +35,7 @@ const ShoppingCart = () => {
         </div>
         <div className="flex w-full flex-wrap  justify-between h-[100%] flex-wap">
           <div className="w-[60%] max-lg:w-full max-lg:px-20 max-md:px-5 "> 
-          {cart?.map((items)=><CartDetail id={items._id} key={items._id} title={items.productID.productName} price={items.productID.productPrice} stock={items.productID.productQuantity} quantity={items.productQuantity} img={items.productID.productImage[0]} cart={cart} loading={loading}/>)}
+          {cart?.map((items)=><CartDetail id={items._id}  key={items._id} title={items.productID.productName} price={items.productID.productPrice} stock={items.productID.productQuantity} quantity={items.productQuantity} img={items.productID.productImage[0]} cart={cart} loading={loading}/>)}
           </div>
           <div className="w-[35%] px-10 max-lg:w-full max-lg:px-20 max-md:px-5">
             <PriceCheckOut />
