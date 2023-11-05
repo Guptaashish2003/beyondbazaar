@@ -1,7 +1,7 @@
 "use client"
 import React, { useRef,useState,useEffect } from 'react'
 import Image from 'next/image'
-import logo from "@/assets/logo.jpg"
+import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
 import { BiMenu,BiX,BiSolidCart,BiSolidUser,BiSolidSearch } from "react-icons/bi";
 import {AiFillCloseCircle } from "react-icons/ai";
@@ -62,7 +62,7 @@ useEffect(() => {
         <div className="logo h-full">
                 <Image
             src={logo}
-            className='w-full h-full object-contain'
+            className='w-[200%] h-[200%] object-contain'
             alt="logo"
             /> 
         </div>
