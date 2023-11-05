@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
-
-  // console.log(request.user)
-// if (request.nextUrl.pathname.startsWith('/login')) {
-//   return NextResponse.rewrite(new URL('/', request.url))
-//   // return NextResponse.redirect(new URL('/', request.url))
-// }
+  let cookies = request.cookies.get('token');
+  console.log(cookies?.value)
+if (request.nextUrl.pathname.startsWith('/login') ) {
+  if (cookies?.value) {
+    return NextResponse.rewrite(new URL('/', request.url))
+  }
+}
 
 }
  

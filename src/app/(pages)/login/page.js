@@ -52,7 +52,18 @@ const Login = () => {
 
     // return false;
   }
-  console.log(session)
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  if (session.status === 'authenticated') {
+    console.log("added...",session.token,session.status)
+    setCookie('token',session.data.token,process.env.JWT_COOKIE_EXPIRE)
+    localStorage.setItem("token",session.data.token)
+    router.push("/")
+  }
   return (
     <section className="bg-image min-h-[--nav-space] lg:mt-[--nav-spc] max-md:items-center flex items-start justify-center">
       {/* <!-- login container --> */}

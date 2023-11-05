@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 
 const jwtToken = async (user, statusCode, msg) => {
-  console.log("jwtToken");
   const token = await user.getSignedToken();
   const cookieOptions = {
     expires: new Date(

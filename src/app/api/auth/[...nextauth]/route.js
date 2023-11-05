@@ -1,6 +1,8 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-
+import User from "@/backend/model/User"
+import ConnectDB from "@/backend/DATABASE/ConnectDB"
+import jwtToken from "@/backend/utils/jwtToken"
 const handler = NextAuth({
     session: {
       strategy: "jwt",
@@ -15,13 +17,24 @@ const handler = NextAuth({
     pages: {
       signIn: "/login",
     },
-    secret: process.env.GOOGLE_AUTH_API_KEY,
-//   pages: {
-//     signIn: '/auth/dashbaord', // on successfully signin    
-//     signOut: '/auth/login', // on signout redirects users to a custom login page.
-//     error: '/auth/error',  // displays authentication errors
-//     newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-//   }
+    callbacks: {
+      async session({ session, token, user }) {
+        await ConnectDB()
+  
+        const {name,email} = session.user;
+        const exist = await User.findOne({email});
+        var newUser;
+        var userToken;
+        if (exist.length === 0) {
+          newUser = await User.create({name, email});
+          userToken = await newUser.getSignedToken();
+        }else{
+          userToken = await exist.getSignedToken();
+        }
+        session.token = userToken;
+        return session;
+      },
+  }
 })
 
 export { handler as GET, handler as POST }
