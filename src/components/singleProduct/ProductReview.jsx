@@ -7,7 +7,7 @@ const ProductReview = ({className}) => {
         Customer reviews
       </div>
       <div className="flex mt-4 justify-center">
-        <div className="flex items-center inline-block py-3 px-2.5 space-x-2 leading-none text-center whitespace-nowrap align-baseline text-sm bg-gray-200 text-dark rounded-full">
+        <div className="flex items-center  py-3 px-2.5 space-x-2 leading-none text-center whitespace-nowrap align-baseline text-sm bg-gray-200 text-dark rounded-full">
           <div className="items-center">
             <ul className="flex justify-center">
               <li>
