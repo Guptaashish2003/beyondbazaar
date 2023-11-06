@@ -33,6 +33,7 @@
     "mongoose-simple-slugify": "^1.2.11",
     "next": "^13.4.19",
     "next-auth": "^4.23.2",
+    "nodemailer": "^6.9.7",
     "postcss": "8.4.29",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

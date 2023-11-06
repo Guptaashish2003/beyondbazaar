@@ -12,9 +12,10 @@ import * as Yup from 'yup';
 import { usePostData } from '@/redux/api/usePostData';
 import { useRouter } from 'next/navigation'
 import { toast } from "react-toastify";
-
+import { signIn, useSession } from "next-auth/react";
 const RegistrationPage = () => {
   const router = useRouter()
+  const session = useSession();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -47,6 +48,19 @@ async function onSubmit(data) {
 
   }
 }
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+if (session.status === 'authenticated') {
+  console.log("added...",session.token,session.status)
+  setCookie('token',session.data.token,process.env.JWT_COOKIE_EXPIRE)
+  localStorage.setItem("token",session.data.token)
+  router.push("/")
+  toast.success("login successfully",{autoClose: 1000, })
+}
   return (
     <section className="bg-image min-h-[--nav-space] mt-[--nav-spc] lg:mt-[--nav-spc] max-md:items-center  flex items-start justify-center ">
       {/* <!-- login container --> */}
@@ -59,6 +73,7 @@ async function onSubmit(data) {
 
           <SubmitButton
             value="Login Up with Google"
+            onClick={()=>signIn("google")}
             className="bg-white border py-2 w-full flex-row-reverse rounded-lg mt-5 text-sm hover:scale-105 duration-300 text-[--first-color]"
           >
             <FcGoogle className="text-2xl" />
