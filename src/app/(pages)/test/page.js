@@ -1,5 +1,5 @@
 "use client"
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 
 import React from 'react'
 import Modal from '@/components/Modal/Modal';
@@ -9,7 +9,14 @@ function page() {
   return (
     <div>
     <button onClick={notify}>Notify!</button>
-    <Modal/>
+    <div className='w-screen h-screen flex justify-center items-center '>
+
+    <Modal btnName='open btn' btnClass="bg-black text-white p-5">
+      <div>
+
+      </div>
+    </Modal>
+    </div>
     
   </div>
   )
