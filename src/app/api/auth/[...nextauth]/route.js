@@ -2,7 +2,6 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import User from "@/backend/model/User"
 import ConnectDB from "@/backend/DATABASE/ConnectDB"
-import jwtToken from "@/backend/utils/jwtToken"
 const handler = NextAuth({
     session: {
       strategy: "jwt",
@@ -26,7 +25,7 @@ const handler = NextAuth({
         var newUser;
         var userToken;
         if (exist.length === 0) {
-          newUser = await User.create({name, email});
+          newUser = await User.create({name, email,byGoogle: true,isEmailValid:true});
           userToken = await newUser.getSignedToken();
         }else{
           userToken = await exist.getSignedToken();

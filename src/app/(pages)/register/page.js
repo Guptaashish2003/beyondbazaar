@@ -17,7 +17,7 @@ const RegistrationPage = () => {
   const router = useRouter()
   const session = useSession();
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  const [loading ,setLoading] = useState(false);
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
@@ -37,14 +37,17 @@ const { register, handleSubmit, reset, formState } = useForm(formOptions);
 const { errors } = formState;
 
 async function onSubmit(data) {
+  setLoading(true);
   const user = await usePostData("/api/user/register", data);
   if (user.success) {
     router.push("/")
-    toast.success(user.message,{autoClose: 1000, })
+    toast.success(user.message,{autoClose: 5000, })
+    setLoading(false);
   }
   else{
     router.push("/")
     toast.error(user.message,{autoClose: 1000, })
+    setLoading(false);
 
   }
 }
@@ -58,7 +61,7 @@ if (session.status === 'authenticated') {
   console.log("added...",session.token,session.status)
   setCookie('token',session.data.token,process.env.JWT_COOKIE_EXPIRE)
   localStorage.setItem("token",session.data.token)
-  router.push("/")
+  // router.push("/")
   toast.success("login successfully",{autoClose: 1000, })
 }
   return (
@@ -142,6 +145,7 @@ if (session.status === 'authenticated') {
             <SubmitButton
               value="Register"
               type="submit"
+              loading={loading}
               className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
             />
           </form>

@@ -7,6 +7,7 @@ import { BiMenu,BiX,BiSolidCart,BiSolidUser,BiSolidSearch } from "react-icons/bi
 import {AiFillCloseCircle } from "react-icons/ai";
 import Link from 'next/link'
 import InputBtn from '../Form/InputBtn'
+import { toast } from 'react-toastify'
 
 function Navbar() {
   const [show, setShow] = useState("translate-y-0");
@@ -53,6 +54,11 @@ useEffect(() => {
     navToggleRef.current.classList.toggle('show-icon')
   }
 
+  const noLoginUser = () => {
+    if(!localStorage.getItem('token') || !document.cookie ){
+      toast.warn("Please Login first.......")
+    }
+  }
 
   return (
     <>
@@ -77,12 +83,12 @@ useEffect(() => {
               <AiFillCloseCircle className={`cursor-pointer close-icon !text-5xl mobile-search`} onClick={()=>{setHide(false)}}/>
             </div>
       </div>
-      <Link href="/shopping-cart">
+      <Link href="/shopping-cart" onClick={noLoginUser}>
         <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
           <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
         </div>
       </Link>
-      <Link href="/login">
+      <Link href="/login" >
         <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
           <BiSolidUser className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
         </div>

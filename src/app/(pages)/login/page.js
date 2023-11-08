@@ -19,6 +19,7 @@ import { signIn, useSession } from "next-auth/react";
 const Login = () => {
   const router = useRouter()
   const session = useSession();
+  const [loading,setLoading] = useState();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -37,13 +38,16 @@ const Login = () => {
 
   async function onSubmit(data) {
     // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    setLoading(true);
     const user = await usePostData("/api/user/login", data);
     if (user.success) {
       localStorage.setItem("token",user.token);
       // router.push("/")
       toast.success(user.message,{autoClose: 1000, })
+      setLoading(false);
     }
     else{
+      setLoading(false);
       console.log(user)
       // router.push("/")
       toast.error(user.message,{autoClose: 1000, })
@@ -125,6 +129,7 @@ const Login = () => {
             <SubmitButton
               value="Login"
               type="submit"
+              loading={loading}
               onSubmit={handleSubmit(onSubmit)}
               className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
             />

@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { NextResponse } from "next/server";
 const UserSchema = new mongoose.Schema( 
   
   {
@@ -57,6 +59,18 @@ const UserSchema = new mongoose.Schema(
         },
       }
     ],
+    byGoogle:{
+      type: Boolean,
+      default: false
+    },
+    isEmailValid:{
+      type: Boolean,
+      default: false
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+    emailVerificationToken: String,
+    emailVerificationExpires: Date,
   },
   { timestamps: true }
 );
@@ -86,6 +100,35 @@ UserSchema.method("getSignedToken", async function getSignedToken(password) {
 UserSchema.method("matchPassword", async function matchPassword(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 });
+
+// genrating password reset token
+
+UserSchema.method("getResetPasswordToken",function getResetPasswordToken() {
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  this.resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+  this.resetPasswordExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
+})
+
+// genrating email verification token
+
+UserSchema.method("getEmailVerificationToken",function getEmailVerificationToken() {
+  const emailToken = crypto.randomBytes(20).toString("hex");
+
+  this.emailVerificationToken = crypto
+      .createHash("sha256")
+      .update(emailToken)
+      .digest("hex");
+  this.emailVerificationExpires = Date.now() + 10 * 60 * 1000;
+  return emailToken;
+})
+
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
 export default User;
