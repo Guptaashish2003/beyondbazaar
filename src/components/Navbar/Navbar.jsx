@@ -8,8 +8,10 @@ import {AiFillCloseCircle } from "react-icons/ai";
 import Link from 'next/link'
 import InputBtn from '../Form/InputBtn'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 function Navbar() {
+  const router = useRouter()
   const [show, setShow] = useState("translate-y-0");
   const [hide, setHide] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -65,10 +67,11 @@ useEffect(() => {
 <header className={`header fixed top-0 left-0 w-full flex justify-evenly ${show}`}>
   <nav className="nav w-full p-2 ">
   <div className="nav__data   flex justify-between items-center w-full h-2/3">
-        <div className="logo h-full">
+        <div className="logo h-full" onClick={()=>router.push("/")}>
                 <Image
             src={logo}
-            className='w-[200%] h-[200%] object-contain'
+            className='w-[200%] h-[200%] object-contain cursor-pointer'
+            
             alt="logo"
             /> 
         </div>
