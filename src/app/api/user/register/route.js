@@ -45,8 +45,8 @@ export async function POST(request) {
     });
     const verificationToken =  user.getEmailVerificationToken();
     await user.save({ validateBeforeSave: false });
-    const verficationUrl = `${process.env.baseURL}/verifyemail/${verificationToken}`;
-    const EmailHtml =  EmailTemplate({url:verficationUrl,msg:"verifiy your email",btn:"Verify email"});
+    const verficationUrl = `${process.env.baseURL}/user/verifyemail/${verificationToken}`;
+    const EmailHtml =  EmailTemplate({url:verficationUrl,msg:"verifiy your email",email:process.env.SUPPORTMAIL});
     try {
         sendEmail({
           email: email,
