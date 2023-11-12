@@ -73,14 +73,14 @@ if (session.status === 'authenticated') {
           <h2 className="font-bold text-center capitalize text-2xl text-[--first-color]">
             Register
           </h2>
-
           <SubmitButton
-            value="Login Up with Google"
+            value="Sign Up with Google"
             onClick={()=>signIn("google")}
-            className="bg-white border py-2 w-full flex-row-reverse rounded-lg mt-5 text-sm hover:scale-105 duration-300 text-[--first-color]"
+            className="bg-white border py-2 w-full  !flex-row-reverse rounded-lg mt-5 text-sm hover:scale-105 duration-300 text-[--first-color]"
           >
             <FcGoogle className="text-2xl" />
           </SubmitButton>
+          
           <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
             <hr className="border-gray-400" />
             <p className="text-center text-sm">OR</p>

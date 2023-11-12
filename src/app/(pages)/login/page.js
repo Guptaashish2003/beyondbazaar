@@ -149,7 +149,7 @@ const Login = () => {
             <FcGoogle className="text-2xl" />
           </SubmitButton>
 
-          <div className="mt-5 text-xs border-b border-gray-400 py-4 text-[#002D74]">
+          <div className="mt-5 text-xs border-b border-gray-400 py-4 text-[#002D74]"            onClick={()=>router.push("/forgot-password")}>
             <a href="#">Forgot your password?</a>
           </div>
 
