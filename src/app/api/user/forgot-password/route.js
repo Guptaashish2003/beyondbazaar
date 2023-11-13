@@ -5,10 +5,12 @@ import sendEmail from "@/backend/utils/sendEmail";
 import ResetPassword from "@/components/EmailTemplate/ResetPassword";
 
 export async function POST(request){
-    console.log("jkfsdhjfhsdjkhfkd")
+    // console.log("jkfsdhjfhsdjkhfkd")
     await connectDB();
 
     try {
+        
+        console.log(id)
         const data = await request.json();
         const {email} = data;
         // const user = await User.findById(_id);
