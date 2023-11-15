@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import connectDB from "@/backend/DATABASE/ConnectDB"  //database connection
 import User from "@/backend/model/User";
 import crypto from "crypto" 
-
 export async function PUT(request,context){
     await connectDB()
     try {
@@ -24,10 +23,8 @@ export async function PUT(request,context){
             return NextResponse.json({success:true, message:"Password Updated"},{status:200})
 
         
-    } catch (error) {
+        } catch (error) {
         return NextResponse.json({success:false, message:"Invalid token"},{status:400})
-        
-        
     }
 }
 

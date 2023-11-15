@@ -4,15 +4,20 @@ import InputBtn from "@/components/Form/InputBtn";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { usePostData } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useRouter,useParams  } from "next/navigation";
+import SubmitButton from "@/components/Form/SubmitButton";
+import { useUpdateData } from "@/redux/api/useUpdateData";
 
 const page = () => {
-  const [loading, setLoading] = useState();
+  const router = useRouter();
+  const params = useParams();
+  const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  // const id = router.query.id;
+  console.log(params.id)
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
@@ -31,8 +36,17 @@ const page = () => {
   const { errors } = formState;
 
   async function onSubmit(data) {
-    console.log(data,"dkljfkjiodj")
-    console.log("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    setLoading(true);
+    const updateData = await useUpdateData(`/api/user/reset-password/${params.id}`, {
+      password: data.confirmPassword,
+    });    
+    if (updateData.success) {
+      toast(updateData.message);
+    } else {
+      toast.error(updateData.message);
+    }
+    setLoading(false);
+    router.push("/login");
   }
   return (
     <section className="bg-gray-50 ">
@@ -109,12 +123,14 @@ const page = () => {
                 </p>
               )}
             </div>
-            <button
+            <SubmitButton
+            loading={loading}
               type="submit"
+              value="Reset Password"
               className="w-full text-white bg-gray-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:hover:bg-gray-900 dark:focus:ring-gray-800"
             >
-              Reset passwod
-            </button>
+              
+            </SubmitButton>
           </form>
         </div>
       </div>

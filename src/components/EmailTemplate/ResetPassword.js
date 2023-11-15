@@ -1,3 +1,4 @@
+
 export default ({ url,name }) => {
   const ResetPassword = `
     <!DOCTYPE html
@@ -592,7 +593,8 @@ export default ({ url,name }) => {
                                                                 <td align="center">
                                                                     <a href="${url}"
                                                                         class="f-fallback button button--green"
-                                                                        target="_blank">Reset your password</a>
+                                                                        target="_blank">Reset your password
+                                                                        </a>
                                                                 </td>
                                                             </tr>
                                                         </table>

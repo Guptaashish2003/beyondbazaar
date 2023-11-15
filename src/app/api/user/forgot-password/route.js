@@ -26,7 +26,7 @@ export async function POST(request){
         }
         const verificationToken =  user.getResetPasswordToken();
         await user.save({ validateBeforeSave: false });
-        const ResetUrl = `${process.env.baseURL}/resetpassword/${verificationToken}`;
+        const ResetUrl = `${process.env.FrontendURL}/reset-password/${verificationToken}`;
         const EmailHtml =  ResetPassword({url:ResetUrl,name:user.name});
         try {
             sendEmail({
