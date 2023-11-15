@@ -48,7 +48,6 @@ const Login = () => {
     }
     else{
       setLoading(false);
-      console.log(user)
       // router.push("/")
       toast.error(user.message,{autoClose: 1000, })
 
@@ -149,8 +148,8 @@ const Login = () => {
             <FcGoogle className="text-2xl" />
           </SubmitButton>
 
-          <div className="mt-5 text-xs border-b border-gray-400 py-4 text-[#002D74]"            onClick={()=>router.push("/forgot-password")}>
-            <a href="#">Forgot your password?</a>
+          <div className="mt-5 text-xs border-b cursor-pointer border-gray-400 py-4 text-[#002D74]"            onClick={()=>router.push("/forgot-password")}>
+            <a>Forgot your password?</a>
           </div>
 
           <div className="mt-3 text-xs flex justify-between items-center text-[--first-color]">

@@ -10,7 +10,6 @@ export async function POST(request){
 
     try {
         
-        console.log(id)
         const data = await request.json();
         const {email} = data;
         // const user = await User.findById(_id);
