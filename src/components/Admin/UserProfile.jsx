@@ -1,10 +1,7 @@
 import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
-
 import { Button } from '.';
-import { userProfileData } from '../data/dummy';
 import { useStateContext } from '@/app/ContextProvider';
-import avatar from '../data/avatar.jpg';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
@@ -24,7 +21,7 @@ const UserProfile = () => {
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
         <img
           className="rounded-full h-24 w-24"
-          src={avatar}
+          src={"avatar"}
           alt="user-profile"
         />
         <div>
