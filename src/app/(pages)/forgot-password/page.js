@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { usePostData } from "@/redux/api/usePostData";
 import { useRouter } from 'next/navigation'
+import Link from "next/link";
 
 const page = () => {
   const Router = useRouter();
@@ -37,7 +38,7 @@ const page = () => {
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   return (
-    <div className="max-w-4xl mx-auto mt-32">
+    <div className="max-w-4xl mx-auto mt-36">
       <div className="flex flex-col items-center justify-center  p-4 space-y-4 antialiased text-gray-900 bg-gray-100">
         <div className="w-full px-8 max-w-lg space-y-6 bg-white rounded-md py-16">
           <h1 className=" mb-6 text-3xl font-bold text-center">Don't worry</h1>
@@ -72,7 +73,7 @@ const page = () => {
             </div>
           </form>
           <div className="text-sm text-gray-600 items-center flex justify-between">
-            <p className="text-gray-800 cursor-pointer hover:text-blue-500 inline-flex items-center ml-4">
+            <Link href="login" className="text-gray-800 cursor-pointer hover:text-blue-500 inline-flex items-center ml-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 mr-2"
@@ -86,7 +87,7 @@ const page = () => {
                 />
               </svg>
               Back
-            </p>
+            </Link>
             <p className="hover:text-gray-900 cursor-pointer">Need help?</p>
           </div>
         </div>
