@@ -34,6 +34,12 @@ const ProductSchema = new mongoose.Schema(
       type: Boolean,
       required: [true, 'please enter the product availiblity'],
     },
+    productTags: [
+      {
+        type: String,
+        required: [true, 'please enter the product tags'],
+      },
+    ],
     // productCategory: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: 'Categories',

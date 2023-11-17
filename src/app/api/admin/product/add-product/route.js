@@ -22,7 +22,8 @@ export async function POST(request) {
       productImage,
       productPrice,
       productQuantity,
-      productAvailable
+      productAvailable,
+      productTags,
     } = data;
 
     if(
@@ -30,7 +31,9 @@ export async function POST(request) {
       !productDescription ||
       !productImage ||
       !productPrice ||
-      !productQuantity 
+      !productQuantity||
+      !productAvailable||
+      !productTags
     ) {
 
       return NextResponse.json(

@@ -4,7 +4,7 @@ import {
   addToCart,
   removeFromCart,
   updateCartItemQty,
-} from "./cartServices";
+} from "./Services";
 const initialState = {isMutation: {success: false},userCart: {cart: []}, noOfProduct:0,totalPrice:0};
 
 export const cartSlice = createSlice({

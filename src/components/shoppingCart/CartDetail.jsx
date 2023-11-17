@@ -4,7 +4,7 @@ import { MdDelete,MdModeEdit } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import productImg from "@/assets/productImag1.jpg";
 import Image from "next/image";
-import { removeFromCart, updateCartItemQty } from "@/redux/action/cartServices";
+import { removeFromCart, updateCartItemQty } from "@/redux/action/Services";
 import { useDispatch } from "react-redux";
 
 const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {

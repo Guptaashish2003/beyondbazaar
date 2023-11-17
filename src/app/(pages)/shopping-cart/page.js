@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import PriceCheckOut from "@/components/shoppingCart/PriceCheckOut";
 import CartDetail from "@/components/shoppingCart/CartDetail";
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserCart } from "@/redux/action/cartServices";
+import { getUserCart } from "@/redux/action/Services";
 import Loading from "@/app/loading";
 import { useRouter } from 'next/navigation'
 import Link from "next/link";

@@ -7,7 +7,7 @@ import SocialMedial from "@/components/SocialMediaIcons/SocialMedial";
 import SubmitButton from "../Form/SubmitButton";
 import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/action/cartServices";
+import { addToCart } from "@/redux/action/Services";
 const ProductDes = ({id,title,discription,price,stock,className}) => {
   const [productCount,setProductCount] = useState(1)
   const dispatch = useDispatch()
