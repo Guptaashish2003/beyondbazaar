@@ -3,13 +3,13 @@ import { NextResponse } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
-  const response = NextResponse.next();
-  let cookies = request.cookies.get('token');
-  if(!cookies?.value){
-      if (request.nextUrl.pathname.startsWith('/shopping-cart') ) {
-        return NextResponse.redirect(new URL('/login', request.url))
-    }
-  }
+  // const response = NextResponse.next();
+  // let cookies = request.cookies.get('token');
+  // if(!cookies?.value){
+  //     if (request.nextUrl.pathname.startsWith('/shopping-cart') ) {
+  //       return NextResponse.redirect(new URL('/login', request.url))
+  //   }
+  // }
   // if(cookies?.value) {
 
     // if (request.nextUrl.pathname.startsWith('/login') ) {
@@ -36,7 +36,7 @@ export async function middleware(request) {
   //     });
   // }
 
-  return response;
+  // return response;
 
 
 }
