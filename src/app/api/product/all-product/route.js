@@ -1,14 +1,29 @@
 import { NextResponse } from "next/server"
 import connectDB from "@/backend/DATABASE/ConnectDB"  //database connection
 import Product from "@/backend/model/Product"
+import Apifeatures from "@/backend/utils/apiFeatures"
 
 
 export async function GET(request){
 
    await connectDB()
    try {
-      const product = await Product.find()
+      const rawParams = request.url.split('?')[1];
+      const keyword = new URLSearchParams(rawParams).get('keyword')
+      const limit = new URLSearchParams(rawParams).get('limit')
+      const page = new URLSearchParams(rawParams).get('page')
+      const filters = new URLSearchParams(rawParams).get('filters')
+      const sort = new URLSearchParams(rawParams).get('sort')
+      
+      const apiFeatures = new Apifeatures(Product.find(),{keyword,limit,page,filters,sort})
+      .search()
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate()
+      const product = await apiFeatures.query;
       const lenProduct = product.length
+      // const lenProduct = product.length
       return NextResponse.json({ success: true, length: lenProduct, message: "products Found", data: product }, { status: 200 });
       
    } catch (error) {

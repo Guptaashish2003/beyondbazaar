@@ -3,17 +3,18 @@ import React, { useRef,useState,useEffect } from 'react'
 import Image from 'next/image'
 import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
-import { BiMenu,BiX,BiSolidCart,BiSolidUser,BiSolidSearch } from "react-icons/bi";
-import {AiFillCloseCircle } from "react-icons/ai";
+import { BiMenu,BiX,BiSolidCart,BiSolidUser } from "react-icons/bi";
+
 import Link from 'next/link'
-import InputBtn from '../Form/InputBtn'
+
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
+import SearchBar from '../SearchBar/SearchBar'
 
 function Navbar() {
   const router = useRouter()
   const [show, setShow] = useState("translate-y-0");
-  const [hide, setHide] = useState(false);
+
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const controlNavbar = () => {
@@ -34,7 +35,7 @@ useEffect(() => {
     return () => {
         window.removeEventListener("scroll", controlNavbar);
     };
-}, [lastScrollY,hide]);
+}, [lastScrollY]);
 
   const dropdownItems = [
     {
@@ -76,16 +77,7 @@ useEffect(() => {
             /> 
         </div>
     <div className="lsc flex justify-center items-center p-4 gap-2 ">
-      <div className={`absolute right-0 left-0 mx-auto w-1/3 flex justify-center max-md:w-1/2 max-lg:w-1/2 max-sm:w-5/6 ` }>
-      {hide?<div className='bg-blor'></div>:""}
-            <div className={`input-box z-10 ${hide?"mobile-search open !ml-0 !mt-5 !mb-2 ":""}`}  >
-              <InputBtn type="text" placeholder="Search..." className='relative p-4 outline-none border-none h-4/5 w-full  rounded-md text-xl font-bold bg-white border  border-gray-200 focus:border-gray-400 '/>
-              <span className="absolute h-[90%] top-0 left-0 w-16 rounded-md flex justify-center bg-white">
-                <BiSolidSearch className="cursor-pointer search-icon" onClick={()=>{setHide(true)}}/>
-              </span>
-              <AiFillCloseCircle className={`cursor-pointer close-icon !text-5xl mobile-search`} onClick={()=>{setHide(false)}}/>
-            </div>
-      </div>
+     <SearchBar/>
       <Link href="/shopping-cart" onClick={noLoginUser}>
         <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
           <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
