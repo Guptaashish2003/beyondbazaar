@@ -1,11 +1,29 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineCancel } from 'react-icons/md';
 import { BsCheck } from 'react-icons/bs';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { useStateContext } from '@/app/ContextProvider';
+import { setModeAction, setColorAction, setThemeSettingsAction } from '../redux/themeSlice';
 
 const ThemeSettings = () => {
-  const { setColor, setMode, currentMode, currentColor, setThemeSettings } = useStateContext();
+  const dispatch = useDispatch();
+  const currentColor = useSelector((state) => state.theme.currentColor);
+  const currentMode = useSelector((state) => state.theme.currentMode);
+  const themeSettings = useSelector((state) => state.theme.themeSettings);
+
+  const setMode = (e) => {
+    dispatch(setModeAction(e.target.value));
+    localStorage.setItem('themeMode', e.target.value);
+  };
+
+  const setColor = (color) => {
+    dispatch(setColorAction(color));
+    localStorage.setItem('colorMode', color);
+  };
+
+  const closeSettings = () => {
+    dispatch(setThemeSettingsAction(false));
+  };
 
   return (
     <div className="bg-half-transparent w-screen fixed nav-item top-0 right-0">
@@ -14,17 +32,15 @@ const ThemeSettings = () => {
           <p className="font-semibold text-lg">Settings</p>
           <button
             type="button"
-            onClick={() => setThemeSettings(false)}
+            onClick={closeSettings}
             style={{ color: 'rgb(153, 171, 180)', borderRadius: '50%' }}
             className="text-2xl p-3 hover:drop-shadow-xl hover:bg-light-gray"
           >
             <MdOutlineCancel />
           </button>
-
         </div>
         <div className="flex-col border-t-1 border-color p-4 ml-4">
-          <p className="font-semibold text-xl ">Theme Option</p>
-
+          <p className="font-semibold text-xl">Theme Option</p>
           <div className="mt-4">
             <input
               type="radio"
@@ -35,7 +51,6 @@ const ThemeSettings = () => {
               onChange={setMode}
               checked={currentMode === 'Light'}
             />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="light" className="ml-2 text-md cursor-pointer">
               Light
             </label>
@@ -50,14 +65,13 @@ const ThemeSettings = () => {
               className="cursor-pointer"
               checked={currentMode === 'Dark'}
             />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="dark" className="ml-2 text-md cursor-pointer">
               Dark
             </label>
           </div>
         </div>
         <div className="p-4 border-t-1 border-color ml-4">
-          <p className="font-semibold text-xl ">Theme Colors</p>
+          <p className="font-semibold text-xl">Theme Colors</p>
           <div className="flex gap-3">
             {themeColors.map((item, index) => (
               <TooltipComponent key={index} content={item.name} position="TopCenter">
@@ -71,7 +85,11 @@ const ThemeSettings = () => {
                     style={{ backgroundColor: item.color }}
                     onClick={() => setColor(item.color)}
                   >
-                    <BsCheck className={`ml-2 text-2xl text-white ${item.color === currentColor ? 'block' : 'hidden'}`} />
+                    <BsCheck
+                      className={`ml-2 text-2xl text-white ${
+                        item.color === currentColor ? 'block' : 'hidden'
+                      }`}
+                    />
                   </button>
                 </div>
               </TooltipComponent>
