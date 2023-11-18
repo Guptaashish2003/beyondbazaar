@@ -2,7 +2,7 @@ import React from 'react'
 
 const ShippingDetail = () => {
   return (
-    <div className="flex flex-col justify-center px-4  md:p-1 xl:p-2 w-full bg-gray-100  space-y-3">
+    <div className="flex flex-col justify-center px-4  md:p-1 xl:p-2 w-full bg-white  space-y-3">
                 <h3 className="text-xl  dark:text-black font-semibold leading-5 text-gray-800">
                   Shipping
                 </h3>
@@ -25,12 +25,12 @@ const ShippingDetail = () => {
                       </p>
                     </div>
                   </div>
-                  <p className="text-lg font-semibold leading-6  dark:text-black text-gray-800">
+                  <p className="text-lg font-semibold leading-6  dark:text-black text-gray-900">
                     $8.00
                   </p>
                 </div>
                 <div className="w-full flex justify-center items-center">
-                  <button className="hover:bg-black  dark:text-gray-800 py-4  w-96 md:w-full max-md:bg-gray-800 bg-gray-800 text-base font-medium leading-4  max-md:text-white text-white">
+                  <button className="hover:bg-black  py-4  w-96 md:w-full max-md:bg-gray-800 bg-gray-800 text-base font-medium leading-4  max-md:text-white text-white">
                     View Carrier Details
                   </button>
                 </div>

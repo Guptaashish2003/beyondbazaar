@@ -1,10 +1,10 @@
 import React from 'react'
-import OrderDetail from '@/components/OrderStatus/OrderDetail'
+import OrderStatus from '@/components/OrderStatus/OrderStatus'
 
 const page = () => {
   return (
     <div>
-        <OrderDetail />
+        <OrderStatus />
     </div>
   )
 }

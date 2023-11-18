@@ -6,18 +6,24 @@ const OrderDetail = () => {
   return (
     <>
       <div className="bg-gray-50">
+      
 
-        <main className="mx-auto max-w-2xl pb-24 pt-8 sm:px-6 sm:pt-16 lg:max-w-7xl lg:px-8">
+        <main className="mx-auto max-w-2xl pb-1 pt-8 sm:px-6 sm:pt-16 lg:max-w-7xl lg:px-8">
           {/* Products */}
           <section aria-labelledby="products-heading" className="mt-6">
+          <div className="flex justify-start item-start  mt-20 my-8 space-y-2 flex-col">
+          <h1 className="text-3xl  dark:text-black lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
+            Order #13432
+          </h1>
+          <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
+            21st Mart 2021 at 10:34 PM
+          </p>
+        </div>
             
             <div className="space-y-8">
               <div className="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
           <div className="space-y-2 px-8 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 ">
-            <div className="flex sm:items-baseline sm:space-x-4">
-              <h1 className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">
-                Order #54879
-              </h1>
+            <div className="flex sm:items-baseline my-2 sm:space-x-4">
               <a
                 href="#"
                 className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block"
