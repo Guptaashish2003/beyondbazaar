@@ -27,6 +27,7 @@ const page = () => {
   return (
     <div className="mt-40 flex w-11/12 md:max-lg:justify-center max-sm:justify-center flex-row gap-10 max-sm:gap-4 mx-auto my-4 flex-wrap justify-start">
       <YourAccSetting
+      href="/your-orders"
         onClick={handleYourOrders}
         img={<FaShoppingBasket className="w-1/2 h-1/2 object-cover" />}
         title={"Your Orders"}
