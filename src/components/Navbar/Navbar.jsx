@@ -58,7 +58,7 @@ useEffect(() => {
   }
 
   const noLoginUser = () => {
-    if(!localStorage.getItem('token') || !document.cookie ){
+    if(!localStorage.getItem('token')  ){
       toast.warn("Please Login first.......")
     }
   }

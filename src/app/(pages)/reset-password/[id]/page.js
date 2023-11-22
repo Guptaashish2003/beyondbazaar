@@ -36,23 +36,29 @@ const page = () => {
   const { errors } = formState;
 
   async function onSubmit(data) {
-    setLoading(true);
-    const updateData = await useUpdateData(`/api/user/reset-password/${params.id}`, {
-      password: data.confirmPassword,
-    });    
-    if (updateData.success) {
-      toast(updateData.message);
-    } else {
-      toast.error(updateData.message);
+    try {
+      setLoading(true);
+      const updateData = await useUpdateData(`/api/user/reset-password/${params.id}`, {
+        password: data.confirmPassword,
+      });    
+      if (updateData.success) {
+        toast(updateData.message);
+      } else {
+        toast.error(updateData.message);
+      }
+      setLoading(false);
+      router.push("/login");
+    } catch (error) {
+      router.push("/login");
+      toast(error.message);
     }
-    setLoading(false);
-    router.push("/login");
+   
   }
   return (
-    <section className="bg-gray-50 ">
+    <section>
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         \
-        <div className="w-full p-6 bg-gray-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md sm:p-8">
+        <div className="w-full p-6 shadow-lg rounded-lg shadow dark:border md:mt-0 sm:max-w-md sm:p-8">
           <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-black">
             Change Password
           </h2>

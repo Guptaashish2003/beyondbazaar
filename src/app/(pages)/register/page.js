@@ -51,15 +51,8 @@ async function onSubmit(data) {
 
   }
 }
-function setCookie(cname, cvalue, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  let expires = "expires="+d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+
 if (session.status === 'authenticated') {
-  console.log("added...",session.token,session.status)
-  setCookie('token',session.data.token,process.env.JWT_COOKIE_EXPIRE)
   localStorage.setItem("token",session.data.token)
   // router.push("/")
   toast.success("login successfully",{autoClose: 1000, })

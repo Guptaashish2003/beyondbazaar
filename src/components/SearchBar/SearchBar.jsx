@@ -22,7 +22,7 @@ function SearchBar({options}) {
     {hide?<div className='bg-blor'></div>:""}
           <div className={`input-box z-10 ${hide?"mobile-search open !ml-0 !mt-5 !mb-2 ":""}`}  >
             <InputBtn onChange={e=>setSearchText(e.target.value)} type="text" placeholder="Search..." className='relative p-4 outline-none border-none h-4/5 w-full  rounded-md text-xl font-bold bg-white border  border-gray-200 focus:border-gray-400 '/>
-            <span className="absolute h-[90%] top-0 left-0 w-16 rounded-md flex justify-center bg-white">
+            <span className="absolute h-[90%] top-0 right-0 w-16 rounded-md flex justify-center bg-white">
               <BiSolidSearch className="cursor-pointer search-icon" onClick={()=>{setHide(true);onSearch()}}/>
             </span>
             <AiFillCloseCircle className={`cursor-pointer close-icon !text-5xl mobile-search`} onClick={()=>{setHide(false)}}/>

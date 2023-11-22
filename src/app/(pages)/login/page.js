@@ -38,7 +38,8 @@ const Login = () => {
 
   async function onSubmit(data) {
     // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    setLoading(true);
+    try {
+      setLoading(true);
     const user = await usePostData("/api/user/login", data);
     if (user.success) {
       localStorage.setItem("token",user.token);
@@ -52,18 +53,17 @@ const Login = () => {
       toast.error(user.message,{autoClose: 1000, })
 
     }
+    } catch (error) {
+      setLoading(false);
+      // router.push("/")
+      toast.error(user.message,{autoClose: 1000, })
+    }
+    
 
     // return false;
   }
-  function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
+
   if (session.status === 'authenticated') {
-    console.log("added...",session.token,session.status)
-    setCookie('token',session.data.token,process.env.JWT_COOKIE_EXPIRE)
     localStorage.setItem("token",session.data.token)
     router.push("/")
     toast.success("login successfully",{autoClose: 1000, })

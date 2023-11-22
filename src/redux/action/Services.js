@@ -3,7 +3,7 @@ import {  toast } from 'react-toastify';
 import { useGetDataProtected } from "../api/useGetData";
 import { usePostDataProtected } from "../api/usePostData";
 import { useDeleteData } from "../api/useDeleteData";
-import { useUpdateData } from "../api/useUpdateData";
+import { useUpdateData, useUpdateDataProtected } from "../api/useUpdateData";
 
 //_____________________GET_USER_CART____________________//
 export const getUserCart = createAsyncThunk(
@@ -97,12 +97,12 @@ export const updateCartItemQty = createAsyncThunk(
   "cart/updateCartItemQty",
   async ({cartItemId, productQuantity}, {rejectWithValue}) => {
     try {
-      const res = await useUpdateData(`/api/cart/update`, {cartItemId,productQuantity});
+      const res = await useUpdateDataProtected(`/api/cart/update`, {cartItemId,productQuantity});
       toast("Cart Item Updated Successfully", "success");
       // console.log(res);
       return res;
     } catch (error) {
-      // console.log("ERROR" + error);
+      console.log("ERROR" + error);
       const message =
         (error.response &&
           error.response.data &&

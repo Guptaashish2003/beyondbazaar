@@ -8,6 +8,7 @@ export async function PUT(request) {
     await connectDB();
     try {
         const check = await isOauth(request);
+        console.log(check,"jjjj");
         if (!check._id) {
             return NextResponse.json({ success: false, message: "authentication failed" }, { status: 400 });
         }

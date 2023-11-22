@@ -533,7 +533,7 @@ a {
   transform: translateY(-50%) rotate(0);
 }
 .close-icon{
-  right: -63px;
+  left: 0;
   color: #000;
   border-radius: 6px;
   background: #fff;

@@ -16,7 +16,8 @@ const page = () => {
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
   const onSubmit = async (data) => {
-    setLoading(true);
+    try {
+      setLoading(true);
     const postdata = await usePostData("/api/user/forgot-password", {
       email: data.email,
     });
@@ -30,6 +31,11 @@ const page = () => {
     //     return
     // }
     Router.push("/login");
+    } catch (error) {
+      Router.push("/login");
+      toast.error(error.message);
+    }
+    
   };
 
   const validationSchema = Yup.object().shape({
