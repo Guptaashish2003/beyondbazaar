@@ -19,7 +19,7 @@ const Page = () => {
   };
 
   const handleYourAddress = () => {
-    router.push("/your-address");
+    router.push("/user/your-address");
   };
 
   const handleSignOut = async () => {
@@ -30,59 +30,55 @@ const Page = () => {
   };
 
   return (
-    <div className="mt-40  w-11/12 md:max-lg:justify-center max-sm:justify-center flex-row gap-10 max-sm:gap-4 mx-auto my-4  justify-start">
-      <Link href="/your-orders" className="w-full inline-block" passHref>
+    <div className="mt-40  w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto my-4">
+      <Link href="your-orders"  passHref>
         <YourAccSetting
           onClick={handleYourOrders}
-          img={<FaShoppingBasket className="w-1/2 h-1/2 object-cover" />}
+          img={<FaShoppingBasket className="w-1/3  h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Your Orders"}
           description={"Track Orders, Buy again "}
         />
       </Link>
 
-      <Link href="/your-address" className="w-full inline-block" passHref>
+      <Link href="/user/your-address" passHref>
         <YourAccSetting
           onClick={handleYourAddress}
-          img={<FaLocationDot className="w-1/2 h-1/2 object-cover" />}
+          img={<FaLocationDot className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Your Addresses"}
           description={"Edit your address for your gifts and orders  "}
         />
       </Link>
 
-      <Link href="/your-address" className="w-full inline-block" passHref>
+      <Link href="/user/your-payment-options" passHref>
         <YourAccSetting
-          img={<MdOutlineSecurity className="w-1/2 h-1/2 object-cover" />}
+          img={<MdOutlineSecurity className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Login & Security"}
           description={"Edit login, name, mobile number, email "}
         />
       </Link>
 
-      <Link href="/your-address" className="w-full inline-block" passHref>
+      <Link href="/user/your-address" passHref>
         <YourAccSetting
-          img={<FaRegCreditCard className="w-1/2 h-1/2 object-cover" />}
+          img={<FaRegCreditCard className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Payment Options"}
           description={"Edit or add your payment options "}
         />
       </Link>
 
-      <Link href="/your-address" className="w-full inline-block" passHref>
+      <Link href="/user/your-address" passHref>
         <YourAccSetting
-          img={<MdSupportAgent className="w-1/2 h-1/2 object-cover" />}
+          img={<MdSupportAgent className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Help & Support"}
-          description={
-            "Contact us, and we'll be happy to assist you, just like family."
-          }
+          description={"Contact us, and we'll be happy to assist you, just like family."}
         />
       </Link>
 
-      <Link href="/" className="w-full inline-block" passHref>
+      <Link href="/" passHref>
         <YourAccSetting
           onClick={handleSignOut}
-          img={<PiSignOutBold className="w-1/2 h-1/2 object-cover" />}
+          img={<PiSignOutBold className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Log Out"}
-          description={
-            "Thank you for visiting. I can't wait to meet you again."
-          }
+          description={"Thank you for visiting. I can't wait to meet you again."}
         />
       </Link>
     </div>
