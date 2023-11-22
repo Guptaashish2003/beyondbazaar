@@ -1,3 +1,4 @@
+
 import Category from '@/components/Categorys/Category'
 import Herosection from '@/components/HeroSection/HeroSection'
 import Productcard from '@/components/ProductCards/Productcard'
@@ -11,7 +12,6 @@ import { useGetData } from '@/redux/api/useGetData'
 
 export default async function Home(){
   const {data} = await useGetData("/product/all-product")
-
   return (
     <>
     <Herosection/>

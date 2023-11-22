@@ -21,16 +21,35 @@ const Page = () => {
   const handleYourAddress = () => {
     router.push("/user/your-address");
   };
-
-  const handleSignOut = async () => {
-    const data = await signOut({ redirect: false });
-    if (data) {
-      router.push("/");
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
     }
+    return "";
+  }
+  const handleSignOut = async () => {
+   console.log(decodeURIComponent(document.cookie)) 
+    // const data = await signOut({ redirect: false });
+    // if(data){
+    //   localStorage.removeItem("token");
+    // }else{
+    //   localStorage.removeItem("token");
+    //   document.cookie = "";
+    // }
+
   };
 
   return (
-    <div className="mt-40  w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto my-4">
+    <div className="mt-40   w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto my-4">
       <Link href="your-orders"  passHref>
         <YourAccSetting
           onClick={handleYourOrders}
@@ -73,14 +92,12 @@ const Page = () => {
         />
       </Link>
 
-      <Link href="/" passHref>
         <YourAccSetting
           onClick={handleSignOut}
           img={<PiSignOutBold className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Log Out"}
           description={"Thank you for visiting. I can't wait to meet you again."}
         />
-      </Link>
     </div>
   );
 };

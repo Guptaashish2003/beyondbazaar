@@ -21,7 +21,7 @@ function Productcard({img,title,price,slug,bgColor, addToCart,discount,animation
     }
   }
   const moveSingle = () => {
-    router.push(`/single-product/${slug}`)
+    router.push(`/user/single-product/${slug}`)
   }
   return (
     <>

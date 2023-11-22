@@ -62,6 +62,14 @@ useEffect(() => {
       toast.warn("Please Login first.......")
     }
   }
+  const userProfile = () => {
+    if(!localStorage.getItem('token')  ){
+      router.push("/login")
+    }else{
+      router.push("user/account-setting")
+    }
+  }
+  
 
   return (
     <>
@@ -78,16 +86,15 @@ useEffect(() => {
         </div>
     <div className="lsc flex justify-center items-center p-4 gap-2 ">
      <SearchBar/>
-      <Link href="/shopping-cart" onClick={noLoginUser}>
+      <Link href="/user/shopping-cart" onClick={noLoginUser}>
         <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
           <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
         </div>
       </Link>
-      <Link href="/login" >
-        <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
+        <div onClick={userProfile} className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
           <BiSolidUser className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
         </div>
-      </Link>
+
     </div>
 
     <div className="nav__toggle"  onClick={showMenu} ref={navToggleRef}>
