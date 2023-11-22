@@ -68,7 +68,7 @@ const Page = () => {
         />
       </Link>
 
-      <Link href="/user/your-payment-options" passHref>
+      <Link href="/user/your-address" passHref>
         <YourAccSetting
           img={<MdOutlineSecurity className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Login & Security"}
@@ -76,7 +76,7 @@ const Page = () => {
         />
       </Link>
 
-      <Link href="/user/your-address" passHref>
+      <Link href="/user/your-payment-options" passHref>
         <YourAccSetting
           img={<FaRegCreditCard className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
           title={"Payment Options"}

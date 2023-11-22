@@ -66,7 +66,7 @@ useEffect(() => {
     if(!localStorage.getItem('token')  ){
       router.push("/login")
     }else{
-      router.push("user/account-setting")
+      router.push("/user/account-setting")
     }
   }
   
