@@ -44,11 +44,7 @@ function onSubmit(data) {
   return false;
 }
 
-function onSubmit(data) {
-  console.log(data);
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(data, null, 4));
-    return false;
-}
+
 
   return (
     <>
