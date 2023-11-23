@@ -4,7 +4,7 @@ import isOauth from "@/backend/middlewere/isOauth";
 import User from "@/backend/model/User";
 //getuserdata
 
-export async function POST(request, context) {
+export async function DELETE(request, context) {
   await connectDB();
 
   try {
@@ -12,13 +12,12 @@ export async function POST(request, context) {
     if (!check._id) {
         return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
     }
-    const data = await request.json();
-    const {name,street,city,state,zip,phoneNo} = data
+    const id = context.params.id;
     const user = await User.findById(check._id);
-    console.log(user)
-    user.address.push({name,street,city,state,zip,phoneNo});
+    const del = user.address.filter(address=>{ return address._id.valueOf() !== id})
+    user.address = del;
     await user.save();
-     return NextResponse.json({ sucess:true ,message: "address added successfully",data:user.address }, { status: 200 });
+     return NextResponse.json({ sucess:true ,message: "address deleted successfully",data:user.address }, { status: 200 });
       
    } catch (error) {
        return NextResponse.json(

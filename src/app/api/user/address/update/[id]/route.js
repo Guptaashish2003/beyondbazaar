@@ -9,20 +9,22 @@ export async function PUT(request, context) {
 
   try {
     const  check  = await isOauth(request);
-    if (!check) {
+    if (!check._id) {
         return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
     }
     const data = await request.json();
     const id = context.params.id;
     const {name,street,city,state,zip,phoneNo} = data
     const user = await User.findById(check._id);
-    const edit = user.address.filter(address=>{
-      if (address._id === id) {
-        return {...address,name,street,city,state,zip,phoneNo }
+    const edit = user.address.map(data=>{
+      if (data._id.valueOf() === id) {
+        return {name,street,city,state,zip,phoneNo}
       }
-      
+      else{
+        return data;
+      }
     })
-    console.log("user",edit)
+    user.address = edit;
     await user.save();
      return NextResponse.json({ sucess:true ,message: "address updated successfully",data:user.address }, { status: 200 });
       
