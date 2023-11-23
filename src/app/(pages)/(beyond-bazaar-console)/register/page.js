@@ -52,11 +52,6 @@ async function onSubmit(data) {
   }
 }
 
-if (session.status === 'authenticated') {
-  localStorage.setItem("token",session.data.token)
-  // router.push("/")
-  toast.success("login successfully",{autoClose: 1000, })
-}
   return (
     <section className="bg-image min-h-[--nav-space] mt-[--nav-spc] lg:mt-[--nav-spc] max-md:items-center  flex items-start justify-center ">
       {/* <!-- login container --> */}

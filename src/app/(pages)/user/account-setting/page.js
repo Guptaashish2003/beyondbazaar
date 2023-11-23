@@ -9,11 +9,13 @@ import { MdSupportAgent } from "react-icons/md";
 import { PiSignOutBold } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut,useSession } from "next-auth/react";
+import {  useGetDataProtected } from "@/redux/api/useGetData";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const router = useRouter();
-
+  const session = useSession();
   const handleYourOrders = () => {
     router.push("/your-orders");
   };
@@ -21,31 +23,23 @@ const Page = () => {
   const handleYourAddress = () => {
     router.push("/user/your-address");
   };
-  function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-  const handleSignOut = async () => {
-   console.log(decodeURIComponent(document.cookie)) 
-    // const data = await signOut({ redirect: false });
-    // if(data){
-    //   localStorage.removeItem("token");
-    // }else{
-    //   localStorage.removeItem("token");
-    //   document.cookie = "";
-    // }
 
+  const handleSignOut = async () => {
+    try {
+      const user = await useGetDataProtected("/api/user/sign-out");
+      if (session.status === 'authenticated') {
+      await signOut({ redirect: false });
+      }
+      console.log(user)
+      if(user.success) {
+        localStorage.removeItem("token");
+       toast.success(user.message); 
+      }
+      router.push("/");
+    } catch (error) {
+      router.push("/");
+      toast.error(error.message);
+    }
   };
 
   return (

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const page = () => {
   const router = useRouter();
   const handleNewAddress = () => {
-    router.push("/beyond-bazaar-console/address");
+    router.push("/address");
 
   };
   return (

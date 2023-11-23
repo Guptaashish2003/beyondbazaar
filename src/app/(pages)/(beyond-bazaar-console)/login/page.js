@@ -1,7 +1,5 @@
 "use client";
 import {React,useState} from "react";
-import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google";
 import loginp from "@/assets/loginp.jpg";
 import Image from "next/image";
 import InputBtn from "@/components/Form/InputBtn";
@@ -14,11 +12,10 @@ import { useRouter } from 'next/navigation'
 import * as Yup from "yup";
 import { usePostData } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter()
-  const session = useSession();
   const [loading,setLoading] = useState();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -37,36 +34,29 @@ const Login = () => {
   const { errors } = formState;
 
   async function onSubmit(data) {
-    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
     try {
       setLoading(true);
     const user = await usePostData("/api/user/login", data);
     if (user.success) {
       localStorage.setItem("token",user.token);
-      // router.push("/")
+      router.push("/")
       toast.success(user.message,{autoClose: 1000, })
       setLoading(false);
     }
     else{
       setLoading(false);
-      // router.push("/")
+      router.push("/")
       toast.error(user.message,{autoClose: 1000, })
 
     }
     } catch (error) {
       setLoading(false);
-      // router.push("/")
+      router.push("/")
       toast.error(user.message,{autoClose: 1000, })
     }
     
 
     // return false;
-  }
-
-  if (session.status === 'authenticated') {
-    localStorage.setItem("token",session.data.token)
-    router.push("/")
-    toast.success("login successfully",{autoClose: 1000, })
   }
   return (
     <section className="bg-image min-h-[--nav-space] lg:mt-[--nav-spc] max-md:items-center flex items-start justify-center">

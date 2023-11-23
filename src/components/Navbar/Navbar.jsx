@@ -4,15 +4,14 @@ import Image from 'next/image'
 import logo from "@/assets/logo.png"
 import Dropdown from './dropdown'
 import { BiMenu,BiX,BiSolidCart,BiSolidUser } from "react-icons/bi";
-
 import Link from 'next/link'
-
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import SearchBar from '../SearchBar/SearchBar'
-
+import { useSession } from "next-auth/react";
 function Navbar() {
   const router = useRouter()
+  const session = useSession();
   const [show, setShow] = useState("translate-y-0");
 
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -35,7 +34,12 @@ useEffect(() => {
     return () => {
         window.removeEventListener("scroll", controlNavbar);
     };
+    
 }, [lastScrollY]);
+
+if (session.status === 'authenticated' && !localStorage.getItem("token")) {
+  localStorage.setItem("token",session.data.token)
+}
 
   const dropdownItems = [
     {
@@ -66,9 +70,10 @@ useEffect(() => {
     if(!localStorage.getItem('token')  ){
       router.push("/login")
     }else{
-      router.push("user/account-setting")
+      router.push("/user/account-setting")
     }
   }
+
   
 
   return (

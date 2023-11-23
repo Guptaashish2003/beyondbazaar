@@ -35,6 +35,9 @@ const UserSchema = new mongoose.Schema(
     },
     address: [
       {
+        name:{
+          type: String,
+        },
         street: {
           type: String,
           maxlength: [30, "Street cannot be more than 60 characters"],
@@ -56,6 +59,9 @@ const UserSchema = new mongoose.Schema(
           type: String,
           required: [true, "Please provide your zip"],
           maxlength: [30, "Zip cannot be more than 60 characters"],
+        },
+        phoneNo: {
+          type:Number,
         },
       }
     ],

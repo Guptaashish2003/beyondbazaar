@@ -23,7 +23,7 @@ export async function PUT(request) {
         const user = await User.findByIdAndUpdate(check._id, {name, email, password,address,phoneNo});
 
 
-        return NextResponse.json({ sucess:true ,message: "Updated-successfully",data:user }, { status: 200 });
+        return NextResponse.json({ success:true ,message: "Updated-successfully",data:user }, { status: 200 });
         
     } catch (error) {
         return NextResponse.json(
