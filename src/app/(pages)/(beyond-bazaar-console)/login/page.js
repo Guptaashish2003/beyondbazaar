@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import {React,useState} from "react";
 import loginp from "@/assets/loginp.jpg";
 import Image from "next/image";

@@ -10,7 +10,7 @@ const Content = ({ title, description, btnName }) => {
           <h1 className="text-black text-lg" >{title}</h1>
           <p className="text-gray-800">{description}</p>
         </div>
-        <SubmitButton className="border rounded-md border-gray-600 w-16">{btnName}</SubmitButton>
+        <div className="border rounded-md border-gray-600 w-16">{btnName}</div>
       </div>
       <hr className="mt-4 border border-slate-500 mx-auto " />
     </>
