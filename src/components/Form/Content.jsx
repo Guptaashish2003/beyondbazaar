@@ -5,7 +5,7 @@ import SubmitButton from "./SubmitButton";
 const Content = ({ title, description, btnName }) => {
   return (
     <>
-      <div className=" mx-auto flex justify-between items-center p-5">
+      <div className=" mx-auto w-full flex justify-between items-center p-5">
         <div className="flex flex-col gap-3">
           <h1 className="text-black text-lg" >{title}</h1>
           <p className="text-gray-800">{description}</p>

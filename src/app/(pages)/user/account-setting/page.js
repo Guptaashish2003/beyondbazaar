@@ -113,7 +113,12 @@ const Page = () => {
               }>
           {verification?
           <div>
-            Security form
+            <h2 className="font-bold text-center text-2xl text-green-500">
+            verification success
+          </h2>
+            {
+            router.push("/user/login-security")
+            }
           </div>:<form
             className="flex flex-col gap-4 py-2"
           >
@@ -130,7 +135,7 @@ const Page = () => {
                   message: "Invalid email address",
                 },
               })}
-              readOnly={true}
+              // readOnly={true}
               className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             />
             <div className="relative">
