@@ -23,7 +23,7 @@ const ProductPhotos = ({img}) => {
 
   const openFullScreen = () => {
     setShowFullScreen(!showFullScreen);
-    console.log(showFullScreen)
+    
   };
 
 
@@ -40,6 +40,7 @@ useEffect(() => {
 
 }, [screenWidth]);
 
+console.log(img)
   return (
     <div className={showFullScreen?"fixed top-0 right-0 w-screen h-screen flex bg-white z-[1000]":"flex w-1/2 max-lg:w-full flex-col gap-y-2 "}>
       <div className={`mx-auto relative ${showFullScreen?"w-3/4 ":"w-11/12"}` }>
