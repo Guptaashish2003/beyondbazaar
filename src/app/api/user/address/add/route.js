@@ -13,12 +13,12 @@ export async function POST(request, context) {
         return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
     }
     const data = await request.json();
-    const {name,street,city,state,zip,phoneNo} = data
+    const {name,email,street,city,state,pincode,country,number,District} = data
+    console.log(data)
     const user = await User.findById(check._id);
-    console.log(user)
-    user.address.push({name,street,city,state,zip,phoneNo});
-    await user.save();
-     return NextResponse.json({ sucess:true ,message: "address added successfully",data:user.address }, { status: 200 });
+    user.address.push({name,email,street,city,state,country,pincode,number,District});
+    await user.save({ validateBeforeSave: false });
+     return NextResponse.json({ success:true ,message: "address added successfully",data:user.address }, { status: 200 });
       
    } catch (error) {
        return NextResponse.json(

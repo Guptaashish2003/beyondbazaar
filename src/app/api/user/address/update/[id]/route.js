@@ -14,19 +14,19 @@ export async function PUT(request, context) {
     }
     const data = await request.json();
     const id = context.params.id;
-    const {name,street,city,state,zip,phoneNo} = data
+    const {name,email,street,city,state,pincode,country,number,District} = data
     const user = await User.findById(check._id);
     const edit = user.address.map(data=>{
       if (data._id.valueOf() === id) {
-        return {name,street,city,state,zip,phoneNo}
+        return {_id:id,name,email,street,city,state,pincode,country,number,District}
       }
       else{
         return data;
       }
     })
     user.address = edit;
-    await user.save();
-     return NextResponse.json({ sucess:true ,message: "address updated successfully",data:user.address }, { status: 200 });
+    await user.save({ validateBeforeSave: false });
+     return NextResponse.json({ success:true ,message: "address updated successfully",data:user.address }, { status: 200 });
       
    } catch (error) {
        return NextResponse.json(

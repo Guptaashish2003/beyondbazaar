@@ -1,12 +1,22 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
+import { useParams } from "next/navigation";
+import { usePostDataProtected } from "@/redux/api/usePostData";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
+import { useGetDataProtected } from "@/redux/api/useGetData";
+import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
+
 
 const CheckOutPage = () => {
+  const {id} = useParams();
+  const router = useRouter()
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
     name: Yup.string().required("Name is required"),
@@ -14,7 +24,7 @@ const CheckOutPage = () => {
       .required("Number is required")
       .min(10, "Number must be at least 10 characters")
       .max(10, "Number must not exceed 10 characters"),
-    address: Yup.string().required("Address is required"),
+    street: Yup.string().required("Address is required"),
 
     city: Yup.string().required("City is required"),
     country: Yup.string().required("Country is required"),
@@ -27,13 +37,58 @@ const CheckOutPage = () => {
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
-  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { register, handleSubmit, formState,setValue } = useForm(formOptions);
   const { errors } = formState;
-  function onSubmit(data) {
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    console.log(data);
+  const [loading,setLoading] = useState(false);
+  const [loadingScreen,setLoadingScreen] = useState(false);
+  useEffect(()=>{setUserData()},[])
+  const setUserData = async () => {
+    try {
+      if (id !== "add-new-address") {
+        setLoadingScreen(true);
+        const {data} = await useGetDataProtected(`/api/user/address/single/${id}`)
+        setLoadingScreen(false);
+        const address = data[0]
+        for (const key in address) {
+          setValue(key,address[key])
+        }
+      }
+      
+    } catch (error) {
+      setLoadingScreen(true);
+      toast.error(error.response.data.message);
+    }
   }
+  
+  async function onSubmit(data) {
+    try {
+          let res;
+          setLoading(true);
+      if (id === "add-new-address") {
+         res = await usePostDataProtected("/api/user/address/add", data)
+      }else{
+        res = await useUpdateDataProtected(`/api/user/address/update/${id}`, data)
+      }
+      setLoading(false)
+      if (res.success) {
+        toast.success(res.message);
+        router.back();
 
+      }
+      
+    } catch (error) {
+      setLoading(false)
+      console.log(error);
+      toast.error(error.response.data.message);
+      router.back();
+      console.log(error);
+      
+    }
+
+  }
+if(loadingScreen){
+  return(<Loading></Loading>)
+}
   return (
     <>
       <div className="min-h-screen p-6 bg-gray-100 flex gap-1 items-center justify-center lg:mt-16 mt-8">
@@ -43,7 +98,8 @@ const CheckOutPage = () => {
               <div className="w-2/3  flex  mx-auto justify-between max-md:flex-col max-md:items-center  text-center">
                 <p className="">Time is Money Get Your Location Instant !!</p>
                 <div className="inline-flex items-end">
-                  <SubmitButton className="bg-gray-500 hover:bg-black max-md:h-11 max-md:text-xs text-white font-bold py-2 px-4 rounded">
+                  <SubmitButton
+                   className="bg-gray-500 hover:bg-black max-md:h-11 max-md:text-xs text-white font-bold py-2 px-4 rounded">
                     Get Location
                   </SubmitButton>
                 </div>
@@ -142,7 +198,7 @@ const CheckOutPage = () => {
                     <div className="md:col-span-3">
                       <label >Address / Street</label>
                       <InputBtn
-                        {...register("address", {
+                        {...register("street", {
                           required: "Address is required",
                           pattern: {
                             value: /^[A-Za-z]+$/i,
@@ -150,15 +206,15 @@ const CheckOutPage = () => {
                           },
                         })}
                         type="text"
-                        name="address"
-                        id="address"
+                        name="street"
+                        id="street"
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         defaultValue=""
                         placeholder=""
                       />
-                      {errors.address && (
+                      {errors.street && (
                         <p className="text-red-500 text-xs italic">
-                          {errors.address.message}
+                          {errors.street.message}
                         </p>
                       )}
                     </div>
@@ -309,9 +365,11 @@ const CheckOutPage = () => {
                     <div className="md:col-span-5 text-right">
                       <div className="inline-flex items-end max-md:flex max-md:justify-center max-md:!items-center">
                         <SubmitButton
+                        loading={loading}
+                        value={id === "add-new-address"?"add New Address":"Edit Address"}
                           className="bg-gray-500 hover:bg-black text-white font-bold py-2 px-4 rounded"
                         >
-                          Submit
+                      
                         </SubmitButton>
                       </div>
                     </div>
