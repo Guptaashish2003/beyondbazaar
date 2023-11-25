@@ -11,7 +11,7 @@ function Modal({withoutBtn,onclose,btnClass,btnName="Button",btnIcon, children, 
       {withoutBtn?"":<button
         onClick={() => showRef?.current?.showModal()}
         {...props}
-        className={`${btnClass} w-full flex justify-center items-center`}
+        className={`${btnClass}   flex justify-center items-center`}
       >
        { btnName}{btnIcon}
       </button>}

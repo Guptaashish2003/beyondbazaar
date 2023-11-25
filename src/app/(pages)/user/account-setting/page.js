@@ -89,7 +89,7 @@ const Page = () => {
         <Link href="your-orders" passHref>
           <YourAccSetting
             onClick={handleYourOrders}
-            img={<FaShoppingBasket className="w-1/3  h-20 mx-auto max-md:w-1/2 object-cover" />}
+            img={<FaShoppingBasket className="w-1/3  h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
             title={"Your Orders"}
             description={"Track Orders, Buy again "}
           />
@@ -98,7 +98,7 @@ const Page = () => {
         <Link href="/user/your-address" passHref>
           <YourAccSetting
             onClick={handleYourAddress}
-            img={<FaLocationDot className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
+            img={<FaLocationDot className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
             title={"Your Addresses"}
             description={"Edit your address for your gifts and orders  "}
           />
@@ -106,7 +106,7 @@ const Page = () => {
 
         <Modal btnName={
           <YourAccSetting
-            img={<MdOutlineSecurity className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
+            img={<MdOutlineSecurity className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
             title={"Login & Security"}
             description={"Edit login, name, mobile number, email "}
           />
@@ -179,7 +179,7 @@ const Page = () => {
 
         <Link href="/user/your-payment-options" passHref>
           <YourAccSetting
-            img={<FaRegCreditCard className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
+            img={<FaRegCreditCard className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
             title={"Payment Options"}
             description={"Edit or add your payment options "}
           />
@@ -187,7 +187,7 @@ const Page = () => {
 
         <Link href="/user/your-address" passHref>
           <YourAccSetting
-            img={<MdSupportAgent className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
+            img={<MdSupportAgent className="w-1/3 h-20 max-md:h-12  mx-auto max-md:w-1/2 object-cover" />}
             title={"Help & Support"}
             description={"Contact us, and we'll be happy to assist you, just like family."}
           />
@@ -195,7 +195,7 @@ const Page = () => {
 
         <YourAccSetting
           onClick={handleSignOut}
-          img={<PiSignOutBold className="w-1/3 h-20 mx-auto max-md:w-1/2 object-cover" />}
+          img={<PiSignOutBold className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
           title={"Log Out"}
           description={"Thank you for visiting. I can't wait to meet you again."}
         />

@@ -35,7 +35,8 @@ const Addresses = ({id,setAddress,name,email,street,state,city,country,district,
         <p className="text-gray-900 text-lg">{name}</p>
         <p className="text-gray-900 text-md">{street}</p>
         <p className="text-gray-900 text-md">{city}</p>
-        <p className="text-gray-900 text-md">{state}, {state} {pincode}</p>
+        <p className="text-gray-900 text-md">{district}</p>
+        <p className="text-gray-900 text-md">{state}-{pincode}</p>
         <p className="text-gray-900 text-md">{country}</p>
         <p className="text-gray-900 text-md">Phone number: +91 {number}</p>
         <div>

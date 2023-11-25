@@ -36,7 +36,6 @@ const CheckOutPage = () => {
       .max(6, "Pincode must not exceed 6 characters"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-
   const { register, handleSubmit, formState,setValue } = useForm(formOptions);
   const { errors } = formState;
   const [loading,setLoading] = useState(false);
@@ -366,7 +365,7 @@ if(loadingScreen){
                       <div className="inline-flex items-end max-md:flex max-md:justify-center max-md:!items-center">
                         <SubmitButton
                         loading={loading}
-                        value={id === "add-new-address"?"add New Address":"Edit Address"}
+                        value={id === "add-new-address"?"Add Address":"Edit Address"}
                           className="bg-gray-500 hover:bg-black text-white font-bold py-2 px-4 rounded"
                         >
                       
