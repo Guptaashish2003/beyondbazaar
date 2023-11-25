@@ -6,7 +6,7 @@ class Apifeatures{
 // search function 
     search(){
         const keyword = this.queryStr.keyword ? {
-            productName:{
+            productTags:{
                 $regex: this.queryStr.keyword,
                 $options: 'i'
             }

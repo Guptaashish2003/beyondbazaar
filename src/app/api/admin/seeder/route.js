@@ -18,12 +18,12 @@ export async function GET(request){
         //     return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         // }
 
-        await User.deleteMany();
+        // await User.deleteMany();
         await Product.deleteMany();
         // await Category.deleteMany();
         // await SubCategory.deleteMany();
         console.log("all Data deleted...")
-        await User.insertMany(userdata)
+        // await User.insertMany(userdata)
         // await Product.insertMany(product)
 
         for (let i = 0; i < product.length; i++) {  //insert product using  for loop by creating a unique slug of the product
@@ -32,11 +32,11 @@ export async function GET(request){
         }
         // await Category.insertMany(category)
         // await SubCategory.insertMany(subCategory)
-        NextResponse.json({success:true,message:"Data added successfully"},{status:200})
+       return NextResponse.json({success:true,message:"Data added successfully"},{status:200})
         
     } catch (error) {
         console.log(error.message)
-        NextResponse.json({success:true,message:error.message},{status:200})
+        return NextResponse.json({success:true,message:error.message},{status:200})
         
     }
   

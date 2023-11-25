@@ -14,6 +14,7 @@ const page = async ({ params }) => {
   if (!data) {
     return notFound();
   }
+
   return (
     <>
     <div className="flex  justify-center flex-wrap  p-4 lg:mt-[--nav-spc] mt-12">
