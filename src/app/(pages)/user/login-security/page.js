@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 import { useState } from "react";
 
+
 const page = () => {
   const [verification, setVerification] = useState(false);
   const [loading, setLoading] = useState();
@@ -19,21 +20,30 @@ const page = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
-  const validationSchema = Yup.object().shape({
+  const nameValidationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-  //   password: Yup.string()
-  //     .required("Password is required")
-  //     .min(6, "Password must be at least 6 characters long"),
-  //   new_password: Yup.string()
-  //     .required("Password is required")
-  //     .min(6, "Password must be at least 6 characters long"),
-  //   confirm_password: Yup.string()
-  //     .required("Password is required")
-  //     .min(6, "Password must be at least 6 characters long"),
   });
-  const formOptions = { resolver: yupResolver(validationSchema) };
-  const { register, handleSubmit, formState } = useForm(formOptions);
-  const { errors } = formState;
+
+  const passwordValidationSchema = Yup.object().shape({
+    current_password: Yup.string().required("Current Password is required"),
+    new_password: Yup.string().required("New Password is required").min(6, "Password must be at least 6 characters long"),
+    confirm_password: Yup.string().required("Confirm Password is required").min(6, "Password must be at least 6 characters long"),
+  });
+
+  const formOptionsName = { resolver: yupResolver(nameValidationSchema) };
+  const formOptionsPassword = { resolver: yupResolver(passwordValidationSchema) };
+
+  const {
+    register: registerName,
+    handleSubmit: handleSubmitName,
+    formState: { errors: errorsName },
+  } = useForm(formOptionsName);
+
+  const {
+    register: registerPassword,
+    handleSubmit: handleSubmitPassword,
+    formState: { errors: errorsPassword },
+  } = useForm(formOptionsPassword);
   const changeName= async (data) => {
     console.log("im called");
     console.log(data);
@@ -92,7 +102,7 @@ const page = () => {
             </div>
           ) : (
             <form
-              onSubmit={handleSubmit(changeName)}
+              onSubmit={handleSubmitName(changeName)}
               className="flex flex-col gap-4 py-2"
             >
               <h2 className="font-bold text-center text-2xl text-[--first-color]">
@@ -102,11 +112,11 @@ const page = () => {
                 type="text"
                 name="name"
                 placeholder="Enter your name"
-                {...register("name", { required: "Name is required" })}
+                {...registerName("name", { required: "Name is required" })}
                 className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
               />
 
-              {errors?.name && (
+              {errorsName?.name && (
                 <p className="text-red-500 text-xs">{errors?.name?.message}</p>
               )}
               <SubmitButton
@@ -137,7 +147,7 @@ const page = () => {
               </h2>
             </div>
           ) : (
-            <form onSubmit={(e) => { e.preventDefault(); handleSubmit(changePassword) }} className="flex flex-col gap-4 py-2">
+            <form onSubmit={handleSubmitPassword(changePassword) } className="flex flex-col gap-4 py-2">
               <h2 className="font-bold text-center text-2xl text-[--first-color]">
                 password update
               </h2>
@@ -146,35 +156,40 @@ const page = () => {
                   placeholder="Current Password"
                   name="password"
                   type={"password"}
-                  // {...register("current_password", {
-                  //   required: "Password is required",
-                  //   minLength: {
-                  //     value: 6,
-                  //     message: "Password must be at least 6 characters long",
-                  //   },
-                  // })}
+                  {...registerPassword("current_password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters long",
+                    },
+                  })}
                   className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                 />
               </div>
-             {/* { errors.current_password && (
+             { errorsPassword.current_password && (
                 <p className="text-red-500 text-xs">
-                  {errors.current_password.message}
+                  {errorsPassword.current_password.message}
                 </p>
-              )} */}
+              )}
               <div className="relative">
                 <InputBtn
                   name="new_password"
                   placeholder="New Password"
                   type={passwordVisible ? "text" : "password"}
-                  // {...register("new_password", {
-                  //   required: "Password is required",
-                  //   minLength: {
-                  //     value: 6,
-                  //     message: "Password must be at least 6 characters long",
-                  //   },
-                  // })}
+                  {...registerPassword("new_password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters long",
+                    },
+                  })}
                   className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                 />
+                {errorsPassword.new_password && (
+                  <p className="text-red-500 text-xs">
+                    {errorsPassword.new_password.message}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
@@ -187,9 +202,9 @@ const page = () => {
                   )}
                 </button>
               </div>
-              {errors.new_password && (
+              {errorsPassword.new_password && (
                 <p className="text-red-500 text-xs">
-                  {errors.new_password.message}
+                  {errorsPassword.new_password.message}
                 </p>
               )}
               <div className="relative">
@@ -197,13 +212,13 @@ const page = () => {
                   name="confirm_password"
                   placeholder="Confirm Password"
                   type={"password"}
-                  // {...register("confirm_password", {
-                  //   required: "Password is required",
-                  //   minLength: {
-                  //     value: 6,
-                  //     message: "Password must be at least 6 characters long",
-                  //   },
-                  // })}
+                  {...registerPassword("confirm_password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters long",
+                    },
+                  })}
                   className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                 />
               </div>
