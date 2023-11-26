@@ -1,22 +1,43 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputBtn from '../Form/InputBtn'
 import {AiFillCloseCircle } from "react-icons/ai";
 import { BiSolidSearch } from "react-icons/bi";
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useDebounce } from 'use-debounce';
+import { useGetData } from '@/redux/api/useGetData';
 function SearchBar({options}) {
   const [searchText,setSearchText] = useState("")
   const searchParams = useSearchParams()
-
-    const [hide, setHide] = useState(false);
+  const [suggest, setSuggest] = useState([])
+  const router = useRouter()
+  const [keywords] = useDebounce(searchText,500)
+  const [hide, setHide] = useState(false);
     const onSearch = () => {
       if (hide) {
-        console.log(searchText)
-        console.log(searchParams.get('page'));
+        router.push("/api/product/all-product&keyword=${query}")
 
       }
     }
-    
+    useEffect(()=>{
+      if(keywords) suggestion()
+    },[keywords])
+    const suggestion = async ()=>{
+      let query = keywords.replaceAll(' ', '+');                 
+      const res = await useGetData(`/api/product/all-product?fields=productTags&keyword=${query}`)
+      let result = [];
+      if(res.success){
+        res?.data?.filter(product =>{
+           product.productTags.filter(tag =>{
+            if(tag.toLowerCase().includes(keywords.toLowerCase())){
+              if(result.length < 10)
+              result.push(tag);
+            }
+          })
+        })
+      }
+      setSuggest(result);
+    }
   return (
     <div className={`absolute right-0 left-0 mx-auto w-1/3 flex justify-center max-md:w-1/2 max-lg:w-1/2 max-sm:w-5/6 ` }>
     {hide?<div className='bg-blor'></div>:""}
