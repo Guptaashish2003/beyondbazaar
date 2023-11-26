@@ -17,9 +17,9 @@ export async function PUT(request) {
           }
         const data = await request.json();
         const {name, email, password,address,phoneNo} = data;
-        if (!name || !email || !password || !address || !phoneNo) {
-            return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
-        }
+        // if (!name || !email || !password || !address || !phoneNo) {
+        //     return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
+        // }
         const user = await User.findByIdAndUpdate(check._id, {name, email, password,address,phoneNo});
 
 

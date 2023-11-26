@@ -17,7 +17,7 @@ export async function GET(request, context) {
           { status: 400 }
         );
       }
-     return NextResponse.json({ sucess:true ,message: "get-login-data-successfully",data:user }, { status: 200 });
+     return NextResponse.json({ success:true ,message: "get-login-data-successfully",data:user }, { status: 200 });
       
    } catch (error) {
        return NextResponse.json(

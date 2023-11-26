@@ -11,7 +11,7 @@ export async function GET(request, context) {
      const check =  await isOauth(request);
     //  console.log(check)
     
-     const response = NextResponse.json({ sucess:true ,message: "logout-successfully"}, { status: 200 });
+     const response = NextResponse.json({ success:true ,message: "logout-successfully"}, { status: 200 });
       
    } catch (error) {
        return NextResponse.json(

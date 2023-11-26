@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import YourAccSetting from "@/components/ProfileSetting/YourAccSetting";
 import { FaShoppingBasket } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -20,13 +20,26 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from 'yup';
 import { usePostData } from "@/redux/api/usePostData";
+import {useDispatch} from "react-redux";
+import {verify} from "@/redux/action/loginSecuritySlice"; 
+
 const Page = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const session = useSession();
   const [loading,setLoading] = useState();
   const [verification,setVerification] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  useEffect(()=>{
+      useGetDataProtected("/api/user/me").then((user) => {
+        if (user.success) {
+          setValue("email", user.data.email);
+      }
+    }).catch((error) => {
+      console.log(error)
+      });
 
+  },[])
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
@@ -38,7 +51,7 @@ const Page = () => {
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
+  const { register, handleSubmit, reset, formState,setValue } = useForm(formOptions);
   const { errors } = formState;
   const handleYourOrders = () => {
     router.push("/your-orders");
@@ -72,6 +85,7 @@ const Page = () => {
     if (user.success) {
       setLoading(false);
       setVerification(true);
+      dispatch(verify(true));
     }
 
     } catch (error) {
@@ -128,6 +142,8 @@ const Page = () => {
             <InputBtn
               type="email"
               placeholder="Email"
+              
+              readOnly={true}
               {...register("email", {
                 required: "Email is required",
                 pattern: {
@@ -135,7 +151,6 @@ const Page = () => {
                   message: "Invalid email address",
                 },
               })}
-              // readOnly={true}
               className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             />
             <div className="relative">

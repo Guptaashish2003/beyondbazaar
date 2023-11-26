@@ -11,31 +11,45 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from "yup";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 import { useState } from "react";
-
-
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 const page = () => {
+  const router = useRouter();
   const [verification, setVerification] = useState(false);
   const [loading, setLoading] = useState();
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const isVerify = useSelector((state) => state.loginSecurity.verification);
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
   const nameValidationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
   });
+  if (!isVerify) {
+    router.back();
+    
+  }
 
   const passwordValidationSchema = Yup.object().shape({
     current_password: Yup.string().required("Current Password is required"),
-    new_password: Yup.string().required("New Password is required").min(6, "Password must be at least 6 characters long"),
-    confirm_password: Yup.string().required("Confirm Password is required").min(6, "Password must be at least 6 characters long"),
+    new_password: Yup.string()
+      .required("New Password is required")
+      .min(6, "Password must be at least 6 characters long"),
+    confirm_password: Yup.string()
+      .required("Confirm Password is required")
+      .min(6, "Password must be at least 6 characters long")
+      .oneOf([Yup.ref("new_password"), null], "Passwords must match"),
   });
 
   const formOptionsName = { resolver: yupResolver(nameValidationSchema) };
-  const formOptionsPassword = { resolver: yupResolver(passwordValidationSchema) };
+  const formOptionsPassword = {
+    resolver: yupResolver(passwordValidationSchema),
+  };
 
   const {
     register: registerName,
     handleSubmit: handleSubmitName,
+    
     formState: { errors: errorsName },
   } = useForm(formOptionsName);
 
@@ -44,15 +58,15 @@ const page = () => {
     handleSubmit: handleSubmitPassword,
     formState: { errors: errorsPassword },
   } = useForm(formOptionsPassword);
-  const changeName= async (data) => {
-    console.log("im called");
-    console.log(data);
+  const changeName = async (data) => {
+    
 
     try {
       setLoading(true);
       const user = await useUpdateDataProtected("/api/user/update/", data);
       if (user.success) {
         setVerification(true);
+      
       }
       setLoading(false);
     } catch (error) {
@@ -62,15 +76,10 @@ const page = () => {
     }
   };
   const changePassword = async (data) => {
-    console.log("im called");
-    console.log(data);
 
     try {
       setLoading(true);
-      const user = await useUpdateDataProtected(
-        "/api/user/update",
-        data
-      );
+      const user = await useUpdateDataProtected("/api/user/update-password", data);
       if (user.success) {
         setVerification(true);
       }
@@ -80,14 +89,14 @@ const page = () => {
       toast.error(error.message);
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="border-2 border-solid border-gray-500 mt-32 w-1/2 mx-auto">
       <div className=" mx-auto w-full flex justify-between items-center p-5">
         <div className="flex items-center text-center flex-col gap-3">
-          <h1 className="text-black text-lg">{"title"}</h1>
-          <p className="text-gray-800">{"description"}</p>
+          <h1 className="text-black text-lg">Name</h1>
+          <p className="text-gray-800">{"data.name"}</p>
         </div>
 
         <Modal
@@ -131,6 +140,7 @@ const page = () => {
         </Modal>
       </div>
       <hr className="mt-4 border-1 border-slate-500 mx-auto " />
+      
       <div className=" mx-auto w-full flex justify-between items-center p-5">
         <div className="flex items-center text-center flex-col gap-3">
           <h1 className="text-black text-lg">{"title"}</h1>
@@ -147,7 +157,10 @@ const page = () => {
               </h2>
             </div>
           ) : (
-            <form onSubmit={handleSubmitPassword(changePassword) } className="flex flex-col gap-4 py-2">
+            <form
+              onSubmit={handleSubmitPassword(changePassword)}
+              className="flex flex-col gap-4 py-2"
+            >
               <h2 className="font-bold text-center text-2xl text-[--first-color]">
                 password update
               </h2>
@@ -165,12 +178,12 @@ const page = () => {
                   })}
                   className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                 />
+                {errorsPassword.current_password && (
+                  <p className="text-red-500 text-xs">
+                    {errorsPassword.current_password.message}
+                  </p>
+                )}
               </div>
-             { errorsPassword.current_password && (
-                <p className="text-red-500 text-xs">
-                  {errorsPassword.current_password.message}
-                </p>
-              )}
               <div className="relative">
                 <InputBtn
                   name="new_password"
@@ -201,12 +214,8 @@ const page = () => {
                     <AiFillEye className="text-[--eye-color]" />
                   )}
                 </button>
+              
               </div>
-              {errorsPassword.new_password && (
-                <p className="text-red-500 text-xs">
-                  {errorsPassword.new_password.message}
-                </p>
-              )}
               <div className="relative">
                 <InputBtn
                   name="confirm_password"
@@ -221,6 +230,11 @@ const page = () => {
                   })}
                   className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                 />
+                {errorsPassword.confirm_password && (
+                  <p className="text-red-500 text-xs">
+                    {errorsPassword.confirm_password.message}
+                  </p>
+                )}
               </div>
 
               <SubmitButton
@@ -233,6 +247,13 @@ const page = () => {
           )}
         </Modal>
       </div>
+      <hr className="mt-4 border-1 border-slate-500 mx-auto " />
+      <div className=" mx-auto w-full flex justify-between items-center p-5">
+        <div className="flex items-center text-center flex-col gap-3">
+          <h1 className="text-black text-lg">{"title"}</h1>
+          <p className="text-gray-800">{"description"}</p>
+        </div>
+        </div>
       {/* <Content title={"name"} btnName={"edit"} description={"Ashish Gupta"} />
       <Content title={"name"} btnName={"edit"} description={"Ashish Gupta"} />
       <Content title={"name"} btnName={"edit"} description={"Ashish Gupta"} />
