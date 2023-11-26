@@ -12,10 +12,10 @@ export async function GET(request){
       const keyword = new URLSearchParams(rawParams).get('keyword')
       const limit = new URLSearchParams(rawParams).get('limit')
       const page = new URLSearchParams(rawParams).get('page')
-      const filters = new URLSearchParams(rawParams).get('filters')
+      const fields = new URLSearchParams(rawParams).get('fields')
       const sort = new URLSearchParams(rawParams).get('sort')
-      
-      const apiFeatures = new Apifeatures(Product.find(),{keyword,limit,page,filters,sort})
+      console.log(keyword,"keyword",fields)
+      const apiFeatures = new Apifeatures(Product.find(),{keyword,limit,page,fields,sort})
       .search()
       .filter()
       .sort()
