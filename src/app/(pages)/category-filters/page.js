@@ -6,14 +6,14 @@ import React from 'react'
 
 
 async function page(context) {
-  const {page} = context.searchParams
-  const {data} = await useGetData("/product/all-product")
-
+  const {page,keyword} = context.searchParams
+  const {data} = await useGetData(`/product/all-product?keyword=${keyword}`)
+console.log("key",keyword,"keyword")
   return (
     <>
      <FilterComponent>
         <div className='flex flex-wrap justify-evenly'>
-          {data.map((pdt)=><Productcard animation={true}/>)}
+          {data.map((pdt)=><Productcard key={pdt._id} animation={true} img={pdt?.productImage[0]} price={pdt.productPrice} title={pdt.productName} slug={pdt.slug}/>)}
           
 
   
