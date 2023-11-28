@@ -194,14 +194,16 @@ const Page = () => {
 
         <Link href="/user/your-payment-options" passHref>
           <YourAccSetting
+            onClick ={()=>router.push("/user/your-payment-options")}
             img={<FaRegCreditCard className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
             title={"Payment Options"}
             description={"Edit or add your payment options "}
           />
         </Link>
 
-        <Link href="/user/your-address" passHref>
+        <Link href="/contact-us" passHref>
           <YourAccSetting
+            onClick ={()=>router.push("/contact-us")}
             img={<MdSupportAgent className="w-1/3 h-20 max-md:h-12  mx-auto max-md:w-1/2 object-cover" />}
             title={"Help & Support"}
             description={"Contact us, and we'll be happy to assist you, just like family."}
