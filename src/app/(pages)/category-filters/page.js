@@ -6,9 +6,15 @@ import React from 'react'
 
 
 async function page(context) {
-  const {page,keyword} = context.searchParams
-  const {data} = await useGetData(`/product/all-product?keyword=${keyword}`)
-console.log("key",keyword,"keyword")
+  let {page=1,keyword} = context.searchParams
+  let link
+  if(keyword){
+    link = `/product/all-product?keyword=${keyword}`
+
+  }else{
+    link = `/product/all-product`
+  }
+  const {data,length} = await useGetData(link)
   return (
     <>
      <FilterComponent>
@@ -19,7 +25,7 @@ console.log("key",keyword,"keyword")
   
     
         </div>
-           <Pagination className='justify-center mt-4'/>
+           <Pagination keyword={keyword} page={page} documentCount={length} className='justify-center mt-4'/>
      </FilterComponent>
     </>
   )

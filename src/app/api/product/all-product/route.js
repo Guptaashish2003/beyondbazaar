@@ -22,9 +22,13 @@ export async function GET(request){
       .limitFields()
       .paginate()
       const product = await apiFeatures.query;
-      const lenProduct = product.length
-      // const lenProduct = product.length
-      return NextResponse.json({ success: true, length: lenProduct, message: "products Found", data: product }, { status: 200 });
+      const countQuery = new Apifeatures(Product.find(),{keyword,limit,page,fields,sort})
+      .search()
+      .filter()
+      .sort()
+      .limitFields()
+      const productcount = await Product.countDocuments(countQuery.query);
+      return NextResponse.json({ success: true, length: productcount, message: "products Found", data: product }, { status: 200 });
       
    } catch (error) {
       return NextResponse.json({success:false, message:error.message},{status:400})

@@ -1,11 +1,21 @@
+import Link from "next/link";
 import React from "react";
 
-function Pagination({className=""}) {
+function Pagination({page,keyword,documentCount,className=""}) {
+  const pages = Math.ceil(documentCount / 10);
+  
   return (
-    <div className={`flex flex-row mx-auto gap-x-4 ${className}`}>
-      <button
-        type="button"
-        className="bg-gray-800 text-white   border-gray-100 py-2 hover:bg-white hover:text-gray-800 px-3"
+    <>
+   {documentCount <= 10?"": <div className={`flex flex-row mx-auto gap-x-4 ${className}`}>
+      <Link
+        href={page!== 1?{
+          pathname: "/category-filters",
+          query: {
+            keyword:keyword,
+            page: Number(page) - 1,
+          },
+        }:""}
+        className={page!== 1?"bg-gray-800 text-white  py-2  border-gray-200 hover:bg-white hover:text-gray-800 px-3":"text-white bg-slate-500 py-2 px-3 cursor-not-allowed"}
       >
         <div className="flex flex-row align-middle">
           <svg
@@ -22,10 +32,17 @@ function Pagination({className=""}) {
           </svg>
           <p className="ml-2">Prev</p>
         </div>
-      </button>
-      <button
-        type="button"
-        className="bg-gray-800 text-white  py-2  border-gray-200 hover:bg-white hover:text-gray-800 px-3"
+      </Link>
+
+      <Link
+        href={page<pages?{
+          pathname: "/category-filters",
+          query: {
+            keyword:keyword,
+            page: Number(page) + 1,
+          },
+        }:""}
+        className={page<pages?"bg-gray-800 text-white  py-2  border-gray-200 hover:bg-white hover:text-gray-800 px-3":"text-white bg-slate-500 py-2 px-3 cursor-not-allowed"}
       >
         <div className="flex flex-row align-middle">
           <span className="mr-2">Next</span>
@@ -42,8 +59,9 @@ function Pagination({className=""}) {
             />
           </svg>
         </div>
-      </button>
-    </div>
+      </Link>
+    </div>}
+    </>
   );
 }
 
