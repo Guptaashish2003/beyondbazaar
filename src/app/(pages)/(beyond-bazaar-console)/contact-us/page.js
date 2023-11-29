@@ -7,8 +7,10 @@ import { IoCallOutline } from "react-icons/io5";
 import { RiHomeOfficeLine } from "react-icons/ri";
 import InputBtn from "@/components/Form/InputBtn";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { usePostData } from "@/redux/api/usePostData";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -25,11 +27,26 @@ const page = () => {
   const formOptions = { resolver: yupResolver(validationSchema) };
   const {register, handleSubmit,  formState} = useForm(formOptions);
   const {errors} = formState;
-  const onSubmit = (data) => {
-    setLoading(true);
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+    const postdata = await usePostData("api/contactUs", {
+      email: data.email,
+    });
+    if (postdata.success) {
+      toast(postdata.message);
+    } else {
+      toast.error(postdata.message);
+    }
     setLoading(false);
-  }
+    // if(!data.email){
+    //     return
+    // }
+    } catch (error) {
+      toast.error(error.message);
+    }
+    
+  };
   return (
     <>
       {/* ====== Contact Section Start */}
