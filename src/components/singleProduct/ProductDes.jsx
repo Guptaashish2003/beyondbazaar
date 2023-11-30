@@ -8,7 +8,9 @@ import SubmitButton from "../Form/SubmitButton";
 import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
+import { useRouter } from "next/navigation";
 const ProductDes = ({id,title,discription,price,stock,className}) => {
+  const router = useRouter();
   const [productCount,setProductCount] = useState(1)
   const dispatch = useDispatch()
   const increment = () => {
@@ -33,7 +35,13 @@ const ProductDes = ({id,title,discription,price,stock,className}) => {
   
   const addToCartProduct = () => {
     dispatch(addToCart({productID:id,productQuantity:productCount}))
+
   };
+  const orderNow = () => {
+    dispatch(addToCart({productID:id,productQuantity:productCount}))
+    router.push("/user/shopping-cart")
+    
+  }
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
       <div className="  my-4 text-bold mr-4">
@@ -68,13 +76,15 @@ const ProductDes = ({id,title,discription,price,stock,className}) => {
         className="my-4 font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl overflow-hidden"
         value={"Add To Cart"}
         onClick={addToCartProduct}
-      >
+        >
         {" "}
         <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />
       </SubmitButton>
       <SubmitButton
         className="my-4 font-bold  orderBounce w-11/12 h-12 border-2 border-solid border-slate-400 text-xl bg-black text-white"
         value={"Order Now"}
+        onClick={orderNow}
+        
         >
         {" "}
         <FiFastForward className="arrowAnime w-6 h-auto" />

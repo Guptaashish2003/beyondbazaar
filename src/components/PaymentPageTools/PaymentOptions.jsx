@@ -17,7 +17,7 @@ const PaymentOptions = ({ paymentOptions, setSelectedPaymentOption }) => {
       />
       <label
         htmlFor="horizontal-list-radio-id"
-        className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-500"
       >
         {paymentOptions}
       </label>
