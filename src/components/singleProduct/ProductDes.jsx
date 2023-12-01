@@ -8,6 +8,8 @@ import SubmitButton from "../Form/SubmitButton";
 import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
+import { useGetDataProtected } from "@/redux/api/useGetData";
+import { createOrder } from "@/redux/action/ordersServices";
 import { useRouter } from "next/navigation";
 const ProductDes = ({id,title,discription,price,stock,className}) => {
   const router = useRouter();
@@ -33,14 +35,23 @@ const ProductDes = ({id,title,discription,price,stock,className}) => {
     }
   }
   
-  const addToCartProduct = () => {
+  const  addToCartProduct =  () => {
     dispatch(addToCart({productID:id,productQuantity:productCount}))
-
-  };
-  const orderNow = () => {
-    dispatch(addToCart({productID:id,productQuantity:productCount}))
-    router.push("/user/shopping-cart")
     
+    
+  };
+  const orderNow = async () => {
+    dispatch(createOrder({productID:id,productQuantity:productCount}))
+    const {data} = await useGetDataProtected('/api/user/me')
+    console.log(data);
+    const userAddress = data.address;
+    if(!userAddress){
+      toast.warn('Please Add Your Address', { autoClose: 2000})
+      router.push('/user/address')
+    }
+    else{
+      router.push("/payment-page")
+    }
   }
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>

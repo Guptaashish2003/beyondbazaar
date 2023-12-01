@@ -4,6 +4,7 @@ import DeliveryOptions from "@/components/PaymentPageTools/DiliveryOptions";
 import PaymentOptions from "@/components/PaymentPageTools/PaymentOptions";
 import CreditCardInput from "@/components/PaymentPageTools/CreditCardInput";
 import UpiInput from "@/components/PaymentPageTools/UpiInput";
+import OrderSummary from "@/components/OrderStatus/OrderTools/OrderSummary";
 
 const PaymentPage = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -15,10 +16,28 @@ const PaymentPage = () => {
   console.log(selectedPaymentOption);
 
   return (
-    <div className="w-1/2  lg:mt-48 max-md:w-11/12 mx-auto">
+    <div className="w-11/12 flex justify-between gap-4 lg:mt-48 max-md:w-11/12 mx-auto">
+      <div className="w-1/2 bg-slate-100">
+      <h1 className="font-bold my-4 px-4  text-xl ">Order Summary:</h1>
+        <OrderSummary />
+        <OrderSummary />
+        <OrderSummary />
+        <div className="flex flex-col  p-4">
+          <div className="flex justify-between">
+          <p className="text-base text-black font-bold">Shipping </p>
+          <p className="text-base text-black font-bold">₹ 92</p>
+          </div>   
+          <div className="flex justify-between">         
+          <p className="text-base text-black font-bold">Total </p>
+          <p className="text-base text-black font-bold">₹ 999</p>
+          </div>
+        </div>
+
+
+      </div>
       
-      <div>
-        <h1 className="font-bold my-4 text-base">Delivery method</h1>
+      <div className= " w-1/2 ">
+        <h1 className="font-bold  text-base">Delivery method</h1>
         <section className="flex flex-wrap gap-1">
           <DeliveryOptions
             Dtitle={"Standard Delivery"}

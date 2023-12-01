@@ -1,45 +1,18 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import pushNotification from "../../common/components/Shared/Notification";
-import {useGetDataProtected} from "../../common/hooks/api/useGetData";
-import {usePostData} from "../../common/hooks/api/usePostData";
-import {useUpdateData} from "../../common/hooks/api/useUpdateData";
-import {useDeleteData} from "../../common/hooks/api/useDeleteData";
+import {  toast } from 'react-toastify';
+import { useGetDataProtected } from "../api/useGetData";
+import { usePostDataProtected } from "../api/usePostData";
+import { useDeleteData } from "../api/useDeleteData";
+import { useUpdateData, useUpdateDataProtected } from "../api/useUpdateData";
 
 //____________________CREATE_CASH_ORDER____________________//
-export const createCashOrder = createAsyncThunk(
-  "orders/createCashOrder",
-  async ({cartId, body}, {rejectWithValue}) => {
-    try {
-      const res = await usePostData(`/orders/${cartId}`, body);
-      pushNotification("Order Created Successfully", "success");
-      // console.log(res);
-      return res;
-    } catch (error) {
-      // console.log("ERROR" + error);
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        (error.response && error.response.data && error.response.data.errors) ||
-        error.message;
-      // console.log(message);
-      if (typeof message === "string") {
-        pushNotification(message, "error");
-      } else {
-        message.forEach((el) => {
-          pushNotification(el.msg, "error");
-        });
-      }
-      return rejectWithValue(message);
-    }
-  }
-);
+
 //____________________CREATE_CARD_ORDER____________________//
-export const createCardOrder = createAsyncThunk(
-  "orders/createCardOrder",
+export const createOrder = createAsyncThunk(
+  "orders/createOrder",
   async (body, {rejectWithValue}) => {
     try {
-      const res = await usePostData(`/orders/checkout-session`, body);
+      const res = await usePostDataProtected("/api/user/create")
       console.log(res);
       return res;
     } catch (error) {
@@ -67,9 +40,7 @@ export const getAllOrders = createAsyncThunk(
   "orders/getAllOrders",
   async ({limit, page}, {rejectWithValue}) => {
     try {
-      const res = await useGetDataProtected(
-        `/orders${limit ? `?limit=${limit}` : ""}${page ? `&page=${page}` : ""}`
-      );
+      const res = useGetDataProtected("/api/user/order/all-orders")
       return res;
     } catch (error) {
       // console.log(error);
@@ -89,19 +60,29 @@ export const getOrderDetails = createAsyncThunk(
   "orders/getOrderDetails",
   async (orderId, {rejectWithValue}) => {
     try {
-      const res = await useGetDataProtected(`/orders/${orderId}`);
+      const res = await useGetDataProtected("/api/user/order/order-detail")
       return res;
+      
     } catch (error) {
-      // console.log(error);
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         (error.response && error.response.data && error.response.data.errors) ||
         error.message;
+        if (typeof message === "string") {
+          toast(message, "error");
+        } else {
+          message.forEach((el) => {
+            toast(el.msg, "error");
+          });
+        }
       // console.log(message);
-      return rejectWithValue(message);
+      return rejectWithValue(message)
+      
+      
     }
+    
   }
 );
 //_____________________UPDATE_ORDER_TO_PAID____________________//

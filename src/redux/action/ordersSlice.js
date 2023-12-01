@@ -1,7 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-  createCashOrder,
-  createCardOrder,
+  createOrder,
   getAllOrders,
   getOrderDetails,
   updateOrderToPaid,
@@ -31,29 +30,18 @@ export const ordersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       //____________________CREATE_CASH_ORDER____________________//
-      .addCase(createCashOrder.pending, (state) => {
+      .addCase(createOrder.pending, (state) => {
         state.isMutation.loading = true;
       })
-      .addCase(createCashOrder.fulfilled, (state, action) => {
+      .addCase(createOrder.fulfilled, (state, action) => {
         state.isMutation.loading = false;
         state.isMutation.success = action.payload.status === 201 && true;
       })
-      .addCase(createCashOrder.rejected, (state, action) => {
+      .addCase(createOrder.rejected, (state, action) => {
         state.isMutation.loading = false;
       })
       //____________________CREATE_CARD_ORDER____________________//
-      .addCase(createCardOrder.pending, (state) => {
-        state.isMutation.loading = true;
-      })
-      .addCase(createCardOrder.fulfilled, (state, action) => {
-        state.isMutation.loading = false;
-        state.isMutation.success = action.payload.status === 200 && true;
-        state.sessionUrl = action.payload.data.session.url;
-      })
-      .addCase(createCardOrder.rejected, (state, action) => {
-        state.isMutation.loading = false;
-      })
-      //____________________GET_ORDER_DETAILS____________________//
+     //____________________GET_ORDER_DETAILS____________________//
       .addCase(getOrderDetails.pending, (state) => {
         state.orderDetails.loading = true;
       })
