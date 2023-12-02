@@ -22,6 +22,7 @@ function SearchBar({options}) {
     }
   }
   const clear = () => {
+    inputRef.current.value = '';
     setSearchText("")
     setSuggest([])
     setSelected(-1)
@@ -32,7 +33,6 @@ function SearchBar({options}) {
         if (inputRef.current.value !== "") {
           let query = inputRef.current.value.replaceAll(' ', '+');
           clear()
-          inputRef.current.value = '';
           router.push(`/category-filters?keyword=${query}`)
           }
       }
@@ -88,6 +88,7 @@ function SearchBar({options}) {
             return <div onClick={()=>{
               let query = item.replaceAll(' ', '+');
               router.push(`/category-filters?keyword=${query}`)
+              
               clear()
             }} className={`p-2 cursor-pointer  border-black border-solid hover:bg-white hover:border-y-2 hover:text-[#333]  ${index===selected?"bg-white border-y-2 text-[#333]":""}`} key={index}>{item}</div>
           })}

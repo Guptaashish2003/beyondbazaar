@@ -9,9 +9,10 @@ async function page(context) {
   let {page=1,keyword} = context.searchParams
   let link
   if(keyword){
-    link = `/product/all-product?keyword=${keyword}`
+    link = `/product/all-product?keyword=${keyword}&page=${page}`
 
-  }else{
+  }
+  else{
     link = `/product/all-product`
   }
   const {data,length} = await useGetData(link)
