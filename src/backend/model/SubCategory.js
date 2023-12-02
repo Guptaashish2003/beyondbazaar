@@ -22,7 +22,6 @@ const SubCategorySchema = new mongoose.Schema({
     slug : {
         type : String,
         source : 'SubCategoryName',
-        trim : true,
         unique : true,
     },
     category : {
