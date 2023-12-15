@@ -33,13 +33,13 @@ const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {
   return (
     <div className="flex flex-col border-y-2 border-solid mt-3 border-slate-300 p-6 max-sm:p-2 relative">
       <div className="flex justify-center items-start max-sm:items-center">
-        <div className="w-32 h-full">
+        <div className="w-32 h-full my-auto">
           <Image src={img} height={'500'} width={'600'} alt="Product image" className="w-full h-full object-contain" />
         </div>
 
         <div className="flex justify-between  p-4 w-full max-sm:flex-col max-sm:items-start max-sm:gap-y-2">
           <div className="text-[--first-color] pl-1">
-            <p className="font-bold">{title}</p>
+            <p className="font-bold max-w-sm">{title}</p>
             <p className="font-bold">₹ {price}</p>
             <p>Color : White/Pink</p>
             <p>Size : White/Pink</p>
@@ -47,7 +47,7 @@ const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {
           </div>
           <div className="pl-2 max-sm:hidden">
             <h2 className="font-bold ">Price</h2>
-            <p> {price} </p>
+            <p>₹ {price} </p>
           </div>
           <div className="flex flex-col text-center max-sm:w-full  max-sm:justify-between max-sm:flex-row">
             <p className="font-bold">Quantity</p>
