@@ -2,7 +2,7 @@
 const nextConfig = {
     basePath: '',
     images: {
-      domains: ['images.unsplash.com','www.example.com'],
+      domains: ['images.unsplash.com','source.unsplash.com'],
     },
     swcMinify: true,
 }
