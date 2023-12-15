@@ -1,0 +1,37 @@
+[
+    {
+        "categoryName": "electronics",
+        "categoryDescription": "High-quality electronics for all your needs.",
+        "categoryImage": "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "categoryName": "home appliances",
+        "categoryDescription": "Home appliances that make your life easier and more convenient.",
+        "categoryImage": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "categoryName": "computer accessories",
+        "categoryDescription": "A wide range of computer accessories to enhance your computing experience.",
+        "categoryImage": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c21hcnRwaG9uZXxlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "categoryName": "speaker",
+        "categoryDescription": "Powerful speakers for immersive audio entertainment.",
+        "categoryImage": "https://images.unsplash.com/photo-1562408590-e32931084e23?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWxlY3Ryb25pY3N8ZW58MHx8MHx8fDA%3D"
+    },
+    {
+        "categoryName": "smartphone",
+        "categoryDescription": "Cutting-edge smartphones with advanced features and stunning designs.",
+        "categoryImage": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGVsZWN0cm9uaWNzfGVufDB8fDB8fHww"
+    },
+    {
+        "categoryName": "electronics",
+        "categoryDescription": "Innovative electronics that redefine modern living.",
+        "categoryImage": "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "categoryName": "home appliances",
+        "categoryDescription": "Efficient home appliances that save energy and reduce utility bills.",
+        "categoryImage": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    }
+]

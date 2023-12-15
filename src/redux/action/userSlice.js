@@ -23,4 +23,8 @@ export const userSlice = createSlice({
   },
 });
 
+<<<<<<< HEAD
 export default userSlice.reducer;
+=======
+export default userSlice.reducer;
+>>>>>>> 111d83d86a8b2755320598e03a515c6dcc132451

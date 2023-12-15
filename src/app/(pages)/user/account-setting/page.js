@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import YourAccSetting from "@/components/ProfileSetting/YourAccSetting";
 import { FaShoppingBasket } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -20,25 +20,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from 'yup';
 import { usePostData } from "@/redux/api/usePostData";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {verify} from "@/redux/action/loginSecuritySlice"; 
-
+import { getUsers } from "@/redux/action/userService";
 const Page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const session = useSession();
-  const [loading,setLoading] = useState();
+  const [Loader,setLoader] = useState();
   const [verification,setVerification] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  useEffect(()=>{
-      useGetDataProtected("/api/user/me").then((user) => {
-        if (user.success) {
-          setValue("email", user.data.email);
-      }
-    }).catch((error) => {
-      console.log(error)
-      });
 
+  const {user,loading} = useSelector((state) => state.user.user)
+  useLayoutEffect(()=>{
+    dispatch(getUsers())
   },[])
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
@@ -80,26 +75,32 @@ const Page = () => {
   };
   const verifyPassword = async (data) => {
     try {
-      setLoading(true);
+      setLoader(true);
     const user = await usePostData("/api/user/login", data);
     if (user.success) {
-      setLoading(false);
+      setLoader(false);
       setVerification(true);
       dispatch(verify(true));
     }
 
     } catch (error) {
-      setLoading(false);
+      setLoader(false);
       router.push("/")
       toast.error("verification fail",{autoClose: 1000, })
     }
   }
-  
+const checkVerification = ()=>{
+  if(user.byGoogle){
+    console.log(user.byGoogle);
+  }
+}
 
   return (
     <>
 
       <div className="mt-40   w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto my-4">
+
+        {/* order page btn  */}
         <Link href="your-orders" passHref>
           <YourAccSetting
             onClick={handleYourOrders}
@@ -108,6 +109,8 @@ const Page = () => {
             description={"Track Orders, Buy again "}
           />
         </Link>
+
+        {/* add address btn  */}
 
         <Link href="/user/your-address" passHref>
           <YourAccSetting
@@ -118,8 +121,10 @@ const Page = () => {
           />
         </Link>
 
-        <Modal btnName={
+{/* change pass name btn  */}
+        <Modal  btnName={
           <YourAccSetting
+          onClick={checkVerification}
             img={<MdOutlineSecurity className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
             title={"Login & Security"}
             description={"Edit login, name, mobile number, email "}
@@ -183,7 +188,7 @@ const Page = () => {
             )}
             <SubmitButton
               value="Verify Password"
-              loading={loading}
+              loading={Loader}
               onClick={handleSubmit(verifyPassword)}
               className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
             />
@@ -191,7 +196,7 @@ const Page = () => {
 
         </Modal>
 
-
+{/* payment options page btn  */}
         <Link href="/user/your-payment-options" passHref>
           <YourAccSetting
             onClick ={()=>router.push("/user/your-payment-options")}
@@ -200,6 +205,8 @@ const Page = () => {
             description={"Edit or add your payment options "}
           />
         </Link>
+
+        {/* Support btn  */}
 
         <Link href="/contact-us" passHref>
           <YourAccSetting
@@ -210,6 +217,7 @@ const Page = () => {
           />
         </Link>
 
+ {/* logout button  */}
         <YourAccSetting
           onClick={handleSignOut}
           img={<PiSignOutBold className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
