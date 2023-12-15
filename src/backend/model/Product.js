@@ -40,11 +40,11 @@ const ProductSchema = new mongoose.Schema(
         required: [true, 'please enter the product tags'],
       },
     ],
-    // productCategory: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Categories',
-    //   required: true
-    // },
+    productCategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'SubCategories',
+      required: true
+    },
   },
   { timestamps: true }
 ).plugin(slugify);

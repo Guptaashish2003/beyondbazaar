@@ -6,6 +6,10 @@ import isOauth from "@/backend/middlewere/isOauth";
 import ConnectDB from "@/backend/DATABASE/ConnectDB";
 import userdata from "@/Data/user.json";
 import product from "@/Data/product.json";
+import Category from "@/backend/model/Category";
+import category from "@/Data/category.json";
+import SubCategory from "@/backend/model/SubCategory";
+import subCategory from "@/Data/subCategory.json";
 export async function GET(request){
     await ConnectDB();
     try {
@@ -30,6 +34,26 @@ export async function GET(request){
             const element = product[i];
             await Product.create(element);  
         }
+
+
+
+        //--------------------subcategory --------------------------------------
+
+
+
+        // for (let i = 0; i < subCategory.length; i++) {  //insert product using  for loop by creating a unique slug of the product
+        //     const element = subCategory[i];
+        //     await SubCategory.create(element);  
+        // }
+        
+
+
+
+
+        // for (let i = 0; i < category.length; i++) {  //insert product using  for loop by creating a unique slug of the product
+        //     const element = category[i];
+        //     await Category.create(element);  
+        // }
         // await Category.insertMany(category)
         // await SubCategory.insertMany(subCategory)
        return NextResponse.json({success:true,message:"Data added successfully"},{status:200})

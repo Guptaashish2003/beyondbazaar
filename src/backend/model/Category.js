@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import slugify from "mongoose-simple-slugify"
 
 const CategorySchema = new mongoose.Schema({
     categoryName : {
@@ -18,14 +19,14 @@ const CategorySchema = new mongoose.Schema({
         required : true,
         trim : true
     } ],
-    categorySlug : {
-        type : String,
-        required : true,
-        trim : true,
-        unique : true,
+    slug : {
+            source: 'categoryName', // "title" field will be used as source for slug generation
+            type: String,
+            // required: [true, 'please enter the product slug'],
+            unique: true,
     }
 
-},{timestamps : true});
+},{timestamps : true}).plugin(slugify);
 
 const Category = mongoose.models.Categories || mongoose.model('Categories', CategorySchema);
 
