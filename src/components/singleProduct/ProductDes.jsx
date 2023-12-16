@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 const ProductDes = ({id,title,discription,price,stock,className}) => {
   const router = useRouter();
   const [productCount,setProductCount] = useState(1)
+  const [loading,setLoading] = useState(false)
   const dispatch = useDispatch()
   const increment = () => {
     if (stock > productCount) {
@@ -35,10 +36,10 @@ const ProductDes = ({id,title,discription,price,stock,className}) => {
     }
   }
   
-  const  addToCartProduct =  () => {
-    dispatch(addToCart({productID:id,productQuantity:productCount}))
-    
-    
+  const  addToCartProduct = async () => {
+    setLoading(true);
+    const {meta} = await dispatch(addToCart({productID:id,productQuantity:productCount}))
+    setLoading(false);
   };
   const orderNow = async () => {
     dispatch(createOrder({productID:id,productQuantity:productCount}))
@@ -84,6 +85,7 @@ const ProductDes = ({id,title,discription,price,stock,className}) => {
         </div>
       </div>
       <SubmitButton
+      loading={loading}
         className="my-4 font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl overflow-hidden"
         value={"Add To Cart"}
         onClick={addToCartProduct}

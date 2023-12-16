@@ -10,11 +10,7 @@ const store = configureStore({
   reducer: {
     cart: cartReducer,
     order: orcerReducer,
-<<<<<<< HEAD
     user:userReducer,
-=======
-    user:useReducer,
->>>>>>> 111d83d86a8b2755320598e03a515c6dcc132451
     themeSetting: themeSettingReducer,
     loginSecurity: loginSecurity,
   },
