@@ -22,7 +22,7 @@ const ShoppingCart = () => {
   }
   if(cart.length === 0){
     return(
-      <div className="h-screen flex justify-center items-center max-md:flex-col">
+      <div className="h-screen flex justify-center items-center max-md:flex-col min-h-screen">
         <div className="flex w-[50%] text-center  flex-col justify-center items-center ">
           <h1 id="error_404" className="text-4xl mt-6 mb-4">
             Cart is Empty......
@@ -150,7 +150,7 @@ const ShoppingCart = () => {
           {cart?.map((items)=><CartDetail id={items._id}  key={items._id} title={items?.productID.productName} price={items?.productID.productPrice} stock={items?.productID.productQuantity} quantity={items.productQuantity} img={items.productID.productImage[0]} cart={cart} loading={loading}/>)}
           </div>
           <div className="w-[35%] px-10 max-lg:w-full max-lg:px-20 max-md:px-5">
-            <PriceCheckOut onClick={()=>router.push("/checkout")} promo={'true'} btnName="Process to pay"/>
+            <PriceCheckOut onClick={()=>router.push("/checkout/bycart")} promo={'true'} btnName="Process to pay"/>
           </div>
         </div>
       </section> 
