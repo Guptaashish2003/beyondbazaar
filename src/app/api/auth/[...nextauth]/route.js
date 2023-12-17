@@ -34,7 +34,7 @@ const handler = NextAuth({
         var newUser;
         var userToken;
         if (exist.length === 0) {
-          newUser = await User.create({name, email,byGoogle: true,isEmailValid:true});
+          newUser = await User.create({name, email,byGoogle: true,twoStepVerification:false,isEmailValid:true});
           userToken = await newUser.getSignedToken();
         }else{
           userToken = await exist.getSignedToken();

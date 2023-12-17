@@ -6,37 +6,49 @@ import PriceCheckOut from "@/components/shoppingCart/PriceCheckOut";
 import { useGetDataProtected } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams,useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 const PaymentPage = () => {
   const {id} = useParams();
+  const router = useRouter()
   const searchParams = useSearchParams()
   const qty = searchParams.get('qty')
   const addressRef = useRef()
   const cart = [1, 2, 4];
   const [address, setAddress] = useState([]);
   const [product, setProduct] = useState([]);
+  const [order,setOrder] = useState([]);
   const [loading,setLoading] = useState(true)
   useEffect(()=>{
     getData()
     // test()
   },[])
   const getData = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await useGetDataProtected("/api/user/address/me");
       if(res.success){
+        console.log(res.data,"aaddress")
+        if(res.data.length === 0){
+          router.push("/address/add-new-address")
+        }
         setAddress(res.data)
-        console.log(res.data)
       }
       if (id === 'bycart') {
         const res = await useGetDataProtected("/api/cart/my-cart");
         if(res.success){
-          const newData = res.data.map((val)=>{return {...val.productID,qty:val.productQuantity}} )
-          setProduct(newData)
-          console.log(newData)
+          const newData = res.data.map((val)=>{
+            const { productID, productQuantity } = val; 
+             return {...productID,qty:productQuantity}} )
+             setProduct(newData)
+          const newOrder = res.data.map((val)=>{
+            const { productID, productQuantity } = val; 
+             return {product:productID._id,qty:productQuantity}} )
+          setOrder({orderItems:newOrder})
+          console.log(newData,"my cart")
+          
         }
       } else {
         const res = await useGetDataProtected(`/api/product/single-product/${id}`);
@@ -80,7 +92,7 @@ const PaymentPage = () => {
 if(loading){
   return <Loading/>
 }
-  
+console.log(order,"my orders")
   return (
     <section className="flex flex-col lg:mt-[--nav-spc] mt-12">
       <div className="flex gap-3 justify-center align-center text-3xl my-4 ">

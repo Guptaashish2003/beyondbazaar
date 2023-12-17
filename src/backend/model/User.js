@@ -82,6 +82,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    twoStepVerification:{
+      type: Boolean,
+      default: true
+    },
     isEmailValid:{
       type: Boolean,
       default: false

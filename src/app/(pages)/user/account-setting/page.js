@@ -97,8 +97,8 @@ const checkVerification = ()=>{
 
   return (
     <>
-
-      <div className="mt-40   w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto my-4">
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="   w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto">
 
         {/* order page btn  */}
         <Link href="your-orders" passHref>
@@ -225,6 +225,8 @@ const checkVerification = ()=>{
           description={"Thank you for visiting. I can't wait to meet you again."}
         />
       </div>
+
+    </div>
 
     </>
   );
