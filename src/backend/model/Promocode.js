@@ -1,50 +1,58 @@
 import mongoose from "mongoose";
+import User from "./User";
+import Product from "./Product";
+import Category from "./Category";
+//write schema here for particular user and for particular product and particular category
 
-const PromocodeSchema = new mongoose.Schema(
-    {
-        promocode: {
+const PromocodeSchema = new mongoose.Schema({
+    promocode: {
         type: String,
-        required: [true, "Please provide your promocode"],
-        maxlength: [30, "Promocode cannot be more than 30 characters"],
-        },
-        discount: {
-        type: Number,
-        required: [true, "Please provide your discount"],
-        maxlength: [30, "Discount cannot be more than 30 characters"],
-        },
-        maxDiscount: {
-        type: Number,
-        required: [true, "Please provide your maxDiscount"],
-        maxlength: [30, "MaxDiscount cannot be more than 30 characters"],
-        },
-        minOrder: {
-        type: Number,
-        required: [true, "Please provide your minOrder"],
-        maxlength: [30, "MinOrder cannot be more than 30 characters"],
-        },
-        maxOrder: {
-        type: Number,
-        required: [true, "Please provide your maxOrder"],
-        maxlength: [30, "MaxOrder cannot be more than 30 characters"],
-        },
-        startDate: {
-        type: Date,
-        required: [true, "Please provide your startDate"],
-        maxlength: [30, "StartDate cannot be more than 30 characters"],
-        },
-        endDate: {
-        type: Date,
-        required: [true, "Please provide your endDate"],
-        maxlength: [30, "EndDate cannot be more than 30 characters"],
-        },
-        active: {
-        type: Boolean,
-        required: [true, "Please provide your active"],
-        maxlength: [30, "Active cannot be more than 30 characters"],
-        },
+        required: true,
+        unique: true,
     },
-    {
-        timestamps: true,
-    }    
-)
-const Promocode = mongoose.model("Promocode", PromocodeSchema);
+    discount: {
+        type: Number,
+        required: true,
+    },
+    maxDiscount: {
+        type: Number,
+        required: true,
+    },
+    minOrder: {
+        type: Number,
+        required: true,
+    },
+    maxOrder: {
+        type: Number,
+        required: true,
+    },
+    startDate: {
+        type: Date,
+        required: true,
+    },
+    endDate: {
+        type: Date,
+        required: true
+    },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: User,
+        required: true,
+    },
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Product,
+        required: true,
+    },
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Category,
+        required: true,
+    },
+}, { timestamps: true });
+
+const Promocode = mongoose.models.Promocode || mongoose.model("Promocode", PromocodeSchema);
