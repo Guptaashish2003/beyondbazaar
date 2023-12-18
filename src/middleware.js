@@ -7,7 +7,7 @@ export async function middleware(request) {
   const response = NextResponse.next();
   let cookies = request.cookies.get('next-auth.session-token')?.value || request.cookies.get('token')?.value;
   if(!cookies){
-      if (request.nextUrl.pathname.startsWith('/shopping-cart') ) {
+      if (request.nextUrl.pathname.startsWith('/user/shopping-cart') ) {
         return NextResponse.redirect(new URL('/login', request.url))
     }
   }
@@ -47,5 +47,5 @@ export async function middleware(request) {
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/', '/login','/register','/shopping-cart',"/user/verify-email/:path*"],
+  matcher: ['/', '/login','/register','/user/shopping-cart',"/user/verify-email/:path*"],
 }

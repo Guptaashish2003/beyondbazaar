@@ -13,7 +13,7 @@ async function page(context) {
 
   }
   else{
-    link = `/product/all-product`
+    link = `/product/all-product?page=${page}`
   }
   const {data,length} = await useGetData(link)
   return (

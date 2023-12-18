@@ -22,11 +22,11 @@ function SearchBar({options}) {
     }
   }
   const clear = () => {
-    inputRef.current.value = '';
+    // inputRef.current.value = '';
     setSearchText("")
     setSuggest([])
     setSelected(-1)
-    setHide(false)
+    // setHide(false)
   }
     const onSearch = () => {
       if (hide) {

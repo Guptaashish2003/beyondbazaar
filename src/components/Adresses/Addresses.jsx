@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useDeleteData } from "@/redux/api/useDeleteData";
 import { toast } from "react-toastify";
 
-const Addresses = ({id,setAddress,name,email,street,state,city,country,district,pincode,number}) => {
+const Addresses = ({id,setAddress,name,email,street,state,city,country,district,pincode,number,withbtn=true,className}) => {
   const deleteAdrress = async ()=>{
     try {
       const res = await useDeleteData(`/api/user/address/delete/${id}`)
@@ -22,7 +22,7 @@ const Addresses = ({id,setAddress,name,email,street,state,city,country,district,
   }
    
   return (
-    <div className="flex flex-col justify-evenly w-[16rem]   items-center rounded-sm cursor-pointer  text-center -2 ring-offset-2 ring-2 ring-gray-500">
+    <div className={`flex flex-col justify-evenly   items-center rounded-sm cursor-pointer  text-center -2 ring-offset-2 ring-2 ring-gray-500 ${className}`}>
       <div className="w-full">
         <Image
           src={logo}
@@ -39,7 +39,7 @@ const Addresses = ({id,setAddress,name,email,street,state,city,country,district,
         <p className="text-gray-900 text-md">{state}-{pincode}</p>
         <p className="text-gray-900 text-md">{country}</p>
         <p className="text-gray-900 text-md">Phone number: +91 {number}</p>
-        <div>
+        {withbtn?<div>
           <Link href={`/address/${id}`} className="bg-none text-blue-500 px-2 py-1 rounded-sm">
             Edit
           </Link>
@@ -47,7 +47,7 @@ const Addresses = ({id,setAddress,name,email,street,state,city,country,district,
           <button onClick={deleteAdrress}   className="bg-none text-blue-500 px-2 py-1 rounded-sm">
             Delete
           </button>
-        </div>
+        </div>:""}
       </div>
     </div>
   );

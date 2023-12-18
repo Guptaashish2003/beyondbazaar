@@ -12,7 +12,9 @@ export async function GET(request) {
             return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
         }
         const userID = check._id;
-        const orders = await Order.find({ user: userID }).sort({ createdAt: -1 });
+        const orders = await Order.find({ user: userID }).populate({
+            path: "user"
+          }).sort({ createdAt: -1 });
 
         if (!orders) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });
