@@ -89,11 +89,6 @@ const Page = () => {
       toast.error("verification fail",{autoClose: 1000, })
     }
   }
-const checkVerification = ()=>{
-  if(user.byGoogle){
-    console.log(user.byGoogle);
-  }
-}
 
   return (
     <>
@@ -124,7 +119,7 @@ const checkVerification = ()=>{
 {/* change pass name btn  */}
         <Modal  btnName={
           <YourAccSetting
-          onClick={checkVerification}
+          onClick={()=>setValue("email",user.email)}
             img={<MdOutlineSecurity className="w-1/3 h-20 max-md:h-12 mx-auto max-md:w-1/2 object-cover" />}
             title={"Login & Security"}
             description={"Edit login, name, mobile number, email "}

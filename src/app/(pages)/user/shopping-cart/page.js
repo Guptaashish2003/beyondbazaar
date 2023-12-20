@@ -12,7 +12,7 @@ const ShoppingCart = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const {loading,cart,error} = useSelector((state) => state.cart.userCart)
-  const {noOfProduct} = useSelector((state) => state.cart)
+  const {noOfProduct,totalPrice,totalProduct} = useSelector((state) => state.cart)
   useEffect(()=>{
     dispatch(getUserCart())
        
@@ -147,10 +147,27 @@ const ShoppingCart = () => {
         </div>
         <div className="flex w-full flex-wrap  justify-between h-[100%] flex-wap">
           <div className="w-[60%] max-lg:w-full max-lg:px-20 max-md:px-5 "> 
-          {cart?.map((items)=><CartDetail id={items._id}  key={items._id} title={items?.productID.productName} price={items?.productID.productPrice} stock={items?.productID.productQuantity} quantity={items.productQuantity} img={items.productID.productImage[0]} cart={cart} loading={loading}/>)}
+          {cart?.map((items)=><CartDetail dispatch={dispatch} id={items._id}  key={items._id} title={items?.productID.productName} price={items?.productID.productPrice} stock={items?.productID.productQuantity} quantity={items.productQuantity} img={items.productID.productImage[0]} cart={cart} loading={loading}/>)}
           </div>
           <div className="w-[35%] px-10 max-lg:w-full max-lg:px-20 max-md:px-5">
-            <PriceCheckOut onClick={()=>router.push("/checkout/bycart")} promo={'true'} btnName="Process to pay"/>
+            <PriceCheckOut  total={totalPrice} onClick={()=>router.push("/checkout/bycart")}  btnName="Process to pay">
+            
+              <div className="flex justify-between">
+                <p>Number Of items</p>
+                <p>{noOfProduct}</p>
+              </div>
+
+              <div className="flex justify-between">
+                <p>Total items</p>
+                <p>{totalProduct}</p>
+              </div>
+
+              <div className="flex justify-between">
+                <p>Total Price</p>
+                <p>₹ {totalPrice}</p>
+              </div>
+        
+              </PriceCheckOut >
           </div>
         </div>
       </section> 

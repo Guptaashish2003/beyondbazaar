@@ -7,11 +7,10 @@ import Image from "next/image";
 import { removeFromCart, updateCartItemQty } from "@/redux/action/Services";
 import { useDispatch } from "react-redux";
 
-const CartDetail = ({id,title,img,price,quantity,stock,cart}) => {
-  const dispatch = useDispatch()
+const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
+
   const [productQty, setProductQty] = useState(quantity)
   useEffect(()=>{
-    console.log("object created..................")
   },[cart])
   const deleteProduct = () => {
     dispatch(removeFromCart(id))

@@ -21,6 +21,8 @@ export const cartSlice = createSlice({
         state.userCart.error = false;
         state.userCart.cart = action.payload.data;
         state.noOfProduct = action.payload.quantity;
+        state.totalPrice = action.payload.totalprice;
+        state.totalProduct = action.payload.totalquantity;
       })
       .addCase(getUserCart.rejected, (state, action) => {
         state.userCart.loading = false;
