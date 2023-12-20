@@ -4,8 +4,13 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import productImg from "@/assets/productImag1.jpg"
-function Productcard({img,title,price,slug,bgColor, addToCart,discount,animation,border}) {
+import { useDispatch } from 'react-redux'
+import { addToCart } from '@/redux/action/Services'
+import SubmitButton from '../Form/SubmitButton'
+function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,discount,animation,border}) {
+  const [loading,setLoading] = useState(false)
   const [line, setLine] = useState(false)
+  const dispatch = useDispatch();
   const [imgBlack, setImgBlack] = useState(false)
   const router = useRouter()
   const addAnimation = () => {
@@ -23,6 +28,15 @@ function Productcard({img,title,price,slug,bgColor, addToCart,discount,animation
   const moveSingle = () => {
     router.push(`/user/single-product/${slug}`)
   }
+  const  addToCartProduct = async () => {
+    setLoading(true)
+    const {meta} = await dispatch(addToCart({productID:id,productQuantity:1}))
+    if(meta.requestStatus === "fulfilled"){
+      setLoading(false);
+    }
+
+    // meta.
+  };
   return (
     <>
      <div style={{border:`2px solid ${border}`}} className='w-5/12 lg:w-1/4 sm:w-2/5 md:w-1/3 xl:w-1/5 flex flex-col items-center justify-center p-2 m-2 cursor-pointer' onMouseEnter={addAnimation} onMouseLeave={removeAnimation}>
@@ -50,9 +64,9 @@ function Productcard({img,title,price,slug,bgColor, addToCart,discount,animation
         </div>
       </div>
       </div>
-      {addToCart?<div className='border-2 border-black border-solid flex justify-center items-center font-bold text-lg w-full h-12 hover:bg-black hover:text-white'>
+      {addToCartBtn?<SubmitButton loading={loading} onClick={addToCartProduct} className='border-2 border-black border-solid flex justify-center items-center font-bold text-lg w-full h-12 hover:bg-black hover:text-white'>
         Add To Cart
-      </div>:""}
+      </SubmitButton>:""}
       </div> 
     </>
   )

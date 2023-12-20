@@ -47,6 +47,8 @@ export const cartSlice = createSlice({
         state.isMutation.loading = false;
         state.isMutation.success = action.payload.status === 200 && true;
         state.noOfProduct = state.noOfProduct - 1;
+        state.totalPrice = action.payload.totalprice;
+        state.totalProduct = action.payload.totalquantity;
         state.userCart.cart = state.userCart.cart.filter((item) => item._id !== action.payload.data._id);
       })
       .addCase(removeFromCart.rejected, (state, action) => {
@@ -59,6 +61,9 @@ export const cartSlice = createSlice({
       .addCase(updateCartItemQty.fulfilled, (state, action) => {
         state.isMutation.loading = false;
         state.isMutation.success = action.payload.status === 200 && true;
+        state.noOfProduct = action.payload.quantity;
+        state.totalPrice = action.payload.totalprice;
+        state.totalProduct = action.payload.totalquantity;
       })
       .addCase(updateCartItemQty.rejected, (state, action) => {
         state.isMutation.loading = false;
