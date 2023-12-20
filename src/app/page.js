@@ -18,7 +18,7 @@ export default async function Home(){
     <Category/>
     <h2 className='p-8 text-5xl max-md:text-3xl font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
-      {data?.map((data)=><Productcard key={data._id} animation={true} img={data?.productImage[0]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
+      {data?.map((data)=><Productcard addToCart={true} key={data._id} animation={true} img={data?.productImage[0]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
 
       <Clothingcard animation={true} img={productImg} hover={productImgHover}/>
       <Productcard/>

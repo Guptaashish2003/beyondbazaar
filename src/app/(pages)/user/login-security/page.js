@@ -21,6 +21,7 @@ const page = () => {
   const [loading, setLoading] = useState();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const isVerify = useSelector((state) => state.loginSecurity.verification);
+  const {user} = useSelector((state) => state.user.user)
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
@@ -88,9 +89,11 @@ const page = () => {
   const changeNumber = async (data) => {
     try {
       setLoading(true);
-      const user = await useUpdateDataProtected("/api/user/update/", data);
+      console.log(data);
+      const user = await useUpdateDataProtected("/api/user/update/", {phoneNo: data.number});
       if (user.success) {
         setVerificationNumber(true);
+        router.back();
       }
       setLoading(false);
       
@@ -122,14 +125,14 @@ const page = () => {
 
   return (
     <div className=" flex  flex-col gap-2 mt-36 w-1/2 mx-auto">
-      <div className=" mx-auto border-2 border-solid border-gray-500 w-full flex justify-between items-center p-5">
+      <div className=" mx-auto border-2 border-solid border-gray-500 rounded-md w-full flex justify-between items-center p-5">
         <div className="flex items-start flex-col gap-3">
           <h1 className="text-black text-lg">Name</h1>
-          <p className="text-gray-800">{"data.name"}</p>
+          <p className="text-gray-800">{user.name}</p>
         </div>
 
         <Modal
-          btnClass={`w-16 border border-gray-600 rounded-md`}
+          btnClass={`w-20 h-8 border border-gray-600 rounded-md`}
           btnName={"edit"}
         >
           {verificationName ? (
@@ -170,14 +173,14 @@ const page = () => {
         </Modal>
       </div>
       <hr className="mt-4 border-1 border-slate-500 mx-auto " />
-      <div className=" mx-auto border-2 border-solid border-gray-500 w-full flex justify-between items-center p-5">
+      <div className=" mx-auto border-2 border-solid border-gray-500 rounded-md w-full flex justify-between items-center p-5">
         <div className="flex items-start flex-col gap-3">
           <h1 className="text-black text-lg">Contact Number</h1>
-          <p className="text-gray-800">{"data.name"}</p>
+          <p className="text-gray-800">{user.phoneNo }  receive security notifications with this mobile number.</p>
         </div>
 
         <Modal
-          btnClass={`w-16 border border-gray-600 rounded-md`}
+          btnClass={`w-20 h-8 border border-gray-600 rounded-md`}
           btnName={"edit"}
         >
           {verificationNumber ? (
@@ -233,13 +236,13 @@ const page = () => {
       </div>
       <hr className="mt-4 border-1 border-slate-500 mx-auto " />
 
-      <div className=" mx-auto border-2 border-solid border-gray-500 w-full flex justify-between items-center p-5">
+      <div className=" mx-auto border-2 border-solid border-gray-500 rounded-md w-full flex justify-between items-center p-5">
         <div className="flex items-start flex-col gap-3">
-          <h1 className="text-black text-lg">{"title"}</h1>
-          <p className="text-gray-800">{"description"}</p>
+          <h1 className="text-black text-lg">{"Change Password"}</h1>
+          <p className="text-gray-800">{"*********"}</p>
         </div>
         <Modal
-          btnClass={`w-16 border border-gray-600 rounded-md`}
+          btnClass={`w-20 h-8 border border-gray-600 rounded-md `}
           btnName={"edit"}
         >
           {verificationPassword ? (

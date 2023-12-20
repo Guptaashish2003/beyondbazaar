@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
-  console.log("middleware running..")
   const response = NextResponse.next();
   let cookies = request.cookies.get('next-auth.session-token')?.value || request.cookies.get('token')?.value;
-  if(!cookies){
+  console.log("middleware running..",cookies)
+  if(cookies === undefined ){
       if (request.nextUrl.pathname.startsWith('/user/shopping-cart') ) {
         return NextResponse.redirect(new URL('/login', request.url))
     }

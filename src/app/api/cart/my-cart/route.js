@@ -12,7 +12,14 @@ export async function GET(request) {
         const userID = check._id;
         const cart = await Cart.find({ userID }).populate("productID", "productName productPrice productImage productQuantity");
          const cartQuantity = cart.length;
-        return NextResponse.json({ success: true,quantity:cartQuantity, message: "Cart", data: cart }, { status: 200 });
+         const totalquantity = cart.reduce((acc, curr) => {
+            return acc + curr.productQuantity;
+         },0)
+         const totalprice = cart.reduce((acc, curr) =>{
+            return acc + curr.productID.productPrice * curr.productQuantity;
+         
+         },0)
+        return NextResponse.json({ success: true,quantity:cartQuantity,totalquantity,totalprice, message: "Cart", data: cart }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });
     }

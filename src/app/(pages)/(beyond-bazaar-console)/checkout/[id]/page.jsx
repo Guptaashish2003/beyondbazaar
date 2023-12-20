@@ -73,7 +73,7 @@ const PaymentPage = () => {
     } 
   }
   const onCheckout = async () => {
-    console.log(addressRef.current.value)
+
     try {
       const res = await usePostDataProtected("/api/user/order/create",{
         orderItems:[{
@@ -127,7 +127,10 @@ console.log(order,"my orders")
               <p className="text-gray-500 text-sm">Add New Address</p>
             </Link>
           </div>
-          <PriceCheckOut onClick={onCheckout} btnName="Checkout" />
+          <PriceCheckOut promo={'true'} onClick={onCheckout} btnName="Checkout" >
+         
+            </PriceCheckOut>
+           
         </div>
       </div>
     </section>
