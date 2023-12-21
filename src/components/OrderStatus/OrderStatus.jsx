@@ -1,27 +1,40 @@
 import React from "react";
 import SingleOrder from "@/components/OrderStatus/OrderTools/SingleOrder";
+import Image from "next/image";
+import SubmitButton from "../Form/SubmitButton";
 
-const OrderStatus = () => {
+const OrderStatus = ({id,title,img,total}) => {
+  const orderDetails = [{"title":"place order","value":"place order"},{"title":"Total","value":"₹575"},{"title":"Order ID","value":"0348820840928904"}]
   return (
-    <>
-      <div className="py-4 mt-32 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
-        <div className="flex justify-start item-start space-y-2 flex-col">
-          <p className="text-lg md:text-xl  dark:text-black font-semibold leading-6 xl:leading-5 text-gray-800">
-                Your Orders
-              </p>
-        </div>
-        <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-3/4 mx-auto xl:space-x-8 space-y-2 md:space-y-3 xl:space-y-0">
-          <div className="flex gap-1 max-md:flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-            <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col border-y-2 border-solid mt-3 border-slate-300 p-6 max-sm:p-2 relative">
+          <div className="flex justify-center items-start max-sm:items-center">
+            <div className="w-32  h-full my-auto">
+              <Image
+                src={"https://source.unsplash.com/random/?electronics&1"}
+                height={"500"}
+                width={"600"}
+                alt="Product image"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-between flex-wrap  p-4 w-full max-sm:flex-col max-sm:items-start max-sm:gap-y-2">
+              <div>
+                <p className="font-bold text-lg max-w-xl">{"SonicWave Floorstanding Speakers: Immerse yourself in superior audio with SonicWave, floorstanding speakers delivering a powerful and immersive sound experience."}</p>
+                <SubmitButton value="Buy it again" className='m-2 px-4 h-8 bg-[#333] text-white rounded-md'></SubmitButton>
+                <SubmitButton value="view your item" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
 
-            <SingleOrder />            
-            <SingleOrder />
-            </div>           
+              </div>
+              <SubmitButton value="Write a Product Review" className='px-4 h-8 bg-[#333] text-white rounded-md'></SubmitButton>
+            </div>
           </div>
-        
+          <div className="flex justify-end flex-wrap gap-x-6 ">
+            {orderDetails.map((data)=><div>
+              <p className="text-[#333] uppercase">{data.title}</p>
+              <p>{data.value}</p>
+            </div>)}
+            <SubmitButton value="view Order Details" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
+          </div>
         </div>
-      </div>
-    </>
   );
 };
 

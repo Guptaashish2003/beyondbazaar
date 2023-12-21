@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineStar } from "react-icons/ai";
 const ProductReview = ({className}) => {
   return (
-    <div className={`container max-w-sm mx-auto items-center text-center bg-white rounded drop-shadow-lg px-5 md:px-0 ${className}`}>
+    <div className={`container max-w-sm items-center text-center bg-white rounded drop-shadow-lg px-5 md:px-0 ${className}`}>
       <div className="pt-8 font-bold text-2xl tracking-wide">
         Customer reviews
       </div>
