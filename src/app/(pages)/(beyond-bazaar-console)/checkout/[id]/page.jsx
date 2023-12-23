@@ -48,8 +48,8 @@ const PaymentPage = () => {
         const res = await useGetDataProtected(`/api/product/single-product/${id}`);
         if(res.success){
           setProduct([{...res.data,qty:qty}]);
-          console.log(res.data)
-          setOrder({orderItems:{qty:qty,product:id},itemsPrice:res.data.productPrice * qty})
+          console.log(res.data._id)
+          setOrder({orderItems:{qty:qty,product:res.data._id},itemsPrice:res.data.productPrice * qty})
         }
       }
 
@@ -72,11 +72,11 @@ const PaymentPage = () => {
 
     try {
       const res = await usePostDataProtected("/api/user/order/create",{
-        order,shippingInfo:addressRef.current.value,itemsPrice:"33",shippingPrice:"33",taxPrice:"33",totalPrice:"33"
+        orderItems:order.orderItems,shippingInfo:addressRef.current.value,itemsPrice:order.itemsPrice,shippingPrice:"0",taxPrice:order.itemsPrice*0.18,totalPrice:(order.itemsPrice*0.18 + order.itemsPrice)
       });
       if(res.success){
         console.log(res.data)
-        router.push("/")
+        router.push("/user/your-orders")
       }
     } catch (error) {
       console.log(error)

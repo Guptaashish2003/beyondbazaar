@@ -14,7 +14,17 @@ const OrderSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: Product,
             },
-
+            seller: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                // required: true,
+            },
+            status: { // Individual product status for this seller
+                type: String,
+                required: true,
+                default:"pending",
+                enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
+            },
         }
     ],
     shippingInfo: {
@@ -36,7 +46,10 @@ const OrderSchema = new mongoose.Schema({
     //     email_address: String,
     // },
     itemsPrice: { type: Number, required: true },
-    // discount:{ type: Number},
+    discount:{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Promocode'
+    },
     // shippingPrice: { type: Number, required: true },
     // taxPrice: { type: Number },
     totalPrice: { type: Number, required: true },
@@ -44,7 +57,7 @@ const OrderSchema = new mongoose.Schema({
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
-},{timestamps : true});
+}, { timestamps: true });
 
 const Order = mongoose.models.Order || mongoose.model("Order", OrderSchema);
 

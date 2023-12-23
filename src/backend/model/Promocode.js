@@ -10,7 +10,12 @@ const PromocodeSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    discount: {
+    discountType: {
+        type: String,
+        required: true,
+        enum: ["Percentage", "Fixed", "FreeShipping"],
+    },
+    discountValue: {
         type: Number,
         required: true,
     },
@@ -34,24 +39,26 @@ const PromocodeSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    limit: {
+        type: Number,
+        default: true,
+    },
     active: {
         type: Boolean,
         default: true,
     },
-    user: {
+    userRestriction: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: User,
         required: true,
-    },
-    product: {
+    }],
+    product: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: Product,
-        required: true,
-    },
+    }],
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Category,
-        required: true,
+        ref: Category
     },
 }, { timestamps: true });
 
