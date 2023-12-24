@@ -60,10 +60,10 @@ const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
               </button>
             </div>
           </div>
-          <total className="flex flex-col text-left  pl-2 max-sm:hidden">
+          <div className="flex flex-col text-left  pl-2 max-sm:hidden">
             <p className="font-bold">Total</p>
             <p>{price*quantity}</p>
-          </total>
+          </div>
         </div>
 
       </div>

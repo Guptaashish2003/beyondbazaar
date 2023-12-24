@@ -1,11 +1,30 @@
 "use client"
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import SubmitButton from "../Form/SubmitButton";
-const PriceCheckOut = ({btnName,total,promo,...props}) => {
+import { usePostDataProtected } from "@/redux/api/usePostData";
+const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
+  const [promoValue,setPromoValue] = useState('');
   useEffect(()=>{
 
   },[total]);
+  const [loading,setLoading] = useState(false);
+  const applyPromo = async ()=>{
+    console.log(promoValue);
+    console.log({orderItems:order.orderItems,totalPrice:order.itemsPrice})
+    try {
+      setLoading(true);
+      const res = await usePostDataProtected("/api/apply-promo",{promocode:promoValue,orderItems:order.orderItems,totalPrice:order.itemsPrice});
+      if(res.success){
+        console.log(res.data);
+        setDiscount(res.data)
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error)
+      setLoading(false);
+    } 
+  }
   return (
     <section className="flex  flex-col justify-center border-solid  border-y-2  p-4 mt-16">
       <h1 className="font-bold text-black m-auto text-2xl mb-2">
@@ -16,12 +35,14 @@ const PriceCheckOut = ({btnName,total,promo,...props}) => {
           <p className="py-1"> Enter Promo Code</p>
           <div className="flex justify-between  py-2 gap-1">
             <input
+            onChange={(e)=>setPromoValue(e.target.value)}
               type="text"
               placeholder="Promo Code"
               className="w-2/3 p-2 border-solid  border-2"
             />
             <SubmitButton
-              type="button"
+              loading={loading}
+              onClick={applyPromo}
               className="text-white w-1/3 hover:scale-105 duration-300 cursor-pointer bg-black"
               value="Apply"
             />

@@ -19,11 +19,14 @@ const PaymentPage = () => {
   const cart = [1, 2, 4];
   const [address, setAddress] = useState([]);
   const [product, setProduct] = useState([]);
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState({discountValue:0});
+
   const [shippingPrice, setShippingPrice] = useState(0);
+
   const [loading,setLoading] = useState(true)
   const [order,setOrder]= useState();
   useEffect(()=>{
+    // setDiscount({discountValue:0})
     getData()
     // test()
   },[])
@@ -82,6 +85,7 @@ const PaymentPage = () => {
       console.log(error)
     } 
   }
+
   
 if(loading){
   return <Loading/>
@@ -121,7 +125,7 @@ if(loading){
               <p className="text-gray-500 text-sm">Add New Address</p>
             </Link>
           </div>
-          <PriceCheckOut total={shippingPrice +discount+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))} onClick={onCheckout} promo={true} btnName="Checkout" >
+          <PriceCheckOut setDiscount={setDiscount} order={order} total={shippingPrice +discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))} onClick={onCheckout} promo={true} btnName="Checkout" >
 
               <div className="flex justify-between">
                 <p>Total items Price</p>
@@ -137,12 +141,12 @@ if(loading){
               </div>
               <div className="flex justify-between">
                 <p>Discount</p>
-                <p>₹ {discount}</p>
+                <p>₹ {discount.discountValue}</p>
               </div>
 
               <div className="flex justify-between">
                 <p>Total Price</p>
-                <p>₹ {shippingPrice +discount+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))}</p>
+                <p>₹ {shippingPrice +discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))}</p>
               </div>
           </PriceCheckOut>
         </div>

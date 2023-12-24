@@ -4,7 +4,6 @@ import connectDB from "@/backend/DATABASE/ConnectDB";
 import { outhRoles } from "@/backend/middlewere/outhRoles";
 import isOauth from "@/backend/middlewere/isOauth";
 
-
 export async function POST(request) {
     await connectDB();
     try {
@@ -20,13 +19,9 @@ export async function POST(request) {
         // if (!promocode || !discountType || !limit ||  !discountValue || !maxDiscount || !minOrder || !maxOrder || !startDate || !endDate || !active ) {
         //     return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
         // }
-        const newPromocode = new Promocode({ promocode,discountType, discountValue, maxDiscount, minOrder, maxOrder, startDate, endDate, active,limit, product, category });
+        const newPromocode = await  Promocode.create({ promocode,discountType, discountValue, maxDiscount, minOrder, maxOrder, startDate:Date.now(), endDate:Date.now(), active,limit, product, category });
 
-        const savePromocode = await newPromocode.save();
-        if (!savePromocode) {
-            return NextResponse.json({ success: false, message: "Promocode Not Saved" }, { status: 400 });
-        }
-        return NextResponse.json({ success: true, message: "Promocode Saved", data: savePromocode }, { status: 200 });
+        return NextResponse.json({ success: true, message: "Promocode created", data: newPromocode }, { status: 200 });
         
     } catch (error) {
         console.log(error)

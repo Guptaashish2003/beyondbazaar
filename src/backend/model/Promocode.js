@@ -63,3 +63,4 @@ const PromocodeSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const Promocode = mongoose.models.Promocode || mongoose.model("Promocode", PromocodeSchema);
+export default Promocode;
