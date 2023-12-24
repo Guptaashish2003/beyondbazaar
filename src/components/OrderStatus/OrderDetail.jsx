@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import productImg from "@/assets/productImag1.jpg";
 
-const OrderDetail = () => {
+const OrderDetail = ({title,img,price,address,}) => {
   return (
     <>
       <div className="bg-gray-50">

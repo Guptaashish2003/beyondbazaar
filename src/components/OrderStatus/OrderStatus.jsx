@@ -4,7 +4,7 @@ import Image from "next/image";
 import SubmitButton from "../Form/SubmitButton";
 import { useRouter } from "next/navigation";
 
-const OrderStatus = ({id,title,img,total,status,slug,mainId}) => {
+const OrderStatus = ({id,title,productId,img,total,status,slug,mainId}) => {
   const orderDetails = [{"title":"place order","value":status},{"title":"Total","value":`₹${total}`},{"title":"Order ID","value":"0348820840928904"}]
   const router = useRouter()
   return (
@@ -34,7 +34,7 @@ const OrderStatus = ({id,title,img,total,status,slug,mainId}) => {
               <p className="text-[#333] uppercase">{data.title}</p>
               <p className="capitalize">{data.value}</p>
             </div>)}
-            <SubmitButton value="view Order Details" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
+            <SubmitButton onClick={()=>router.push(`/user/order-status/${mainId}?orderId=${id}`)} value="view Order Details" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
           </div>
         </div>
   );

@@ -8,10 +8,10 @@ const page =  () => {
   const [loading,setLoading] = useState(true)
   const [order,setOrder] = useState([])
   useEffect(()=>{
-    setData()
+    getData()
     setLoading(false)
   },[])
-  const setData = async ()=>{
+  const getData = async ()=>{
     try {
       const res = await useGetDataProtected("/api/user/order/all-orders");
       if(res.success){
@@ -33,7 +33,7 @@ const page =  () => {
         Your Orders
       </p>
     </div>
-        {order.map((val,index)=><OrderStatus key={val._id} id={val._id} mainId={val.mainId} status={val.status} slug={val.product.slug} total={val.product.productPrice} title={val.product.productName} img={val.product.productImage[0]}   />)}
+        {order.map((val,index)=><OrderStatus key={val._id} id={val._id} mainId={val.mainId} productId={val.product._id} status={val.status} slug={val.product.slug} total={val.product.productPrice} title={val.product.productName} img={val.product.productImage[0]}   />)}
     </div>
   )
 }

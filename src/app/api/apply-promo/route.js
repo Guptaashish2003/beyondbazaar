@@ -41,6 +41,7 @@ export async function POST(request) {
               return NextResponse.json({ success: false, message: "User not eligible for this promo code" }, { status: 403 });
             }
             let validProducts;
+            console.log(orderItems)
         if(!promocodeDoc.product.length !== 0) {
             validProducts = orderItems.every((item) => {
                 const productId = item.product; // Assuming productId is available in cart items
