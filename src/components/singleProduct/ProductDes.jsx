@@ -98,7 +98,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
         <SocialMedial
           hover={"hover:text-black"}
           className="gap-4 text-xl"
-          facebook={"https://www.facebook.com/"}
+          facebook={"https://www.facebook.com/sharer/sharer.php?u=http%3A//localhost%3A3000/user/single-product/protype-mechanical-keyboard-enhance-your-typing-experience-with-protype-a-mechanical-keyboard-that-offers-tactile-feedback-and-customizable-rgb-lighting-d4e54aeac8"}
           instagram={"https://www.facebook.com/"}
           twitter={"https://www.facebook.com/"}
           linkedin={"https://www.facebook.com/"}

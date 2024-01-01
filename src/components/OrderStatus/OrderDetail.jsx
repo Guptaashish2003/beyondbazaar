@@ -1,8 +1,10 @@
-import React from "react";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import productImg from "@/assets/productImag1.jpg";
 
-const OrderDetail = ({title,img,price,address,}) => {
+const OrderDetail = ({title,img,price,discription,address,status=2}) => {
+  const [orderStatus,setOrderStatus] = useState(status);
   return (
     <>
       <div className="bg-gray-50">
@@ -50,22 +52,22 @@ const OrderDetail = ({title,img,price,address,}) => {
                   <div className="sm:flex lg:col-span-7">
                     <div className="aspect-h-1 aspect-w-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
                       <Image
-                        src={productImg}
+                        src={img}
+                        width={50}
+                        height={60}
                         alt="Insulated bottle with white base and black snap lid."
                         className="h-full w-full object-cover object-center sm:h-full sm:w-full"
                       />
                     </div>
                     <div className="mt-6 sm:ml-6 sm:mt-0">
                       <h3 className="text-base font-medium text-gray-900">
-                        <a href="#">Nomad Tumbler</a>
+                        <a href="#">{title}</a>
                       </h3>
                       <p className="mt-2 text-sm font-medium text-gray-900">
-                        $35.00
+                        ₹ {price}
                       </p>
                       <p className="mt-3 text-sm text-gray-500">
-                        This durable and portable insulated tumbler will keep
-                        your beverage at the perfect temperature during your
-                        next adventure.
+                        {discription}
                       </p>
                     </div>
                   </div>
@@ -88,12 +90,6 @@ const OrderDetail = ({title,img,price,address,}) => {
                         <dd className="mt-3 space-y-3 text-gray-500">
                           <p>f•••@example.com</p>
                           <p>1•••••••••40</p>
-                          <button
-                            type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                          >
-                            Edit
-                          </button>
                         </dd>
                       </div>
                     </dl>
@@ -109,16 +105,16 @@ const OrderDetail = ({title,img,price,address,}) => {
                     <div className="overflow-hidden rounded-full bg-gray-200">
                       <div
                         className="h-2 rounded-full bg-indigo-600"
-                        style={{ width: "calc((1 * 2 + 1) / 8 * 100%)" }}
+                        style={{ width: `calc((1 * ${orderStatus} + 1) / 8 * 100%)` }}
                       />
                     </div>
                     <div className="mt-6 hidden grid-cols-4 text-sm font-medium text-gray-600 sm:grid">
-                      <div className="text-indigo-600">Order placed</div>
-                      <div className="text-center text-indigo-600">
+                      <div className={` text-indigo-600`}>Order placed</div>
+                      <div className={`text-center ${orderStatus >= 2? "text-indigo-600":""}`}>
                         Processing
                       </div>
-                      <div className="text-center">Shipped</div>
-                      <div className="text-right">Delivered</div>
+                      <div className={`text-center ${orderStatus >= 4? "text-indigo-600":""}`}>Shipped</div>
+                      <div className={`text-right ${orderStatus >= 8? "text-indigo-600":""}`}>Delivered</div>
                     </div>
                   </div>
                 </div>

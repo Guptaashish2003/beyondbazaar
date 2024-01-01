@@ -1,35 +1,36 @@
-import SubCategory from "@/backend/model/SubCategory";
+
 import connectDB from "@/backend/DATABASE/ConnectDB"; // database connection
 import product from "@/Data/product.json";
-
 import { NextResponse } from "next/server";
-import axios from "axios";
+import { uploadBytes,getDownloadURL } from 'firebase/storage';
+import { ref } from 'firebase/storage';
+import {storage} from "@/backend/DATABASE/firebaseConfig"
 
-export async function GET(request) {
+const giveCurrentDateTime = () => {
+  const today = new Date();
+  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const dateTime = date + ' ' + time;
+  return dateTime;
+}
+
+export async function POST(request) {
   await connectDB();
   try {
-    // Function to generate Unsplah image URL
-    function generateUnsplashUrl(electronicNumber, count) {
-      return `https://source.unsplash.com/random/?electronic=${electronicNumber}&count=${count}`;
-    }
 
-    // Function to update 'productImage' in each entry
-    function updateProductImage(entry, index) {
-      const numberOfImages = 5; // Number of images you want for each entry
-      entry.productImage = Array.from({ length: numberOfImages }, (_, i) =>
-        generateUnsplashUrl(index + 1, i + 1)
-      );
-      return entry;
-    }
+    const formData = await request.formData();
+  const files = formData.get("file");
+    console.log(files,"files")
+    const dateTime = giveCurrentDateTime();
 
-    // Update 'productImage' for each entry
-    const updatedJsonEntries = product.map(updateProductImage);
-
-    // Log the updated JSON entries
-    console.log(JSON.stringify(updatedJsonEntries, null, 2));
+    const filename = `images/${dateTime}${files.name}`;
+    const imageRef = ref(storage, filename);
+    const response = await uploadBytes(imageRef, files);
+      const imageUrl = await getDownloadURL(response.ref);
+      console.log(imageUrl);
 
     // Return a valid response
-    return NextResponse.json({ success: true, updatedJsonEntries }, { status: 200 });
+    return NextResponse.json({ success: true, data:imageUrl }, { status: 200 });
 
   } catch (error) {
     // Handle errors and return an appropriate response

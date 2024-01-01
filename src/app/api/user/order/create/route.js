@@ -14,11 +14,12 @@ export async function POST(request) {
         const userID = check._id;
         const data = await request.json();
         // const {  orderItems, shippingInfo, paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice } = data;
-        const {  orderItems, shippingInfo, paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice,discount } = data;
+        let {  orderItems, shippingInfo, paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice,discount } = data;
         // if (!orderItems || !shippingInfo || !paymentInfo || !itemsPrice || !taxPrice || !shippingPrice || !totalPrice) {
         //     return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         // }
-        const order = await Order.create({ user:userID, orderItems, shippingInfo, paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice,discount });
+        shippingInfo = check.address.filter((val)=>{return val._id.valueOf() === shippingInfo})
+        const order = await Order.create({ user:userID, orderItems, shippingInfo:shippingInfo[0], paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice,discount });
         return NextResponse.json({ success: true, message: "Order Created", data: order }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });

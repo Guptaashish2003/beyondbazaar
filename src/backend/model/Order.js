@@ -27,17 +27,51 @@ const OrderSchema = new mongoose.Schema({
             },
         }
     ],
-    shippingInfo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User.address'
-    },
-    // shippingInfo: {
-    //     fullName: { type: String, required: true },
-    //     address: { type: String, required: true },
-    //     city: { type: String, required: true },
-    //     postalCode: { type: Number, required: true },
-    //     country: { type: String, required: true },
-    // },
+    shippingInfo: 
+        {
+          name:{
+            type: String,
+          },
+          email:{
+            type: String,
+          },
+          street: {
+            type: String,
+            maxlength: [30, "Street cannot be more than 60 characters"],
+          },
+  
+          city: {
+            type: String,
+            required: [true, "Please provide your city"],
+            maxlength: [30, "City cannot be more than 60 characters"],
+          },
+  
+          state: {
+            type: String,
+            required: [true, "Please provide your state"],
+            maxlength: [30, "State cannot be more than 60 characters"],
+          },
+          District: {
+            type: String,
+            required: [true, "Please provide your district"],
+            maxlength: [30, "district cannot be more than 60 characters"],
+          },
+          
+          pincode: {
+            type: String,
+            required: [true, "Please provide your pincode"],
+            maxlength: [30, "pincode cannot be more than 60 characters"],
+          },
+          country: {
+            type: String,
+            required: [true, "Please provide your country"],
+            maxlength: [30, "country cannot be more than 60 characters"],
+          },
+          number: {
+            type:Number,
+          },
+        }
+      ,
     // paymentMethod: { type: String, required: true , default : "Paypal" },
     // paymentResult: {
     //     id: String,

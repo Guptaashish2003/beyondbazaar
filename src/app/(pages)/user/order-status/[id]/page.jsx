@@ -9,7 +9,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 const page = () => {
   const [loading,setLoading] = useState(true)
   const [order,setOrder] = useState([]);
-  const [product,setProduct] = useState([]);
+  const [product,setProduct] = useState();
   const {id} = useParams();
   const searchParams = useSearchParams()
   const productId = searchParams.get('orderId');
@@ -25,7 +25,7 @@ const page = () => {
         const data = res.data.orderItems.filter((val)=>{
           return productId === val._id
         })
-        setProduct(data);
+        setProduct(data[0]);
       }
     } catch (error) {
       console.log(error)
@@ -37,7 +37,7 @@ const page = () => {
   console.log(product)
   return (
     <div className="flex flex-col ">
-      <OrderDetail className="w-[65%]"/>
+      <OrderDetail status={4} title={product?.product.productName} img={product?.product.productImage[0]} discription={product?.product.productDescription} price={product?.product.productPrice} className="w-[65%]"/>
       <div className="w-11/12 max-md:w-full p-4 rounded-md bg-gray-50 flex mx-auto gap-3 ">
         <ShippingDetail />
         <PriceTotal />

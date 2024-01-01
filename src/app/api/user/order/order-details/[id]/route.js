@@ -15,7 +15,15 @@ export async function GET(request,context) {
             console.log(id)
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
-        const orders = await Order.findOne({ user: check._id ,_id:id });
+        const orders = await Order.findOne({ user: check._id ,_id:id }).populate({
+            path: 'orderItems',
+            populate: [
+              {
+                path: 'product',
+                select: 'productName productImage productDescription productPrice',
+              },
+            ],
+          });
         if (!orders||orders.length===0) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });
         }
