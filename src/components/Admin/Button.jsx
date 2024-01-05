@@ -1,14 +1,15 @@
+"use client"
 import React from 'react';
-
-import { useStateContext } from '@/app/ContextProvider';
-
+import { useSelector, useDispatch } from 'react-redux'
+import {setIsClicked} from "@/redux/action/themeSlice"
 const Button = ({ icon, bgColor, color, bgHoverColor, size, text, borderRadius, width }) => {
-  const { setIsClicked, initialState } = useStateContext();
+  const { isClicked } = useSelector((state) => state.theme);
+  const dispatch = useDispatch()
 
   return (
     <button
       type="button"
-      onClick={() => setIsClicked(initialState)}
+      onClick={() => dispatch(setIsClicked(isClicked))}
       style={{ backgroundColor: bgColor, color, borderRadius }}
       className={` text-${size} p-3 w-${width} hover:drop-shadow-xl hover:bg-${bgHoverColor}`}
     >

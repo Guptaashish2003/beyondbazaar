@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './action/cartSlice';
 import useReducer from './action/userSlice';
 import orcerReducer from './action/ordersSlice';
-import themeSettingReducer from './action/themeSettingReducer';
+import themeReducer from './action/themeSlice';
 import loginSecurity from './action/loginSecuritySlice';
 import userReducer from "@/redux/action/userSlice"
 const store = configureStore({
@@ -11,7 +11,7 @@ const store = configureStore({
     cart: cartReducer,
     order: orcerReducer,
     user:userReducer,
-    themeSetting: themeSettingReducer,
+    theme:themeReducer,
     loginSecurity: loginSecurity,
   },
 });

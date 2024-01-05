@@ -1,10 +1,34 @@
 import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { Button } from '.';
-import { useStateContext } from '@/app/ContextProvider';
+import { useSelector } from 'react-redux'
 
 const UserProfile = () => {
-  const { currentColor } = useStateContext();
+  const { currentColor } = useSelector((state) => state.theme);
+  
+  const userProfileData = [
+    {
+      // icon: <BsCurrencyDollar />,
+      title: 'My Profile',
+      desc: 'Account Settings',
+      iconColor: '#03C9D7',
+      iconBg: '#E5FAFB',
+    },
+    {
+      // icon: <BsShield />,
+      title: 'My Inbox',
+      desc: 'Messages & Emails',
+      iconColor: 'rgb(0, 194, 146)',
+      iconBg: 'rgb(235, 250, 242)',
+    },
+    {
+      // icon: <FiCreditCard />,
+      title: 'My Tasks',
+      desc: 'To-do and Daily Tasks',
+      iconColor: 'rgb(255, 244, 229)',
+      iconBg: 'rgb(254, 201, 15)',
+    },
+  ];
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -16,12 +40,13 @@ const UserProfile = () => {
           bgHoverColor="light-gray"
           size="2xl"
           borderRadius="50%"
+          // onClick={() => dispatch(handleClick('userProfile'))}
         />
       </div>
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
         <img
           className="rounded-full h-24 w-24"
-          src={"avatar"}
+          src={"https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
           alt="user-profile"
         />
         <div>

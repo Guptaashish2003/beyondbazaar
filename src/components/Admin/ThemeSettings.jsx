@@ -2,31 +2,45 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineCancel } from 'react-icons/md';
 import { BsCheck } from 'react-icons/bs';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { setModeAction, setColorAction, setThemeSettingsAction } from '../redux/themeSlice';
+import { setMode, setColor,setThemeSettings  } from '@/redux/action/themeSlice';
 
 const ThemeSettings = () => {
   const dispatch = useDispatch();
-  const currentColor = useSelector((state) => state.theme.currentColor);
-  const currentMode = useSelector((state) => state.theme.currentMode);
-  const themeSettings = useSelector((state) => state.theme.themeSettings);
+  const {currentColor,currentMode,themeSettings} = useSelector((state) => state.theme);
+  const themeColors = [
+    {
+      name: 'blue-theme',
+      color: '#1A97F5',
+    },
+    {
+      name: 'green-theme',
+      color: '#03C9D7',
+    },
+    {
+      name: 'purple-theme',
+      color: '#7352FF',
+    },
+    {
+      name: 'red-theme',
+      color: '#FF5C8E',
+    },
+    {
+      name: 'indigo-theme',
+      color: '#1E4DB7',
+    },
+    {
+      color: '#FB9678',
+      name: 'orange-theme',
+    },
+  ];
 
-  const setMode = (e) => {
-    dispatch(setModeAction(e.target.value));
-    localStorage.setItem('themeMode', e.target.value);
-  };
-
-  const setColor = (color) => {
-    dispatch(setColorAction(color));
-    localStorage.setItem('colorMode', color);
-  };
 
   const closeSettings = () => {
-    dispatch(setThemeSettingsAction(false));
+    dispatch(setThemeSettings(false));
   };
 
   return (
-    <div className="bg-half-transparent w-screen fixed nav-item top-0 right-0">
+    <div className="bg-transparent w-screen fixed nav-item top-0 right-0">
       <div className="float-right h-screen dark:text-gray-200  bg-white dark:bg-[#484B52] w-400">
         <div className="flex justify-between items-center p-4 ml-4">
           <p className="font-semibold text-lg">Settings</p>
@@ -48,7 +62,7 @@ const ThemeSettings = () => {
               name="theme"
               value="Light"
               className="cursor-pointer"
-              onChange={setMode}
+              onChange={(e)=>dispatch(setMode(e))}
               checked={currentMode === 'Light'}
             />
             <label htmlFor="light" className="ml-2 text-md cursor-pointer">
@@ -61,7 +75,7 @@ const ThemeSettings = () => {
               id="dark"
               name="theme"
               value="Dark"
-              onChange={setMode}
+              onChange={(e)=>dispatch(setMode(e))}
               className="cursor-pointer"
               checked={currentMode === 'Dark'}
             />
@@ -74,7 +88,7 @@ const ThemeSettings = () => {
           <p className="font-semibold text-xl">Theme Colors</p>
           <div className="flex gap-3">
             {themeColors.map((item, index) => (
-              <TooltipComponent key={index} content={item.name} position="TopCenter">
+              <div key={index} content={item.name} position="TopCenter">
                 <div
                   className="relative mt-2 cursor-pointer flex gap-5 items-center"
                   key={item.name}
@@ -83,7 +97,7 @@ const ThemeSettings = () => {
                     type="button"
                     className="h-10 w-10 rounded-full cursor-pointer"
                     style={{ backgroundColor: item.color }}
-                    onClick={() => setColor(item.color)}
+                    onClick={() => dispatch(setColor(item.color))}
                   >
                     <BsCheck
                       className={`ml-2 text-2xl text-white ${
@@ -92,7 +106,7 @@ const ThemeSettings = () => {
                     />
                   </button>
                 </div>
-              </TooltipComponent>
+              </div>
             ))}
           </div>
         </div>

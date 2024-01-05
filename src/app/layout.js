@@ -1,3 +1,4 @@
+
 import Navbar from '@/components/Navbar/Navbar'
 import './globals.css'
 import { Inter } from 'next/font/google'
@@ -13,16 +14,21 @@ export const metadata = {
   title: 'BeyondBazar',
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({children,params}) {
+  const {isAdmin} = params
+  console.log(params,"parmas layout")
   return (
     <html lang="en">
       <body className={inter.className} > 
       <GoogleProvider>
           <Providers>
-            <Navbar/>
+            {isAdmin?"":<Navbar/>}
             {children}
+            {isAdmin?"":<>
             <CompanyTrust/>
             <Footer/>
+            </>}
+            
           </Providers>
         <ToastContainer
           position="top-right"

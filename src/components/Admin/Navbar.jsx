@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { FiShoppingCart } from 'react-icons/fi';
-import { BsChatLeft } from 'react-icons/bs';
 import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { Cart, Chat, Notification, UserProfile } from '.';
-import { useStateContext } from '@/app/ContextProvider';
 
-const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
-  <TooltipComponent content={title} position="BottomCenter">
+import {  Notification, UserProfile } from './index';
+import { useSelector, useDispatch } from 'react-redux'
+import {setScreenSize,setActiveMenu,handleClick} from "@/redux/action/themeSlice"
+const NavButton = ({  customFunc, icon, color, dotColor }) => (
+  <div >
     <button
       type="button"
       onClick={() => customFunc()}
@@ -22,14 +20,15 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
       />
       {icon}
     </button>
-  </TooltipComponent>
+  </div>
 );
 
 const Navbar = () => {
-  const { currentColor, activeMenu, setActiveMenu, handleClick, isClicked, setScreenSize, screenSize } = useStateContext();
+  const dispatch = useDispatch()
+  const { currentColor, activeMenu, isClicked, screenSize } = useSelector((state) => state.theme);
 
   useEffect(() => {
-    const handleResize = () => setScreenSize(window.innerWidth);
+    const handleResize = () => dispatch(setScreenSize(window.innerWidth));
 
     window.addEventListener('resize', handleResize);
 
@@ -40,30 +39,28 @@ const Navbar = () => {
 
   useEffect(() => {
     if (screenSize <= 900) {
-      setActiveMenu(false);
+      dispatch(setActiveMenu(false));
     } else {
-      setActiveMenu(true);
+      dispatch(setActiveMenu(true));
     }
   }, [screenSize]);
 
-  const handleActiveMenu = () => setActiveMenu(!activeMenu);
+  const handleActiveMenu = () => dispatch(setActiveMenu(!activeMenu));
 
   return (
     <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative">
 
       <NavButton title="Menu" customFunc={handleActiveMenu} color={currentColor} icon={<AiOutlineMenu />} />
       <div className="flex">
-        <NavButton title="Cart" customFunc={() => handleClick('cart')} color={currentColor} icon={<FiShoppingCart />} />
-        <NavButton title="Chat" dotColor="#03C9D7" customFunc={() => handleClick('chat')} color={currentColor} icon={<BsChatLeft />} />
-        <NavButton title="Notification" dotColor="rgb(254, 201, 15)" customFunc={() => handleClick('notification')} color={currentColor} icon={<RiNotification3Line />} />
-        <TooltipComponent content="Profile" position="BottomCenter">
+        <NavButton title="Notification" dotColor="rgb(254, 201, 15)" customFunc={() => dispatch(handleClick('notification'))} color={currentColor} icon={<RiNotification3Line />} />
+        <div content="Profile" position="BottomCenter">
           <div
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-            onClick={() => handleClick('userProfile')}
+            onClick={() => dispatch(handleClick('userProfile'))}
           >
             <img
               className="rounded-full w-8 h-8"
-              src={"avatar"}
+              src={"https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
               alt="user-profile"
             />
             <p>
@@ -74,10 +71,7 @@ const Navbar = () => {
             </p>
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
-        </TooltipComponent>
-
-        {isClicked.cart && (<Cart />)}
-        {isClicked.chat && (<Chat />)}
+        </div>
         {isClicked.notification && (<Notification />)}
         {isClicked.userProfile && (<UserProfile />)}
       </div>
