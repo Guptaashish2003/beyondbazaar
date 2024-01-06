@@ -55,6 +55,7 @@ function DashboardLayout({children}) {
           </div>
           <div>
             {themeSettings && (<ThemeSettings />)}
+            {children}
           </div>
           <Footer />
         </div>

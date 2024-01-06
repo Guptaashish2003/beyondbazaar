@@ -3,26 +3,30 @@ import { MdOutlineCancel } from 'react-icons/md';
 import { Button } from '.';
 import { useSelector } from 'react-redux'
 
+import {  FiCreditCard } from 'react-icons/fi';
+import {  BsCurrencyDollar, BsShield } from 'react-icons/bs';
+
+
 const UserProfile = () => {
   const { currentColor } = useSelector((state) => state.theme);
   
   const userProfileData = [
     {
-      // icon: <BsCurrencyDollar />,
+      icon: <BsCurrencyDollar />,
       title: 'My Profile',
       desc: 'Account Settings',
       iconColor: '#03C9D7',
       iconBg: '#E5FAFB',
     },
     {
-      // icon: <BsShield />,
+      icon: <BsShield />,
       title: 'My Inbox',
       desc: 'Messages & Emails',
       iconColor: 'rgb(0, 194, 146)',
       iconBg: 'rgb(235, 250, 242)',
     },
     {
-      // icon: <FiCreditCard />,
+      icon: <FiCreditCard />,
       title: 'My Tasks',
       desc: 'To-do and Daily Tasks',
       iconColor: 'rgb(255, 244, 229)',

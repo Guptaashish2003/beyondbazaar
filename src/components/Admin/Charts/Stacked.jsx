@@ -1,29 +1,50 @@
 import React from 'react';
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip } from '@syncfusion/ej2-react-charts';
-import { useStateContext } from '@/app/ContextProvider';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-const Stacked = ({ width, height }) => {
-  const { currentMode } = useStateContext();
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
+export default function Stacked({id,data,title,color,label,...props}) {
+  data[0].backgroundColor = "#333" 
+  if(data.length>1) data[1].backgroundColor = color;
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: title,
+      },
+    },
+    responsive: true,
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
+    },
+  };
+  console.log(data);
+  const stacker = {
+    labels:label,
+    datasets:data,
+  };
   return (
-    <ChartComponent
-      id="charts"
-      primaryXAxis={stackedPrimaryXAxis}
-      primaryYAxis={stackedPrimaryYAxis}
-      width={width}
-      height={height}
-      chartArea={{ border: { width: 0 } }}
-      tooltip={{ enable: true }}
-      background={currentMode === 'Dark' ? '#33373E' : '#fff'}
-      legendSettings={{ background: 'white' }}
-    >
-      <Inject services={[StackingColumnSeries, Category, Legend, Tooltip]} />
-      <SeriesCollectionDirective>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        {stackedCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
-      </SeriesCollectionDirective>
-    </ChartComponent>
-  );
-};
-
-export default Stacked;
+    <Bar {...props} id={id} options={options} data={stacker} />
+  )
+}

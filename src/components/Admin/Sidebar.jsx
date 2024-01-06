@@ -7,7 +7,14 @@ import {setActiveMenu} from "@/redux/action/themeSlice"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import SubmitButton from '../Form/SubmitButton';
-// import { links } from '../data/dummy';
+import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart, AiOutlineBarChart } from 'react-icons/ai';
+import { FiShoppingBag, FiEdit, FiPieChart } from 'react-icons/fi';
+import { BsKanban, BsBarChart } from 'react-icons/bs';
+import { BiColorFill } from 'react-icons/bi';
+import { IoMdContacts } from 'react-icons/io';
+import { RiContactsLine, RiStockLine } from 'react-icons/ri';
+import { GiLouvrePyramid } from 'react-icons/gi';
+
 const Sidebar = () => {
   const { currentColor, activeMenu, screenSize } = useSelector((state) => state.theme);
   const dispatch = useDispatch()
@@ -17,8 +24,8 @@ const Sidebar = () => {
       title: 'Dashboard',
       links: [
         {
-          name: 'adminstrative/dashboard',
-          // icon: <FiShoppingBag />,
+          name: 'dashboard',
+          icon: <FiShoppingBag />,
         },
       ],
     },
@@ -28,15 +35,15 @@ const Sidebar = () => {
       links: [
         {
           name: 'orders',
-          // icon: <AiOutlineShoppingCart />,
+          icon: <AiOutlineShoppingCart />,
         },
         {
           name: 'employees',
-          // icon: <IoMdContacts />,
+          icon: <IoMdContacts />,
         },
         {
           name: 'customers',
-          // icon: <RiContactsLine />,
+          icon: <RiContactsLine />,
         },
       ],
     },
@@ -45,19 +52,19 @@ const Sidebar = () => {
       links: [
         {
           name: 'calendar',
-          // icon: <AiOutlineCalendar />,
+          icon: <AiOutlineCalendar />,
         },
         {
           name: 'kanban',
-          // icon: <BsKanban />,
+          icon: <BsKanban />,
         },
         {
           name: 'editor',
-          // icon: <FiEdit />,
+          icon: <FiEdit />,
         },
         {
           name: 'color-picker',
-          // icon: <BiColorFill />,
+          icon: <BiColorFill />,
         },
       ],
     },
@@ -70,32 +77,32 @@ const Sidebar = () => {
         },
         {
           name: 'area',
-          // icon: <AiOutlineAreaChart />,
+          icon: <AiOutlineAreaChart />,
         },
   
         {
           name: 'bar',
-          // icon: <AiOutlineBarChart />,
+          icon: <AiOutlineBarChart />,
         },
         {
           name: 'pie',
-          // icon: <FiPieChart />,
+          icon: <FiPieChart />,
         },
         {
           name: 'financial',
-          // icon: <RiStockLine />,
+          icon: <RiStockLine />,
         },
         {
           name: 'color-mapping',
-          // icon: <BsBarChart />,
+          icon: <BsBarChart />,
         },
         {
           name: 'pyramid',
-          // icon: <GiLouvrePyramid />,
+          icon: <GiLouvrePyramid />,
         },
         {
           name: 'stacked',
-          // icon: <AiOutlineBarChart />,
+          icon: <AiOutlineBarChart />,
         },
       ],
     },
@@ -116,7 +123,7 @@ const Sidebar = () => {
         <>
           <div className="flex justify-between items-center">
             <Link href="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-              <SiShopware /> <span>Shoppy</span>
+              <SiShopware /> <span>Beyond Bazar</span>
             </Link>
             <div content="Menu" position="BottomCenter">
               <SubmitButton
@@ -138,11 +145,11 @@ const Sidebar = () => {
                 </p>
                 {item.links.map((link) => (
                   <Link
-                    href={`/${link.name}`}
+                    href={`/adminstrative/${link.name}`}
                     key={link.name}
                     onClick={handleCloseSideBar}
-                    className={`/${link.name}`=== pathname ? activeLink : normalLink}
-                    style={{"backgroundColor":`${`/${link.name}`=== pathname ?  currentColor: ""}`}}
+                    className={`/adminstrative/${link.name}`=== pathname ? activeLink : normalLink}
+                    style={{"backgroundColor":`${`/adminstrative/${link.name}`=== pathname ?  currentColor: ""}`}}
                   >
                     {link?.icon}
                     <span className="capitalize ">{link.name}</span>
