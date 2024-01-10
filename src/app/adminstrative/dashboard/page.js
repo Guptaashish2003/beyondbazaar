@@ -1,25 +1,93 @@
 "use client"
 import React from 'react';
-
 import { GoDotFill } from "react-icons/go";
-
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { LuIndianRupee } from "react-icons/lu";
-import { GoPrimitiveDot } from 'react-icons/go';
 import { IoIosMore } from 'react-icons/io';
-import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart, AiOutlineBarChart, AiOutlineStock } from 'react-icons/ai';
-import { FiShoppingBag, FiEdit, FiPieChart, FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
-import { BsKanban, BsBarChart, BsBoxSeam, BsShield, BsChatLeft } from 'react-icons/bs';
-import { BiColorFill } from 'react-icons/bi';
-import { IoMdContacts } from 'react-icons/io';
-import { RiContactsLine, RiStockLine } from 'react-icons/ri';
+import {  FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
+import { BsBoxSeam, BsShield, BsChatLeft } from 'react-icons/bs';
 import { MdOutlineSupervisorAccount } from 'react-icons/md';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
-import { GiLouvrePyramid } from 'react-icons/gi';
-import { GrLocation } from 'react-icons/gr';
 import {  Button,SparkLine,Stacked,PieChart } from '@/components/Admin/index';
 import { useSelector, useDispatch } from 'react-redux'
+
+const weeklyStats = [
+  {
+    icon: <FiShoppingCart />,
+    amount: '-$560',
+    title: 'Top Sales',
+    desc: 'Johnathan Doe',
+    iconBg: '#FB9678',
+    pcColor: 'red-600',
+  },
+  {
+    icon: <FiStar />,
+    amount: '-$560',
+    title: 'Best Seller',
+    desc: 'MaterialPro Admin',
+    iconBg: 'rgb(254, 201, 15)',
+    pcColor: 'red-600',
+  },
+  {
+    icon: <BsChatLeft />,
+    amount: '+$560',
+    title: 'Most Commented',
+    desc: 'Ample Admin',
+    iconBg: '#00C292',
+    pcColor: 'green-600',
+  },
+];
+
+
+const medicalproBranding = {
+  data: [
+    {
+      title: 'Due Date',
+      desc: 'Oct 23, 2021',
+    },
+    {
+      title: 'Budget',
+      desc: '$98,500',
+    },
+    {
+      title: 'Expense',
+      desc: '$63,000',
+    },
+  ],
+  teams: [
+    {
+      name: 'Bootstrap',
+      color: 'orange',
+    },
+    {
+      name: 'Angular',
+      color: '#FB9678',
+    },
+  ],
+  leaders: [
+    {
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+  ],
+};
 function page() {
   const { currentColor, currentMode } = useSelector((state) => state.theme);
   const dispatch = useDispatch()
@@ -351,12 +419,12 @@ const pieData = {
             {/* <DropDown currentMode={currentMode} /> */}
           </div>
           <div className="md:w-full overflow-auto">
-            {/* <LineChart /> */}
+          <SparkLine key={"2"} title="bugest" label={lineLabl} currentColor={currentColor} id="lineChart" data={lineData} color={currentColor} />
           </div>
         </div>
       </div>
 
-      {/* <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center">
         <div className="md:w-400 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl p-6 m-3">
           <div className="flex justify-between">
             <p className="text-xl font-semibold">Weekly Stats</p>
@@ -386,7 +454,7 @@ const pieData = {
               </div>
             ))}
             <div className="mt-4">
-              <SparkLine currentColor={currentColor} id="area-sparkLine" height="160px" type="Area" data={SparklineAreaData} width="320" color="rgb(242, 252, 253)" />
+              <SparkLine id="last-chart" currentColor={currentColor}  color={currentColor} height="160px" type="Area" data={lineData} width="320"  />
             </div>
           </div>
 
@@ -456,7 +524,7 @@ const pieData = {
           <div className="mt-10">
             <img
               className="md:w-96 h-50 "
-              src={product9}
+              src={'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
               alt=""
             />
             <div className="mt-8">
@@ -477,7 +545,7 @@ const pieData = {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

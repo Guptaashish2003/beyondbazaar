@@ -7,13 +7,12 @@ import {setActiveMenu} from "@/redux/action/themeSlice"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import SubmitButton from '../Form/SubmitButton';
-import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart, AiOutlineBarChart } from 'react-icons/ai';
-import { FiShoppingBag, FiEdit, FiPieChart } from 'react-icons/fi';
-import { BsKanban, BsBarChart } from 'react-icons/bs';
-import { BiColorFill } from 'react-icons/bi';
+import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart,AiOutlineStock, AiOutlineBarChart } from 'react-icons/ai';
+import { FiShoppingBag, FiPieChart } from 'react-icons/fi';
+import { BsKanban } from 'react-icons/bs';
 import { IoMdContacts } from 'react-icons/io';
-import { RiContactsLine, RiStockLine } from 'react-icons/ri';
-import { GiLouvrePyramid } from 'react-icons/gi';
+import { RiContactsLine } from 'react-icons/ri';
+import { PiChartPolarThin } from "react-icons/pi";
 
 const Sidebar = () => {
   const { currentColor, activeMenu, screenSize } = useSelector((state) => state.theme);
@@ -25,6 +24,7 @@ const Sidebar = () => {
       links: [
         {
           name: 'dashboard',
+          link: 'dashboard',
           icon: <FiShoppingBag />,
         },
       ],
@@ -35,14 +35,17 @@ const Sidebar = () => {
       links: [
         {
           name: 'orders',
+          link: 'orders',
           icon: <AiOutlineShoppingCart />,
         },
         {
           name: 'employees',
+          link: 'employees',
           icon: <IoMdContacts />,
         },
         {
           name: 'customers',
+          link: 'customers',
           icon: <RiContactsLine />,
         },
       ],
@@ -52,20 +55,14 @@ const Sidebar = () => {
       links: [
         {
           name: 'calendar',
+          link: 'calendar',
           icon: <AiOutlineCalendar />,
         },
         {
           name: 'kanban',
+          link: 'kanban',
           icon: <BsKanban />,
-        },
-        {
-          name: 'editor',
-          icon: <FiEdit />,
-        },
-        {
-          name: 'color-picker',
-          icon: <BiColorFill />,
-        },
+        }
       ],
     },
     {
@@ -73,35 +70,34 @@ const Sidebar = () => {
       links: [
         {
           name: 'line',
-          // icon: <AiOutlineStock />,
+          link: 'line',
+          icon: <AiOutlineStock />,
         },
         {
           name: 'area',
+          name: 'area',
+          link: 'area',
           icon: <AiOutlineAreaChart />,
         },
   
         {
           name: 'bar',
+          link: 'bar',
           icon: <AiOutlineBarChart />,
         },
         {
           name: 'pie',
+          link: 'dashboard/pie',
           icon: <FiPieChart />,
         },
         {
-          name: 'financial',
-          icon: <RiStockLine />,
-        },
-        {
-          name: 'color-mapping',
-          icon: <BsBarChart />,
-        },
-        {
-          name: 'pyramid',
-          icon: <GiLouvrePyramid />,
+          name: 'polar Area',
+          link: 'polar',
+          icon: <PiChartPolarThin />,
         },
         {
           name: 'stacked',
+          link: 'dashboard/stacked',
           icon: <AiOutlineBarChart />,
         },
       ],
@@ -145,11 +141,11 @@ const Sidebar = () => {
                 </p>
                 {item.links.map((link) => (
                   <Link
-                    href={`/adminstrative/${link.name}`}
+                    href={`/adminstrative/${link.link}`}
                     key={link.name}
                     onClick={handleCloseSideBar}
-                    className={`/adminstrative/${link.name}`=== pathname ? activeLink : normalLink}
-                    style={{"backgroundColor":`${`/adminstrative/${link.name}`=== pathname ?  currentColor: ""}`}}
+                    className={`/adminstrative/${link.link}`=== pathname ? activeLink : normalLink}
+                    style={{"backgroundColor":`${`/adminstrative/${link.link}`=== pathname ?  currentColor: ""}`}}
                   >
                     {link?.icon}
                     <span className="capitalize ">{link.name}</span>
