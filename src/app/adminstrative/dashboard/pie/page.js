@@ -30,7 +30,7 @@ const pieData = {
     
   <div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl">
     <ChartsHeader category="Pie" title="Project Cost Breakdown" />
-    <div className="w-full">
+    <div className="w-full h-screen">
       <PieChart id="chart-pie" label={lineLabl} data={pieData} legendVisiblity height="full" />
     </div>
   </div>
