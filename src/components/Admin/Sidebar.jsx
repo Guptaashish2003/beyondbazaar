@@ -70,19 +70,18 @@ const Sidebar = () => {
       links: [
         {
           name: 'line',
-          link: 'line',
+          link: 'dashboard/line',
           icon: <AiOutlineStock />,
         },
         {
           name: 'area',
-          name: 'area',
-          link: 'area',
+          link: 'dashboard/area',
           icon: <AiOutlineAreaChart />,
         },
   
         {
           name: 'bar',
-          link: 'bar',
+          link: 'dashboard/bar',
           icon: <AiOutlineBarChart />,
         },
         {
@@ -92,7 +91,7 @@ const Sidebar = () => {
         },
         {
           name: 'polar Area',
-          link: 'polar',
+          link: 'dashboard/polar',
           icon: <PiChartPolarThin />,
         },
         {

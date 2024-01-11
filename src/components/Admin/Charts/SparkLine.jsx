@@ -7,6 +7,7 @@ import {
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
@@ -20,7 +21,8 @@ export default function SparkLine({title="",label,color,width,height,data,...pro
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler
   );
 
    const options = {
