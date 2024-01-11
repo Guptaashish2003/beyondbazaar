@@ -596,6 +596,18 @@
   dependencies:
     mini-svg-data-uri "^1.2.3"
 
+"@tanstack/react-table@^8.11.3":
+  version "8.11.3"
+  resolved "https://registry.npmjs.org/@tanstack/react-table/-/react-table-8.11.3.tgz"
+  integrity sha512-Gwwm7po1MaObBguw69L+UiACkaj+eOtThQEArj/3fmUwMPiWaJcXvNG2X5Te5z2hg0HMx8h0T0Q7p5YmQlTUfw==
+  dependencies:
+    "@tanstack/table-core" "8.11.3"
+
+"@tanstack/table-core@8.11.3":
+  version "8.11.3"
+  resolved "https://registry.npmjs.org/@tanstack/table-core/-/table-core-8.11.3.tgz"
+  integrity sha512-nkcFIL696wTf1QMvhGR7dEg60OIRwEZm1OqFTYYDTRc4JOWspgrsJO3IennsOJ7ptumHWLDjV8e5BjPkZcSZAQ==
+
 "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz"
