@@ -45,7 +45,7 @@ const Sidebar = () => {
         },
         {
           name: 'customers',
-          link: 'customers',
+          link: 'dashboard/customers',
           icon: <RiContactsLine />,
         },
       ],
