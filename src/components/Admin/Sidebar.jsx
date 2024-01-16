@@ -55,12 +55,12 @@ const Sidebar = () => {
       links: [
         {
           name: 'calendar',
-          link: 'calendar',
+          link: 'dashboard/calendar',
           icon: <AiOutlineCalendar />,
         },
         {
           name: 'kanban',
-          link: 'kanban',
+          link: 'dashboard/kanban',
           icon: <BsKanban />,
         }
       ],
