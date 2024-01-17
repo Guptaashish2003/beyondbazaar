@@ -7,10 +7,13 @@ import {setActiveMenu} from "@/redux/action/themeSlice"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import SubmitButton from '../Form/SubmitButton';
+import { FaProductHunt } from "react-icons/fa6";
 import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart,AiOutlineStock, AiOutlineBarChart } from 'react-icons/ai';
 import { FiShoppingBag, FiPieChart } from 'react-icons/fi';
 import { BsKanban } from 'react-icons/bs';
+import { MdAddShoppingCart } from "react-icons/md";
 import { IoMdContacts } from 'react-icons/io';
+import { CiDiscount1 } from "react-icons/ci";
 import { RiContactsLine } from 'react-icons/ri';
 import { PiChartPolarThin } from "react-icons/pi";
 
@@ -35,18 +38,28 @@ const Sidebar = () => {
       links: [
         {
           name: 'orders',
-          link: 'orders',
+          link: 'dashboard/orders',
           icon: <AiOutlineShoppingCart />,
         },
+        // {
+        //   name: 'employees',
+        //   link: 'employees',
+        //   icon: <IoMdContacts />,
+        // },
         {
-          name: 'employees',
-          link: 'employees',
-          icon: <IoMdContacts />,
+          name: 'products',
+          link: 'dashboard/products',
+          icon: <FaProductHunt />,
         },
         {
           name: 'customers',
           link: 'dashboard/customers',
           icon: <RiContactsLine />,
+        },
+        {
+          name: 'Promo code',
+          link: 'dashboard/PromoCode',
+          icon: <CiDiscount1 />,
         },
       ],
     },
@@ -62,7 +75,12 @@ const Sidebar = () => {
           name: 'kanban',
           link: 'dashboard/kanban',
           icon: <BsKanban />,
-        }
+        },
+        {
+          name: 'Add Product',
+          link: 'dashboard/product/add',
+          icon: <MdAddShoppingCart />,
+        },
       ],
     },
     {
@@ -102,7 +120,7 @@ const Sidebar = () => {
       ],
     },
   ];
-  console.log(pathname)
+
   const handleCloseSideBar = () => {
     if (activeMenu !== undefined && screenSize <= 900) {
       dispatch(setActiveMenu(false));

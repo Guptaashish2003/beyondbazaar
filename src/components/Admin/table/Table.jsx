@@ -15,7 +15,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-
+import { FaSortAmountDown ,FaSortAmountUp} from "react-icons/fa";
 
 
 
@@ -98,6 +98,7 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
           >
             Export to CSV
           </CSVLink>:""}
+          {/* <CSVDownload data={exportData} target="_blank"></CSVDownload> */}
           
 
           <Dropdown
@@ -175,8 +176,8 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
                         header.getContext()
                       )}
                       {{
-                        asc: " 🔼",
-                        desc: " 🔽",
+                        asc: <FaSortAmountUp className="inline mx-2"/>,
+                        desc: <FaSortAmountDown className="inline mx-2"/>,
                       }[header.column.getIsSorted()] ?? null}
                     </div>
                   )}
