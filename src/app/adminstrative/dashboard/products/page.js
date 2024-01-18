@@ -104,27 +104,18 @@ const defaultData = [{"_id":1,"productName":"Widgetizer","productPrice":256143,"
 
 
 const Products = () => {
+    
   const exortHead = [
-    ["productName", "_id", "email", "productPrice", "productCategory", "productQuantity"],
-    ...defaultData.map(({ productName,_id,email,productPrice,productCategory,productQuantity }) => [
-        productName,
-        _id,
-        email,
-        productPrice,
-        productCategory,
-        productQuantity,
+    ["_id","productName","productPrice","productQuantity","productCategory",],
+    ...defaultData.map(({ _id,productName,productPrice,productQuantity,productCategory }) => [
+        _id,productName,productPrice,productQuantity,productCategory
       ]),
   ];
-  const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-  ];
+
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Products" />
-      <Table search={true} label={columns} tableData={defaultData} exportData={csvData}></Table>
+      <Table search={true} label={columns} tableData={defaultData} exportData={exortHead}></Table>
     </div>
   );
 };

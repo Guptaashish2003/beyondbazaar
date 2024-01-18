@@ -6,10 +6,11 @@ import { HiDotsVertical } from "react-icons/hi";
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-function Actions({children}) {
+function Actions({children,className}) {
     const action = [{name:"copy",task:""},]
     return (
-            <Menu as="div" className="relative inline-block text-left">
+        <div className={`${className}`}>
+            <Menu as="div" className={`relative inline-block text-left `}>
                 <div>
                     <Menu.Button className="mx-auto">
                     <HiDotsVertical />
@@ -45,6 +46,7 @@ function Actions({children}) {
                     </Menu.Items>
                 </Transition>
             </Menu>
+        </div>
     )
 }
 

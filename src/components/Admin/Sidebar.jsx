@@ -12,6 +12,8 @@ import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart,AiOutlineS
 import { FiShoppingBag, FiPieChart } from 'react-icons/fi';
 import { BsKanban } from 'react-icons/bs';
 import { MdAddShoppingCart } from "react-icons/md";
+import { TfiLayoutSliderAlt } from "react-icons/tfi";
+import { TbDiscountCheck } from "react-icons/tb";
 import { IoMdContacts } from 'react-icons/io';
 import { CiDiscount1 } from "react-icons/ci";
 import { RiContactsLine } from 'react-icons/ri';
@@ -58,7 +60,7 @@ const Sidebar = () => {
         },
         {
           name: 'Promo code',
-          link: 'dashboard/PromoCode',
+          link: 'dashboard/promoCodes',
           icon: <CiDiscount1 />,
         },
       ],
@@ -72,6 +74,11 @@ const Sidebar = () => {
           icon: <AiOutlineCalendar />,
         },
         {
+          name: 'hero sliders',
+          link: 'dashboard/sliders',
+          icon: <TfiLayoutSliderAlt />,
+        },
+        {
           name: 'kanban',
           link: 'dashboard/kanban',
           icon: <BsKanban />,
@@ -80,6 +87,11 @@ const Sidebar = () => {
           name: 'Add Product',
           link: 'dashboard/product/add',
           icon: <MdAddShoppingCart />,
+        },
+        {
+          name: 'Add Promo code',
+          link: 'dashboard/promoCode/add',
+          icon: <TbDiscountCheck />,
         },
       ],
     },
