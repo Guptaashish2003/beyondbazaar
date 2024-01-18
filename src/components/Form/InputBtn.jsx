@@ -1,10 +1,10 @@
 import React, { forwardRef, useId } from 'react'
 
-function InputBtn({type="text", placeholder="Enter Your Detail",name="",className="",label="",...props},ref) {
+function InputBtn({type="text", placeholder="Enter Your Detail",labelClass,mainClass,name="",className="",label="",...props},ref) {
     const id = useId()
   return (
-    <>
-    {label && <label htmlFor={id}>{label}</label>}
+    <div className={`flex flex-col gap-y-1 ${mainClass}`}>
+    {label && <label className={`${labelClass}`} htmlFor={id}>{label}</label>}
    <input
     id={id}
     ref={ref}
@@ -15,7 +15,7 @@ function InputBtn({type="text", placeholder="Enter Your Detail",name="",classNam
     placeholder={placeholder}
     {...props}
     />
-    </>
+    </div >
   )
 }
 

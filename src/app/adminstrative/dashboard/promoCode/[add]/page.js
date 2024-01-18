@@ -29,7 +29,7 @@ export default function page() {
   const formdata = [1,2,3,4,5,6,7]
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
-      <Header category="app" title="Add product" />
+      <Header category="app" title="Add Promo Code" />
       <div className="md:w-11/12 px-8 md:px-16 ">
         <form
           onSubmit={handleSubmit(onSubmit)}
