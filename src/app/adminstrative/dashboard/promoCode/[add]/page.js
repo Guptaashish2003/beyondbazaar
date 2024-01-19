@@ -26,7 +26,19 @@ export default function page() {
   const onSubmit = ()=>{
     console.log("hello")
   }
-  const formdata = [1,2,3,4,5,6,7]
+  const formdata = [
+    {type:"text",value:"Enter your Code"},
+    {type:"dropdown",label:"select the Type",option:["Percentage", "Fixed", "FreeShipping"],labelClass:"absolute -top-10"},
+    {type:"number",value:"Enter your discount value"},
+    {type:"number",value:"Enter max discount"},
+    {type:"number",value:"Enter min order price"},
+    {type:"number",value:"Enter max order price"},
+    {type:"datetime-local",value:"Enter max order price"},
+    {type:"datetime-local",value:"Enter max order price"},
+    {type:"number",value:"Number of Limit"},
+    {type:"dropdown",label:"select the Type",option:["true", "false"],labelClass:"absolute top-6"},
+
+  ]
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="app" title="Add Promo Code" />
@@ -35,22 +47,23 @@ export default function page() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4 py-2"
         >
-          <div className="flex flex-wrap justify-between p-8">
+          <div className="flex flex-wrap justify-between p-8 gap-y-4">
 
           {formdata.map((itm,index)=><InputBtn
             key={index}
-            type="email"
-            placeholder="Email"
-            label='Enter your email address'
-            labelClass='text-xs mt-4 text-[--first-color] ml-6'
-            mainClass="w-2/5 min-w-[16]"
-            className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+            type={itm?.type}
+            placeholder={itm?.value}
+            label={itm?.label}
+            option={itm?.option}
+            labelClass={`text-xs mt-4 text-[--first-color] ml-6 ${itm?.labelClass}`}
+            mainClass="w-2/5 min-w-[16] mx-2"
+            className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
           />)}
 
           </div>
 
           <SubmitButton
-            value="Login"
+            value="Add Promo Code"
             type="submit"
             loading={loading}
             onSubmit={handleSubmit(onSubmit)}
