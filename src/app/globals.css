@@ -759,3 +759,10 @@ thead th {
   margin: 2px 0;
 }
 
+/* tag cantainer  */
+.rti--container{
+  min-height: 8rem;
+  width: 90%;
+  margin: 0 auto;
+}
+
