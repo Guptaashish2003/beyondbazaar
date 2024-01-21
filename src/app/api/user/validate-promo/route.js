@@ -1,8 +1,8 @@
-import Promocode from "@backend/model/Promocode";
+import Promocode from "@/backend/model/Promocode";
 import { NextResponse } from "next/server";
-import connectDB from "@backend/DATABASE/ConnectDB";
-import { outhRoles } from "@backend/middlewere/outhRoles";
-import isOauth from "@backend/middlewere/isOauth";
+import connectDB from "@/backend/DATABASE/ConnectDB";
+import { outhRoles } from "@/backend/middlewere/outhRoles";
+import isOauth from "@/backend/middlewere/isOauth";
 //validate promocode for particular user, partucular product and particular category
 export async function GET(request) {
 

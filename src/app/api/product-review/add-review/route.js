@@ -1,8 +1,8 @@
-import ProductReview from "@backend/model/ProductReview";
+import ProductReview from "@/backend/model/ProductReview";
 import { NextResponse } from "next/server";
-import connectDB from "@backend/DATABASE/ConnectDB"
-import { outhRoles } from "@backend/middlewere/outhRoles";
-import isOauth from "@backend/middlewere/isOauth";
+import connectDB from "@/backend/DATABASE/ConnectDB"
+import { outhRoles } from "@/backend/middlewere/outhRoles";
+import isOauth from "@/backend/middlewere/isOauth";
 
 export async function POST(request) {
     await connectDB();

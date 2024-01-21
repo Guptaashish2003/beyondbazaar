@@ -1,4 +1,4 @@
-import { NextResponse,NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import isOauth from "@/backend/middlewere/isOauth";
  
@@ -12,7 +12,7 @@ export async function GET(request, context) {
     //  console.log(check)
     
      const response = NextResponse.json({ success:true ,message: "logout-successfully"}, { status: 200 });
-      
+     return response;
    } catch (error) {
        return NextResponse.json(
           { success: false, message: error.message },
