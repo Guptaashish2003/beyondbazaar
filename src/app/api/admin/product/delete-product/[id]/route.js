@@ -17,8 +17,8 @@ export async function DELETE(request, context) {
         if (!role) {
             return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         }
-      const id = context.params.id;
-      
+        const id = context.params.id;
+        
       const product = await Product.findByIdAndDelete(id);
     
       console.log(product);

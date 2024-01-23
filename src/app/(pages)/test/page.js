@@ -11,7 +11,7 @@ function page() {
         console.log(imageUpload)
         const fd = new FormData();
         fd.append("file",imageUpload);
-       const res = await usePostDataProtected("/api/admin/test",fd,{"Content-Type": "image/jpeg"});
+       const res = await usePostDataProtected("/api/admin/heroslider/add",fd,{"Content-Type": "image/jpeg"});
        console.log(res.data)
        setImage(res.data)
     };
