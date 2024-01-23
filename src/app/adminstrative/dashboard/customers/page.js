@@ -1,10 +1,13 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Header } from '@/components/Admin';
 import Table from '@/components/Admin/table/Table';
 import { createColumnHelper, } from "@tanstack/react-table";
 import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
+import { useGetDataProtected } from '@/redux/api/useGetData';
+import { NextResponse } from 'next/server';
+
 
 
 const columnHelper = createColumnHelper();
@@ -104,7 +107,22 @@ const defaultData = [{"_id":1,"name":"Deane","email":"dsmeed0@tamu.edu","phoneNo
 
 
 
+
 const Customers = () => {
+  const getData = async() => {  
+    try {
+      const data = await useGetDataProtected("/api/admin/user/all-user");
+       console.log(data);
+      
+    } catch (error) {
+      // return NextResponse.redirect("/admin/login");
+    }
+
+  }
+  useEffect(() => {
+   getData();
+
+  }, []);
   const exortHead = [
     ["name", "_id", "email", "phoneNo", "address", "role"],
     ...defaultData.map(({ name,_id,email,phoneNo,address,role }) => [
