@@ -6,6 +6,7 @@ import { createColumnHelper, } from "@tanstack/react-table";
 import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
+import Loading from '@/app/loading'
 
 
 const columnHelper = createColumnHelper();
@@ -78,6 +79,9 @@ const Products = () => {
   useEffect(() => {
     getData();
   }, []);
+  if(loading){
+    return(<Loading></Loading>)
+  }
 
 
   const exportHead = [

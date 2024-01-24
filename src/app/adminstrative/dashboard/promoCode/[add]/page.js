@@ -9,9 +9,10 @@ import * as Yup from "yup";
 import { usePostData } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { Header } from "@/components/Admin";
+// import Loading from "@/app/loading";
 export default function page() {
   const router = useRouter()
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
@@ -23,8 +24,26 @@ export default function page() {
 
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
-  const onSubmit = ()=>{
-    console.log("hello")
+  const onSubmit = async(promoData)=>{
+    console.log("promoData",promoData)
+    alert(JSON.stringify(promoData))
+    setLoading(true)
+    try {
+      const data = await usePostData("/api/admin/promocode/add",promoData)
+      setLoading(false)
+      console.log(data)
+      if(data?.status){
+        toast.success(data?.message)
+        // router.push("/admin/promoCode")
+        reset()
+      }else{
+        toast.error(data?.message)
+      }
+      
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    
   }
   const formdata = [
     {type:"text",value:"Enter your Code"},
@@ -33,12 +52,17 @@ export default function page() {
     {type:"number",value:"Enter max discount"},
     {type:"number",value:"Enter min order price"},
     {type:"number",value:"Enter max order price"},
-    {type:"datetime-local",value:"Enter max order price"},
-    {type:"datetime-local",value:"Enter max order price"},
+    {type:"datetime-local", label: "Enter start date", value:""},
+    {type:"datetime-local", label: "Enter end date", value:""},
     {type:"number",value:"Number of Limit"},
     {type:"dropdown",label:"select the Type",option:["true", "false"],labelClass:"absolute top-6"},
 
   ]
+  
+
+  // if(loadingScreen){
+  //   return(<Loading></Loading>)
+  // }
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="app" title="Add Promo Code" />
@@ -66,7 +90,7 @@ export default function page() {
             value="Add Promo Code"
             type="submit"
             loading={loading}
-            onSubmit={handleSubmit(onSubmit)}
+            // onSubmit={handleSubmit(onSubmit)}
             className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
           />
         </form>
