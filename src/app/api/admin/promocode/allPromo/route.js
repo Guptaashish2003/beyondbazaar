@@ -8,10 +8,15 @@ export async function GET(request) {
     await connectDB();
     try {
         const  user  = await isOauth(request);
+        if(user.role ==undefined){
+            return NextResponse.json({ success: false, message: "token is expired login again" }, { status: 400 });
+        }
+       
         if (!user) {
             return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
         }
         const role =  outhRoles(["admin"], request);
+
         if (!role) {
             return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         }
@@ -23,6 +28,7 @@ export async function GET(request) {
         const lenPromocode = promocodes.length;
         return NextResponse.json({ success: true, length: lenPromocode, message: "Promocode Found", data: promocodes }, { status: 200 });
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });
     }
 }

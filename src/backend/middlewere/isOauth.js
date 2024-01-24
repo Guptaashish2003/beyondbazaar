@@ -5,7 +5,7 @@ import User from "@/backend/model/User";
 const isOauth = async req => {
   try {
     const token = req.headers.get("Authorization")?.split(" ")[1]
-
+    console.log("token",token)
     if (!token) {
       return NextResponse.json(
         { success: false, message: error.message },
@@ -13,6 +13,7 @@ const isOauth = async req => {
       );
     }
     const decoded =  jwt.verify(token,process.env.JWT_SECRET_KEY )
+    console.log("decoded",decoded) 
     if (!decoded) {
       return NextResponse.json(
         { success: false, message:"Invalid Token , You are not Authorized"  },

@@ -1,10 +1,11 @@
 "use client"
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Header } from '@/components/Admin';
 import Table from '@/components/Admin/table/Table';
 import { createColumnHelper, } from "@tanstack/react-table";
-import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
+import { useGetDataProtected } from '@/redux/api/useGetData';
+import Loading from '@/app/loading'
 
 
 const columnHelper = createColumnHelper();
@@ -108,10 +109,31 @@ const defaultData = [{"_id":1,"promocode":"DEAL50","discountType":"Percentage","
 
 
 const PromoCodes = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  const getData = async () => {
+    try {
+      const {data} = await useGetDataProtected("/api/admin/promocode/allPromo");
+      console.log(data)
+      if(data){
+        setData(data);
+      }
+      setLoading(false);
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+      
+    }
+  }
+  useEffect(()=>{
+    getData();
+  },[])
     
   const exortHead = [
     ["_id","promocode","discountType","discountValue","limit",],
-    ...defaultData.map(({ _id,promocode,discountType,discountValue,limit }) => [
+    ...data.map(({ _id,promocode,discountType,discountValue,limit }) => [
         _id,promocode,discountType,discountValue,limit
       ]),
   ];
@@ -119,7 +141,7 @@ const PromoCodes = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="PromoCodes" />
-      <Table search={true} label={columns} tableData={defaultData} exportData={exortHead}></Table>
+      <Table search={true} label={columns} tableData={data} exportData={exortHead}></Table>
     </div>
   );
 };

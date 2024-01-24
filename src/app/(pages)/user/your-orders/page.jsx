@@ -17,7 +17,6 @@ const page =  () => {
       if(res.success){
      
         setOrder(res.data);
-        console.log(res.data)
       }
     } catch (error) {
       

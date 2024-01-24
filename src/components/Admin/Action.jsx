@@ -7,7 +7,10 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 function Actions({children,className}) {
-    const action = [{name:"copy",task:""},]
+    const action = [
+        { name: 'Copy', task: 'copy' },
+        { name: 'Suspend', task: 'suspend' },
+      ];
     return (
         <div className={`${className}`}>
             <Menu as="div" className={`relative inline-block text-left `}>
