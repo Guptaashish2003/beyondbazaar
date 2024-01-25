@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import User from "@/backend/model/User";
-import sendEmail from "@/backend/utils/sendEmail";
+import {sendEmail} from "@/backend/utils/sendEmail";
 import ResetPassword from "@/components/EmailTemplate/ResetPassword";
 
 export async function POST(request){

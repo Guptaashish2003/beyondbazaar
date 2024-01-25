@@ -9,7 +9,6 @@ export async function POST(request,response) {
   try {
     const data = await request.json();
     const { email, password } = data;
-    console.log(email, password);
     if (!email && !password) {
       return new NextResponse({
         status: 400,
@@ -17,7 +16,6 @@ export async function POST(request,response) {
       });
     }
     const user = await User.findOne({ email: email }).select("+password");
-    console.log(user);
     if (!user) {
       
       return  NextResponse.json({

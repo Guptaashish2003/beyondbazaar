@@ -24,12 +24,12 @@ export default function page() {
 
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
-  const onSubmit = async(promoData)=>{
-    console.log("promoData",promoData)
-    alert(JSON.stringify(promoData))
+  async function onSubmit(data){
+    console.log("promoData",data)
+    alert(JSON.stringify(data))
     setLoading(true)
     try {
-      const data = await usePostData("/api/admin/promocode/add",promoData)
+      const data = await usePostData("/api/admin/promocode/add",data)
       setLoading(false)
       console.log(data)
       if(data?.status){
@@ -46,16 +46,36 @@ export default function page() {
     
   }
   const formdata = [
-    {type:"text",value:"Enter your Code"},
-    {type:"dropdown",label:"select the Type",option:["Percentage", "Fixed", "FreeShipping"],labelClass:"absolute -top-10"},
-    {type:"number",value:"Enter your discount value"},
-    {type:"number",value:"Enter max discount"},
-    {type:"number",value:"Enter min order price"},
-    {type:"number",value:"Enter max order price"},
-    {type:"datetime-local", label: "Enter start date", value:""},
-    {type:"datetime-local", label: "Enter end date", value:""},
-    {type:"number",value:"Number of Limit"},
-    {type:"dropdown",label:"select the Type",option:["true", "false"],labelClass:"absolute top-6"},
+    {type:"text",value:"Enter your Code",name:"Code",register:  {...register("code", {
+      required: true
+    })}},
+    {type:"dropdown",label:"select the Type",option:["Percentage", "Fixed", "FreeShipping"],labelClass:"absolute -top-10",name:"type",register:  {...register("type", {
+      required: true
+    })}},
+    {type:"number",value:"Enter your discount value",name:"value",register:  {...register("value", {
+      required: true
+    })}},
+    {type:"number",value:"Enter max discount",name:"maxDis",register:  {...register("maxDis", {
+      required: true
+    })}},
+    {type:"number",value:"Enter min order price",name:"minOdr",register:  {...register("minOdr", {
+      required: true
+    })}},
+    {type:"number",value:"Enter max order price",name:"maxOdr",register:  {...register("maxOdr", {
+      required: true
+    })}},
+    {type:"datetime-local", label: "Enter start date", value:"",name:"startDate",register:  {...register("startDate", {
+      required: true
+    })}},
+    {type:"datetime-local", label: "Enter end date", value:"",name:"endDate",register:  {...register("endDate", {
+      required: true
+    })}},
+    {type:"number",value:"Number of Limit",name:"limit",register:  {...register("limit", {
+      required: true
+    })}},
+    {type:"dropdown",label:"select the Type",option:["true", "false"],labelClass:"absolute top-6",name:"active",register:  {...register("active", {
+      required: true
+    })}},
 
   ]
   
@@ -79,6 +99,8 @@ export default function page() {
             placeholder={itm?.value}
             label={itm?.label}
             option={itm?.option}
+            name={itm?.name}
+            {...itm?.register}
             labelClass={`text-xs mt-4 text-[--first-color] ml-6 ${itm?.labelClass}`}
             mainClass="w-2/5 min-w-[16] mx-2"
             className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
