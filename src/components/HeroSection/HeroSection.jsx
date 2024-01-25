@@ -7,8 +7,8 @@ import hero3 from "@/assets/hero3.jpg"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-function HeroSection() {
-  const sliderImage = [hero1,hero2,hero3]
+function HeroSection({sliderImage}) {
+  // const sliderImage = [hero1,hero2,hero3]
   return (
    <>
    <Swiper
@@ -24,6 +24,8 @@ function HeroSection() {
       {sliderImage.map((img,index)=><SwiperSlide key={index} className='w-full h-full'>
         <Image
           src={img}
+          width={600}
+          height={300}
           style={{objectFit: "cover" }}
           alt="hero image"
           className='cursor-pointer w-full h-full'

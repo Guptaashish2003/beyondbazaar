@@ -1,19 +1,48 @@
+"use client"
 import { Header } from '@/components/Admin';
 import Actions from '@/components/Admin/Action'
 import SubmitButton from '@/components/Form/SubmitButton';
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TiImage } from "react-icons/ti";
+import { usePostDataProtected } from "@/redux/api/usePostData";
+import { useGetData } from '@/redux/api/useGetData';
 export default function page() {
-  const slider = ['https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D','https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D','https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D']
+  const [slider,setSlider] = useState([])
+  useEffect(()=>{
+    getData()
+  },[])
+  const getData =async ()=>{
+    const hero = await useGetData("/api/heroslides")
+    console.log(hero.data)
+    setSlider(hero.data)
+  }
+  const [imageUpload, setImageUpload] = useState(null);
+  const [loading,setLoading] = useState(false);
+  const uploadFile = async (e) => {
+      e.preventDefault();
+      try {
+        setLoading(true);
+        console.log(imageUpload)
+        const fd = new FormData();
+        fd.append("file",imageUpload);
+        const res = await usePostDataProtected("/api/admin/heroslider/add",fd,{"Content-Type": "image/jpeg"});
+        console.log(res.data)
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        
+      }
+  
+  };
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Apps" title="Hero slider" />
       <div className='min-w-20 flex  gap-2 justify-center flex-wrap '>
-        {slider.map((itm,index)=><div key={index} className='relative'>
+        {slider.map((itm,index)=><div key={itm._id} className='relative'>
           <Actions className='absolute top-1 right-2 z-20'></Actions>
           <div className='w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10'><span>{index}</span></div>
-          <Image src={itm} width={300} height={400} className='object-fill hover:bg-black h-full' /></div>)}
+          <Image src={itm.heroImage} width={300} height={400} className='object-fill hover:bg-black h-full' /></div>)}
         
       </div>
       <div className="flex justify-center w-full mx-auto sm:max-w-7xl">
@@ -28,7 +57,9 @@ export default function page() {
             action="#"
             className="relative w-[90%] h-32 mb-10 rounded-lg shadow-inner "
           >
-            <input type="file" id="file-upload" className="hidden" />
+            <input type="file" id="file-upload" className="hidden" onChange={(e) => {
+                    setImageUpload(e.target.files[0]);
+                }} />
             <label
               htmlFor="file-upload"
               className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer"
@@ -39,7 +70,7 @@ export default function page() {
               <TiImage width={'12px'}/>
             </label>
           </form>
-            <SubmitButton className='w-[90%] h-12 bg-black my-4 text-blue-50'>Upload</SubmitButton>
+            <SubmitButton onClick={uploadFile} loading={loading} className='w-[90%] h-12 bg-black my-4 text-blue-50'>Upload</SubmitButton>
         </div>
       </div>
 

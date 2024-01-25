@@ -32,7 +32,8 @@ const page = () => {
     // }
     Router.push("/login");
     } catch (error) {
-      Router.push("/login");
+      // Router.push("/login");
+      console.log(error)
       toast.error(error.message);
     }
     

@@ -12,9 +12,11 @@ import { useGetData } from '@/redux/api/useGetData'
 
 export default async function Home(){
   const {data} = await useGetData("/product/all-product")
+  const hero = await useGetData("/heroslides")
+  const img = hero.data.map((itm)=>itm.heroImage);
   return (
     <>
-    <Herosection/>
+    <Herosection sliderImage={img}/>
     <Category/>
     <h2 className='p-8 text-5xl max-md:text-3xl font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>

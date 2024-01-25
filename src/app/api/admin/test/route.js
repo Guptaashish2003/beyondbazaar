@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { uploadBytes,getDownloadURL } from 'firebase/storage';
 import { ref } from 'firebase/storage';
 import {storage} from "@/backend/DATABASE/firebaseConfig"
+import { deleteImage } from "@/backend/utils/deleteImage";
 
 const giveCurrentDateTime = () => {
   const today = new Date();
@@ -33,7 +34,7 @@ export async function POST(request) {
 
   } catch (error) {
     // Handle errors and return an appropriate response
-    console.error(error);
+    console.log(error);
     return NextResponse.json({ success: false, message: "Something went wrong" }, { status: 400 });
   }
 }
