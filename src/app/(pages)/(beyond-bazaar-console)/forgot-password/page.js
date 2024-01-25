@@ -33,7 +33,11 @@ const page = () => {
     Router.push("/login");
     } catch (error) {
       // Router.push("/login");
+<<<<<<< HEAD
       console.log(error)
+=======
+      console.log(error);
+>>>>>>> dbf8c234cebc5d2c9550785957f209d4f5ff81e9
       toast.error(error.message);
     }
     

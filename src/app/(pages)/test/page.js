@@ -40,7 +40,11 @@ function page() {
                 </div>:""
             }
         </div>
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> dbf8c234cebc5d2c9550785957f209d4f5ff81e9
   );
 }
 
