@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 import User from "@/backend/model/User";
 
 const isOauth = async req => {
+  console.log("jkhkdfkljskksdfirst")
   try {
-    const token = req.headers.get("Authorization")?.split(" ")[1]
-    console.log("token",token)
+    const token = await req.headers.get("Authorization")?.split(" ")[1]
+    console.log("togfgfhgfhken",token)
     if (!token) {
       return NextResponse.json(
-        { success: false, message: error.message },
+        { success: false, message: error.message && "You are not Authorized or token is expired"},
         { status: 400 }
       );
     }
@@ -16,15 +17,16 @@ const isOauth = async req => {
     console.log("decoded",decoded) 
     if (!decoded) {
       return NextResponse.json(
-        { success: false, message:"Invalid Token , You are not Authorized"  },
+        { success: false, message:"Invalid Token , You are not Authorized and DeAuthorized"  },
         { status: 400 }
       );
     }
     
     const user = await User.findOne({ _id: decoded.id })
+    console.log("user",user)
     if (!user) {
       return NextResponse.json(
-        { success: false, message: "User Not Found" },
+        { success: false, message: "User Not Found or Login again" },
         { status: 400 }
       );
     }
@@ -32,6 +34,7 @@ const isOauth = async req => {
     req.user = user
     return user
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

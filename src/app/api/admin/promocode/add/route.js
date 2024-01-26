@@ -7,11 +7,18 @@ import isOauth from "@/backend/middlewere/isOauth";
 export async function POST(request) {
     await connectDB();
     try {
-        const  userOauth  = await isOauth(request);
-        if (!userOauth) {
+        const  user  = await isOauth(request);
+        console.log(user)
+        if(user.role ==undefined){
+            return NextResponse.json({ success: false, message: "token is expired login again" }, { status: 400 });
+        }
+       
+        if (!user) {
             return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
         }
+       
         const role =  outhRoles(["admin"], request);
+
         if (!role) {
             return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         }
