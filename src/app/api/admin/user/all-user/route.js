@@ -26,7 +26,7 @@ export async function GET(request) {
         if (!users) {
             return NextResponse.json({ success: false, message: "User Not Found" },{ status: 400 });
         }
-        const lenUser = users.length;
+        const lenUser = await User.countDocuments();
         return NextResponse.json({ success: true, length: lenUser, message: "User Found", data: users },{ status: 200 });
         
     } catch (error) {

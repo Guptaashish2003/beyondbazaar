@@ -62,7 +62,7 @@ const Customers = () => {
   const [loading, setLoading] = useState(true);
   const getData = async () => {
     try {
-      const { data } = await useGetDataProtected("/api/admin/user/all-user");
+      const { data } = await useGetDataProtected("/api/admin/user/all-user?limit=20&page=1");
       if (data) {
         setData(data);
       }
