@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
+import { useSearchParams } from 'next/navigation';
 
 
 const columnHelper = createColumnHelper();
@@ -63,12 +64,23 @@ const Products = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [documentCount, setDoumentCount] = useState(1);
+  const searchParams = useSearchParams()
+  const limit = searchParams.get("limit")
+  const [page,setPage] = useState(1)
   const getData = async () => {
     try {
-      const {data} = await useGetDataProtected("/api/product/all-product");
-      console.log(data)
-      if(data){
-        setData(data);
+      let link;
+      if(limit){
+        link = `/api/product/all-product?limit=${limit}&page=${page}`
+      }else{
+        link = `/api/product/all-product?page=${page}`
+      }
+      const data = await useGetDataProtected(link);
+      console.log(data.data)
+      if (data) {
+        setData(data.data);
+        setDoumentCount(data.length);
       }
       setLoading(false);
     }catch(error){
@@ -78,20 +90,16 @@ const Products = () => {
   }
   useEffect(() => {
     getData();
-  }, []);
+  }, [page]);
   if(loading){
     return(<Loading></Loading>)
   }
 
 
   const exportHead = [
-    ["_id", "productTags ", "productPrice", "productQuantity", "productCategory"],
-    ...data.map(({ _id, productTags, productPrice, productQuantity, productCategory }) => [
-      _id,
-      productTags,
-      productPrice,
-      productQuantity,
-      productCategory,
+    ["_id", "productName ", "productPrice", "productQuantity", "productCategory","createdAt"],
+    ...data.map(({_id, productName , productPrice, productQuantity, productCategory,createdAt }) => [
+      _id, productName , productPrice, productQuantity, productCategory,createdAt
     ]),
   ];
 
@@ -102,7 +110,7 @@ const Products = () => {
         // Loading indicator or skeleton loader can be placed here
         <p>Loading...</p>
       ) : (
-        <Table search={true} label={columns} tableData={data} exportData={exportHead} />
+        <Table page={page} setPage={setPage} limit={limit+1} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exportHead} />
       )}
     </div>
   );

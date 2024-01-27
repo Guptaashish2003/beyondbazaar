@@ -3,14 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
-function Pagination({path,page,keyword,documentCount,limit=10,className=""}) {
-  const pages = Math.ceil(documentCount / 10);
+function Pagination({path,page,keyword,documentCount,limit=10,limitOption,className=""}) {
+  const pages = Math.ceil(documentCount / limit);
 
   const router = useRouter()
   
   return (
     <>
-   {documentCount <= 10?"": <div className={`flex flex-row mx-auto gap-x-4 ${className}`}>
+   {documentCount <= limit?"": <div className={`flex flex-row mx-auto gap-x-4 ${className}`}>
       <Link
         href={page> 1?{
           pathname: path,
@@ -66,13 +66,17 @@ function Pagination({path,page,keyword,documentCount,limit=10,className=""}) {
           </svg>
         </div>
       </Link>
-      {limit?<select
+      {limitOption?<select
           className="py-2 px-3 flex justify-center items-center bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
           value={limit}
     
         >
           {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize} onClick={()=>{router.push(`${path}?page=${page}&limit=${pageSize}`)}}>
+            <option key={pageSize} value={pageSize} 
+            onClick={()=>{
+              router.push(`${path}?page=${page}&limit=${pageSize}`)
+
+              }}>
               Show {pageSize}
             </option>
           ))}

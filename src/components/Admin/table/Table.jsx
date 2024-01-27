@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CSVLink,CSVDownload } from "react-csv";
 import {
   Dropdown,
@@ -16,18 +16,17 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { FaSortAmountDown ,FaSortAmountUp} from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 
 
-export default function Table({ label,exportData, tableData,addNew,search }) {
-  const data = useMemo(() => tableData, []);
+
+export default function Table({ label,exportData,setPage,limit=10,page,documentCount, tableData,addNew,search, }) {
+
   const [columnVisibility, setColumnVisibility] = useState({});
   const [columnOrder, setColumnOrder] = useState({});
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [page ,setPage] = useState(1)
-  const [limit,setLimit] = useState(10)
-
 
   function DebouncedInput({
     value: initialValue,
@@ -59,8 +58,13 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
   }
 
   const table = useReactTable({
-    data,
+    data:tableData,
     columns:label,
+    initialState: {
+      pagination: {
+          pageSize: Number(limit),
+      },
+  },
     state: {
       columnVisibility,
       columnOrder,
@@ -79,6 +83,7 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
     debugHeaders: true,
     debugColumns: true,
   });
+  
 
   return (
     <div className="p-10 rounded-lg border ">
@@ -160,10 +165,10 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
               key={headerGroup.id}
-              className="   font-semibold text-base m-10"
+              className="font-semibold text-base m-10"
             >
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th key={header.id} className={console.log(header.id,'header.id')}>
                   {header.isPlaceholder ? null : (
                     <div
                       {...{
@@ -192,63 +197,34 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id} className="   ">
               {row.getVisibleCells().map((cell) => (
+                <>
                 <td key={cell.id} className="px-4 py-2 text-center">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
+                </>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* <div className="flex items-center gap-2 mx-auto justify-center mt-6">
+
+      <div className="flex items-center gap-2 mx-auto justify-center mt-6">
         <button
           className="p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          onClick={() => setPage(page-1)}
+          disabled={page<=1}
         >
           {"Pre <"}
         </button>
         <button
           className="p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          onClick={() => setPage(page+1)}
+          disabled={page<=documentCount/limit}
         >
           {"Next >"}
         </button>
-        <span className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
-          </strong>
-        </span>
-        <span className="flex items-center gap-1">
-          | Go to page:
-          <input
-            type="number"
-            defaultValue={table.getState().pagination.pageIndex + 1}
-            onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              table.setPageIndex(page);
-            }}
-            className="border p-1 rounded w-8 text-center"
-          />
-        </span>
-        <select
-          className="p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
-          value={table.getState().pagination.pageSize}
-          onChange={(e) => {
-            table.setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div> */}
+      </div>
     </div>
   );
 }

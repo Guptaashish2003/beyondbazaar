@@ -7,8 +7,7 @@ import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
-import Pagination from '@/components/pagination/Pagination';
-
+import { useSearchParams } from 'next/navigation'
 const columnHelper = createColumnHelper();
 
 const columns = [
@@ -55,17 +54,26 @@ const columns = [
 ];
 
 
-
-
-
 const Customers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [documentCount, setDoumentCount] = useState(1);
+  const searchParams = useSearchParams()
+  const limit = searchParams.get("limit")
+  const [page,setPage] = useState(1)
   const getData = async () => {
     try {
-      const { data } = await useGetDataProtected("/api/admin/user/all-user?limit=20&page=1");
+        let link;
+      if(limit){
+        link = `/api/admin/user/all-user?limit=${limit}&page=${page}`
+      }else{
+        link = `/api/admin/user/all-user?page=${page}`
+      }
+      const  data  = await useGetDataProtected(link);
       if (data) {
-        setData(data);
+        setData(data.data);
+        console.log(data.data,page,limit)
+        setDoumentCount(data.length);
       }
       setLoading(false);
     } catch (error) {
@@ -76,34 +84,23 @@ const Customers = () => {
   useEffect(() => {
    getData();
 
-  }, []);
+  }, [limit,page]);
   if(loading){
     return(<Loading></Loading>)
   }
-  // const exortHead = [
-  //   ["name", "_id", "email", "phoneNo", "address", "role"],
-  //   ...data.map(({ name,_id,email,phoneNo,address,role }) => [
-  //       name,
-  //       _id,
-  //       email,
-  //       phoneNo,
-  //       address,
-  //       role,
-  //     ]),
-  // ];
-  const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+  const exortHead = [
+    ["_id","name" , "email", "phoneNo", "address", "role","byGoogle","createdAt"],
+    ...data.map(({ _id,name , email, phoneNo, address, role,byGoogle,createdAt}) => [
+      _id,name , email, phoneNo, address, role,byGoogle,createdAt
+      ]),
   ];
+
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Customers" />
       <div>
-      <Table search={true} label={columns} tableData={data} exportData={csvData}></Table>
+      <Table  page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead} ></Table>
       </div>
-      <Pagination path='/adminstrative/dashboard/customers' page={1} documentCount={11} className='justify-center mt-4 '/>
     </div>
   );
 };

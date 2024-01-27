@@ -6,7 +6,7 @@ import { HiDotsVertical } from "react-icons/hi";
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-function Actions({children,className}) {
+function Actions({children,className,actions}) {
     const action = [
         { name: 'Copy', task: 'copy' },
         { name: 'Suspend', task: 'suspend' },
@@ -31,7 +31,7 @@ function Actions({children,className}) {
                 >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
-                          { action.map((act)=> <Menu.Item>
+                          { action.map((act,index)=> <Menu.Item key={index}>
                                 {({ active }) => (
                                     <a
                                         href="#"

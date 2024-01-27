@@ -6,6 +6,7 @@ import { createColumnHelper, } from "@tanstack/react-table";
 import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
+import { useSearchParams } from 'next/navigation';
 
 
 const columnHelper = createColumnHelper();
@@ -59,13 +60,24 @@ const columns = [
 const PromoCodes = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [documentCount, setDoumentCount] = useState(1);
+  const searchParams = useSearchParams()
+  const limit = searchParams.get("limit")
+  const [page,setPage] = useState(1)
   
   const getData = async () => {
     try {
-      const {data} = await useGetDataProtected("/api/admin/promocode/allPromo");
+      let link;
+      if(limit){
+        link = `/api/admin/promocode/allPromo?limit=${limit}&page=${page}`
+      }else{
+        link = `/api/admin/promocode/allPromo?page=${page}`
+      }
+      const data = await useGetDataProtected(link);
       console.log(data)
       if(data){
         setData(data);
+        setDoumentCount(data.length);
       }
       setLoading(false);
       
@@ -77,7 +89,7 @@ const PromoCodes = () => {
   }
   useEffect(()=>{
     getData();
-  },[])
+  },[page])
 
   
   if(loading){
@@ -94,7 +106,7 @@ const PromoCodes = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="PromoCodes" />
-      <Table search={true} label={columns} tableData={data} exportData={exortHead}></Table>
+      <Table page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead}></Table>
     </div>
   );
 };
