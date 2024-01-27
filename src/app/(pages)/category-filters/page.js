@@ -26,7 +26,7 @@ async function page(context) {
   
     
         </div>
-           <Pagination path="/category-filters" limit={0} keyword={keyword} page={page} documentCount={length} className='justify-center mt-4'/>
+           <Pagination path="/category-filters" limitOption={false} keyword={keyword} page={page} documentCount={length} className='justify-center mt-4'/>
      </FilterComponent>
     </>
   )

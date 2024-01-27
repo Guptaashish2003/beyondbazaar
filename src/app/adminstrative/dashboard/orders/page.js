@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
+import { useSearchParams } from 'next/navigation';
 
 
 const columnHelper = createColumnHelper();
@@ -26,13 +27,13 @@ const columns = [
       height={500}
       alt="Picture of the author"/>
     <span className='col-start-2'>{info.getValue()}</span>
-    <span>{info.row.original.totalPrice}</span>
+    <span>{info.row.original.qty}</span>
     </div>,
     header: () => <span>Name</span>,
   }),
 
-  columnHelper.accessor((row) => row.totalPrice, {
-    accessorKey: "totalPrice",
+  columnHelper.accessor((row) => row.productPrice, {
+    accessorKey: "productPrice",
     cell: (info) => info.getValue(),
     header: () => <span>price</span>,
   }),
@@ -119,12 +120,25 @@ const defaultData = [{"_id":1,"totalPrice":5904,"productName":"Gizmo B","status"
 const Orders = () => {
   const [data, setData] = useState([]);
   const [loading , setLoading] = useState(true);
+  const [documentCount, setDoumentCount] = useState(1);
+  const searchParams = useSearchParams()
+  const limitValue = searchParams.get("limit")
+  const [limit,setLimit] = useState(limitValue)
+  const [page,setPage] = useState(1)
   const getData = async () =>{
     try {
-      const {data} = await useGetDataProtected("/api/admin/order/all-order");
-      console.log(data)
+      let link;
+      if(limitValue){
+        link = `/api/admin/order/all-order?limit=${limit}&page=${page}`
+      }else{
+        link = `/api/admin/order/all-order?page=${page}`
+      }
+      const data = await useGetDataProtected(link);
+      console.log(data.data)
       if(data){
-        setData(data);
+        setData(data.data);
+        setDoumentCount(data.length);
+        setLimit(data.length);
       }
       setLoading(false);
       
@@ -136,7 +150,7 @@ const Orders = () => {
   }
   useEffect(() => {
     getData();
-  }, []);
+  }, [page]);
 
   if(loading){
     return(<Loading></Loading>)
@@ -160,7 +174,7 @@ const Orders = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Orders" />
-      <Table search={true} label={columns} tableData={defaultData} exportData={csvData}></Table>
+      <Table page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} tableData={defaultData} exportData={csvData}></Table>
     </div>
   );
 };

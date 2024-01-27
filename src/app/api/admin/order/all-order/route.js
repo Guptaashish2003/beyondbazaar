@@ -22,12 +22,25 @@ export async function GET(request) {
         const limit = new URLSearchParams(rawParams).get('limit')
         const apiFeatures = new Apifeatures(Order.find(),{page,limit})
         .paginate()
-      const orders = await apiFeatures.query;
+      const orders = await apiFeatures.query.populate({
+        path: 'orderItems',
+        populate: [
+          {
+            path: 'product',
+            select: 'productName productImage ',
+          },
+        ],
+      });
         if (!orders) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });
         }
-        const lenOrder = await Order.countDocuments();
-        return NextResponse.json({ success: true, length: lenOrder, message: "Order Found", data: orders }, { status: 200 });
+        let newOrder = orders.map((val)=>{
+            return val.orderItems.map((inside)=>{return ({...inside._doc,ctmName:val.shippingInfo.name,number:val.shippingInfo.number,mainId:val._id,itemsPrice:val.itemsPrice,shippingInfo:`${val.shippingInfo.street} ${val.shippingInfo.city}`})})
+         })
+         newOrder = newOrder.flat();
+        let lenOrder = await Order.countDocuments(); 
+        lenOrder = lenOrder + newOrder.length
+        return NextResponse.json({ success: true, length: lenOrder, message: "Order Found", data: newOrder }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });
     }
