@@ -1,18 +1,23 @@
+"use client"
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
 
-function Pagination({page,keyword,documentCount,className=""}) {
+
+function Pagination({path,page,keyword,documentCount,limit=10,className=""}) {
   const pages = Math.ceil(documentCount / 10);
+
+  const router = useRouter()
   
   return (
     <>
    {documentCount <= 10?"": <div className={`flex flex-row mx-auto gap-x-4 ${className}`}>
       <Link
         href={page> 1?{
-          pathname: "/category-filters",
+          pathname: path,
           query: {
             keyword:keyword,
             page: Number(page) - 1,
+            limit:limit
           },
         }:""}
         className={page> 1?"bg-gray-800 text-white  py-2  border-gray-200 hover:bg-white hover:text-gray-800 px-3":"text-white bg-slate-500 py-2 px-3 cursor-not-allowed"}
@@ -36,10 +41,11 @@ function Pagination({page,keyword,documentCount,className=""}) {
 
       <Link
         href={page<pages?{
-          pathname: "/category-filters",
+          pathname: path,
           query: {
             keyword:keyword,
             page: Number(page) + 1,
+            limit:limit
           },
         }:""}
         className={page<pages?"bg-gray-800 text-white  py-2  border-gray-200 hover:bg-white hover:text-gray-800 px-3":"text-white bg-slate-500 py-2 px-3 cursor-not-allowed"}
@@ -60,6 +66,17 @@ function Pagination({page,keyword,documentCount,className=""}) {
           </svg>
         </div>
       </Link>
+      {limit?<select
+          className="py-2 px-3 flex justify-center items-center bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
+          value={limit}
+    
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize} onClick={()=>{router.push(`${path}?page=${page}&limit=${pageSize}`)}}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>:""}
     </div>}
     </>
   );

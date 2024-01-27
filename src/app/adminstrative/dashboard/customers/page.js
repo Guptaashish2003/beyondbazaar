@@ -2,11 +2,12 @@
 import React, { useEffect,useState } from 'react';
 import { Header } from '@/components/Admin';
 import Table from '@/components/Admin/table/Table';
-import { createColumnHelper, } from "@tanstack/react-table";
+import {  createColumnHelper, } from "@tanstack/react-table";
 import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
+import Pagination from '@/components/pagination/Pagination';
 
 const columnHelper = createColumnHelper();
 
@@ -99,7 +100,10 @@ const Customers = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Customers" />
+      <div>
       <Table search={true} label={columns} tableData={data} exportData={csvData}></Table>
+      </div>
+      <Pagination path='/adminstrative/dashboard/customers' page={1} documentCount={11} className='justify-center mt-4 '/>
     </div>
   );
 };
