@@ -8,10 +8,10 @@ import { Dialog, Transition } from "@headlessui/react"
 
 const  Page = () => {
   const [events, setEvents] = useState([
-    { title: "event 1", id: "1" },
-    { title: "event 2", id: "2" },
-    { title: "event 3", id: "3" },
-    { title: "event 4", id: "4" },
+    // { title: "event 1", id: "1" },
+    // { title: "event 2", id: "2" },
+    // { title: "event 3", id: "3" },
+    // { title: "event 4", id: "4" },
     { title: "event 5", id: "5" }
   ])
   const [allEvents, setAllEvents] = useState([])
@@ -24,6 +24,9 @@ const  Page = () => {
     allDay: false,
     id: 0
   })
+  console.log(allEvents)
+  // console.log(events)
+
 
   useEffect(() => {
     let draggableEl = document.getElementById('draggable-el');
@@ -53,6 +56,7 @@ const  Page = () => {
       id: new Date().getTime()
     })
     setShowModal(true)
+    console.log("newEvent", newEvent)
   }
 
   function addEvent(data) {
@@ -64,6 +68,7 @@ const  Page = () => {
       id: new Date().getTime()
     }
     setAllEvents([...allEvents, event])
+    console.log(event)
   }
 
   function handleDeleteModal(data) {
@@ -109,6 +114,7 @@ const  Page = () => {
       allDay: false,
       id: 0
     })
+    // console.log(allEvents)
   }
 
   return (

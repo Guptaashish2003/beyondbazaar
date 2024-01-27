@@ -26,6 +26,7 @@ export async function POST(request) {
         // if (!promocode || !discountType || !limit ||  !discountValue || !maxDiscount || !minOrder || !maxOrder || !startDate || !endDate || !active ) {
         //     return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
         // }
+    
         const newPromocode = await  Promocode.create({ promocode,discountType, discountValue, maxDiscount, minOrder, maxOrder, startDate:Date.now(), endDate:Date.now(), active,limit, product, category });
 
         return NextResponse.json({ success: true, message: "Promocode created", data: newPromocode }, { status: 200 });
