@@ -9,11 +9,11 @@ async function page(context) {
   let {page=1,keyword} = context.searchParams
   let link
   if(keyword){
-    link = `/product/all-product?keyword=${keyword}&page=${page}`
+    link = `/product/all-product?limit=20&keyword=${keyword}&page=${page}`
 
   }
   else{
-    link = `/product/all-product?page=${page}`
+    link = `/product/all-product?limit=20&page=${page}`
   }
   const {data,length} = await useGetData(link)
   return (
@@ -26,7 +26,7 @@ async function page(context) {
   
     
         </div>
-           <Pagination keyword={keyword} page={page} documentCount={length} className='justify-center mt-4'/>
+           <Pagination path="/category-filters" limit={0} keyword={keyword} page={page} documentCount={length} className='justify-center mt-4'/>
      </FilterComponent>
     </>
   )

@@ -25,6 +25,8 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
   const [columnOrder, setColumnOrder] = useState({});
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [page ,setPage] = useState(1)
+  const [limit,setLimit] = useState(10)
 
 
   function DebouncedInput({
@@ -199,7 +201,7 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
         </tbody>
       </table>
 
-      <div className="flex items-center gap-2 mx-auto justify-center mt-6">
+      {/* <div className="flex items-center gap-2 mx-auto justify-center mt-6">
         <button
           className="p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
           onClick={() => table.previousPage()}
@@ -246,7 +248,7 @@ export default function Table({ label,exportData, tableData,addNew,search }) {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
     </div>
   );
 }
