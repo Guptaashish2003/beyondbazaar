@@ -18,8 +18,14 @@ export async function PUT(request, context) {
                 return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
             }
         const id = context.params.id;
-        const { status,shippingInfo } = request.body;
-        const order = await Order.findByIdAndUpdate(id, { status ,shippingInfo});
+        const { status,orderId } = await request.json();
+        const order = await Order.findById(id);
+        order.orderItems.filter((item) =>{
+            if(item._id.valueOf() === orderId){
+                item.status = status;
+            }
+        });
+        order.save();
         return NextResponse.json(
         { success: true, message: "Updated successfully" },
         { status: 200 }

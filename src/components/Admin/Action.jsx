@@ -8,10 +8,8 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 function Actions({children,id=null,className,actions}) {
-    const action = [
-        { name: 'Copy', task:()=>{navigator.clipboard.writeText(id);} },
-        {...actions}
-      ];
+    console.log(actions)
+    actions.push( { name: 'Copy', task:()=>{navigator.clipboard.writeText(id);}})
     return (
         <div className={`${className}`}>
             <Menu as="div" className={`relative inline-block text-left `}>
@@ -32,10 +30,10 @@ function Actions({children,id=null,className,actions}) {
                 >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
-                          { action.map((act,index)=> <Menu.Item key={index}>
+                          { actions.map((act,index)=> <Menu.Item key={index}>
                                 {({ active }) => (
                                     <button
-                                        onClick={act.task}
+                                        onClick={act?.task}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm w-full'
