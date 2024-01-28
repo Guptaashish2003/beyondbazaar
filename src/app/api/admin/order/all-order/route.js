@@ -38,6 +38,7 @@ export async function GET(request) {
             return val.orderItems.map((inside)=>{return ({...inside._doc,ctmName:val.shippingInfo.name,number:val.shippingInfo.number,mainId:val._id,itemsPrice:val.itemsPrice,shippingInfo:`${val.shippingInfo.street} ${val.shippingInfo.city}`})})
          })
          newOrder = newOrder.flat();
+         newOrder = newOrder.map((itm)=>{return ({...itm,productName:itm.product.productName})})
         let lenOrder = await Order.countDocuments(); 
         lenOrder = lenOrder + newOrder.length
         return NextResponse.json({ success: true, length: lenOrder, message: "Order Found", data: newOrder }, { status: 200 });

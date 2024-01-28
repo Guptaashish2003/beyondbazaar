@@ -3,13 +3,14 @@ import React from 'react'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { HiDotsVertical } from "react-icons/hi";
+import SubmitButton from '../Form/SubmitButton';
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-function Actions({children,className,actions}) {
+function Actions({children,id=null,className,actions}) {
     const action = [
-        { name: 'Copy', task: 'copy' },
-        { name: 'Suspend', task: 'suspend' },
+        { name: 'Copy', task:()=>{navigator.clipboard.writeText(id);} },
+        {...actions}
       ];
     return (
         <div className={`${className}`}>
@@ -33,15 +34,15 @@ function Actions({children,className,actions}) {
                         <div className="py-1">
                           { action.map((act,index)=> <Menu.Item key={index}>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <button
+                                        onClick={act.task}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
+                                            'block px-4 py-2 text-sm w-full'
                                         )}
                                     >
                                         {act.name}
-                                    </a>
+                                    </button>
                                 )}
                             </Menu.Item>)}
 

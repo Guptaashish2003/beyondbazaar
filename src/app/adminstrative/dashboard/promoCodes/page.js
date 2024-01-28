@@ -15,7 +15,7 @@ const columns = [
   columnHelper.accessor((row) => row._id, {
     id: "_id",
     Aggregated: ({ value }) => `${value} Names`,
-    cell: (info) => <i>{info.getValue()} </i>,
+    cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
     header: () => <span>id</span>,
   }),
   columnHelper.accessor((row) => row.promocode, {
@@ -51,7 +51,7 @@ const columns = [
   }),
   columnHelper.accessor("actions", {
     accessorKey: "actions",
-    cell: (info) => <Actions></Actions>,
+    cell: (info) => <Actions id={info.row.original._id}></Actions>,
     header: () => <span>actions</span>,
   }),
 
@@ -62,7 +62,8 @@ const PromoCodes = () => {
   const [loading, setLoading] = useState(true);
   const [documentCount, setDoumentCount] = useState(1);
   const searchParams = useSearchParams()
-  const limit = searchParams.get("limit")
+  const limitValue = searchParams.get("limit")
+  const [limit,setLimit] = useState(limitValue)
   const [page,setPage] = useState(1)
   
   const getData = async () => {
@@ -72,11 +73,12 @@ const PromoCodes = () => {
         link = `/api/admin/promocode/allPromo?limit=${limit}&page=${page}`
       }else{
         link = `/api/admin/promocode/allPromo?page=${page}`
+        setLimit(10)
       }
       const data = await useGetDataProtected(link);
       console.log(data)
       if(data){
-        setData(data);
+        setData(data.data);
         setDoumentCount(data.length);
       }
       setLoading(false);
@@ -106,7 +108,7 @@ const PromoCodes = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="PromoCodes" />
-      <Table page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead}></Table>
+      <Table page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead}></Table>
     </div>
   );
 };

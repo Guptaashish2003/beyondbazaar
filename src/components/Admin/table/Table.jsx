@@ -16,8 +16,6 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { FaSortAmountDown ,FaSortAmountUp} from "react-icons/fa";
-import { useRouter } from "next/navigation";
-
 
 
 
@@ -168,7 +166,7 @@ export default function Table({ label,exportData,setPage,limit=10,page,documentC
               className="font-semibold text-base m-10"
             >
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className={console.log(header.id,'header.id')}>
+                <th key={header.id} >
                   {header.isPlaceholder ? null : (
                     <div
                       {...{

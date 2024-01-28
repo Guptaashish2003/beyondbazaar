@@ -11,6 +11,12 @@ import { useSearchParams } from 'next/navigation'
 const columnHelper = createColumnHelper();
 
 const columns = [
+  columnHelper.accessor((row) => row._id, {
+    id: "_id",
+    Aggregated: ({ value }) => `${value} Names`,
+    cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
+    header: () => <span>id</span>,
+  }),
   columnHelper.accessor((row) => row.name, {
     accessorKey: "name",
     cell: (info) => <div style={{gridTemplateColumns:"3rem 1fr"}} className='grid  grid-rows-2 gap-x-1 text-start'>
@@ -22,12 +28,6 @@ const columns = [
       <span>{info.row.original.email}</span>
       </div>,
     header: () => <span>Name</span>,
-  }),
-  columnHelper.accessor((row) => row._id, {
-    id: "_id",
-    Aggregated: ({ value }) => `${value} Names`,
-    cell: (info) => <i>{info.getValue()} </i>,
-    header: () => <span>id</span>,
   }),
 
   columnHelper.accessor((row) => row.phoneNo, {
@@ -47,7 +47,7 @@ const columns = [
   }),
   columnHelper.accessor("actions", {
     accessorKey: "actions",
-    cell: (info) => <Actions></Actions>,
+    cell: (info) => <Actions id={info.row.original._id}></Actions>,
     header: () => <span>actions</span>,
   }),
 
@@ -59,15 +59,19 @@ const Customers = () => {
   const [loading, setLoading] = useState(true);
   const [documentCount, setDoumentCount] = useState(1);
   const searchParams = useSearchParams()
-  const limit = searchParams.get("limit")
+
+  const limitValue = searchParams.get("limit")
+  const [limit,setLimit] = useState(limitValue)
   const [page,setPage] = useState(1)
   const getData = async () => {
     try {
         let link;
-      if(limit){
+      if(limitValue){
         link = `/api/admin/user/all-user?limit=${limit}&page=${page}`
       }else{
+        
         link = `/api/admin/user/all-user?page=${page}`
+        setLimit(10)
       }
       const  data  = await useGetDataProtected(link);
       if (data) {
@@ -99,7 +103,7 @@ const Customers = () => {
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Customers" />
       <div>
-      <Table  page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead} ></Table>
+      <Table  page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead} ></Table>
       </div>
     </div>
   );
