@@ -6,7 +6,7 @@ const firebaseConfig = {
 
   authDomain: process.env.AUTHDOMAIN,
 
-  projectId: process.env.PRODECT_ID,
+  projectId: process.env.PROJECT_ID,
 
   storageBucket: process.env.STORAGE_BUCKET,
 

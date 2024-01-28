@@ -2036,7 +2036,7 @@ __metadata:
     axios: "npm:^1.6.2"
     bcryptjs: "npm:^2.4.3"
     chart.js: "npm:^4.4.1"
-    firebase: "npm:^10.7.1"
+    firebase: "npm:^10.7.2"
     framer-motion: "npm:^10.16.5"
     jsonwebtoken: "npm:^9.0.2"
     mongoose: "npm:^8.0.1"
@@ -2425,7 +2425,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"firebase@npm:^10.7.1":
+"firebase@npm:^10.7.2":
   version: 10.7.2
   resolution: "firebase@npm:10.7.2"
   dependencies:

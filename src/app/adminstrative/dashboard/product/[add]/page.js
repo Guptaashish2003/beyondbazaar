@@ -1,5 +1,5 @@
 "use client";
-import { React, useState } from "react";
+import { React, use, useState } from "react";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
@@ -13,10 +13,14 @@ import Modal from "@/components/Modal/Modal";
 import { TiImage } from "react-icons/ti";
 import Actions from "@/components/Admin/Action";
 import Image from "next/image";
+import { usePostDataProtected } from "@/redux/api/usePostData";
+import { imageUpload } from "@/backend/utils/imageUpload";
+
 export default function page() {
   const router = useRouter();
   const [loading, setLoading] = useState();
   const [tag, setTag] = useState(["papaya"]);
+  const [imageU, setImageU] = useState(null);
 
   const validationSchema = Yup.object().shape({
     pName: Yup.string().required("Name is required"),
@@ -30,14 +34,45 @@ export default function page() {
     stockAvail: Yup.string().required("Stock Availiblity is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
-  const onSubmit = (productData) => {
+
+  const onSubmit = async (productData) => {
     productData.tag = tag;
+    try {
+      console.log("firstkflsdfasldk")
+      setLoading(true);
+      console.log(imageU)
+      const fd = new FormData();
+      fd.append("file",imageU);
+      const imageUrl = await usePostDataProtected("/api/admin/product/add-product-image", fd);
+      productData.image = imageUrl;
+      console.log("imageuploadingij",imageUrl)
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      
+    }
     console.log(productData);
     alert(JSON.stringify(productData));
-    console.log("hello");
+    // setLoading(true);
+    // try {
+    //   const res = await usePostDataProtected("/api/admin/product/add", productData);
+    //   setLoading(false);
+    //   if (res?.status) {
+    //     toast.success(res?.message);
+    //     reset();
+    //   } else {
+    //     toast.error(res?.message);
+    //   }
+
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error(error?.message);
+      
+    // }
+
   };
 
   const slider = [
@@ -178,10 +213,12 @@ export default function page() {
                 btnName="Add SubCategory"
               ></Modal>
             </div>
-            {/* <div
+            <div
             className="relative w-[90%] h-36 rounded-lg shadow-inner border-1 my-2 mx-auto"
           >
-            <input type="file" id="file-upload" className="hidden" />
+            <input type="file" id="file-upload" onChange={(e) => {
+                    setImageU(e.target.files[0]);
+                }} className="hidden" />
             <label
               htmlFor="file-upload"
               className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer"
@@ -191,7 +228,7 @@ export default function page() {
               </p>
               <TiImage width={'12px'}/>
             </label>
-          </div> */}
+          </div>
           </div>
           {/* previewImage */}
           <div className=" min-w-20 flex  gap-2 justify-center flex-wrap h-24 p-1 ">
