@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
-import { usePostData } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { Header } from "@/components/Admin";
 import { TagsInput } from "react-tag-input-component";

@@ -9,16 +9,17 @@ import * as Yup from "yup";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { useGetData, useGetDataProtected } from "@/redux/api/useGetData";
 import { toast } from "react-toastify";
-import { TagsInput } from "react-tag-input-component";
 import { Header } from "@/components/Admin";
+import { TagsInput } from "react-tag-input-component";
 
-// import Loading from "@/app/loading";
+// import TagsInput from "react-tagsinput";
 export default function page() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState([]);
   const [product, setProduct] = useState([]);
   const [productTag, setProductTag] = useState([]);
+  
   const [categoryTags, setCategoryTags] = useState([]);
 
   const validationSchema = Yup.object().shape({
@@ -38,9 +39,8 @@ export default function page() {
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
   async function onSubmit(formData) {
-    //   formData.startDate = new Date(formData.startDate).toISOString();
-    // formData.endDate = new Date(formData.endDate).toISOString();
-    console.log("promoData", formData);
+    formData.promoProduct = productTag;
+    formData.promoCategory = categoryTags;
     alert(JSON.stringify(formData));
     setLoading(true);
 
@@ -50,8 +50,6 @@ export default function page() {
         formData
       );
       setLoading(false);
-      console.log(response);
-
       if (response?.status) {
         toast.success(response?.message);
         // router.push("/admin/promoCode")
@@ -87,7 +85,29 @@ export default function page() {
   useEffect(() => {
     getProductCategory();
   }, []);
-
+  const handleProudctTagsChange = (e) => {
+    try {
+     
+      const newTags = [...productTag, e.target.value]
+      newTags.filter((item) => item !== e.target.value)
+      setProductTag(newTags)
+      
+    } catch (error) {
+      toast.error(error.message); 
+    }
+  };
+  const handleCategoryTags = (e) => {
+    try {
+     
+      const newTags = [...categoryTags, e.target.value]
+      newTags.filter((item) => item !== e.target.value)
+      setCategoryTags(newTags)
+      
+    } catch (error) {
+      toast.error(error.message); 
+    }
+  };
+ 
   const formdata = [
     {
       type: "text",
@@ -214,13 +234,8 @@ export default function page() {
       label: "select the product ",
       option: ["None", ...product.map((itm) => itm.productTags[0])],
       labelClass: "absolute top-6",
-      onclick: (e) =>{setProductTag(e.target.value)},
       name: "promoProduct",
-      register: {
-        ...register("promoProduct", {
-          required: true,
-        }),
-      },
+      register:  {...register("promoProduct", { onChange: handleProudctTagsChange })}
     },
     {
       type: "dropdown",
@@ -228,20 +243,10 @@ export default function page() {
       option: ["None", ...category.map((itm) => itm.categoryName)],
       labelClass: "absolute top-6",
       name: "promoCategory",
-      register: {
-        ...register("promoCategory", {
-          required: true,
-        }),
-      },
+      register:  {...register("promoCategory", { onChange: handleCategoryTags })}
     },
   ];
-  const handleProudctTagsChange = (newTags) => {
-    // setProductTag(newTags);
-  };
-  const handleCategoryTags = (newTags) => {
-    // setCategoryTags(newTags);
-  };
-
+ 
   // if(loadingScreen){
   //   return(<Loading></Loading>)
   // }
@@ -260,7 +265,7 @@ export default function page() {
                   type={itm?.type}
                   placeholder={itm?.value}
                   label={itm?.label}
-                  onclick={itm?.onclick}
+                  // onclick={itm?.onclick}
                   option={itm?.option}
                   name={itm?.name}
                   {...itm?.register}
@@ -276,18 +281,16 @@ export default function page() {
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap gap-4 ">
+          <div className="flex w-full flex-wrap gap-4 ">
             <TagsInput
               className=" border-gray-200 border-2"
-              value={productTag}
-              onChange={handleProudctTagsChange}
+              value={[...productTag]}
               name="productTag"
               placeHolder="Enter the product tags"
             />
             <TagsInput
               className=" border-gray-200 border-2"
-              value={categoryTags}
-              onChange={handleCategoryTags}
+              value={[...categoryTags]}
               name="categoryTags"
               placeHolder="Enter the category tags"
             />
