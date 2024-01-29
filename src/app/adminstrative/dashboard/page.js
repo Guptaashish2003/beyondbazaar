@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React,{useEffect} from 'react';
 import { GoDotFill } from "react-icons/go";
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { LuIndianRupee } from "react-icons/lu";
@@ -11,6 +11,10 @@ import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
 import {  Button,SparkLine,Stacked,PieChart } from '@/components/Admin/index';
 import { useSelector, useDispatch } from 'react-redux'
+import { useGetDataProtected } from '@/redux/api/useGetData';
+import { useGetData } from '@/redux/api/useGetData';
+
+
 
 const weeklyStats = [
   {
@@ -91,6 +95,22 @@ const medicalproBranding = {
 function page() {
   const { currentColor, currentMode } = useSelector((state) => state.theme);
   const dispatch = useDispatch()
+
+  const getAlldashboard = async () => {
+    try {
+      const dashBoardData = await useGetDataProtected('/api/admin/dashboard')
+
+      console.log(dashBoardData,"productData","orderData","customerData")
+
+      
+    } catch (error) {
+      console.error(error)
+
+    }
+  }
+  useEffect(() => {
+    getAlldashboard()
+  }, [])
   const earningData = [
    {
      icon: <MdOutlineSupervisorAccount />,

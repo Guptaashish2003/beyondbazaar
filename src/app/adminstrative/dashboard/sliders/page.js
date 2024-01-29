@@ -40,7 +40,7 @@ export default function page() {
       <Header category="Apps" title="Hero slider" />
       <div className='min-w-20 flex  gap-2 justify-center flex-wrap '>
         {slider.map((itm,index)=><div key={itm._id} className='relative'>
-          <Actions className='absolute top-1 right-2 z-20'></Actions>
+          <Actions  className='absolute top-1 right-2 z-20'></Actions>
           <div className='w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10'><span>{index}</span></div>
           <Image src={itm.heroImage} width={300} height={400} className='object-fill hover:bg-black h-full' /></div>)}
         
