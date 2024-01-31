@@ -10,6 +10,7 @@ const giveCurrentDateTime = () => {
   const dateTime = date + time;
   return dateTime;
 }
+storage.maxUploadRetryTime = 120000;
 
 export async function imageUpload(data,path) {
   try {
