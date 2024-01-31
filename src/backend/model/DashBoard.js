@@ -45,6 +45,8 @@ const DashBoardSchema = new mongoose.Schema({
         default:[],
     },
     
+    
+    
 },{timestamps : true});
 
 const Dashboard = mongoose.models.Dashboard || mongoose.model('Dashboard', DashBoardSchema);

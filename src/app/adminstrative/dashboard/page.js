@@ -1,5 +1,5 @@
 "use client"
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { GoDotFill } from "react-icons/go";
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { LuIndianRupee } from "react-icons/lu";
@@ -7,7 +7,7 @@ import { IoIosMore } from 'react-icons/io';
 import {  FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
 import { BsBoxSeam, BsShield, BsChatLeft } from 'react-icons/bs';
 import { MdOutlineSupervisorAccount } from 'react-icons/md';
-import { HiOutlineRefresh } from 'react-icons/hi';
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { TiTick } from 'react-icons/ti';
 import {  Button,SparkLine,Stacked,PieChart } from '@/components/Admin/index';
 import { useSelector, useDispatch } from 'react-redux'
@@ -93,12 +93,20 @@ const medicalproBranding = {
   ],
 };
 function page() {
+  const [data , setData] = useState([])
+  const [dataChange , setDataChange] = useState([])
+
   const { currentColor, currentMode } = useSelector((state) => state.theme);
   const dispatch = useDispatch()
 
   const getAlldashboard = async () => {
     try {
       const dashBoardData = await useGetDataProtected('/api/admin/dashboard')
+      // const percentageCH = await useGetDataProtected('/api/admin/dashboard/calculated')
+      if(dashBoardData.success ){
+      setData(dashBoardData.data)
+      // setDataChange(percentageCH.data)
+    }
 
       console.log(dashBoardData,"productData","orderData","customerData")
 
@@ -111,11 +119,12 @@ function page() {
   useEffect(() => {
     getAlldashboard()
   }, [])
+  console.log("data",data,"data")
   const earningData = [
    {
      icon: <MdOutlineSupervisorAccount />,
-     amount: '39,354',
-     percentage: '-4%',
+     amount: data.totalUsers,
+    //  percentage: `${Math.floor(dataChange.totalUserChange)} %` ,
      title: 'Customers',
      iconColor: '#03C9D7',
      iconBg: '#E5FAFB',
@@ -123,8 +132,8 @@ function page() {
    },
    {
      icon: <BsBoxSeam />,
-     amount: '4,396',
-     percentage: '+23%',
+     amount: data.totalProducts,
+    //  percentage: `${Math.floor(dataChange.totalProductChange)} %`,
      title: 'Products',
      iconColor: 'rgb(255, 244, 229)',
      iconBg: 'rgb(254, 201, 15)',
@@ -132,8 +141,8 @@ function page() {
    },
    {
      icon: <FiBarChart />,
-     amount: '423,39',
-     percentage: '+38%',
+     amount: data.totalSales,
+    //  percentage:  `${Math.floor(dataChange.totalOrderChange)} %`,
      title: 'Sales',
      iconColor: 'rgb(228, 106, 118)',
      iconBg: 'rgb(255, 244, 229)',
@@ -141,14 +150,14 @@ function page() {
      pcColor: 'green-600',
    },
    {
-     icon: <HiOutlineRefresh />,
-     amount: '39,354',
-     percentage: '-12%',
-     title: 'Refunds',
-     iconColor: 'rgb(0, 194, 146)',
-     iconBg: 'rgb(235, 250, 242)',
-     pcColor: 'red-600',
-   },
+    icon: <MdOutlineProductionQuantityLimits />,
+    amount: data.totalOrders,
+    // percentage: `${Math.floor(dataChange.totalOrderChange)} %`,
+    title: 'Orders',
+    iconColor: 'rgb(0, 194, 146)',
+    iconBg: 'rgb(235, 250, 242)',
+    pcColor: 'red-600',
+  },
  ];
  
  const lineLabl = ["January", "February", "March", "April", "May", "June", "July"];
