@@ -20,11 +20,12 @@ export async function PUT(request, context) {
         }
     const data = await request.json();
     const id = context.params.id;
-
-    const product = await Product.findByIdAndUpdate(id, data);
+    console.log(data)
+    const product = await Product.findByIdAndUpdate(id, {data});
+    console.log(data,product)
 
     return NextResponse.json(
-      { sucess: true, message: "Updated-successfully" },
+      { success: true, message: "Updated-successfully" },
       { status: 200 }
     );
   } catch (error) {

@@ -7,55 +7,11 @@ import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
 const columnHelper = createColumnHelper();
 
-const columns = [
-  columnHelper.accessor((row) => row._id, {
-    id: "_id",
-    Aggregated: ({ value }) => `${value} Names`,
-    cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
-    header: () => <span>id</span>,
-  }),
-  columnHelper.accessor((row) => row.promocode, {
-    accessorKey: "promocode",
-    cell: (info) => info.getValue(),
-    header: () => <span>Code</span>,
-  }),
-
-  columnHelper.accessor((row) => row.discountType, {
-    accessorKey: "discountType",
-    cell: (info) => info.getValue(),
-    header: () => <span>Type</span>,
-  }),
-  columnHelper.accessor((row) => row.discountValue, {
-    accessorKey: "discountValue",
-    cell: (info) => info.getValue(),
-    header: () => <span>value</span>,
-  }),
-  columnHelper.accessor((row) => row.limit, {
-    accessorKey: "limit",
-    cell: (info) => info.getValue(),
-    header: () => <span>limit</span>,
-  }),
-  columnHelper.accessor((row) => row.active, {
-    accessorKey: "active",
-    cell: (info) => info.getValue(),
-    header: () => <span>active</span>,
-  }),
-  columnHelper.accessor((row) => row.endDate, {
-    accessorKey: "endDate",
-    cell: (info) => info.getValue(),
-    header: () => <span>end Date</span>,
-  }),
-  columnHelper.accessor("actions", {
-    accessorKey: "actions",
-    cell: (info) => <Actions id={info.row.original._id}></Actions>,
-    header: () => <span>actions</span>,
-  }),
-
-];
 
 const PromoCodes = () => {
   const [data, setData] = useState([]);
@@ -65,7 +21,56 @@ const PromoCodes = () => {
   const limitValue = searchParams.get("limit")
   const [limit,setLimit] = useState(limitValue)
   const [page,setPage] = useState(1)
+  const router = useRouter()
   
+  const columns = [
+    columnHelper.accessor((row) => row._id, {
+      id: "_id",
+      Aggregated: ({ value }) => `${value} Names`,
+      cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
+      header: () => <span>id</span>,
+    }),
+    columnHelper.accessor((row) => row.promocode, {
+      accessorKey: "promocode",
+      cell: (info) => info.getValue(),
+      header: () => <span>Code</span>,
+    }),
+  
+    columnHelper.accessor((row) => row.discountType, {
+      accessorKey: "discountType",
+      cell: (info) => info.getValue(),
+      header: () => <span>Type</span>,
+    }),
+    columnHelper.accessor((row) => row.discountValue, {
+      accessorKey: "discountValue",
+      cell: (info) => info.getValue(),
+      header: () => <span>value</span>,
+    }),
+    columnHelper.accessor((row) => row.limit, {
+      accessorKey: "limit",
+      cell: (info) => info.getValue(),
+      header: () => <span>limit</span>,
+    }),
+    columnHelper.accessor((row) => row.active, {
+      accessorKey: "active",
+      cell: (info) => info.getValue(),
+      header: () => <span>active</span>,
+    }),
+    columnHelper.accessor((row) => row.endDate, {
+      accessorKey: "endDate",
+      cell: (info) => info.getValue(),
+      header: () => <span>end Date</span>,
+    }),
+    columnHelper.accessor("actions", {
+      accessorKey: "actions",
+      cell: (info) => <Actions id={info.row.original._id} actions={
+        [{name:"edit promo",task:()=>{router.push(`/adminstrative/dashboard/promoCode/${info.row.original._id}`)}}]
+        
+      }></Actions>,
+      header: () => <span>actions</span>,
+    }),
+  
+  ];
   const getData = async () => {
     try {
       let link;
@@ -108,7 +113,7 @@ const PromoCodes = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="PromoCodes" />
-      <Table page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead}></Table>
+      <Table page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} data={data} exportData={exortHead}></Table>
     </div>
   );
 };

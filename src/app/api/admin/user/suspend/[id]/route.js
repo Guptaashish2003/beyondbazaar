@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 // suspend and unsuspend user api
 
 
-export default async function PUT(req) {
+export  async function PUT(req,context) {
     await connectDB();
     try {
         const admin = await isOauth(req);
@@ -17,7 +17,7 @@ export default async function PUT(req) {
         if (!role) {
             return  NextResponse.json({ success: false, message: "You are not Authorized" });
         }
-        const { id } = req.query;
+        const { id } = context.params;
         const { suspend } = req.body;
         if (!id) {
             return  NextResponse.json({ success: false, message: "User Not Found" });

@@ -22,24 +22,21 @@ const Orders = () => {
   const searchParams = useSearchParams()
   const limitValue = searchParams.get("limit")
   const [limit,setLimit] = useState(limitValue)
-  const [update,setUdate]= useState(1)
   const [page,setPage] = useState(1)
   const router = useRouter();
-  const rerender = React.useReducer(() => ({}), {})[1]
+  
   
   const cancelOrder = async (id,mainId) => {
-    console.log(id,mainId);
     try {
       const res = await useUpdateDataProtected(`/api/admin/order/update/${mainId}`,{status:"cancelled",orderId:id});
-      if(res.status){
+      if(res.success){
         const val = data.map((val)=>  {
             if(val._id === id){
-              val.status = "ashished";
+              val.status = "cancelled";
             } 
             return val;
           })
           setData(val);
-          rerender()
       }
       
     } catch (error) {
@@ -97,13 +94,14 @@ const Orders = () => {
       accessorKey: "actions",
       cell: (info) => <Actions id={info.row.original._id} actions={
         [{name:"cancel",task:()=>{cancelOrder(info.row.original._id,info.row.original.mainId)}},
-        {name:"view details",task:()=>{router.push(`${info.row.original._id}`)}}]
+        {name:"view details",task:()=>{router.push(`/user/order-status/${info.row.original.mainId}?orderId=${info.row.original._id}`)}}]
         
       }></Actions>,
       header: () => <span>actions</span>,
     }),
   
   ];
+
   const getData = async () =>{
     try {
       let link;
@@ -113,7 +111,7 @@ const Orders = () => {
         link = `/api/admin/order/all-order?page=${page}`
       }
       const data = await useGetDataProtected(link);
-      console.log(data);
+      console.log("api data",data);
       if(data){
         setData(data.data);
         setDoumentCount(data.length);
@@ -129,7 +127,7 @@ const Orders = () => {
   }
   useEffect(() => {
     getData();
-  }, [page,update]);
+  }, [page]);
 
   if(loading){
     return(<Loading></Loading>)
@@ -151,7 +149,7 @@ const Orders = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Orders" />
-      <Table page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exortHead}></Table>
+      <Table page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} data={data} exportData={exortHead}></Table>
     </div>
   );
 };

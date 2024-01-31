@@ -8,7 +8,6 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 function Actions({children,id=null,className,actions=[]}) {
-    console.log(actions)
     actions.push( { name: 'Copy', task:()=>{navigator.clipboard.writeText(id);}})
     return (
         <div className={`${className}`}>

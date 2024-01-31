@@ -19,8 +19,7 @@ import { FaSortAmountDown ,FaSortAmountUp} from "react-icons/fa";
 
 
 
-export default function Table({ label,exportData,setPage,limit=10,page,documentCount, tableData,addNew,search, }) {
-
+export default function Table({ label,exportData,setPage,limit=10,page,documentCount, data,addNew,search, }) {
   const [columnVisibility, setColumnVisibility] = useState({});
   const [columnOrder, setColumnOrder] = useState({});
   const [sorting, setSorting] = useState([]);
@@ -56,7 +55,7 @@ export default function Table({ label,exportData,setPage,limit=10,page,documentC
   }
 
   const table = useReactTable({
-    data:tableData,
+    data,
     columns:label,
     initialState: {
       pagination: {
@@ -82,7 +81,8 @@ export default function Table({ label,exportData,setPage,limit=10,page,documentC
     debugColumns: true,
   });
   
-
+  useEffect(()=>{
+  },[data])
   return (
     <div className="p-10 rounded-lg border ">
       <div className="flex justify-between">
