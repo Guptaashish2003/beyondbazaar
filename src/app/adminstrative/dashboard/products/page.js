@@ -7,61 +7,14 @@ import Image from 'next/image';
 import Actions from '@/components/Admin/Action';
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useUpdateDataProtected } from '@/redux/api/useUpdateData';
 
 
 const columnHelper = createColumnHelper();
 
-const columns = [
-  columnHelper.accessor((row) => row._id, {
-    id: "_id",
-    Aggregated: ({ value }) => `${value} Names`,
-    cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
-    header: () => <span>id</span>,
-  }),
-  columnHelper.accessor((row) => row.productTags, {
-    accessorKey: "productTags",
-    cell: (info) => {
-      const tags = info.getValue()[0]; 
-      const firstTag = tags.split(' ').slice(0, 2).join(' '); 
-      return (
-        <div style={{ gridTemplateColumns: "3rem 2fr" }} className='grid  grid-rows-2 text-start'>
-          <Image className='row-start-1 row-end-3 w-8 h-8 bg-black rounded-full object-fill' src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            width={500}
-            height={500}
-            alt="Picture of the author"/>
-          <abbr title={firstTag} className='text-s'>{firstTag}</abbr>
-        </div>
-      );
-    },
-    header: () => <span>Name</span>,
-  }),
-
-  columnHelper.accessor((row) => row.productPrice, {
-    accessorKey: "productPrice",
-    cell: (info) => info.getValue(),
-    header: () => <span>price</span>,
-  }),
-  columnHelper.accessor((row) => row.productQuantity, {
-    accessorKey: "productQuantity",
-    cell: (info) => info.getValue(),
-    header: () => <span>stock</span>,
-  }),
-  columnHelper.accessor((row) => row.productCategory, {
-    accessorKey: "productCategory",
-    cell: (info) => info.getValue(),
-    header: () => <span>category</span>,
-  }),
-  columnHelper.accessor("actions", {
-    accessorKey: "actions",
-    cell: (info) => <Actions id={info.row.original._id}></Actions>,
-    header: () => <span>actions</span>,
-  }),
-
-];
-
 const Products = () => {
-
+  
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [documentCount, setDoumentCount] = useState(1);
@@ -69,6 +22,82 @@ const Products = () => {
   const limitValue = searchParams.get("limit")
   const [limit,setLimit] = useState(limitValue)
   const [page,setPage] = useState(1)
+  const router= useRouter()
+  
+  const available = async (id,productAvailable) => {
+    console.log(id,productAvailable)
+  
+    try {
+      const res = await useUpdateDataProtected(`/api/admin/product/update-product/${id}`,{productAvailable:!productAvailable});
+      console.log(res)
+      if(res.success){
+        const val = data.map((val)=>  {
+            if(val._id === id){
+              val.productAvailable = !productAvailable;
+            } 
+            return val;
+          })
+          console.log('val',val)
+          setData(val);
+      }
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      
+    }
+  
+  }
+  const columns = [
+    columnHelper.accessor((row) => row._id, {
+      id: "_id",
+      Aggregated: ({ value }) => `${value} Names`,
+      cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
+      header: () => <span>id</span>,
+    }),
+    columnHelper.accessor((row) => row.productTags, {
+      accessorKey: "productTags",
+      cell: (info) => {
+        const tags = info.getValue()[0]; 
+        const firstTag = tags.split(' ').slice(0, 2).join(' '); 
+        return (
+          <div style={{ gridTemplateColumns: "3rem 2fr" }} className='grid  grid-rows-2 text-start'>
+            <Image className='row-start-1 row-end-3 w-8 h-8 bg-black rounded-full object-fill' src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={500}
+              height={500}
+              alt="Picture of the author"/>
+            <abbr title={firstTag} className='text-s'>{firstTag}</abbr>
+          </div>
+        );
+      },
+      header: () => <span>Name</span>,
+    }),
+  
+    columnHelper.accessor((row) => row.productPrice, {
+      accessorKey: "productPrice",
+      cell: (info) => info.getValue(),
+      header: () => <span>price</span>,
+    }),
+    columnHelper.accessor((row) => row.productQuantity, {
+      accessorKey: "productQuantity",
+      cell: (info) => info.getValue(),
+      header: () => <span>stock</span>,
+    }),
+    columnHelper.accessor((row) => row.productCategory, {
+      accessorKey: "productCategory",
+      cell: (info) => info.getValue(),
+      header: () => <span>category</span>,
+    }),
+    columnHelper.accessor("actions", {
+      accessorKey: "actions",
+      cell: (info) => <Actions id={info.row.original._id} actions={
+        [{name:`${info.row.original.productAvailable?"disable":"enable"}`,task:()=>{available(info.row.original._id,info.row.original.productAvailable)}},
+        {name:"edit product",task:()=>{router.push(`/adminstrative/dashboard/product/${info.row.original._id}`)}}]
+        
+      }></Actions>,
+      header: () => <span>actions</span>,
+    }),
+  
+  ];
   const getData = async () => {
     try {
       let link;
@@ -112,7 +141,7 @@ const Products = () => {
         // Loading indicator or skeleton loader can be placed here
         <p>Loading...</p>
       ) : (
-        <Table page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} tableData={data} exportData={exportHead} />
+        <Table page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} data={data} exportData={exportHead} />
       )}
     </div>
   );
