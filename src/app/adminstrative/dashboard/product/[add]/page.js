@@ -14,7 +14,7 @@ import { TiImage } from "react-icons/ti";
 import Actions from "@/components/Admin/Action";
 import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
-import { imageUpload } from "@/backend/utils/imageUpload";
+import { imageUpload } from "@/backend/utils/fireBaseImageCrud";
 
 export default function page() {
   const router = useRouter();

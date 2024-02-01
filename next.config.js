@@ -2,7 +2,7 @@
 const nextConfig = {
     basePath: '',
     images: {
-      domains: ['images.unsplash.com','source.unsplash.com',"firebasestorage.googleapis.com","https://firebasestorage.googleapis.com"],
+      domains: ['images.unsplash.com','source.unsplash.com',"firebasestorage.googleapis.com",'utfs.io'],
     },
     swcMinify: true,
 }

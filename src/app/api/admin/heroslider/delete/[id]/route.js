@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import { outhRoles } from "@/backend/middlewere/outhRoles";
 import isOauth from "@/backend/middlewere/isOauth";
-import { imageUpload } from "@/backend/utils/imageUpload";
+import { imageUpload } from "@/backend/utils/fireBaseImageCrud";
 import { deleteImage } from "@/backend/utils/deleteImage";
 //creating a new category by admin
 

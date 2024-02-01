@@ -1,22 +1,17 @@
-import { initializeApp } from 'firebase/app';
-import { getStorage } from 'firebase/storage';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.APIKEY,
-
-  authDomain: process.env.AUTHDOMAIN,
-
-  projectId: process.env.PROJECT_ID,
-
-  storageBucket: process.env.STORAGE_BUCKET,
-
+  authDomain: "beyondbazaar.firebaseapp.com",
+  projectId: "beyondbazaar",
+  storageBucket: "beyondbazaar.appspot.com",
   messagingSenderId: process.env.MESSAGING_ID,
-
   appId: process.env.APP_ID
-
 };
 
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-
-export { storage };
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
