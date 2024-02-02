@@ -23,15 +23,15 @@ const isOauth = async req => {
     }
     
     const user = await User.findOne({ _id: decoded.id })
-    console.log("user",user)
     if (!user) {
       return NextResponse.json(
         { success: false, message: "User Not Found or Login again" },
         { status: 400 }
-      );
-    }
-  
-    req.user = user
+        );
+      }
+      
+      req.user = user
+      console.log("user in auth",user)
     return user
   } catch (error) {
     console.error(error);
