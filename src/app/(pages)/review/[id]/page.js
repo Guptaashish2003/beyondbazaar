@@ -8,10 +8,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { usePostDataProtected } from '@/redux/api/usePostData';
-import { useParams } from 'next/navigation';
+import { useParams,useSearchParams } from 'next/navigation';
 export default function page() {
     const ratingValue = [1,2,3,4,5]
     const id = useParams()
+    const searchParams = useSearchParams()
+    const reviewId = searchParams.get("reviewId")
+    console.log("reviewId",reviewId)
     const [rating,setRating] = useState(0)
     const validationSchema = Yup.object().shape({
       title: Yup.string().required("title is required"),
@@ -29,13 +32,25 @@ export default function page() {
       console.log(id)
       try {
         // setLoading(true);
-      const res = await usePostDataProtected("/api/product-review/add-review", {...data,productId:id.id,rating});
-      console.log(res);
-      if (res.success) {
-      
-        // toast.success(user.message,{autoClose: 1000, })
-        // setLoading(false);
-      }
+        if(reviewId){
+          const res = await usePostDataProtected(`/api/product-review/update/${reviewId}`, {...data,productId:id.id,rating});
+          console.log(res);
+          if (res.success) {
+          
+            // toast.success(user.message,{autoClose: 1000, })
+            // setLoading(false);
+          }
+        }
+        else{
+          const res = await usePostDataProtected("/api/product-review/add-review", {...data,productId:id.id,rating});
+          console.log(res);
+          if (res.success) {
+          
+            // toast.success(user.message,{autoClose: 1000, })
+            // setLoading(false);
+          }
+        }
+     
 
       } catch (error) {
         console.log(error)

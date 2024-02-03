@@ -46,15 +46,16 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
   }
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
-      <div className="  my-4 text-bold mr-4">
-        <h1 className="title text-4xl capitalize my-1 font-bold max-lg:text-center">
+      <div className="  my-2 text-bold mr-4">
+        <p className="title max-lg:text-xl text-2xl capitalize my-1 font-bold max-lg:text-center">
           {title || 'Samsung curved display'}
-        </h1>
-        <p className="para text-center text-base ">
+        </p>
+        <p className="para text-start text-base ">
           {discription || "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odioerror ullam optio quod corporis"}
         </p>
+       
 
-        <span className="inline-block my-1 text-[--first-color] font-bold text-xl cursor-text max-lg:my-3">
+        <span className="inline-block my-2 text-[--first-color] font-bold text-xl cursor-text max-lg:my-2">
           <LiaRupeeSignSolid className="text-[--first-color] inline font-bold" />{" "}
           <p className="border-b-2 inline border-slate-400 border-solid ">
             {price || 2999}
@@ -62,7 +63,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
         </span>
         <hr className="mt-8 border border-slate-200" />
       </div>
-      <div className=" flex text-xl text-black gap-4 items-center container  p-4 ">
+      <div className=" flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  p-4 ">
         <p>Quantity:</p>
         <div className="flex border-2 border-solid border-slate-300 text-2xl">
           <button onClick={decrement} className="px-4 py-1">
@@ -76,7 +77,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
       </div>
       <SubmitButton
       loading={loading}
-        className="my-4 font-bold cartAnimation w-11/12 h-12 border-2 border-solid border-slate-400 text-xl overflow-hidden"
+        className="my-4 max-lg:my-2 font-bold cartAnimation w-11/12 h-12 max-lg:h-8 border-2 border-solid border-slate-400 text-xl overflow-hidden"
         value={"Add To Cart"}
         onClick={addToCartProduct}
         >
@@ -84,7 +85,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
         <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />
       </SubmitButton>
       <SubmitButton
-        className="my-4 font-bold  orderBounce w-11/12 h-12 border-2 border-solid border-slate-400 text-xl bg-black text-white"
+        className="my-4 font-bold max-lg:my-2 orderBounce w-11/12 h-12 max-lg:h-8 border-2 border-solid border-slate-400 text-xl bg-black text-white"
         value={"Order Now"}
         onClick={orderNow}
         
@@ -93,7 +94,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
         <FiFastForward className="arrowAnime w-6 h-auto" />
       </SubmitButton>
       
-      <div className="flex gap-5 mt-20">
+      <div className="flex gap-5 ">
         <span className="text-xl"> share:</span>
         <SocialMedial
           hover={"hover:text-black"}
