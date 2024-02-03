@@ -4,13 +4,13 @@ import Product from "./Product"
 
 //write schema here for product review or feedback
 
-const ProductSchema = new mongoose.Schema(
+const ProductReviewSchema = new mongoose.Schema(
     {
-        userID: {
+        userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User
         },
-        productID: {
+        productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: Product
         },
@@ -24,13 +24,22 @@ const ProductSchema = new mongoose.Schema(
         required: false,
         default: []
         },
-        feedback: {
+        title: {
         type: String,
         required: true,
         default: "Good"
-        }
+        },
+        description: {
+        type: String,
+        required: true,
+        default: "Good"
+        },
     },
     { timestamps: true }
     )
+
+    const ProductReview = mongoose.models.ProductReview || mongoose.model("ProductReview", ProductReviewSchema)
+export default ProductReview
+
 
 

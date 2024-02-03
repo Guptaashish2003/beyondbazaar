@@ -1,30 +1,29 @@
 import ProductReview from "@/backend/model/ProductReview";
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"
-import { outhRoles } from "@/backend/middlewere/outhRoles";
 import isOauth from "@/backend/middlewere/isOauth";
 
 export async function POST(request) {
     await connectDB();
     try {
-        const { product, user, review,photos, rating } = request.body;
-        if (!product || !user || !review || !rating) {
+        const userOauth = await isOauth(request);
+        const { productId,title,  description, rating } = await request.json();
+        console.log(productId,title,  description, rating )
+        if (!productId || !title || !description ) {
             return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
         }
-        const userOauth = await isOauth(request);
+        const userId = userOauth._id
+
         if (!userOauth) {
             return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
         }
-        const role = outhRoles(["user"], request);
-        if (!role) {
-            return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
-        }
+        
         //do one user can give review to one product only once
         const newProductReview = new ProductReview({
-            product,
-            user,
-            review,
-            photos,
+            productId,
+            userId,
+            title,
+            description,
             rating
         });
         const saveProductReview = await newProductReview.save();
