@@ -1,5 +1,5 @@
 "use client";
-import { React, use, useState } from "react";
+import { React,  useEffect, useRef, useState } from "react";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
@@ -14,13 +14,20 @@ import { TiImage } from "react-icons/ti";
 import Actions from "@/components/Admin/Action";
 import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
-import { imageUpload } from "@/backend/utils/fireBaseImageCrud";
-
+import { uploadImage } from '@/components/Admin/uploadImage';
+import { UploadButton   } from "@/backend/utils/uploadthing"
+import { useGetData } from "@/redux/api/useGetData";
 export default function page() {
   const router = useRouter();
+  const [isCategory,setIsCategory] = useState()
   const [loading, setLoading] = useState();
   const [tag, setTag] = useState(["papaya"]);
   const [imageU, setImageU] = useState(null);
+  const [slider,setSlider] = useState([])
+  const [method,setMethod] = useState("firebase")
+  const [category,setCategory] = useState([])
+  const [categoryName,setCategoryName] = useState('')
+  const [subCategoryName,setSubCategoryName] = useState('')
 
   const validationSchema = Yup.object().shape({
     pName: Yup.string().required("Name is required"),
@@ -32,6 +39,7 @@ export default function page() {
       .max(200, "Description must be at most 200 characters"),
     category: Yup.string().required("Category is required"),
     stockAvail: Yup.string().required("Stock Availiblity is required"),
+    categoryName: Yup.string().required("category Name is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
@@ -40,7 +48,6 @@ export default function page() {
   const onSubmit = async (productData) => {
     productData.tag = tag;
     try {
-      console.log("firstkflsdfasldk")
       setLoading(true);
       console.log(imageU)
       const fd = new FormData();
@@ -75,11 +82,70 @@ export default function page() {
 
   };
 
-  const slider = [
-    "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ];
+  useEffect(() => {   
+    const path = 'product'    
+    imageU && uploadImage(path,imageU,slider,setSlider);
+    getCategorys()
+  }, [imageU]);
+  const getCategorys = async () => {
+    try {
+      const res = await useGetData(
+        "/api/category/all-category?limit=1000&fields=_id,categoryName"
+      );
+      console.log(res.data)
+      if (res) {
+        setCategory(res.data.sort());
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+      
+    }
+  }
+  
+  const addCategory = async () => {
+    try {
+      const res = await usePostDataProtected(
+        "/api/admin/Category/add",
+        {
+          categoryName,
+          categoryImage:slider
+        }
+      );
+      console.log(res.data)
+      if (res) {
+        
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+      
+    }
+  }
+  const addSubCategory = async () => {
+    const category = isCategory
+    console.log(category)
+
+    try {
+      const res = await usePostDataProtected(
+        "/api/admin/SubCategory/add",
+        {subCategoryName,category:isCategory}
+      );
+      if (res) {
+        
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+      
+    }
+  }
 
   const btnClass =
     "bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300";
@@ -131,12 +197,14 @@ export default function page() {
       labelClass: "absolute top-6",
     },
   ];
-  const handleTagsChange = (newTags) => {
-    // Update the tags state and react-hook-form value
-    setTag(newTags);
-    // Assuming "tag" is the name of your input field
-  };
 
+  const handleTagsChange = (newTags) => {
+    setTag(newTags);
+  };
+  const handleChange = (event) => {
+    setMethod(event.target.value);
+  };
+  console.log(slider);
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="app" title="Add Product" />
@@ -196,7 +264,8 @@ export default function page() {
                 id="dropdown"
                 name="category"
                 label="select Category"
-                option={["Category", "categories"]}
+                option={[...category.map((itm) => itm.categoryName)]}
+                onChange={(e)=>setIsCategory(e.target.value)}
                 labelClass={`text-xs mt-4 text-[--first-color] ml-6 absolute top-6`}
                 mainClass="w-2/5 min-w-[16] mx-2"
                 className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
@@ -207,34 +276,138 @@ export default function page() {
               <Modal
                 btnClass={`${btnClass} px-4`}
                 btnName="Add Category"
-              ></Modal>
+              >
+                   <div  className='flex flex-col'>
+                      <InputBtn
+                      type='text' 
+                      placeholder='category Name'
+                      label='category Name'
+                      name='categoryName'
+                      onChange={(e)=>setCategoryName(e.target.value)}
+                      className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
+                        >
+                        </InputBtn>
+
+                      <SubmitButton
+                      onClick={addCategory}
+                      value="submit"
+                      className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
+                      ></SubmitButton>
+                    </div>
+              </Modal>
               <Modal
                 btnClass={`${btnClass} px-4`}
                 btnName="Add SubCategory"
-              ></Modal>
+              >
+                   <div  className='flex flex-col gap-y-2'>
+                      <InputBtn
+                      type='text' 
+                      placeholder='SubCategory Name'
+                      label='SubCategory Name'
+                      name='SubCategoryName'
+                      onChange={(e)=>setSubCategoryName(e.target.value)}
+                      className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
+                        >
+                        </InputBtn>
+                        <InputBtn
+                          type="dropdown"
+                          id="dropdown"
+                          name="category"
+                          label="select Category"
+                          option={[...category.map((itm) => itm.categoryName)]}
+                          onChange={(e)=>setIsCategory(e.target.value)}
+                          labelClass={`text-xs mt-4 text-[--first-color] ml-6 absolute top-6`}
+                          mainClass="w-full"
+                          className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
+                        />
+                      <SubmitButton
+                      value="Submit"
+                      onClick={addSubCategory}
+                      className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
+                      ></SubmitButton>
+                    </div>
+              </Modal>
             </div>
-            <div
-            className="relative w-[90%] h-36 rounded-lg shadow-inner border-1 my-2 mx-auto"
-          >
-            <input type="file" id="file-upload" onChange={(e) => {
-                    setImageU(e.target.files[0]);
-                }} className="hidden" />
-            <label
-              htmlFor="file-upload"
-              className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer"
+          </div>
+            {/* select method  */}
+            <div className='flex justify-center gap-x-4 mx-auto my-2'>
+            <label>
+            <input
+              type="radio"
+              name="method"
+              id="uploadthing"
+              value="uploadthing"
+              checked={method === 'uploadthing'}
+              onChange={handleChange}
+              className="mx-2"
+            />
+            uploadthing
+          </label>
+            <label>
+            <input
+              type="radio"
+              name="method"
+              id="firebase"
+              value="firebase"
+              checked={method === 'firebase'}
+              onChange={handleChange}
+              className="mx-2"
+            />
+            firebase
+          </label>
+            <label>
+            <input
+              type="radio"
+              name="method"
+              id="aws"
+              value="aws"
+              checked={method === 'aws'}
+              onChange={handleChange}
+              className="mx-2"
+            />
+            aws
+          </label>
+            </div>
+
+
+              {method==="firebase" && <div
+              className="relative w-[90%] h-36 rounded-lg shadow-inner border-1 my-2 mx-auto"
             >
-              <p className="z-10 text-xs font-light text-center text-gray-500">
-                Drag &amp; Drop your files here
-              </p>
-              <TiImage width={'12px'}/>
-            </label>
-          </div>
-          </div>
+              <input type="file" id="file-upload" onChange={(e) => {
+                      setImageU(e.target.files[0]);
+                  }} className="hidden" />
+              <label
+                htmlFor="file-upload"
+                className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer"
+              >
+                <p className="z-10 text-xs font-light text-center text-gray-500">
+                  Drag &amp; Drop your files here
+                </p>
+                <TiImage width={'12px'}/>
+              </label>
+              </div>}
+              { method==="uploadthing" &&<div>
+          <UploadButton 
+        className=" bg-[#333] text-white px-10 py-2 " 
+        endpoint="imageUploader"
+        onClientUploadComplete={res => {
+          if(slider.length > 0) {
+            setSlider([...slider,res[0].url])
+          }else{
+            
+            setSlider([res[0].url])
+          }
+        }}
+        onUploadError={error => {
+          // Do something with the error.
+          alert(`ERROR! ${error.message}`)
+        }}
+      />
+          </div>}
           {/* previewImage */}
-          <div className=" min-w-20 flex  gap-2 justify-center flex-wrap h-24 p-1 ">
+          <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
             {slider.map((itm, index) => (
               <div key={index} className="relative w-24 h-full">
-                <Actions className="absolute top-1 right-2 z-20 text-white"></Actions>
                 <div className="w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10">
                   <span>{index}</span>
                 </div>
@@ -242,6 +415,7 @@ export default function page() {
                   src={itm}
                   width={300}
                   height={400}
+                  alt="hero image"
                   className="object-fill hover:bg-black h-full w-full"
                 />
               </div>

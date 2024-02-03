@@ -7,12 +7,6 @@ const CategorySchema = new mongoose.Schema({
         required : true,
         trim : true,
         maxlength : 32
-    },
-    categoryDescription :{
-        type : String,
-        required : true,
-        trim : true,
-        maxlength : 2000
     } ,
     categoryImage : [{
         type : String,

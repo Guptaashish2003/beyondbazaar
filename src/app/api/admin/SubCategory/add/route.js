@@ -20,16 +20,13 @@ export async function POST(request) {
         const data = await request.json();
         console.log(data, "data")
 
-        const { category,SubCategoryName,SubCategoryImage,SubCategoryDescription ,SubCategorySlug } = data;
+        const { category,SubCategoryName  } = data;
 
-        if (!SubCategoryName || !SubCategoryImage || !SubCategoryDescription ) {
+        if (!SubCategoryName || !category ) {
             return NextResponse.json({ success: false, message: "Please fill all the fields" }, { status: 400 });
         }
         const Subcategory = await SubCategory.create({
             SubCategoryName,
-            SubCategoryImage,
-            SubCategoryDescription,
-            SubCategorySlug,
             category
         });
         console.log(Subcategory, "Subcategory")

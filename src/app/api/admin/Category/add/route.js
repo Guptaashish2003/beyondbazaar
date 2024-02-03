@@ -18,15 +18,14 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         }
         const data = await request.json();
-        const { categoryName,categoryImage,categoryDescription ,categorySlug } = data;
-        if (!categoryName || !categoryImage || !categoryDescription || !categorySlug) {
+        const { categoryName,categoryImage } = data;
+        console.log(categoryName, categoryImage)
+        if (!categoryName || !categoryImage ) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
         const category = await Category.create({
             categoryName,
             categoryImage,
-            categoryDescription,
-            categorySlug
         });
         return NextResponse.json({ success: true, data: category }, { status: 200 });
 

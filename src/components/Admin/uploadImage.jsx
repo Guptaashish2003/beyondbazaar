@@ -6,7 +6,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 const storage = getStorage(app);
-export const uploadImage = ({file}) => {
+export const uploadImage = (path,file,Image,setImage) => {
     const name = new Date().getTime() + file.name;
     const storageRef = ref(storage, name);
 
@@ -30,7 +30,11 @@ export const uploadImage = ({file}) => {
       (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log(downloadURL)
+          if(Image.length > 0) {
+            setImage([...Image,downloadURL])
+          }else{
+            setImage([downloadURL])
+          }
           return downloadURL;
         });
       }

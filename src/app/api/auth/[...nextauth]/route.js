@@ -45,7 +45,7 @@ const handler = NextAuth({
           value: userToken,
           httpOnly: true,
           path: '/',
-          maxAge: cookieOptions.expires,
+          expires: cookieOptions.expires,
         })
         return session;
       },

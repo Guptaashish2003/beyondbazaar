@@ -8,17 +8,6 @@ const SubCategorySchema = new mongoose.Schema({
         trim : true,
         maxlength : 32
     },
-    SubCategoryDescription :{
-        type : String,
-        required : true,
-        trim : true,
-        maxlength : 2000
-    } ,
-    SubCategoryImage : [{
-        type : String,
-        required : true,
-        trim : true
-    } ],
     slug : {
         type : String,
         source : 'SubCategoryName',

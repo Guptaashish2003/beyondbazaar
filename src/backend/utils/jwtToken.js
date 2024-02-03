@@ -1,5 +1,6 @@
+'use server'
 import { NextResponse } from "next/server";
-
+import { cookies } from 'next/headers'
 
 const jwtToken = async (user, statusCode, msg) => {
   const token = await user.getSignedToken();
@@ -25,12 +26,15 @@ const jwtToken = async (user, statusCode, msg) => {
       status: statusCode,
     }
   );
-  Response.cookies.set({
+  console.log(cookieOptions.expires)
+  cookies().set({
     name: "token",
     value: token,
     httpOnly: true,
-    maxAge: cookieOptions.expires, // 1 week
-  });
+    path: '/',
+    expires: cookieOptions.expires,
+  })
+
   
   return Response;
 };

@@ -28,7 +28,7 @@ export default function page() {
       e.preventDefault();
       try {
         setLoading(true);
-        const res = await usePostDataProtected("/api/admin/heroslider/add",{url:preImage[0].url});
+        const res = await usePostDataProtected("/api/admin/heroslider/add",{url:preImage[0]});
         console.log(res.data);
         setLoading(false);
       } catch (error) {
@@ -37,8 +37,9 @@ export default function page() {
   
   };
   
-  useEffect(() => {       
-    file && uploadImage({file,setPreImage});
+  useEffect(() => { 
+    const path = 'slider';
+    file && uploadImage(path,file,preImage,setPreImage);
   }, [file]);
   const handleChange = (event) => {
     setMethod(event.target.value);
@@ -59,7 +60,7 @@ export default function page() {
 
       <div className=" w-full mx-auto sm:max-w-7xl my-2">
         <div className='flex justify-center items-center gap-4 h-24 '>
-          {preImage.map((img,index)=><Image key={index} src={img.url} alt='hero images' width={300} height={400} className='object-fill h-full w-auto' />)}
+          {preImage.map((img,index)=><Image key={index} src={img} alt='hero images' width={300} height={400} className='object-fill h-full w-auto' />)}
         </div>
         {/* select method  */}
         <div className='flex justify-center gap-x-4'>
@@ -112,7 +113,12 @@ export default function page() {
         className=" bg-[#333] text-white px-10 py-2 " 
         endpoint="imageUploader"
         onClientUploadComplete={res => {
-          setPreImage(res)
+          if(preImage.length > 0) {
+            setPreImage([...preImage,res[0].url])
+          }else{
+            
+            setPreImage([res[0].url])
+          }
         }}
         onUploadError={error => {
           // Do something with the error.
