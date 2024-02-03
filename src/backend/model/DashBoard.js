@@ -40,6 +40,10 @@ const DashBoardSchema = new mongoose.Schema({
         type:Number,
         default:[],
     },
+    totalEarnings:{
+        type:Number,
+        default:[],
+    },
     totalOrderByUser:{
         type:Array,
         default:[],

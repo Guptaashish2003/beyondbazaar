@@ -23,7 +23,6 @@ export default function page() {
   const [loading,setLoading] = useState(false);
   const [method,setMethod] = useState("firebase")
   const [preImage,setPreImage] = useState([])
-  const [media, setMedia] = useState("");
   const [file, setFile] = useState(null);
   const uploadFile = async (e) => {
       e.preventDefault();
@@ -37,13 +36,14 @@ export default function page() {
       }
   
   };
-
+  
   useEffect(() => {       
-    file && setPreImage([{url:uploadImage({file,setPreImage})}]); ;
+    file && uploadImage({file,setPreImage});
   }, [file]);
   const handleChange = (event) => {
     setMethod(event.target.value);
   };
+  console.log("preview image",preImage)
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Apps" title="Hero slider" />

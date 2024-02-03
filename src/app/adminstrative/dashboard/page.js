@@ -159,8 +159,11 @@ function page() {
     pcColor: 'red-600',
   },
  ];
+
+
+
  
- const lineLabl = ["January", "February", "March", "April", "May", "June", "July"];
+ const lineLabl = ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"];
  const lineData = [
   {
     label: "Dataset 1",
@@ -267,7 +270,7 @@ const pieData = {
           <div className="flex justify-between items-center">
             <div>
               <p className="font-bold text-gray-400">Earnings</p>
-              <p className="text-2xl">₹63,448.78</p>
+              <p className="text-2xl">₹ {Math.floor(data.totalEarnings)}</p>
             </div>
             <button
               type="button"

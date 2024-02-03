@@ -26,7 +26,7 @@ function InputBtn(
       {type === 'dropdown' ? (
         <select name={name} id={id} ref={ref} onClick={onClick}  className={`w-full 
         ${className}`} {...props}>
-         { option.map((itm)=><option value={itm}>{itm}</option>)}
+         { option.map((itm,index)=><option key={index} value={itm}>{itm}</option>)}
         </select>
       ) : (
         <input

@@ -35,6 +35,22 @@ export async function GET(request) {
         },
       },
     ]);
+    const totalEarnings = await Order.aggregate([
+      {
+          $group: {
+              _id: null,
+              totalItemsPrice: { $sum: "$itemsPrice" },
+              totalTaxPrice: { $sum: "$taxPrice" },
+              totalTotalPrice: { $sum: "$totalPrice" }
+          }
+      },
+      {
+          $project: {
+              total: { $subtract: ["$totalTotalPrice", { $add: ["$totalItemsPrice", "$totalTaxPrice"] }] }
+          }
+      }
+  ]);
+    console.log(totalEarnings, "totalEarnings");
     const totalReviews = await Order.aggregate([
       {
         $group: {
@@ -85,40 +101,43 @@ export async function GET(request) {
         },
       },
     ]);
- 
-  
-  const data = {
-    totalSales: totalSales[0].totalSales,
-    UtotalOrderByUser: totalOrderByUser[0].totalOrderByUser,
-    totalReviews: totalReviews[0].totalReviews,
-    totalDelivered: totalDelivered[0].totalDelivered,
-    totalCancelled: totalCancelled[0].totalCancelled,
-    totalPending: totalPending[0].totalPending,
-    totalShipped: totalShipped[0].totalShipped,
-    totalOrderByUser: totalOrderByUser[0].totalOrderByUser[0],
-  };
-      const len = await Dashboard.countDocuments();
-      let DashBoardData;
-      if(len == 0){
-            DashBoardData = await Dashboard.create({totalUsers,
-            totalUsers,
-            totalProducts,
-            totalOrders,
-            ...data,})
+    console.log(totalOrderByUser, "totalOrderByUser")
 
-      }
-      else{
-        const id = await Dashboard.find();
-        console.log("hello")
-        DashBoardData = await Dashboard.findByIdAndUpdate({_id:id[0]._id},{
+    const data = {
+      totalSales: totalSales[0].totalSales,
+      UtotalOrderByUser: totalOrderByUser[0].totalOrderByUser,
+      totalReviews: totalReviews[0].totalReviews,
+      totalDelivered: totalDelivered[0].totalDelivered,
+      totalCancelled: totalCancelled[0].totalCancelled,
+      totalPending: totalPending[0].totalPending,
+      totalShipped: totalShipped[0].totalShipped,
+      totalOrderByUser: totalOrderByUser[0].totalOrderByUser,
+      totalEarnings:totalEarnings[0].total
+    };
+
+    const len = await Dashboard.countDocuments();
+    let DashBoardData;
+    if (len == 0) {
+      DashBoardData = await Dashboard.create({
+        totalUsers,
+        totalUsers,
+        totalProducts,
+        totalOrders,
+        ...data,
+      });
+    } else {
+      const id = await Dashboard.find();
+      console.log("hello");
+      DashBoardData = await Dashboard.findByIdAndUpdate(
+        { _id: id[0]._id },
+        {
           totalUsers,
           totalProducts,
           totalOrders,
           ...data,
-        });
-
-
-      }
+        }
+      );
+    }
 
     return NextResponse.json(
       { success: true, message: "DashBoard Data", data: DashBoardData },
