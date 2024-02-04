@@ -240,7 +240,7 @@ export default function page() {
     {
       type: "dropdown",
       label: "select the Category Type",
-      option: ["None", ...category.map((itm) => itm.categoryName)],
+      option: ["None",...category.map((itm) =>{return {name:itm.categoryName,value:itm._id}})],
       labelClass: "absolute top-6",
       name: "promoCategory",
       register:  {...register("promoCategory", { onChange: handleCategoryTags })}
