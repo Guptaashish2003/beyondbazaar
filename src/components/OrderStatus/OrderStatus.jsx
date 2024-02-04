@@ -5,7 +5,10 @@ import SubmitButton from "../Form/SubmitButton";
 import { useRouter } from "next/navigation";
 
 const OrderStatus = ({id,title,productId,img,total,status,slug,mainId}) => {
-  const orderDetails = [{"title":"place order","value":status},{"title":"Total","value":`₹${total}`},{"title":"Order ID","value":"0348820840928904"}]
+  const orderDetails = [{"title":"place order","value":status},{"title":"Total","value":`${total.toLocaleString('en-IN', {
+    style: 'currency',
+    currency: 'INR'
+  })}`},{"title":"Order ID","value":"0348820840928904"}]
   const router = useRouter()
   return (
         <div className="flex flex-col border-y-2 border-solid mt-3 border-slate-300 p-6 max-sm:p-2 relative">

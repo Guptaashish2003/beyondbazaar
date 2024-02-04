@@ -2,6 +2,7 @@ import ProductReview from "@/backend/model/ProductReview";
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"
 import isOauth from "@/backend/middlewere/isOauth";
+import { outhRoles } from "@/backend/middlewere/outhRoles";
 
 export async function POST(request) {
     await connectDB();
@@ -9,10 +10,18 @@ export async function POST(request) {
         const userOauth = await isOauth(request);
         const { productId,title,  description, rating } = await request.json();
         console.log(productId,title,  description, rating )
+        console.log(userOauth)
+         
+        
         const reviewFind = await ProductReview.findOne({ productId, userId: userOauth._id });
-        if (reviewFind) {
-            return NextResponse.json({ success: false, message: "You have already given review to this product" }, { status: 400 });
+        //admin can do multipe review
+        if (userOauth.role !== "admin") {
+
+            if (reviewFind) {
+                return NextResponse.json({ success: false, message: "You have already given review to this product" }, { status: 400 });
+            }
         }
+       
         if (!productId || !title || !description ) {
             return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
         }

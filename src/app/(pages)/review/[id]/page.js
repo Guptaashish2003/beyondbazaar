@@ -1,7 +1,7 @@
 "use client"
 import InputBtn from '@/components/Form/InputBtn'
 import SubmitButton from '@/components/Form/SubmitButton';
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { TiStarFullOutline } from "react-icons/ti";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,10 +9,13 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { usePostDataProtected } from '@/redux/api/usePostData';
 import { useParams,useSearchParams } from 'next/navigation';
+import { useGetData } from '@/redux/api/useGetData';
 export default function page() {
+  const [reviewData,setReviewData] = useState([])
     const ratingValue = [1,2,3,4,5]
     const id = useParams()
     const searchParams = useSearchParams()
+    console.log(searchParams)
     const reviewId = searchParams.get("reviewId")
     console.log("reviewId",reviewId)
     const [rating,setRating] = useState(0)
@@ -59,12 +62,30 @@ export default function page() {
         // toast.error(res.message,{autoClose: 1000, })
       }
       
-    }  
-  return (
+    } 
+    const getData = async () =>{
+      try {
+        const response  = await useGetData(`/api/product-review/my-review/${reviewId}`)
+        console.log("response//////.......",response)
+        if(response.success){
+          setReviewData(response.data)
+          setRating(response.data.rating)
+        }
+      } catch (error) {
+        
+      }
+    }
+    useEffect(() => {
+      if(reviewId){
+        getData()
+      }
+    }, [])
+    return (
     <div className='min-h-screen flex justify-center items-center'>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col'>
             <InputBtn
              type='text' 
+             defaultValue={(reviewId)? reviewData.title : ""}
              placeholder='title of review'
              label='Title of review'
              name='title'
@@ -90,7 +111,8 @@ export default function page() {
               </div>
             <textarea
              name="description" id="" cols="30" rows="5"
-             defaultValue="review description"
+             placeholder="review description"
+             defaultValue={(reviewId)? reviewData.description : ""}
              className="my-2 px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
              {...register("description", {
               required: "description is required",

@@ -11,13 +11,13 @@ import React from "react";
 const page = async ({ params }) => {
   // notFound()
   const { slug } = params;
-  const { data, success } = await useGetData(`product/single-product/${slug}`);
+  const { data, success } = await useGetData(`/product/single-product/${slug}`);
   if (!data) {
     return notFound();
   }
 
   const reviewData = await useGetData(
-    `product-review/all-review/${data._id}`
+    `/product-review/all-review/${data._id}`
   );
   console.log(reviewData);
 
