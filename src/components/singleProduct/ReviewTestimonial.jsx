@@ -9,9 +9,6 @@ import userLogo from "@/assets/userLogo.png";
 function ReviewTestimonial({ id,reviewData }) {
   const router = useRouter();
    
-  const date = new Date(reviewData[0].createdAt);
-  console.log("da///////////////////te", date);
- 
   // console.log("reviewData", reviewData);
 //  console.log( reviewData[0].createdAt);
 
