@@ -1,45 +1,66 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { TiStarFullOutline } from "react-icons/ti";
-function ReviewTestimonial() {
+import { MdRateReview } from "react-icons/md";
+import { useRouter } from "next/navigation";
+
+function ReviewTestimonial({ id,reviewData }) {
+  const router = useRouter();
+ 
+  // console.log("reviewData", reviewData);
+//  console.log( reviewData[0].createdAt);
+
   return (
-    <section className="border-y-2 flex gap-x-2 py-4">
-      <Image
-        alt="image"
-        width={50}
-        height={50}
-        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        className="w-12 h-12 rounded-full object-fill"
-      ></Image>
-      <div >
-        <div className="flex justify-between ">
+    <div className="w-full">
+      { reviewData && reviewData.length > 0 && reviewData.map((review) => (
+      <div className="border-y-2 w-full jus flex  gap-x-2 py-4">
+        <Image
+          alt="image"
+          width={50}
+          height={50}
+          src=""
+          className="w-12 h-12 rounded-full object-fill"
+        ></Image>
+        <div className="w-full " >
+          <div className="flex w-full justify-between ">
             <span>
-          <p className="font-bold uppercase text-[">raju bhai...</p>
-          <div className="flex">
-          <TiStarFullOutline />
-          <TiStarFullOutline />
-          <TiStarFullOutline />
-          <TiStarFullOutline />
-          <TiStarFullOutline />
+              <p className="font-bold uppercase text-[">{review.userId.name}</p>
+              <div className="flex">
+                {Array.from({ length: review.rating }, (_, index) => (
+                  <TiStarFullOutline
+                    key={index}
+                    className="text-[#eab308] w-4 h-4"
+                  />
+                ))}
+              </div>
+            </span>
+            <span>{review.createdAt}
+            <MdRateReview className="relative left-[90%] cursor-pointer mt-2 w-6 h-6"
+              onClick={() => {
+                router.push(`/review/${review.productId}?reviewId=${review._id}`);
+                
+              }}
+            />
+            
+            </span>
           </div>
-            </span>
-            <span>
-                10-12-2903
-            </span>
-        </div>
-        <div className="my-4">
-          <h3 className="font-extrabold   text-lg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-            voluptas quod esse deleniti dolore excepturi perspiciatis mollitia
-            expedita, doloribus iste quae aut! Mollitia eius cumque esse
-            temporibus laudantium quas soluta.
-          </p>
+          <div className="my-4">
+            <h3 className="font-extrabold   text-lg">
+             {review.title}
+            </h3>
+            <p>
+             {review.description}
+            </p>
+          </div>
         </div>
       </div>
-    </section>
+
+      ))
+
+
+      }
+    </div>
   );
 }
 

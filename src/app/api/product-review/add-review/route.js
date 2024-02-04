@@ -9,6 +9,10 @@ export async function POST(request) {
         const userOauth = await isOauth(request);
         const { productId,title,  description, rating } = await request.json();
         console.log(productId,title,  description, rating )
+        const reviewFind = await ProductReview.findOne({ productId, userId: userOauth._id });
+        if (reviewFind) {
+            return NextResponse.json({ success: false, message: "You have already given review to this product" }, { status: 400 });
+        }
         if (!productId || !title || !description ) {
             return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
         }
