@@ -24,6 +24,7 @@ export async function POST(request) {
       productQuantity,
       productAvailable,
       productTags,
+      productCategory
     } = data;
 
     if(
@@ -33,7 +34,8 @@ export async function POST(request) {
       !productPrice ||
       !productQuantity||
       !productAvailable||
-      !productTags
+      !productTags ||
+      !productCategory
     ) {
 
       return NextResponse.json(
@@ -48,8 +50,9 @@ export async function POST(request) {
       productPrice,
       productQuantity,
       productAvailable,
+      productCategory
     });
-    return NextResponse.json({ success: true, data: product }, { status: 200 });
+    return NextResponse.json({ success: true, data: product,message:"product added" }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

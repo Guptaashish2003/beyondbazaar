@@ -26,62 +26,72 @@ export default function page() {
   const [slider,setSlider] = useState([])
   const [method,setMethod] = useState("firebase")
   const [category,setCategory] = useState([])
+  const [productCategory,setSubCategory] = useState([])
   const [categoryName,setCategoryName] = useState('')
-  const [subCategoryName,setSubCategoryName] = useState('')
+  const [SubCategoryName,setSubCategoryName] = useState('')
 
   const validationSchema = Yup.object().shape({
-    pName: Yup.string().required("Name is required"),
-    pRate: Yup.number().required("Price is required"),
-    Qty: Yup.number().required("Quantity is required"),
-    discription: Yup.string()
+    productName: Yup.string().required("Name is required"),
+    productPrice: Yup.number().required("Price is required"),
+    productQuantity: Yup.number().required("Quantity is required"),
+    productDescription: Yup.string()
       .required("Discription is required")
-      .min(20, "Description must be at least 20 characters")
-      .max(200, "Description must be at most 200 characters"),
-    category: Yup.string().required("Category is required"),
-    stockAvail: Yup.string().required("Stock Availiblity is required"),
-    categoryName: Yup.string().required("category Name is required"),
+      .min(20, "Description must be at least 20 characters"),
+    productCategory: Yup.string().required("Category is required"),
+    productAvailable: Yup.string().required("Stock Availiblity is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
 
+  // const onSubmit = async (productData) => {
+  //   productData.tag = tag;
+  //   // try {
+  //     // setLoading(true);
+  //   alert(JSON.stringify(productData));
+  //   // setLoading(true);
+  //   // try {
+  //   //   const res = await usePostDataProtected("/api/admin/product/add", productData);
+  //   //   setLoading(false);
+  //   //   if (res?.status) {
+  //   //     toast.success(res?.message);
+  //   //     reset();
+  //   //   } else {
+  //   //     toast.error(res?.message);
+  //   //   }
+
+  //   // } catch (error) {
+  //   //   console.log(error);
+  //   //   toast.error(error?.message);
+      
+  //   // }
+
+  // };
+
   const onSubmit = async (productData) => {
-    productData.tag = tag;
+    productData.productTags = tag;
+    productData.productImage = slider;
+    // alert(JSON.stringify(productData));
+    setLoading(true);
     try {
-      setLoading(true);
-      console.log(imageU)
-      const fd = new FormData();
-      fd.append("file",imageU);
-      const imageUrl = await usePostDataProtected("/api/admin/product/add-product-image", fd);
-      productData.image = imageUrl;
-      console.log("imageuploadingij",imageUrl)
+      const res = await usePostDataProtected("/api/admin/product/add-product", productData);
       setLoading(false);
+      console.log(res)
+      if (res?.success) {
+        toast.success(res?.message);
+        reset();
+      } else {
+        toast.error(res?.message);
+      }
+
     } catch (error) {
       setLoading(false);
-      console.error(error);
+      console.log(error);
+      toast.error(error?.message);
       
     }
-    console.log(productData);
-    alert(JSON.stringify(productData));
-    // setLoading(true);
-    // try {
-    //   const res = await usePostDataProtected("/api/admin/product/add", productData);
-    //   setLoading(false);
-    //   if (res?.status) {
-    //     toast.success(res?.message);
-    //     reset();
-    //   } else {
-    //     toast.error(res?.message);
-    //   }
-
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error(error?.message);
-      
-    // }
 
   };
-
   useEffect(() => {   
     const path = 'product'    
     imageU && uploadImage(path,imageU,slider,setSlider);
@@ -92,9 +102,14 @@ export default function page() {
       const res = await useGetData(
         "/api/category/all-category?limit=1000&fields=_id,categoryName"
       );
+      const data = await useGetData(
+        "/api/subcategory/all?limit=1000&fields=_id,SubCategoryName"
+      );
       console.log(res.data)
+      console.log(data)
       if (res) {
         setCategory(res.data.sort());
+        setSubCategory(data.data.sort());
       } else {
         toast.error(res?.message);
       }
@@ -133,7 +148,7 @@ export default function page() {
     try {
       const res = await usePostDataProtected(
         "/api/admin/SubCategory/add",
-        {subCategoryName,category:isCategory}
+        {SubCategoryName,category:isCategory}
       );
       if (res) {
         
@@ -154,9 +169,9 @@ export default function page() {
       type: "text",
       value: "Enter Product Name",
       id: "name",
-      name: "pName",
+      name: "productName",
       register: {
-        ...register("pName", {
+        ...register("productName", {
           required: "Name is required",
         }),
       },
@@ -165,9 +180,9 @@ export default function page() {
       type: "number",
       value: "Enter Product price",
       id: "price",
-      name: "pRate",
+      name: "productPrice",
       register: {
-        ...register("pRate", {
+        ...register("productPrice", {
           required: "Price is required",
         }),
       },
@@ -176,21 +191,21 @@ export default function page() {
       type: "number",
       value: "Enter Product Quantity",
       id: "quantity",
-      name: "Qty",
+      name: "productQuantity",
       register: {
-        ...register("Qty", {
+        ...register("productQuantity", {
           required: "Quantity is required",
         }),
       },
     },
     {
       id: "dropdown",
-      name: "stockAvail",
+      name: "productAvailable",
       type: "dropdown",
       label: "Product Available",
       option: ["true", "false"],
       register: {
-        ...register("stockAvail", {
+        ...register("productAvailable", {
           required: "stocks availiblity is required",
         }),
       },
@@ -204,7 +219,7 @@ export default function page() {
   const handleChange = (event) => {
     setMethod(event.target.value);
   };
-  console.log(slider);
+  
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="app" title="Add Product" />
@@ -242,18 +257,14 @@ export default function page() {
 
             <textarea
               id="descript"
-              name="discription"
+              name="productDescription"
               className="my-6 px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white w-11/12"
               placeholder="Enter Product Description"
-              {...register("discription", {
+              {...register("productDescription", {
                 required: "Description is required",
                 minLength: {
                   value: 20,
                   message: "Description must be at least 20 characters",
-                },
-                maxLength: {
-                  value: 200,
-                  message: "Description must be at most 200 characters",
                 },
               })}
             />
@@ -262,14 +273,13 @@ export default function page() {
               <InputBtn
                 type="dropdown"
                 id="dropdown"
-                name="category"
+                name="productCategory"
                 label="select Category"
-                option={[...category.map((itm) => itm.categoryName)]}
-                onChange={(e)=>setIsCategory(e.target.value)}
+                option={[...productCategory.map((itm) =>{return {name:itm.SubCategoryName,value:itm._id}})]}
                 labelClass={`text-xs mt-4 text-[--first-color] ml-6 absolute top-6`}
                 mainClass="w-2/5 min-w-[16] mx-2"
                 className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
-                {...register("category", {
+                {...register("productCategory", {
                   required: "Category is required",
                 })}
               />
@@ -314,7 +324,7 @@ export default function page() {
                           id="dropdown"
                           name="category"
                           label="select Category"
-                          option={[...category.map((itm) => itm.categoryName)]}
+                          option={[...category.map((itm) =>{return {name:itm.categoryName,value:itm._id}})]}
                           onChange={(e)=>setIsCategory(e.target.value)}
                           labelClass={`text-xs mt-4 text-[--first-color] ml-6 absolute top-6`}
                           mainClass="w-full"
