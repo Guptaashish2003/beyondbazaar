@@ -4,22 +4,26 @@ import React from "react";
 import { TiStarFullOutline } from "react-icons/ti";
 import { MdRateReview } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import userLogo from "@/assets/userLogo.png";
 
 function ReviewTestimonial({ id,reviewData }) {
   const router = useRouter();
+   
+  const date = new Date(reviewData[0].createdAt);
+  console.log("da///////////////////te", date);
  
   // console.log("reviewData", reviewData);
 //  console.log( reviewData[0].createdAt);
 
   return (
-    <div className="w-full">
+    <div className="w-full p-2 ">
       { reviewData && reviewData.length > 0 && reviewData.map((review) => (
       <div className="border-y-2 w-full jus flex  gap-x-2 py-4">
         <Image
           alt="image"
           width={50}
           height={50}
-          src=""
+          src={userLogo}
           className="w-12 h-12 rounded-full object-fill"
         ></Image>
         <div className="w-full " >
@@ -35,8 +39,8 @@ function ReviewTestimonial({ id,reviewData }) {
                 ))}
               </div>
             </span>
-            <span>{review.createdAt}
-            <MdRateReview className="relative left-[90%] cursor-pointer mt-2 w-6 h-6"
+            <span className="flex flex-col justify-end">{(review.createdAt).slice(0,10)}
+            <MdRateReview className="max-sm:relative max-sm:left-[75%] cursor-pointer mt-2 w-6 h-6"
               onClick={() => {
                 router.push(`/review/${review.productId}?reviewId=${review._id}`);
                 

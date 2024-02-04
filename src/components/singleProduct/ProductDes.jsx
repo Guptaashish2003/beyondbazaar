@@ -56,9 +56,11 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
        
 
         <span className="inline-block my-2 text-[--first-color] font-bold text-xl cursor-text max-lg:my-2">
-          <LiaRupeeSignSolid className="text-[--first-color] inline font-bold" />{" "}
           <p className="border-b-2 inline border-slate-400 border-solid ">
-            {price || 2999}
+            {price.toLocaleString('en-IN', {
+              style: 'currency',
+              currency: 'INR'
+            }) || 2999}
           </p>
         </span>
         <hr className="mt-8 border border-slate-200" />

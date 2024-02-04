@@ -12,7 +12,8 @@ import { TiTick } from 'react-icons/ti';
 import {  Button,SparkLine,Stacked,PieChart } from '@/components/Admin/index';
 import { useSelector, useDispatch } from 'react-redux'
 import { useGetDataProtected } from '@/redux/api/useGetData';
-import { useGetData } from '@/redux/api/useGetData';
+import Loading from '@/app/loading';
+
 
 
 
@@ -94,32 +95,38 @@ const medicalproBranding = {
 };
 function page() {
   const [data , setData] = useState([])
-  const [dataChange , setDataChange] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const { currentColor, currentMode } = useSelector((state) => state.theme);
   const dispatch = useDispatch()
 
   const getAlldashboard = async () => {
+
     try {
+      setLoading(true)
+
       const dashBoardData = await useGetDataProtected('/api/admin/dashboard')
       // const percentageCH = await useGetDataProtected('/api/admin/dashboard/calculated')
+
       if(dashBoardData.success ){
+
       setData(dashBoardData.data)
+      setLoading(false)
       // setDataChange(percentageCH.data)
     }
-
-      console.log(dashBoardData,"productData","orderData","customerData")
-
-      
     } catch (error) {
+      setLoading(false)
       console.error(error)
 
     }
   }
   useEffect(() => {
     getAlldashboard()
+
   }, [])
-  console.log("data",data,"data")
+  if (loading) {
+    return <Loading />;
+  }
   const earningData = [
    {
      icon: <MdOutlineSupervisorAccount />,
@@ -141,7 +148,10 @@ function page() {
    },
    {
      icon: <FiBarChart />,
-     amount: data.totalSales,
+     amount: (data?.totalSales)?.toLocaleString('en-IN', {
+      style: 'currency',
+      currency: 'INR'
+    }),
     //  percentage:  `${Math.floor(dataChange.totalOrderChange)} %`,
      title: 'Sales',
      iconColor: 'rgb(228, 106, 118)',
@@ -263,14 +273,20 @@ const pieData = {
 };
 
   return (
-    // top 
+    // top
     <div className="mt-24">
       <div className="flex flex-wrap lg:flex-nowrap justify-center ">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
           <div className="flex justify-between items-center">
             <div>
               <p className="font-bold text-gray-400">Earnings</p>
-              <p className="text-2xl">₹ {Math.floor(data.totalEarnings)}</p>
+              <p className="text-2xl">
+                {" "}
+                {(data?.totalEarnings)?.toLocaleString("en-IN", {
+                  style: "currency",
+                  currency: "INR",
+                })}
+              </p>
             </div>
             <button
               type="button"
@@ -291,7 +307,10 @@ const pieData = {
         </div>
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {earningData.map((item) => (
-            <div key={item.title} className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl ">
+            <div
+              key={item.title}
+              className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl "
+            >
               <button
                 type="button"
                 style={{ color: item.iconColor, backgroundColor: item.iconBg }}
@@ -310,7 +329,7 @@ const pieData = {
           ))}
         </div>
       </div>
-                      
+
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780  ">
           <div className="flex justify-between">
@@ -348,7 +367,17 @@ const pieData = {
               </div>
 
               <div className="mt-5">
-                <SparkLine key={"2"} title="bugest" label={lineLabl} currentColor={currentColor} id="line-sparkLine" height="150px" width="250px" data={lineData} color={currentColor} />
+                <SparkLine
+                  key={"2"}
+                  title="bugest"
+                  label={lineLabl}
+                  currentColor={currentColor}
+                  id="line-sparkLine"
+                  height="150px"
+                  width="250px"
+                  data={lineData}
+                  color={currentColor}
+                />
               </div>
               <div className="mt-10">
                 <Button
@@ -360,13 +389,20 @@ const pieData = {
               </div>
             </div>
             <div>
-              <Stacked key={1} currentMode={currentMode} color={currentColor} label={lineLabl} data={stackedData} width="320px" height="360px" />
+              <Stacked
+                key={1}
+                currentMode={currentMode}
+                color={currentColor}
+                label={lineLabl}
+                data={stackedData}
+                width="320px"
+                height="360px"
+              />
             </div>
           </div>
         </div>
 
         <div>
-          
           <div
             className=" rounded-2xl md:w-400 p-4 m-3"
             style={{ backgroundColor: currentColor }}
@@ -375,13 +411,23 @@ const pieData = {
               <p className="font-semibold text-white text-2xl">Earnings</p>
 
               <div>
-                <p className="text-2xl text-white font-semibold mt-8">$63,448.78</p>
+                <p className="text-2xl text-white font-semibold mt-8">
+                  $63,448.78
+                </p>
                 <p className="text-gray-200">Monthly revenue</p>
               </div>
             </div>
 
             <div className="mt-4">
-              <Stacked id="monthlyrevenue" color={currentColor}  currentColor={currentColor} data={lineData} label={lineLabl} height="200px"   width="320" />
+              <Stacked
+                id="monthlyrevenue"
+                color={currentColor}
+                currentColor={currentColor}
+                data={lineData}
+                label={lineLabl}
+                height="200px"
+                width="320"
+              />
             </div>
           </div>
 
@@ -392,16 +438,11 @@ const pieData = {
             </div>
 
             <div className="w-40">
-              <PieChart id="pie-chart" data={pieData}   height="180px" />
+              <PieChart id="pie-chart" data={pieData} height="180px" />
             </div>
           </div>
-          
         </div>
-        
       </div>
-
-
-
 
       <div className="flex gap-10 m-4 flex-wrap justify-center">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
@@ -451,7 +492,15 @@ const pieData = {
             {/* <DropDown currentMode={currentMode} /> */}
           </div>
           <div className="md:w-full overflow-auto">
-          <SparkLine key={"2"} title="bugest" label={lineLabl} currentColor={currentColor} id="lineChart" data={lineData} color={currentColor} />
+            <SparkLine
+              key={"2"}
+              title="bugest"
+              label={lineLabl}
+              currentColor={currentColor}
+              id="lineChart"
+              data={lineData}
+              color={currentColor}
+            />
           </div>
         </div>
       </div>
@@ -460,14 +509,20 @@ const pieData = {
         <div className="md:w-400 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl p-6 m-3">
           <div className="flex justify-between">
             <p className="text-xl font-semibold">Weekly Stats</p>
-            <button type="button" className="text-xl font-semibold text-gray-500">
+            <button
+              type="button"
+              className="text-xl font-semibold text-gray-500"
+            >
               <IoIosMore />
             </button>
           </div>
 
           <div className="mt-10 ">
             {weeklyStats.map((item) => (
-              <div key={item.title} className="flex justify-between mt-4 w-full">
+              <div
+                key={item.title}
+                className="flex justify-between mt-4 w-full"
+              >
                 <div className="flex gap-4">
                   <button
                     type="button"
@@ -486,15 +541,25 @@ const pieData = {
               </div>
             ))}
             <div className="mt-4">
-              <SparkLine id="last-chart" currentColor={currentColor}  color={currentColor} height="160px" type="Area" data={lineData} width="320"  />
+              <SparkLine
+                id="last-chart"
+                currentColor={currentColor}
+                color={currentColor}
+                height="160px"
+                type="Area"
+                data={lineData}
+                width="320"
+              />
             </div>
           </div>
-
         </div>
         <div className="w-400 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl p-6 m-3">
           <div className="flex justify-between">
             <p className="text-xl font-semibold">MedicalPro Branding</p>
-            <button type="button" className="text-xl font-semibold text-gray-400">
+            <button
+              type="button"
+              className="text-xl font-semibold text-gray-400"
+            >
               <IoIosMore />
             </button>
           </div>
@@ -504,7 +569,10 @@ const pieData = {
 
           <div className="flex gap-4 border-b-1 border-color mt-6">
             {medicalproBranding.data.map((item) => (
-              <div key={item.title} className="border-r-1 border-color pr-4 pb-2">
+              <div
+                key={item.title}
+                className="border-r-1 border-color pr-4 pb-2"
+              >
                 <p className="text-xs text-gray-400">{item.title}</p>
                 <p className="text-sm">{item.desc}</p>
               </div>
@@ -529,7 +597,12 @@ const pieData = {
             <p className="text-md font-semibold mb-2">Leaders</p>
             <div className="flex gap-4">
               {medicalproBranding.leaders.map((item, index) => (
-                <img key={index} className="rounded-full w-8 h-8" src={item.image} alt="" />
+                <img
+                  key={index}
+                  className="rounded-full w-8 h-8"
+                  src={item.image}
+                  alt=""
+                />
               ))}
             </div>
           </div>
@@ -549,14 +622,19 @@ const pieData = {
         <div className="w-400 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl p-6 m-3">
           <div className="flex justify-between">
             <p className="text-xl font-semibold">Daily Activities</p>
-            <button type="button" className="text-xl font-semibold text-gray-500">
+            <button
+              type="button"
+              className="text-xl font-semibold text-gray-500"
+            >
               <IoIosMore />
             </button>
           </div>
           <div className="mt-10">
             <img
               className="md:w-96 h-50 "
-              src={'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
+              src={
+                "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              }
               alt=""
             />
             <div className="mt-8">

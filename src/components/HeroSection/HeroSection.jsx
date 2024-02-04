@@ -1,9 +1,6 @@
 "use client"
 import React from 'react'
 import Image from 'next/image'
-import hero1 from "@/assets/hero1.jpg"
-import hero2 from "@/assets/hero2.jpg"
-import hero3 from "@/assets/hero3.jpg"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';

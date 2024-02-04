@@ -26,7 +26,7 @@ const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
     } 
   }
   return (
-    <section className="flex  flex-col justify-center border-solid  border-y-2  p-4 mt-16">
+    <section className="flex  flex-col justify-center border-solid  border-y-2  p-2 mt-4">
       <h1 className="font-bold text-black m-auto text-2xl mb-2">
         Order Summary
       </h1>
@@ -55,7 +55,10 @@ const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
         {props.children}
         <div className="flex justify-between font-bold py-2 text-xl">
           <p>Estimated Total</p>
-          <p>₹ {total}</p>
+          <p> {total.toLocaleString('en-IN', {
+            style: 'currency',
+            currency: 'INR'
+          })}</p>
         </div>
       </div>
 

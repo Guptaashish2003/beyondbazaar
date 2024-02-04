@@ -61,7 +61,7 @@ export async function GET(request, context) {
     }
     const allProductReview = await ProductReview.find({ productId: id })
       .populate("userId", "name ")
-      .sort("-createdAt");
+      .sort("-rating");
 
     return NextResponse.json(
       {
