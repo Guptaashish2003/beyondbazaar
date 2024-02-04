@@ -9,7 +9,9 @@ import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUpdateDataProtected } from '@/redux/api/useUpdateData';
-
+import FullScreenLoader from '@/components/FullScreenLoader/FullScreenLoader';
+import { toast } from "react-toastify";
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
 
 const columnHelper = createColumnHelper();
 
@@ -18,6 +20,7 @@ const columnHelper = createColumnHelper();
 const Orders = () => {
   const [data, setData] = useState([]);
   const [loading , setLoading] = useState(true);
+  const [fullScreenLoader , setFullScreenLoader] = useState(false);
   const [documentCount, setDoumentCount] = useState(1);
   const searchParams = useSearchParams()
   const limitValue = searchParams.get("limit")
@@ -28,19 +31,23 @@ const Orders = () => {
   
   const cancelOrder = async (id,mainId) => {
     try {
+      setFullScreenLoader(true);
       const res = await useUpdateDataProtected(`/api/admin/order/update/${mainId}`,{status:"cancelled",orderId:id});
       if(res.success){
         const val = data.map((val)=>  {
-            if(val._id === id){
-              val.status = "cancelled";
-            } 
-            return val;
-          })
-          setData(val);
+          if(val._id === id){
+            val.status = "cancelled";
+          } 
+          return val;
+        })
+        setData(val);
       }
+      setFullScreenLoader(false);
+      toast.success(res.message,{autoClose: 1000, })
       
     } catch (error) {
-      console.error("Error fetching data:", error);
+      setFullScreenLoader(false);
+      errorTostHandler(error)
       
     }
   }
@@ -111,7 +118,7 @@ const Orders = () => {
         link = `/api/admin/order/all-order?page=${page}`
       }
       const data = await useGetDataProtected(link);
-      console.log("api data",data);
+    
       if(data){
         setData(data.data);
         setDoumentCount(data.length);
@@ -120,7 +127,7 @@ const Orders = () => {
       setLoading(false);
       
     } catch (error) {
-      console.error("Error fetching data:", error);
+      errorTostHandler(error)
       setLoading(false);
       
     }
@@ -147,10 +154,13 @@ const Orders = () => {
   ];
 
   return (
+    <>
+    {fullScreenLoader && <FullScreenLoader/>}
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Orders" />
-      <Table page={page} setPage={setPage} limit={limit-1} documentCount={documentCount} search={true} label={columns} data={data} exportData={exortHead}></Table>
+      <Table page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} data={data} exportData={exortHead}></Table>
     </div>
+    </>
   );
 };
 

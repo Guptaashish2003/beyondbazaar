@@ -8,6 +8,7 @@ import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
 
 
 const columnHelper = createColumnHelper();
@@ -81,7 +82,6 @@ const PromoCodes = () => {
         setLimit(10)
       }
       const data = await useGetDataProtected(link);
-      console.log(data)
       if(data){
         setData(data.data);
         setDoumentCount(data.length);
@@ -89,7 +89,7 @@ const PromoCodes = () => {
       setLoading(false);
       
     } catch (error) {
-      console.error("Error fetching data:", error);
+      errorTostHandler(error)
       setLoading(false);
       
     }

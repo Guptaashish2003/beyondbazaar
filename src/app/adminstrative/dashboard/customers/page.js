@@ -9,6 +9,9 @@ import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
 import { useSearchParams } from 'next/navigation'
 import { useUpdateDataProtected } from '@/redux/api/useUpdateData';
+import FullScreenLoader from '@/components/FullScreenLoader/FullScreenLoader';
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
+import { toast } from "react-toastify";
 const columnHelper = createColumnHelper();
 
 
@@ -16,6 +19,7 @@ const columnHelper = createColumnHelper();
 const Customers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fullScreenLoader , setFullScreenLoader] = useState(false);
   const [documentCount, setDoumentCount] = useState(1);
   const searchParams = useSearchParams()
   
@@ -26,7 +30,9 @@ const Customers = () => {
   
   const suspend = async (id,suspend) => {
     try {
+      setFullScreenLoader(true);
       const res = await useUpdateDataProtected(`/api/admin/user/suspend/${id}`,{suspend:!suspend});
+    
       if(res.success){
         const val = data.map((val)=>  {
             if(val._id === id){
@@ -35,10 +41,13 @@ const Customers = () => {
             return val;
           })
           setData(val);
-      }
+          toast.success(res.message,{autoClose: 1000, })
+        }
+        setFullScreenLoader(false);
       
     } catch (error) {
-      console.error("Error fetching data:", error);
+      setFullScreenLoader(false);
+      errorTostHandler(error)
       
     }
   }
@@ -76,7 +85,9 @@ const Customers = () => {
     }),
     columnHelper.accessor((row) => row.address, {
       accessorKey: "address",
-      cell: (info) => info.getValue(),
+      cell: (info) => <abbr >
+        {`${info.getValue().street} ${info.getValue().city}`}
+      </abbr>,
       header: () => <span>address</span>,
     }),
     columnHelper.accessor("actions", {
@@ -94,7 +105,7 @@ const Customers = () => {
     try {
         let link;
       if(limitValue){
-        link = `/api/admin/user/all-user?limit=${limit}&page=${page}`
+        link = `/api/admin/user/all-user?limit=${limit}&page=${page}&fields=_id,name,email,phoneNo,address,role,byGoogle,createdAt`
       }else{
         
         link = `/api/admin/user/all-user?page=${page}`
@@ -103,12 +114,13 @@ const Customers = () => {
       const  data  = await useGetDataProtected(link);
       if (data) {
         setData(data.data);
-        console.log(data.data,page,limit)
+        setLimit(data.data.length);
+      
         setDoumentCount(data.length);
       }
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      errorTostHandler(error)
       setLoading(false);
     }
   };
@@ -127,12 +139,15 @@ const Customers = () => {
   ];
 
   return (
+    <>
+     {fullScreenLoader && <FullScreenLoader/>}
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Customers" />
       <div>
       <Table  page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} data={data} exportData={exortHead} ></Table>
       </div>
     </div>
+    </>
   );
 };
 

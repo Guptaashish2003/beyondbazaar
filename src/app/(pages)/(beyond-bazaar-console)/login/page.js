@@ -53,7 +53,7 @@ const Login = () => {
     } catch (error) {
       setLoading(false);
       router.push("/")
-      toast.error(user.message,{autoClose: 1000, })
+      toast.error(error.message,{autoClose: 1000, })
     }
     
 

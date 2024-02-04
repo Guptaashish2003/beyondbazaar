@@ -9,13 +9,16 @@ import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading'
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUpdateDataProtected } from '@/redux/api/useUpdateData';
-
+import { toast } from "react-toastify";
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
+import FullScreenLoader from '@/components/FullScreenLoader/FullScreenLoader';
 
 const columnHelper = createColumnHelper();
 
 const Products = () => {
   
   const [data, setData] = useState([]);
+  const [fullScreenLoader , setFullScreenLoader] = useState(false);
   const [loading, setLoading] = useState(true);
   const [documentCount, setDoumentCount] = useState(1);
   const searchParams = useSearchParams()
@@ -25,11 +28,9 @@ const Products = () => {
   const router= useRouter()
   
   const available = async (id,productAvailable) => {
-    console.log(id,productAvailable)
-  
     try {
+      setFullScreenLoader(true);
       const res = await useUpdateDataProtected(`/api/admin/product/update-product/${id}`,{productAvailable:!productAvailable});
-      console.log(res)
       if(res.success){
         const val = data.map((val)=>  {
             if(val._id === id){
@@ -37,13 +38,13 @@ const Products = () => {
             } 
             return val;
           })
-          console.log('val',val)
           setData(val);
       }
-      
+      setFullScreenLoader(false);
+      toast.success(res.message,{autoClose: 1000, })
     } catch (error) {
-      console.error("Error fetching data:", error);
-      
+      setFullScreenLoader(false);
+      errorTostHandler(error)
     }
   
   }
@@ -54,18 +55,17 @@ const Products = () => {
       cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
       header: () => <span>id</span>,
     }),
-    columnHelper.accessor((row) => row.productTags, {
-      accessorKey: "productTags",
+    columnHelper.accessor((row) => row.productName, {
+      accessorKey: "productName",
       cell: (info) => {
-        const tags = info.getValue()[0]; 
-        const firstTag = tags.split(' ').slice(0, 2).join(' '); 
+        const name = info.getValue(); 
         return (
           <div style={{ gridTemplateColumns: "3rem 2fr" }} className='grid  grid-rows-2 text-start'>
             <Image className='row-start-1 row-end-3 w-8 h-8 bg-black rounded-full object-fill' src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               width={500}
               height={500}
               alt="Picture of the author"/>
-            <abbr title={firstTag} className='text-s'>{firstTag}</abbr>
+            <abbr title={name} className='text-s max-h-5 max-w-60 overflow-clip'>{name}</abbr>
           </div>
         );
       },
@@ -108,14 +108,14 @@ const Products = () => {
         setLimit(10)
       }
       const data = await useGetDataProtected(link);
-      console.log(data.data)
+      
       if (data) {
         setData(data.data);
         setDoumentCount(data.length);
       }
       setLoading(false);
     }catch(error){
-      console.error("Error fetching data:", error);
+      errorTostHandler(error)
       setLoading(false);
     }
   }
@@ -135,6 +135,8 @@ const Products = () => {
   ];
 
   return (
+    <>
+     {fullScreenLoader && <FullScreenLoader/>}
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Page" title="Products" />
       {loading ? (
@@ -144,6 +146,7 @@ const Products = () => {
         <Table page={page} setPage={setPage} limit={limit} documentCount={documentCount} search={true} label={columns} data={data} exportData={exportHead} />
       )}
     </div>
+    </>
   );
 };
 
