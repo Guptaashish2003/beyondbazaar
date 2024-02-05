@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUserCart } from "@/redux/action/Services";
 import Loading from "@/app/loading";
 import { useRouter } from 'next/navigation'
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import Link from "next/link";
 const ShoppingCart = () => {
   const router = useRouter()
@@ -24,6 +25,7 @@ const ShoppingCart = () => {
   
   if(error){
     router.push("/")
+    errorTostHandler(error)
   }
 
   if(cart.length === 0){

@@ -18,6 +18,7 @@ export async function POST(request) {
         // if (!orderItems || !shippingInfo || !paymentInfo || !itemsPrice || !taxPrice || !shippingPrice || !totalPrice) {
         //     return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         // }
+        taxPrice = totalPrice * 0.18;
         shippingInfo = check.address.filter((val)=>{return val._id.valueOf() === shippingInfo})
         const order = await Order.create({ user:userID, orderItems, shippingInfo:shippingInfo[0], paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice,discount });
         return NextResponse.json({ success: true, message: "Order Created", data: order }, { status: 200 });

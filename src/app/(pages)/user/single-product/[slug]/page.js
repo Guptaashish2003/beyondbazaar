@@ -8,6 +8,7 @@ import { useGetData } from "@/redux/api/useGetData";
 import { notFound } from "next/navigation";
 import React from "react";
 
+
 const page = async ({ params }) => {
   const { slug } = params;
   const { data, success } = await useGetData(`/product/single-product/${slug}`);

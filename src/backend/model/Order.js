@@ -85,7 +85,7 @@ const OrderSchema = new mongoose.Schema({
         ref: 'Promocode'
     },
     // shippingPrice: { type: Number, required: true },
-    // taxPrice: { type: Number },
+    taxPrice: { type: Number },
     totalPrice: { type: Number, required: true },
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },

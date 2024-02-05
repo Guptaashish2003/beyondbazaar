@@ -5,6 +5,7 @@ import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import { Fragment, useEffect, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 const  Page = () => {
   const [events, setEvents] = useState([
@@ -29,22 +30,28 @@ const  Page = () => {
 
 
   useEffect(() => {
-    let draggableEl = document.getElementById('draggable-el');
-    if (draggableEl) {
-        const draggable = new Draggable(draggableEl, {
+      try {
+        let draggableEl = document.getElementById("draggable-el");
+        if (draggableEl) {
+          const draggable = new Draggable(draggableEl, {
             itemSelector: ".fc-event",
             eventData: function (eventEl) {
-                let title = eventEl.getAttribute("title");
-                let id = eventEl.getAttribute("data");
-                let start = eventEl.getAttribute("start");
-                return { title, id, start };
-            }
-        });
+              let title = eventEl.getAttribute("title");
+              let id = eventEl.getAttribute("data");
+              let start = eventEl.getAttribute("start");
+              return { title, id, start };
+            },
+          });
 
-        return () => {
-            draggable.destroy(); 
-        };
-    }
+          return () => {
+            draggable.destroy();
+          };
+        }
+      } catch (error) {
+        errorTostHandler(error)
+
+      }
+
 }, []);
 
 

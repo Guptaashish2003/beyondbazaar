@@ -6,6 +6,7 @@ import PriceTotal from "@/components/OrderStatus/OrderTools/PriceTotal";
 import { useGetDataProtected } from '@/redux/api/useGetData'
 import Loading from '@/app/loading'
 import { useParams, useSearchParams } from 'next/navigation';
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 const page = () => {
   const [loading,setLoading] = useState(true)
   const [order,setOrder] = useState([]);
@@ -28,7 +29,7 @@ const page = () => {
         setProduct(data[0]);
       }
     } catch (error) {
-      console.log(error)
+      errorTostHandler(error)
     }
   };
   if(loading){

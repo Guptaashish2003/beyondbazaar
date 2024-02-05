@@ -17,6 +17,8 @@ import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 const CheckOutPage = () => {
   const {id} = useParams();
   const router = useRouter()
+  const [lattitude,setLattitude] = useState();
+  const [longitude,setLongitude] = useState();
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
     name: Yup.string().required("Name is required"),
@@ -58,7 +60,15 @@ const CheckOutPage = () => {
       toast.error(error.response.data.message);
     }
   }
-  
+  const getLocation = () => {
+
+  const geo = navigator.geolocation;
+  geo.getCurrentPosition((useCoords) => {
+    setLattitude(useCoords.coords.latitude);
+    setLongitude(useCoords.coords.longitude);
+  });
+}
+console.log(lattitude,longitude,"lattitude,longitude")
   async function onSubmit(data) {
     try {
           let res;
@@ -98,6 +108,7 @@ if(loadingScreen){
                 <p className="">Time is Money Get Your Location Instant !!</p>
                 <div className="inline-flex items-end">
                   <SubmitButton
+                    onClick={getLocation}
                    className="bg-gray-500 hover:bg-black max-md:h-11 max-md:text-xs text-white font-bold py-2 px-4 rounded">
                     Get Location
                   </SubmitButton>
