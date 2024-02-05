@@ -1,16 +1,13 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
-import isOauth from "@/backend/middlewere/isOauth";
- 
+import { cookies } from 'next/headers'
 //getuserdata
 
 export async function GET(request, context) {
   await connectDB();
 
   try {
-     const check =  await isOauth(request);
-    //  console.log(check)
-    
+      cookies().delete('token')
      const response = NextResponse.json({ success:true ,message: "logout-successfully"}, { status: 200 });
      return response;
    } catch (error) {

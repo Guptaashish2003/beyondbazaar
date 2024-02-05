@@ -3,23 +3,27 @@ import React, { useEffect, useState } from 'react'
 import OrderStatus from '@/components/OrderStatus/OrderStatus'
 import { useGetDataProtected } from '@/redux/api/useGetData'
 import Loading from '@/app/loading'
+import { errorTostHandler } from '@/redux/api/errorTostHandler'
+import { useRouter } from 'next/navigation'
 
 const page =  () => {
   const [loading,setLoading] = useState(true)
   const [order,setOrder] = useState([])
+  const router = useRouter()
   useEffect(()=>{
     getData()
     setLoading(false)
   },[])
+  
   const getData = async ()=>{
     try {
       const res = await useGetDataProtected("/api/user/order/all-orders");
       if(res.success){
-     
         setOrder(res.data);
       }
     } catch (error) {
-      
+      router.back();
+      errorTostHandler(error);
     }
   }
   if(loading){

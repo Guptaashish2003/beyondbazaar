@@ -7,9 +7,9 @@ import isOauth from "@/backend/middlewere/isOauth";
 export async function POST(request) {
   await connectDB();
   try {
-    const  user  = await isOauth(request);
-        if (!user) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
         }
         const role =  outhRoles(["admin"], request);
         if (!role) {

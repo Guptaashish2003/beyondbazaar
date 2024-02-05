@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import { usePostData } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 const Login = () => {
 
@@ -33,31 +34,24 @@ const Login = () => {
 
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
-
+ 
   async function onSubmit(data) {
     try {
       setLoading(true);
     const user = await usePostData("/api/user/login", data);
     if (user.success) {
       localStorage.setItem("token",user.token);
-      router.push("/")
+      router.push("/");
       toast.success(user.message,{autoClose: 1000, })
       setLoading(false);
-    }
-    else{
-      setLoading(false);
-      router.push("/")
-      toast.error(user.message,{autoClose: 1000, })
-
     }
     } catch (error) {
       setLoading(false);
       router.push("/")
-      toast.error(error.message,{autoClose: 1000, })
+      errorTostHandler(error);
     }
     
 
-    // return false;
   }
   return (
     <section className="bg-image min-h-[--nav-space] lg:mt-[--nav-spc] max-md:items-center flex items-start justify-center">

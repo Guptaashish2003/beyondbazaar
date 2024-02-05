@@ -7,9 +7,8 @@ export async function GET(request) {
     await connectDB();
     try {
         const check = await isOauth(request);
-
         if (!check._id) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+            return check
         }
         const userID = check._id;
         const orders = await Order.find({ user: userID }).populate({

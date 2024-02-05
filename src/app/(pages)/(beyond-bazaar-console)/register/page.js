@@ -13,6 +13,7 @@ import { usePostData } from '@/redux/api/usePostData';
 import { useRouter } from 'next/navigation'
 import { toast } from "react-toastify";
 import { signIn, useSession } from "next-auth/react";
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
 const RegistrationPage = () => {
   const router = useRouter()
   const session = useSession();
@@ -37,19 +38,21 @@ const { register, handleSubmit, reset, formState } = useForm(formOptions);
 const { errors } = formState;
 
 async function onSubmit(data) {
-  setLoading(true);
-  const user = await usePostData("/api/user/register", data);
-  if (user.success) {
-    router.push("/")
-    toast.success(user.message,{autoClose: 5000, })
+  try {
+    setLoading(true);
+    const user = await usePostData("/api/user/register", data);
+    if (user.success) {
+      router.push("/")
+      toast.success(user.message,{autoClose: 5000, })
+      setLoading(false);
+    }
+    
+  } catch (error) {
     setLoading(false);
+    errorTostHandler(error);
+    
   }
-  else{
-    router.push("/")
-    toast.error(user.message,{autoClose: 1000, })
-    setLoading(false);
-
-  }
+  
 }
 
   return (

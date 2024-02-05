@@ -8,9 +8,9 @@ export async function POST(request, context) {
   await connectDB();
 
   try {
-    const  check  = await isOauth(request);
+    const check = await isOauth(request);
     if (!check._id) {
-        return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        return check
     }
     const data = await request.json();
     const {name,email,street,city,state,pincode,country,number,District} = data

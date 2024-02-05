@@ -8,10 +8,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { usePostDataProtected } from '@/redux/api/usePostData';
-import { useParams,useSearchParams } from 'next/navigation';
+import { useParams,useRouter,useSearchParams } from 'next/navigation';
 import { useGetData } from '@/redux/api/useGetData';
+import { toast } from "react-toastify";
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
 export default function page() {
   const [reviewData,setReviewData] = useState([])
+    const [loading,setLoading] = useState(false);
+    const router = useRouter()
     const ratingValue = [1,2,3,4,5]
     const id = useParams()
     const searchParams = useSearchParams()
@@ -31,48 +35,41 @@ export default function page() {
     const { errors } = formState;
   
     async function onSubmit(data) {
-      alert(JSON.stringify(data));
-      console.log(id)
       try {
-        // setLoading(true);
+        setLoading(true);
         if(reviewId){
           const res = await usePostDataProtected(`/api/product-review/update/${reviewId}`, {...data,productId:id.id,rating});
-          console.log(res);
           if (res.success) {
-          
-            // toast.success(user.message,{autoClose: 1000, })
-            // setLoading(false);
+            toast.success(user.message,{autoClose: 1000, })
           }
         }
         else{
           const res = await usePostDataProtected("/api/product-review/add-review", {...data,productId:id.id,rating});
-          console.log(res);
           if (res.success) {
-          
-            // toast.success(user.message,{autoClose: 1000, })
-            // setLoading(false);
+            toast.success(user.message,{autoClose: 1000, })
           }
         }
-     
-
+        
+        
       } catch (error) {
+        setLoading(false);
         console.log(error)
-        // setLoading(false);
-        // router.push("/")
-        // toast.error(res.message,{autoClose: 1000, })
+        setLoading(false);
+        router.push("/")
+        errorTostHandler(error);
       }
       
     } 
     const getData = async () =>{
       try {
         const response  = await useGetData(`/api/product-review/my-review/${reviewId}`)
-        console.log("response//////.......",response)
         if(response.success){
           setReviewData(response.data)
           setRating(response.data.rating)
         }
       } catch (error) {
-        
+        router.back()
+        errorTostHandler(error);
       }
     }
     useEffect(() => {

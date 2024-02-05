@@ -11,36 +11,27 @@ export async function POST(request,response) {
     const { email, password } = data;
     if (!email && !password) {
       return new NextResponse({
-        status: 400,
         message: "Invalid email or password",
-      });
+      },{status: 400});
     }
     const user = await User.findOne({ email: email }).select("+password");
     if (!user) {
-      
       return  NextResponse.json({
-        status: 400,
         message: "Invalid email or password",
-      });
+      },{status: 400});
     }
-    console.log(data);
     const PasswordMatch = await user.matchPassword(password);
     if (!PasswordMatch) {
       return NextResponse.json({
-        status: 400,
         message: "Invalid email or password",
-      });
+      },{status: 400});
     }
     // return NextResponse.json({name:"nnnn",data: "user"}, { status: 200});
     return await jwtToken(user, 200, "Login Success", request);
-
-
     
   } catch (error) {
-    console.log(error);
     return  NextResponse.json({
-      status: 400,
       message: error.message,
-    });
+    },{status: 400});
   }
 }

@@ -10,14 +10,13 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useRouter,useParams  } from "next/navigation";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useUpdateData } from "@/redux/api/useUpdateData";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 const page = () => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  // const id = router.query.id;
-  console.log(params.id)
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
@@ -43,14 +42,12 @@ const page = () => {
       });    
       if (updateData.success) {
         toast(updateData.message);
-      } else {
-        toast.error(updateData.message);
-      }
+      } 
       setLoading(false);
       router.push("/login");
     } catch (error) {
       router.push("/login");
-      toast(error.message);
+      errorTostHandler(error);
     }
    
   }

@@ -8,20 +8,13 @@ import isOauth from "@/backend/middlewere/isOauth";
 export async function PUT(request) {
     await connectDB();
     try {
-        const check =  await isOauth(request);
+        const check = await isOauth(request);
         if (!check._id) {
-            return NextResponse.json(
-              { success: false, message: "User Not Found" },
-              { status: 400 }
-            );
-          }
+            return check
+        }
         const data = await request.json();
-        const {name, email, password,address,phoneNo} = data;
-        // if (!name || !email || !password || !address || !phoneNo) {
-        //     return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
-        // }
-        const user = await User.findByIdAndUpdate(check._id, {name, email, password,address,phoneNo});
-
+        const {name, email,address,phoneNo} = data;
+        const user = await User.findByIdAndUpdate(check._id, {name, email,address,phoneNo});
 
         return NextResponse.json({ success:true ,message: "Updated-successfully",data:user }, { status: 200 });
         

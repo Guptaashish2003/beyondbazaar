@@ -5,24 +5,19 @@ import {sendEmail} from "@/backend/utils/sendEmail";
 import ResetPassword from "@/components/EmailTemplate/ResetPassword";
 
 export async function POST(request){
-    // console.log("jkfsdhjfhsdjkhfkd")
     await connectDB();
-
     try {
-        
         const data = await request.json();
         const {email} = data;
-        // const user = await User.findById(_id);
         if ( !email ) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
         const user = await User.findOne( {email});
-        
         if (!user) {
             return NextResponse.json({
-                status: 400,
+                success: false,
                 message: "email not found",
-            });
+            },{status: 400});
         }
         const verificationToken =  user.getResetPasswordToken();
         await user.save({ validateBeforeSave: false });

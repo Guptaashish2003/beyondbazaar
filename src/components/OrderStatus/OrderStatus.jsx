@@ -24,7 +24,7 @@ const OrderStatus = ({id,title,productId,img,total,status,slug,mainId}) => {
             </div>
             <div className="flex justify-between flex-wrap  p-4 w-full max-sm:flex-col max-sm:items-start max-sm:gap-y-2">
               <div>
-                <p className="font-bold text-lg max-w-xl">{title}</p>
+                <p className="font-bold text-lg max-w-xl max-h-16 max-sm:text-sm overflow-hidden text-ellipsis">{title}</p>
                 <SubmitButton onClick={()=>router.push(`/checkout/${slug}?qty=1`)} value="Buy it again" className='m-2 px-4 h-8 bg-[#333] text-white rounded-md'></SubmitButton>
                 <SubmitButton onClick={()=>router.push(`/user/single-product/${slug}`)} value="view your item" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
 
@@ -32,9 +32,9 @@ const OrderStatus = ({id,title,productId,img,total,status,slug,mainId}) => {
               <SubmitButton onClick={()=>router.push(`/review/${productId}`)} value="Write a Product Review" className='px-4 h-8 bg-[#333] text-white rounded-md'></SubmitButton>
             </div>
           </div>
-          <div className="flex justify-end flex-wrap gap-x-6 ">
+          <div className="flex justify-end flex-wrap gap-x-6 max-sm:justify-center">
             {orderDetails.map((data,index)=><div key={index}>
-              <p className="text-[#333] uppercase">{data.title}</p>
+              <p className="text-[#333] uppercase ">{data.title}</p>
               <p className="capitalize">{data.value}</p>
             </div>)}
             <SubmitButton onClick={()=>router.push(`/user/order-status/${mainId}?orderId=${id}`)} value="view Order Details" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>

@@ -8,13 +8,10 @@ export async function GET(request) {
   await connectDB();
 
   try {
-     const check =  await isOauth(request); 
-      if (!check._id) {
-        return NextResponse.json(
-          { success: false, message: "User Not Found" },
-          { status: 400 }
-        );
-      }
+    const check = await isOauth(request);
+    if (!check._id) {
+        return check
+    }
       const addres = request.user.address;
      return NextResponse.json({ success:true ,message: "all address",data:addres }, { status: 200 });
       

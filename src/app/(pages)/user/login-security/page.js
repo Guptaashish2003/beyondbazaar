@@ -12,6 +12,7 @@ import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 const page = () => {
   const router = useRouter();
@@ -80,16 +81,16 @@ const page = () => {
       }
       
       setLoading(false);
+      router.back();
     } catch (error) {
-      console.error("Error in change Name", error);
-      toast.error(error.message);
       setLoading(false);
+      router.back();
+      errorTostHandler(error);
     }
   };
   const changeNumber = async (data) => {
     try {
       setLoading(true);
-      console.log(data);
       const user = await useUpdateDataProtected("/api/user/update/", {phoneNo: data.number});
       if (user.success) {
         setVerificationNumber(true);
@@ -98,14 +99,15 @@ const page = () => {
       setLoading(false);
       
     } catch (error) {
-      console.error("Error in change Number", error);
-      toast.error(error.message);
       setLoading(false);
+      router.back();
+      errorTostHandler(error);
     }
   };
   
   const changePassword = async (data) => {
     try {
+
       setLoading(true);
       const user = await useUpdateDataProtected(
         "/api/user/update-password",
@@ -116,10 +118,11 @@ const page = () => {
       }
       
       setLoading(false);
+      router.back();
     } catch (error) {
-      console.error("Error in changePassword:", error);
-      toast.error(error.message);
       setLoading(false);
+      router.back();
+      errorTostHandler(error);
     }
   };
 

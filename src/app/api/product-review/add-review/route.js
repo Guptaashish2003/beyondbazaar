@@ -7,15 +7,15 @@ import { outhRoles } from "@/backend/middlewere/outhRoles";
 export async function POST(request) {
     await connectDB();
     try {
-        const userOauth = await isOauth(request);
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
+        }
         const { productId,title,  description, rating } = await request.json();
-        console.log(productId,title,  description, rating )
-        console.log(userOauth)
-         
         
-        const reviewFind = await ProductReview.findOne({ productId, userId: userOauth._id });
+        const reviewFind = await ProductReview.findOne({ productId, userId: check._id });
         //admin can do multipe review
-        if (userOauth.role !== "admin") {
+        if (check.role !== "admin") {
 
             if (reviewFind) {
                 return NextResponse.json({ success: false, message: "You have already given review to this product" }, { status: 400 });
@@ -25,9 +25,9 @@ export async function POST(request) {
         if (!productId || !title || !description ) {
             return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
         }
-        const userId = userOauth._id
+        const userId = check._id
 
-        if (!userOauth) {
+        if (!check) {
             return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
         }
         

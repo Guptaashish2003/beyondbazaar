@@ -8,9 +8,9 @@ export async function DELETE(request, context) {
   await connectDB();
 
   try {
-    const  check  = await isOauth(request);
+    const check = await isOauth(request);
     if (!check._id) {
-        return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        return check
     }
     const id = context.params.id;
     const user = await User.findById(check._id);

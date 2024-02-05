@@ -17,9 +17,15 @@ const ShoppingCart = () => {
     dispatch(getUserCart())
        
   },[])
+  
   if (loading) {
     return Loading();
   }
+  
+  if(error){
+    router.push("/")
+  }
+
   if(cart.length === 0){
     return(
       <div className="h-screen flex justify-center items-center max-md:flex-col min-h-screen">
@@ -131,10 +137,6 @@ const ShoppingCart = () => {
       </div>
     );
   }
-  if(error){
-    router.push("/")
-  }
-  console.log(cart)
   return (
     <>
       <section className="flex flex-col lg:mt-[--nav-spc] mt-12">

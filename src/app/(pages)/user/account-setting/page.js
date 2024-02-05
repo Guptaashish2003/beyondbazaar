@@ -23,11 +23,14 @@ import { usePostData } from "@/redux/api/usePostData";
 import {useDispatch, useSelector} from "react-redux";
 import {verify} from "@/redux/action/loginSecuritySlice"; 
 import { getUsers } from "@/redux/action/userService";
+import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
+
 const Page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const session = useSession();
   const [Loader,setLoader] = useState();
+  const [fullScreenLoader , setFullScreenLoader] = useState(false);
   const [verification,setVerification] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -58,19 +61,21 @@ const Page = () => {
 
   const handleSignOut = async () => {
     try {
+      setFullScreenLoader(true);
       const user = await useGetDataProtected("/api/user/sign-out");
       if (session.status === 'authenticated') {
         await signOut({ redirect: false });
       }
-      console.log(user)
       if (user.success) {
         localStorage.removeItem("token");
         toast.success(user.message);
       }
+      setFullScreenLoader(false);
       router.push("/");
     } catch (error) {
+      setFullScreenLoader(false);
       router.push("/");
-      toast.error(error.message);
+      errorTostHandler(error);
     }
   };
   const verifyPassword = async (data) => {
@@ -78,20 +83,22 @@ const Page = () => {
       setLoader(true);
     const user = await usePostData("/api/user/login", data);
     if (user.success) {
-      setLoader(false);
       setVerification(true);
       dispatch(verify(true));
     }
-
+    
+    setLoader(false);
     } catch (error) {
       setLoader(false);
       router.push("/")
-      toast.error("verification fail",{autoClose: 1000, })
+      errorTostHandler(error);
+      
     }
   }
 
   return (
     <>
+    {fullScreenLoader && <FullScreenLoader/>}
     <div className="min-h-screen flex justify-center items-center">
       <div className="   w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto">
 

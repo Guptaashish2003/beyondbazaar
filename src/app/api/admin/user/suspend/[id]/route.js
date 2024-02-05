@@ -9,9 +9,9 @@ import { NextResponse } from "next/server";
 export  async function PUT(req,context) {
     await connectDB();
     try {
-        const admin = await isOauth(req);
-        if (!admin) {
-            return  NextResponse.json({ success: false, message: "User Not Found" },{status: 404});
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
         }
         const role = outhRoles(["admin"], req);
         if (!role) {

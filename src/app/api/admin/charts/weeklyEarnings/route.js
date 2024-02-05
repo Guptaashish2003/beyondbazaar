@@ -8,14 +8,10 @@ export async function POST(request) {
     console.log("first")
     await connectDB();
     try {
-        const user = await isOauth(request);
-        // console.log(user, "user")
-        if (!user) {
-          return NextResponse.json(
-            { success: false, message: "User Not Found" },
-            { status: 400 }
-          );
-        }
+      const check = await isOauth(request);
+      if (!check._id) {
+          return check
+      }
         // console.log(request, "request")
         const role = outhRoles(["admin"], request);
 

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { LiaRupeeSignSolid } from "react-icons/lia";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiFastForward } from "react-icons/fi";
 import SocialMedial from "@/components/SocialMediaIcons/SocialMedial";
@@ -8,9 +7,8 @@ import SubmitButton from "../Form/SubmitButton";
 import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
-import { useGetDataProtected } from "@/redux/api/useGetData";
-import { createOrder } from "@/redux/action/ordersServices";
 import { useRouter } from "next/navigation";
+
 const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
   const router = useRouter();
   const [productCount,setProductCount] = useState(1)
@@ -38,7 +36,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
   
   const  addToCartProduct = async () => {
     setLoading(true);
-    const {meta} = await dispatch(addToCart({productID:id,productQuantity:productCount}))
+    dispatch(addToCart({productID:id,productQuantity:productCount}))
     setLoading(false);
   };
   const orderNow = async () => {
@@ -47,9 +45,9 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
       <div className="  my-2 text-bold mr-4">
-        <p className="title max-lg:text-xl text-2xl capitalize my-1 font-bold max-lg:text-center">
+        <h1 className="title max-lg:text-xl text-2xl capitalize my-1 font-bold max-lg:text-center">
           {title || 'Samsung curved display'}
-        </p>
+        </h1>
         <p className="para text-start text-base ">
           {discription || "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odioerror ullam optio quod corporis"}
         </p>
@@ -83,7 +81,6 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
         value={"Add To Cart"}
         onClick={addToCartProduct}
         >
-        {" "}
         <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />
       </SubmitButton>
       <SubmitButton
@@ -92,7 +89,6 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
         onClick={orderNow}
         
         >
-        {" "}
         <FiFastForward className="arrowAnime w-6 h-auto" />
       </SubmitButton>
       

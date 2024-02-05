@@ -37,8 +37,9 @@ useEffect(() => {
     
 }, [lastScrollY]);
 
-if (session.status === 'authenticated' && !localStorage.getItem("token")) {
+if (session.status === 'authenticated' && localStorage.getItem("token") !== session.data.token) {
   localStorage.setItem("token",session.data.token)
+
 }
 
   const dropdownItems = [

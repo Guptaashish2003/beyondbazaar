@@ -6,6 +6,10 @@ import { NextResponse } from "next/server";
 export async function GET(reqest, context) {
   await ConnectDB();
   try {
+    const check = await isOauth(request);
+    if (!check._id) {
+        return check
+    }
     const id = await context.params.id;
     const review = await ProductReview.findById(id)
     if (!review) {

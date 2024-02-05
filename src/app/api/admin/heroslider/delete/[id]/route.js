@@ -11,14 +11,14 @@ import { deleteImage } from "@/backend/utils/deleteImage";
 export async function DELETE(request,context) {
     await connectDB();
     try {
-        // const  user  = await isOauth(request);
-        // if (!user) {
-        //     return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
-        // }
-        // const role =  outhRoles(["admin"], request);
-        // if (!role) {
-        //     return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
-        // }
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
+        }
+        const role =  outhRoles(["admin"], request);
+        if (!role) {
+            return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
+        }
         const id = context.params.id;
         const img = await heroSlide.findById(id);
     

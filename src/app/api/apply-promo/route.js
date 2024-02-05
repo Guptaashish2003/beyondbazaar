@@ -18,9 +18,9 @@ function calculateDiscount(promoCodeType,discountValue, totalOrderValue,maxDisco
 export async function POST(request) {
     await connectDB();
     try {
-        const  userOauth  = await isOauth(request);
-        if (!userOauth) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
         }
         const { promocode,orderItems,totalPrice,category } = await request.json();
         // if (!promocode || !orderItems  ) {
@@ -37,7 +37,7 @@ export async function POST(request) {
           if (!promocodeDoc ) {
               return NextResponse.json({ success: false, message: "Invalid or inactive promo code" }, { status: 404 });
             }
-            if (promocodeDoc.userRestriction.includes(userOauth._id)) {
+            if (promocodeDoc.userRestriction.includes(check._id)) {
               return NextResponse.json({ success: false, message: "User not eligible for this promo code" }, { status: 403 });
             }
             let validProducts;

@@ -1,27 +1,34 @@
 
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useDeleteData } from "@/redux/api/useDeleteData";
 import { toast } from "react-toastify";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
+import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
 
 const Addresses = ({id,setAddress,name,email,street,state,city,country,district,pincode,number,withbtn=true,className}) => {
+  const [fullScreenLoader , setFullScreenLoader] = useState(false);
   const deleteAdrress = async ()=>{
     try {
+      setFullScreenLoader(true);
       const res = await useDeleteData(`/api/user/address/delete/${id}`)
       if (res.success) {
         setAddress(res.data)
         toast.success(res.message);
       }
+      setFullScreenLoader(false);
     } catch (error) {
-      console.log(error)
-      toast.error(error.response.data.message);
+      setFullScreenLoader(false);
+      errorTostHandler(error);
     }
   }
    
   return (
+    <>
+    {fullScreenLoader && <FullScreenLoader/>}
     <div className={`flex flex-col justify-evenly   items-center rounded-sm cursor-pointer  text-center -2 ring-offset-2 ring-2 ring-gray-500 ${className}`}>
       <div className="w-full">
         <Image
@@ -50,6 +57,7 @@ const Addresses = ({id,setAddress,name,email,street,state,city,country,district,
         </div>:""}
       </div>
     </div>
+    </>
   );
 };
 

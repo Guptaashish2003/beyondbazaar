@@ -8,9 +8,9 @@ export async function GET(request, context) {
   await connectDB();
 
   try {
-     const check =  await isOauth(request);
-    if(!check){
-        return NextResponse.json({ success:true ,message: "user not found" }, { status: 400 });
+    const check = await isOauth(request);
+    if (!check._id) {
+        return check
     }
     cookies().delete('token')
      return NextResponse.json({ success:true ,message: "logout-successfully" }, { status: 200 });

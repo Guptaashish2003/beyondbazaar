@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB";
 import User from "@/backend/model/User";
-import sendEmail from "@/backend/utils/sendEmail";
+import {sendEmail} from "@/backend/utils/sendEmail";
 import EmailTemplate from "@/components/EmailTemplate/EmailTemplate";
 export async function POST(request) {
   await connectDB();
-
   try {
     const data = await request.json();
     const { email, password, name } = data;
@@ -20,24 +19,10 @@ export async function POST(request) {
 
     if (isExist !== null) {
         return NextResponse.json({
-            status: 400,
+            success:false,
             message: "user already exists",
-        });
+        },{status: 404});
     }
-
-    // if (!isMatch(password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")) {
-    //     return new NextResponse({
-    //       status: 400,
-    //       statusText: "Invalid password",
-    //     });
-    // }
-    // if(!isMatch(email, "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")) {
-    //     return new NextResponse({
-    //       status: 400,
-    //       statusText: "Invalid email",
-    //     });
-    // }
-
     const user = await User.create({
       email,
       password,

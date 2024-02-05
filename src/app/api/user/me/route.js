@@ -9,13 +9,9 @@ export async function GET(request, context) {
 
   try {
      const check =  await isOauth(request);
-    //  console.log(check)
       const user = request.user;    
       if (!check._id) {
-        return NextResponse.json(
-          { success: false, message: "User Not Found" },
-          { status: 400 }
-        );
+          return check
       }
      return NextResponse.json({ success:true ,message: "get-login-data-successfully",data:user }, { status: 200 });
       

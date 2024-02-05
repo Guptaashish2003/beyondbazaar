@@ -12,9 +12,9 @@ export async function GET(request) {
         if (!promocode || !user || !product || !category) {
             return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
         }
-        const  userOauth  = await isOauth(request);
-        if (!userOauth) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
         }
         const role =  outhRoles(["user"], request);
         if (!role) {

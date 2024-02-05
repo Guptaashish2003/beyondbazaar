@@ -17,9 +17,7 @@ export async function PUT(request,context){
             if (!user) {
                 return NextResponse.json({success:false, message:"Invalid token"},{status:400}) 
             }
-            console.log(user);
-            console.log(data.password);
-            
+
             user.password = data.password;
             user.resetPasswordToken = undefined;
             user.resetPasswordExpires = undefined;

@@ -8,9 +8,9 @@ export async function POST(request, context) {
     await connectDB();
     try {
         const reviewId = await context.params.id;
-        const user = await isOauth(request);
-        if (!user) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
         }
         const { productId,  title, description ,rating } = await request.json();
         if(!reviewId || !productId || !title || !description || !rating){

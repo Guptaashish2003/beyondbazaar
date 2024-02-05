@@ -8,13 +8,9 @@ import Apifeatures from "@/backend/utils/apiFeatures";
 export async function GET(request) {
     await connectDB();
     try {
-        const  user  = await isOauth(request);
-        if(user.role ==undefined){
-            return NextResponse.json({ success: false, message: "token is expired login again" }, { status: 400 });
-        }
-       
-        if (!user) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+        const check = await isOauth(request);
+        if (!check._id) {
+            return check
         }
         const role =  outhRoles(["admin"], request);
 

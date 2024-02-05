@@ -5,6 +5,7 @@ import { useGetData } from '@/redux/api/useGetData'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
  function page() {
     const {id}= useParams();
     const router = useRouter()
@@ -22,12 +23,13 @@ import { useRouter } from 'next/navigation'
       if (data.success) {
         setIsVerify(true);
       }
-      else{
         setIsVerify(false); 
-      }
+
       } catch (error) {
         setLoading(false);
         setIsVerify(false); 
+        router.push('/')
+        errorTostHandler(error);
         
       }
     }

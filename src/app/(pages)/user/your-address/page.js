@@ -5,6 +5,7 @@ import Addresses from "@/components/Adresses/Addresses";
 import Link from "next/link";
 import { useGetDataProtected } from "@/redux/api/useGetData";
 import Loading from "@/app/loading";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 const page =  () => {
   const [address,setAddress] = useState([])
@@ -12,6 +13,7 @@ const page =  () => {
   useEffect(()=>{
     getAddress()
   },[])
+  
   const getAddress = async () => {
     try {
       const res = await useGetDataProtected("/api/user/address/me");
@@ -21,17 +23,14 @@ const page =  () => {
       }
     } catch (error) {
       setLoading(false);
+      errorTostHandler(error);
 
-      console.log(error)
     }
-  
-    
   }
   if(loading){
     return(<Loading/>);
   }
   
-  console.log(address)
   return (
     <div className="mt-40  max-lg:mt-24 mx-auto w-3/4">
       <h1 className=" text-gray-900 my-8 text-2xl font-semibold">Your Addresses</h1>

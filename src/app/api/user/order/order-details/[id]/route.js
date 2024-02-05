@@ -8,7 +8,7 @@ export async function GET(request,context) {
     try {
         const check = await isOauth(request);
         if (!check._id) {
-            return NextResponse.json({ success: false, message: "User Not Found" }, { status: 400 });
+            return check
         }
         const id = context.params.id;
         if(!id){

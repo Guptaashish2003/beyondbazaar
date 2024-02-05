@@ -5,31 +5,49 @@ import { AiOutlineHeart } from "react-icons/ai";
 import productImg from "@/assets/productImag1.jpg";
 import Image from "next/image";
 import { removeFromCart, updateCartItemQty } from "@/redux/action/Services";
-import { useDispatch } from "react-redux";
+import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
+import { toast } from 'react-toastify';
 
 const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
-
   const [productQty, setProductQty] = useState(quantity)
+  const [fullScreenLoader , setFullScreenLoader] = useState(false);
+  
   useEffect(()=>{
   },[cart])
+
   const deleteProduct = () => {
+    setFullScreenLoader(true)
     dispatch(removeFromCart(id))
   }
+
   const updatequantity = (action) => {
+    setFullScreenLoader(true)
     if (action) {
       if (productQty < stock){
-        dispatch(updateCartItemQty({cartItemId:id,productQuantity:productQty+1}));
-        setProductQty(productQty+1);
+        dispatch(updateCartItemQty({cartItemId:id,productQuantity:productQty+1})).then(() => {
+          setFullScreenLoader(false)
+          setProductQty(productQty+1);
+        })
+      }else{
+        toast.warn("out of stock quantity")
       }
     }
     else{
       if (productQty > 1){ 
-        dispatch(updateCartItemQty({cartItemId:id,productQuantity:productQty-1}));
-        setProductQty(productQty-1);
+        dispatch(updateCartItemQty({cartItemId:id,productQuantity:productQty-1})).then(() => {
+          setProductQty(productQty-1);
+          setFullScreenLoader(false)
+        })
+      }else{
+        toast.warn("out of stock quantity")
       }
     }
+    
   }
+
   return (
+    <>
+    {fullScreenLoader && <FullScreenLoader/>}
     <div className="flex flex-col border-y-2 border-solid mt-3 border-slate-300 p-6 max-sm:p-2 relative">
       <div className="flex justify-center gap-1 items-start max-sm:items-center">
         <div className="w-32 h-full my-auto">
@@ -106,6 +124,7 @@ const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
         <AiOutlineHeart className="hover:scale-125 duration-300 cursor-pointer transition-colors hover:text-red-700 max-sm:absolute max-sm:top-6 max-sm:right-4 text-xl" />
       </div>
     </div>
+    </>
   );
 };
 

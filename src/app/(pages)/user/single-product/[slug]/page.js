@@ -9,17 +9,14 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 const page = async ({ params }) => {
-  // notFound()
   const { slug } = params;
   const { data, success } = await useGetData(`/product/single-product/${slug}`);
   if (!data) {
     return notFound();
   }
-
   const reviewData = await useGetData(
     `/product-review/all-review/${data._id}`
   );
-  console.log(reviewData);
 
   return (
     <>
@@ -36,10 +33,10 @@ const page = async ({ params }) => {
         />
       </div>
       <ProductDetails />
-      <section className="mt-10 flex  max-w-[90%] max-md:flex-col mx-auto gap-x-4">
+     { reviewData.data.length > 0 && <section className="mt-10 flex  max-w-[90%] max-md:flex-col mx-auto gap-x-4">
         <ProductReview className="mb-4" reviewData={reviewData} />
         <ReviewTestimonial id={data._id} reviewData={reviewData.data} />
-      </section>
+      </section>}
     </>
   );
 };
