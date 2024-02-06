@@ -13,6 +13,7 @@ import Loading from "@/app/loading";
 import { useGetDataProtected } from "@/redux/api/useGetData";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
+import GeoCoding from "@/backend/utils/bigDataGeo";
 
 
 const CheckOutPage = () => {
@@ -20,6 +21,7 @@ const CheckOutPage = () => {
   const router = useRouter()
   const [lattitude,setLattitude] = useState();
   const [longitude,setLongitude] = useState();
+  const [adress,setAdress] = useState();
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
     name: Yup.string().required("Name is required"),
@@ -43,7 +45,22 @@ const CheckOutPage = () => {
   const { errors } = formState;
   const [loading,setLoading] = useState(false);
   const [loadingScreen,setLoadingScreen] = useState(false);
-  useEffect(()=>{setUserData()},[])
+  const GetGoeCoding = async () => {
+    try {
+      const res = await GeoCoding( lattitude,longitude)
+      if (res.success) {
+        setAdress(res);
+        toast.success(res.message);
+  
+      }
+    } catch (error) {
+      errorTostHandler(error);
+    }
+  
+  }
+  useEffect(()=>{setUserData();
+  },[])
+  console.log(adress,"adress" )
   const setUserData = async () => {
     try {
       if (id !== "add-new-address") {
@@ -69,6 +86,9 @@ const CheckOutPage = () => {
     setLongitude(useCoords.coords.longitude);
   });
 }
+
+
+
 console.log(lattitude,longitude,"lattitude,longitude")
   async function onSubmit(data) {
     try {

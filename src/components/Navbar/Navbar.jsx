@@ -135,7 +135,7 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
        <li>
          
         { <span onClick={userProfile} className="nav__link  mobileUser">
-           {localStorage.getItem('token') ?"Settings":"Login 😉"}
+           {/* {localStorage.getItem('token') ?"Settings":"Login 😉"} */}
          </span>}
        </li>
       </ul>
