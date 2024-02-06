@@ -26,7 +26,7 @@ function HeroSection({sliderImage,sliderHieght,className,...props}) {
           height={600}
           style={{objectFit: "cover" }}
           alt="hero image"
-          className={`w-full cursor-pointer sliderHieght ${sliderHieght}`}
+          className={`w-full cursor-pointer  ${sliderHieght}`}
         />
       </SwiperSlide>)}
       

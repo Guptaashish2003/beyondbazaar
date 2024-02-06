@@ -74,6 +74,7 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
     }else{
       router.push("/user/account-setting")
     }
+    showMenu()
   }
 
   
@@ -125,7 +126,7 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
       <ul className="nav__list">
         <li>
          
-          <Link href="/" className="nav__link">
+          <Link href="/" className="nav__link" onClick={showMenu}>
             Home
           </Link>
         </li>
@@ -133,8 +134,8 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
        { dropdownItems.map((item,index)=><Dropdown key={index}  title={item.title} dropLink={item.dropLink}/>)}
        <li>
          
-        { <span onClick={userProfile} className="nav__link nav__toggle">
-           {localStorage.getItem('token') ?"settings":"Login 😉"}
+        { <span onClick={userProfile} className="nav__link  mobileUser">
+           {localStorage.getItem('token') ?"Settings":"Login 😉"}
          </span>}
        </li>
       </ul>

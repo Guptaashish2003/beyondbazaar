@@ -112,6 +112,10 @@ a {
   right: 2rem;
   z-index: 3000000;
 }
+.mobileUser{
+  visibility: visible;
+
+}
 .navMargin{
   margin-top: var(--header-height);
 }
@@ -317,6 +321,10 @@ a {
     height: 10rem;
   }
   .mobileCart{
+    visibility: hidden;
+
+  }
+  .mobileUser{
     visibility: hidden;
 
   }
