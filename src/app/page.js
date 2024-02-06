@@ -11,16 +11,16 @@ import productImgHover from "@/assets/proImg1Hover.jpg"
 import { useGetData } from '@/redux/api/useGetData'
 
 export default async function Home(){
-  const {data} = await useGetData("/product/all-product")
+  const {data} = await useGetData("/product/all-product?limit=12")
   const hero = await useGetData("/heroslides")
   const img = hero.data.map((itm)=>itm.heroImage);
   return (
     <>
-    <Herosection sliderImage={img}/>
+    <Herosection  sliderImage={img} className="navMargin " sliderHieght=''/>
     <Category/>
     <h2 className='p-8 text-5xl max-md:text-3xl font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
-      {data?.map((data)=><Productcard id={data._id} addToCartBtn={true} key={data._id} animation={true} img={data?.productImage[0]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
+      {data?.map((data)=><Productcard animation={true}  id={data._id}  key={data._id}  img={data?.productImage[0]} hover={data?.productImage[1]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
 
       <Clothingcard animation={true} img={productImg} hover={productImgHover}/>
       <Productcard/>

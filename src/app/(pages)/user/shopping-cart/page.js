@@ -30,7 +30,7 @@ const ShoppingCart = () => {
 
   if(cart.length === 0){
     return(
-      <div className="h-screen flex justify-center items-center max-md:flex-col min-h-screen">
+      <div className="flex justify-center items-center max-md:flex-col navMargin minScreen">
         <div className="flex w-[50%] text-center  flex-col justify-center items-center ">
           <h1 id="error_404" className="text-4xl mt-6 mb-4">
             Cart is Empty......

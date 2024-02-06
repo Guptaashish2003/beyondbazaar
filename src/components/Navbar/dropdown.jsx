@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image';
 import React, { useRef } from 'react'
 import { BiDownArrowAlt,BiSolidHeartCircle } from "react-icons/bi";
 function dropdown({title,dropLink}) {
@@ -38,7 +39,14 @@ function dropdown({title,dropLink}) {
 
        {dropLink.map((items,index)=><div key={index} className="dropdown__group">
           <div className="dropdown__icon">
-          <BiSolidHeartCircle style={{width:"50px", height:"50px"}}/>
+          <Image
+          src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="category"
+          width={30}
+          height={30}
+          className='rounded-full'
+           style={{width:"50px", height:"50px"}} 
+           />
           </div>
           <span className="dropdown__title">{items.title}</span>
           <ul className="dropdown__list">

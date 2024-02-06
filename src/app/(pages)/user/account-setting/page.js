@@ -99,7 +99,7 @@ const Page = () => {
   return (
     <>
     {fullScreenLoader && <FullScreenLoader/>}
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-screen flex justify-center items-center navMargin minScreen">
       <div className="   w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto">
 
         {/* order page btn  */}

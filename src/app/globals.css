@@ -29,9 +29,6 @@ html {
   /*========== z index ==========*/
   --z-tooltip: 10;
   --z-fixed: 40;
-  /* nav space  */
-  --nav-space: calc(100vh - var(--header-height));
-  --nav-spc: calc(6rem + var(--header-height));
   /* swiper pagination css  */
   --swiper-pagination-color: var(--first-color);
 }
@@ -104,9 +101,29 @@ a {
 .nav {
   height: var(--header-height);
 }
-.minHeight{
+.logo {
+  width: 5rem;
+  height: 5rem;
+}
+.mobileCart{
+  visibility: visible;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 3000000;
+}
+.navMargin{
   margin-top: var(--header-height);
-  min-height: calc(100vh - var(--header-height));
+}
+.minScreen{
+  width: 100%;
+  min-height: calc(100vh - var(--header-height)) !important;
+}
+@media (min-width: 1280px) {
+  .sliderHieght{
+    height: calc(100vh - var(--header-height) - 4rem) ;
+  }
+
 }
 
 .nav__toggle {
@@ -146,7 +163,7 @@ a {
     position: relative;
     left: 0;
     display: block;
-    top: 2.5rem;
+    top: 1.1rem;
     /* width: 100%; */
     height: calc(100vh - 3.5rem);
     overflow: auto;
@@ -294,10 +311,23 @@ a {
     padding: 1rem;
 
   }
-  .minHeight{
+  .logo {
+    margin-top: 35px;
+    width: 10rem;
+    height: 10rem;
+  }
+  .mobileCart{
+    visibility: hidden;
+
+  }
+  .navMargin{
     margin-top: calc(var(--header-height) + 4rem);
+  }
+  .minScreen{
+    width: 100%;
     min-height: calc(100vh - var(--header-height) + 4rem);
   }
+
 
   .nav__toggle {
     display: none;

@@ -6,7 +6,6 @@ import { TiStarFullOutline } from "react-icons/ti";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { toast } from "react-toastify";
 import { usePostDataProtected } from '@/redux/api/usePostData';
 import { useParams,useRouter,useSearchParams } from 'next/navigation';
 import { useGetData } from '@/redux/api/useGetData';
@@ -40,22 +39,21 @@ export default function page() {
         if(reviewId){
           const res = await usePostDataProtected(`/api/product-review/update/${reviewId}`, {...data,productId:id.id,rating});
           if (res.success) {
-            toast.success(user.message,{autoClose: 1000, })
+            toast.success(res.message,{autoClose: 1000, })
           }
         }
         else{
           const res = await usePostDataProtected("/api/product-review/add-review", {...data,productId:id.id,rating});
           if (res.success) {
-            toast.success(user.message,{autoClose: 1000, })
+            toast.success(res.message,{autoClose: 1000, })
           }
         }
-        
+        router.back()
+        setLoading(false);
         
       } catch (error) {
         setLoading(false);
-        console.log(error)
-        setLoading(false);
-        router.push("/")
+        router.back();
         errorTostHandler(error);
       }
       
@@ -78,7 +76,7 @@ export default function page() {
       }
     }, [])
     return (
-    <div className='min-h-screen flex justify-center items-center'>
+    <div className=' flex justify-center py-12 navMargin minScreen'>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col'>
             <InputBtn
              type='text' 
@@ -127,6 +125,7 @@ export default function page() {
              <SubmitButton
              value="Submit"
              type="submit"
+             loading={loading}
              className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
              ></SubmitButton>
         </form>

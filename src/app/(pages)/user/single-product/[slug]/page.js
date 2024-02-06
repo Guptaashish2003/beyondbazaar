@@ -21,7 +21,7 @@ const page = async ({ params }) => {
 
   return (
     <>
-      <div className="flex  justify-center flex-wrap  p-4 lg:mt-[--nav-spc] mt-12">
+      <div className="flex  justify-center flex-wrap  p-4 navMargin minScreen">
         <ProductPhotos img={data.productImage} />
         <ProductDes
           className="min-h-96"

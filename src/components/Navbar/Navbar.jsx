@@ -45,7 +45,8 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
   const dropdownItems = [
     {
       title:"Technical",
-      dropLink:  [{title:"mobile",icon:"webdev",links:[{name:"pro player",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},{title:"computer",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},{title:"smart watch",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]}],
+      dropLink:  [{title:"mobile",icon:"webdev",links:[{name:"pro player",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},
+      {title:"computer",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]},{title:"smart watch",icon:"webdev",links:[{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"},{name:"webdev",url:"webdev"}]}],
       
     },
     {
@@ -79,24 +80,33 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
 
   return (
     <>
+    {/* mobile cart  */}
+    <Link href="/user/shopping-cart" className='mobileCart ' onClick={noLoginUser}>
+      <div className='w-14 h-14 bg-[--first-color] text-white rounded-full flex justify-center items-center'>
+        <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
+      </div>
+    </Link>
+
+      {/* nav  */}
 <header className={`header fixed top-0 left-0 w-full flex justify-evenly ${show}`}>
   <nav className="nav w-full p-2 ">
   <div className="nav__data   flex justify-between items-center w-full h-2/3">
-        <div className="logo h-full" onClick={()=>router.push("/")}>
+        <div className="logo h-full overflow-hidden" onClick={()=>router.push("/")}>
                 <Image
             src={logo}
-            className='w-[200%] h-[200%] object-contain cursor-pointer'
-            
+            className='w-full object-contain cursor-pointer'
             alt="logo"
             /> 
         </div>
     <div className="lsc flex justify-center items-center p-4 gap-2 ">
      <SearchBar/>
+      {/* cart */}
       <Link href="/user/shopping-cart" onClick={noLoginUser}>
         <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
           <BiSolidCart className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
         </div>
       </Link>
+        {/* user  */}
         <div onClick={userProfile} className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>
           <BiSolidUser className='w-[75%] h-[75%] text-inherit cursor-pointer '/>
         </div>
@@ -121,7 +131,12 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
         </li>
         {/*=============== DROPDOWNs ===============*/}
        { dropdownItems.map((item,index)=><Dropdown key={index}  title={item.title} dropLink={item.dropLink}/>)}
-
+       <li>
+         
+        { <span onClick={userProfile} className="nav__link nav__toggle">
+           {localStorage.getItem('token') ?"settings":"Login 😉"}
+         </span>}
+       </li>
       </ul>
     </div>
 

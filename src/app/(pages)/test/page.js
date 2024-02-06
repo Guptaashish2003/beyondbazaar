@@ -16,7 +16,7 @@ function page() {
        setImage(res.data)
     };
     return (
-        <div className="flex justify-center items-center w-screen h-screen">
+        <div className="flex justify-center items-center w-screen h-screen navMargin minScreen">
         <form onSubmit={uploadFile} className="">
             <div>
             <input

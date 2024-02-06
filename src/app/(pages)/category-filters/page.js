@@ -6,27 +6,28 @@ import React from 'react'
 
 
 async function page(context) {
-  let {page=1,keyword} = context.searchParams
+  let {page=1,keyword,sort} = context.searchParams
   let link
-  if(keyword){
-    link = `/product/all-product?limit=20&keyword=${keyword}&page=${page}`
+  if(keyword && sort){
+    link = `/product/all-product?limit=10&keyword=${keyword}&sort=${sort}&page=${page}`
+
+  }
+  else if(keyword){
+    link = `/product/all-product?limit=10&keyword=${keyword}&page=${page}`
 
   }
   else{
-    link = `/product/all-product?limit=20&page=${page}`
+    link = `/product/all-product?limit=10&page=${page}`
   }
   const {data,length} = await useGetData(link)
   return (
     <>
-     <FilterComponent>
+     <FilterComponent path="/category-filters" keyword={keyword}>
         <div className='flex flex-wrap justify-evenly'>
           {data.map((pdt)=><Productcard key={pdt._id} animation={true} img={pdt?.productImage[0]} price={pdt.productPrice} title={pdt.productName} slug={pdt.slug}/>)}
-          
-
-  
     
         </div>
-           <Pagination path="/category-filters" limitOption={false} keyword={keyword} page={page} documentCount={length} className='justify-center mt-4'/>
+           <Pagination path="/category-filters" limitOption={false} keyword={keyword} sort={sort} page={page} documentCount={length} className='justify-center mt-4'/>
      </FilterComponent>
     </>
   )

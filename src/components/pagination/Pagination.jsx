@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
-function Pagination({path,page,keyword,documentCount,limit=10,limitOption,className=""}) {
+function Pagination({path,page,keyword,sort='',documentCount,limit=10,limitOption,className=""}) {
   const pages = Math.ceil(documentCount / limit);
 
   const router = useRouter()
@@ -17,7 +17,7 @@ function Pagination({path,page,keyword,documentCount,limit=10,limitOption,classN
           query: {
             keyword:keyword,
             page: Number(page) - 1,
-            limit:limit
+            sort:sort
           },
         }:""}
         className={page> 1?"bg-gray-800 text-white  py-2  border-gray-200 hover:bg-white hover:text-gray-800 px-3":"text-white bg-slate-500 py-2 px-3 cursor-not-allowed"}
@@ -45,7 +45,7 @@ function Pagination({path,page,keyword,documentCount,limit=10,limitOption,classN
           query: {
             keyword:keyword,
             page: Number(page) + 1,
-            limit:limit
+            sort:`${sort}`
           },
         }:""}
         className={page<pages?"bg-gray-800 text-white  py-2  border-gray-200 hover:bg-white hover:text-gray-800 px-3":"text-white bg-slate-500 py-2 px-3 cursor-not-allowed"}
@@ -66,21 +66,7 @@ function Pagination({path,page,keyword,documentCount,limit=10,limitOption,classN
           </svg>
         </div>
       </Link>
-      {limitOption?<select
-          className="py-2 px-3 flex justify-center items-center bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
-          value={limit}
-    
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize} 
-            onClick={()=>{
-              router.push(`${path}?page=${page}&limit=${pageSize}`)
 
-              }}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>:""}
     </div>}
     </>
   );

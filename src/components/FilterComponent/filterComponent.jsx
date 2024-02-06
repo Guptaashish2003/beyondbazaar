@@ -8,13 +8,13 @@ import {  FunnelIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { BiChevronDown } from 'react-icons/bi';
 import { AiOutlineClose } from 'react-icons/ai';
 import FilterCard from '@/components/filterCard/filter';
+import Link from 'next/link';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
+  { name: 'Best Rating', href: '-rating', current: false },
+  { name: 'Price: Low to High', href: 'productPrice', current: false },
+  { name: 'Price: High to Low', href: '-productPrice', current: false },
 ]
 const subCategories = [
   { name: 'Totes', href: '#' },
@@ -65,11 +65,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function FilterComponent({children}) {
+export default function FilterComponent({children,keyword,path}) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   return (
-    <div className="bg-white lg:mt-[--nav-spc] mt-10">
+    <div className="bg-white navMargin minScreen">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -159,8 +159,14 @@ export default function FilterComponent({children}) {
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.href}
+                            <Link
+                              href={{
+                                pathname: path,
+                                query: {
+                                  keyword:keyword,
+                                  sort:option.href,
+                                },
+                              }}
                               className={classNames(
                                 option.current ? 'font-medium text-gray-900' : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
@@ -168,7 +174,7 @@ export default function FilterComponent({children}) {
                               )}
                             >
                               {option.name}
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                       ))}

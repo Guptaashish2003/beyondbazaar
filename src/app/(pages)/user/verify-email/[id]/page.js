@@ -40,7 +40,7 @@ import { errorTostHandler } from '@/redux/api/errorTostHandler';
       )
     }
   return (
-    <div className='w-screen h-screen flex justify-center items-center'>
+    <div className='w-screen  flex justify-center items-center navMargin minScreen'>
       <Modal withoutBtn={true} onclose={()=>router.push("/login")}>
         <div className='w-[75%]'>
           <h1 className='text-lg font-bold'>{isVerify?'Verification Successful 🎉':"Verification Failed 🚫"}</h1>

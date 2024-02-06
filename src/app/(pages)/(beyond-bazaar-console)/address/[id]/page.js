@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 import { useGetDataProtected } from "@/redux/api/useGetData";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 
 const CheckOutPage = () => {
@@ -57,7 +58,7 @@ const CheckOutPage = () => {
       
     } catch (error) {
       setLoadingScreen(true);
-      toast.error(error.response.data.message);
+      errorTostHandler(error);
     }
   }
   const getLocation = () => {
@@ -87,10 +88,8 @@ console.log(lattitude,longitude,"lattitude,longitude")
       
     } catch (error) {
       setLoading(false)
-      console.log(error);
-      toast.error(error.response.data.message);
       router.back();
-      console.log(error);
+      errorTostHandler(error);
       
     }
 
@@ -100,7 +99,7 @@ if(loadingScreen){
 }
   return (
     <>
-      <div className="min-h-screen p-6 bg-gray-100 flex gap-1 items-center justify-center lg:mt-16 mt-8">
+      <div className="min-h-screen p-6 bg-gray-100 flex gap-1 items-center justify-center navMargin minScreen">
         <div className="container max-w-screen-lg mx-auto">
           <div>
             <div className="bg-white rounded shadow-lg mx-auto p-4 px-4 md:p-8 mb-6">

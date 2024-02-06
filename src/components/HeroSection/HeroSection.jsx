@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-function HeroSection({sliderImage}) {
+function HeroSection({sliderImage,sliderHieght,className,...props}) {
   // const sliderImage = [hero1,hero2,hero3]
   return (
    <>
@@ -16,16 +16,17 @@ function HeroSection({sliderImage}) {
         disableOnInteraction: false,
       }}
       modules={[Autoplay]}
-      className='w-full '
+      className={`${sliderHieght} ${className}`}
+      {...props}
           >
-      {sliderImage.map((img,index)=><SwiperSlide key={index} className='w-full '>
+      {sliderImage.map((img,index)=><SwiperSlide key={index} className={`w-full  ${sliderHieght}`}>
         <Image
           src={img}
           width={600}
-          height={300}
+          height={600}
           style={{objectFit: "cover" }}
           alt="hero image"
-          className='cursor-pointer w-full h-full'
+          className={`w-full cursor-pointer sliderHieght ${sliderHieght}`}
         />
       </SwiperSlide>)}
       

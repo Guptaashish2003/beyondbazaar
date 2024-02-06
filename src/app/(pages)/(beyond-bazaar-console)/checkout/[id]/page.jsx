@@ -92,7 +92,7 @@ if(loading){
 }
   
   return (
-    <section className="flex flex-col lg:mt-[--nav-spc] mt-12">
+    <section className="flex flex-col navMargin minScreen">
       <div className="flex gap-3 justify-center align-center text-3xl my-4 ">
         <p>Order CheckOut</p>
       </div>

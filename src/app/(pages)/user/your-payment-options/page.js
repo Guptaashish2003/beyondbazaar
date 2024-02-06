@@ -42,7 +42,7 @@ const Page = () => {
   };
 
   return (
-    <div className="mt-40  max-lg:mt-24 mx-auto w-3/4">
+    <div className="mx-auto w-3/4 navMargin minScreen">
       <h1 className=" text-gray-900 my-8 text-2xl font-semibold">Payment</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}

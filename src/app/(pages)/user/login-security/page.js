@@ -127,7 +127,7 @@ const page = () => {
   };
 
   return (
-    <div className=" flex  flex-col gap-2 mt-36 w-1/2 mx-auto">
+    <div className=" flex  flex-col gap-2 mt-36 w-1/2 mx-auto navMargin minScreen">
       <div className=" mx-auto border-2 border-solid border-gray-500 rounded-md w-full flex justify-between items-center p-5">
         <div className="flex items-start flex-col gap-3">
           <h1 className="text-black text-lg">Name</h1>
