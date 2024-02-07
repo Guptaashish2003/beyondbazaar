@@ -19,7 +19,7 @@ import GeoCoding from "@/backend/utils/bigDataGeo";
 const CheckOutPage = () => {
   const {id} = useParams();
   const router = useRouter()
-  const [lattitude,setLattitude] = useState();
+  const [latitude,setlatitude] = useState();
   const [longitude,setLongitude] = useState();
   const [adress,setAdress] = useState();
   const validationSchema = Yup.object().shape({
@@ -45,19 +45,6 @@ const CheckOutPage = () => {
   const { errors } = formState;
   const [loading,setLoading] = useState(false);
   const [loadingScreen,setLoadingScreen] = useState(false);
-  const GetGoeCoding = async () => {
-    try {
-      const res = await GeoCoding( lattitude,longitude)
-      if (res.success) {
-        setAdress(res);
-        toast.success(res.message);
-  
-      }
-    } catch (error) {
-      errorTostHandler(error);
-    }
-  
-  }
   useEffect(()=>{setUserData();
   },[])
   console.log(adress,"adress" )
@@ -78,18 +65,26 @@ const CheckOutPage = () => {
       errorTostHandler(error);
     }
   }
-  const getLocation = () => {
+  const getLocation = async () => {
+    try {
+        const geo = navigator.geolocation;
+        const position = await new Promise((resolve, reject) => {
+            geo.getCurrentPosition(resolve, reject);
+          });
+          setlatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+          const res = await GeoCoding( latitude, longitude);
 
-  const geo = navigator.geolocation;
-  geo.getCurrentPosition((useCoords) => {
-    setLattitude(useCoords.coords.latitude);
-    setLongitude(useCoords.coords.longitude);
-  });
-}
+        // console.log(res, "res");
+    } catch (error) {
+        console.log("Error fetching location", error);
+    }
+};
 
 
 
-console.log(lattitude,longitude,"lattitude,longitude")
+
+console.log(latitude,longitude,"latitude,longitude")
   async function onSubmit(data) {
     try {
           let res;
