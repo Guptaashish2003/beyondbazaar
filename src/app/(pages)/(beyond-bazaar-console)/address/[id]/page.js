@@ -13,22 +13,18 @@ import Loading from "@/app/loading";
 import { useGetDataProtected } from "@/redux/api/useGetData";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
-import GeoCoding from "@/backend/utils/bigDataGeo";
-
 
 const CheckOutPage = () => {
   const {id} = useParams();
   const router = useRouter()
-  const [latitude,setlatitude] = useState();
-  const [longitude,setLongitude] = useState();
-  const [adress,setAdress] = useState();
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
     name: Yup.string().required("Name is required"),
-    number: Yup.string()
+    phNumber: Yup.string()
       .required("Number is required")
       .min(10, "Number must be at least 10 characters")
       .max(10, "Number must not exceed 10 characters"),
+    houseNo: Yup.string().required("House Number is required"),
     street: Yup.string().required("Address is required"),
 
     city: Yup.string().required("City is required"),
@@ -47,7 +43,6 @@ const CheckOutPage = () => {
   const [loadingScreen,setLoadingScreen] = useState(false);
   useEffect(()=>{setUserData();
   },[])
-  console.log(adress,"adress" )
   const setUserData = async () => {
     try {
       if (id !== "add-new-address") {
@@ -70,22 +65,27 @@ const CheckOutPage = () => {
         const geo = navigator.geolocation;
         const position = await new Promise((resolve, reject) => {
             geo.getCurrentPosition(resolve, reject);
-          });
-          setlatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-          const res = await GeoCoding( latitude, longitude);
+          });          
+          const res = await usePostDataProtected(`/api/get-location `, {latitude
+            :position.coords.latitude,longitude:position.coords.longitude})
+            const userData = await useGetDataProtected("/api/user/me")
+            if(userData.success){
+              setValue("name",userData.data.name)
+              setValue("email",userData.data.email)
+              setValue("phNumber",userData.data.phoneNo)
+            }
+            if(res.success){
+              for (const key in res.data) {
+                setValue(key,res.data[key])
+              }
+            }
 
-        // console.log(res, "res");
     } catch (error) {
         console.log("Error fetching location", error);
     }
 };
 
-
-
-
-console.log(latitude,longitude,"latitude,longitude")
-  async function onSubmit(data) {
+  async function onSubmit(data) { 
     try {
           let res;
           setLoading(true);
@@ -189,7 +189,7 @@ if(loadingScreen){
                     <div className="md:col-span-5">
                       <label >Contact Number</label>
                       <InputBtn
-                        {...register("number", {
+                        {...register("phNumber", {
                           required: "Number is required",
                           pattern: {
                             value: /^[A-Za-z0-9]+/i,
@@ -207,20 +207,40 @@ if(loadingScreen){
                           },
                         })}
                         type="tel"
-                        name="number"
-                        id="number"
+                        name="phNumber"
+                        id="phNumber"
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         defaultValue=""
                         placeholder="+91 99xxxxxx00"
                       />
-                      {errors.number && (
+                      {errors.phNumber && (
                         <p className="text-red-500 text-xs italic">
-                          {errors.number.message}
+                          {errors.phNumber.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="md:col-span-5">
+                      <label >House Number / Locality </label>
+                      <InputBtn
+                        {...register("houseNo", {
+                          required: "houseNo is required",
+                          
+                        })}
+                        type="text"
+                        name="houseNo"
+                        id="houseNo"
+                        className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                        defaultValue=""
+                        placeholder="RZ-123, 1st floor, Gali No-2"
+                      />
+                      {errors.houseNo && (
+                        <p className="text-red-500 text-xs italic">
+                          {errors.houseNo.message}
                         </p>
                       )}
                     </div>
                     <div className="md:col-span-3">
-                      <label >Address / Street</label>
+                      <label >Street</label>
                       <InputBtn
                         {...register("street", {
                           required: "Address is required",
@@ -234,7 +254,7 @@ if(loadingScreen){
                         id="street"
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         defaultValue=""
-                        placeholder=""
+                        placeholder="street"
                       />
                       {errors.street && (
                         <p className="text-red-500 text-xs italic">
@@ -257,7 +277,7 @@ if(loadingScreen){
                         id="city"
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         defaultValue=""
-                        placeholder=""
+                        placeholder="city"
                       />
                       {errors.city && (
                         <p className="text-red-500 text-xs italic">
@@ -362,7 +382,7 @@ if(loadingScreen){
                         name="pincode"
                         id="pincode"
                         className="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                        placeholder=""
+                        placeholder="pincode"
                         defaultValue=""
                       />
                       {errors.pincode && (

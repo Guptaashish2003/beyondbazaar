@@ -45,6 +45,14 @@ const ProductSchema = new mongoose.Schema(
       ref: 'SubCategories',
       required: true
     },
+    mostPoular: {
+      type: Number,
+      default: false,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 ).plugin(slugify);
