@@ -3,6 +3,8 @@ import React, { useEffect,useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import SubmitButton from "../Form/SubmitButton";
 import { usePostDataProtected } from "@/redux/api/usePostData";
+import { toast } from "react-toastify";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
   const [promoValue,setPromoValue] = useState('');
   useEffect(()=>{
@@ -10,19 +12,17 @@ const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
   },[total]);
   const [loading,setLoading] = useState(false);
   const applyPromo = async ()=>{
-    console.log(promoValue);
-    console.log({orderItems:order.orderItems,totalPrice:order.itemsPrice})
     try {
       setLoading(true);
       const res = await usePostDataProtected("/api/apply-promo",{promocode:promoValue,orderItems:order.orderItems,totalPrice:order.itemsPrice});
       if(res.success){
-        console.log(res.data);
         setDiscount(res.data)
         setLoading(false);
+        toast.success(res.message)
       }
     } catch (error) {
-      console.log(error)
       setLoading(false);
+      errorTostHandler(error);
     } 
   }
   return (
