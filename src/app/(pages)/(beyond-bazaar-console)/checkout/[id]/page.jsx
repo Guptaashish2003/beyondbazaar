@@ -3,12 +3,14 @@ import Loading from "@/app/loading";
 import SelectAdres from "@/components/PaymentPageTools/SelectAdres";
 import SumCard from "@/components/PaymentPageTools/SumCard";
 import PriceCheckOut from "@/components/shoppingCart/PriceCheckOut";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import { useGetDataProtected } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const PaymentPage = () => {
   const {id} = useParams();
@@ -26,9 +28,7 @@ const PaymentPage = () => {
   const [loading,setLoading] = useState(true)
   const [order,setOrder]= useState();
   useEffect(()=>{
-    // setDiscount({discountValue:0})
     getData()
-    // test()
   },[])
   const getData = async () => {
     try {
@@ -36,7 +36,6 @@ const PaymentPage = () => {
       const res = await useGetDataProtected("/api/user/address/me");
       if(res.success){
         setAddress(res.data)
-        console.log(res.data)
       }
       if (id === 'bycart') {
         const res = await useGetDataProtected("/api/cart/my-cart");
@@ -45,32 +44,22 @@ const PaymentPage = () => {
           const newOrder = res.data.map((val)=>{return {product:val.productID._id,qty:val.productQuantity}} )
           setProduct(newData)
           setOrder({orderItems:newOrder,itemsPrice:res.totalprice})
-          console.log({orderItems:newOrder,itemsPrice:res.totalprice},'order...')
+
         }
       } else {
         const res = await useGetDataProtected(`/api/product/single-product/${id}`);
         if(res.success){
           setProduct([{...res.data,qty:qty}]);
-          console.log(res.data._id)
           setOrder({orderItems:[{qty:qty,product:res.data._id}],itemsPrice:res.data.productPrice * qty})
         }
       }
 
       setLoading(false);
     } catch (error) {
-      console.log(error)
+      errorTostHandler(error);
     } 
   }
-  const test = async () => {
-    try {
-      const res = await useGetDataProtected("/api/user/order/all-orders");
-      if(res.success){
-        console.log(res.data)
-      }
-    } catch (error) {
-      console.log(error)
-    } 
-  }
+  
   const onCheckout = async () => {
 
     try {
@@ -82,7 +71,7 @@ const PaymentPage = () => {
         router.push("/user/your-orders")
       }
     } catch (error) {
-      console.log(error)
+      errorTostHandler(error);
     } 
   }
 
@@ -92,7 +81,7 @@ if(loading){
 }
   
   return (
-    <section className="flex flex-col navMargin minScreen">
+    <section className="flex flex-col navMargin minScreen px-">
       <div className="flex gap-3 justify-center align-center text-3xl my-4 ">
         <p>Order CheckOut</p>
       </div>
@@ -112,7 +101,7 @@ if(loading){
               <select
                 id="address-select"
                 ref={addressRef}
-                className="h-14 w-full max-w-full bg-[#333] text-white border rounded-md text-center capitalize"
+                className="h-14 w-full max-w-full px-4 bg-[#333] text-white border rounded-md text-center capitalize"
               >
                 {address.map((val,index)=> <option key={index} value={val._id} >{`${val?.street} ${val?.state} ${val?.pincode} ${val?.number}`}</option>)}
               </select>
@@ -125,7 +114,7 @@ if(loading){
               <p className="text-gray-500 text-sm">Add New Address</p>
             </Link>
           </div>
-          <PriceCheckOut setDiscount={setDiscount} order={order} total={shippingPrice +discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))} onClick={onCheckout} promo={true} btnName="Checkout" >
+          <PriceCheckOut setDiscount={setDiscount} order={order} total={shippingPrice - discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))} onClick={onCheckout} promo={true} btnName="Checkout" >
 
               <div className="flex justify-between">
                 <p>Total items Price</p>
@@ -146,7 +135,7 @@ if(loading){
 
               <div className="flex justify-between">
                 <p>Total Price</p>
-                <p>₹ {shippingPrice +discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))}</p>
+                <p>₹ {shippingPrice - discount.discountValue + order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))}</p>
               </div>
           </PriceCheckOut>
         </div>

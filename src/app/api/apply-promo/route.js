@@ -27,7 +27,7 @@ export async function POST(request) {
         //     return NextResponse.json({ success: false, message: "promo code not exist" }, { status: 400 });
         // }
         const promocodeDoc = await Promocode.findOne({
-            promocode: promocode,
+            promocode: promocode.toUpperCase(),
             active: true,
             startDate: { $lte: new Date() },
             endDate: { $gte: new Date() },
@@ -53,7 +53,7 @@ export async function POST(request) {
           }
           const discountValue = calculateDiscount(promocodeDoc.discountType,promocodeDoc.discountValue,totalPrice,promocodeDoc.maxDiscount);
           const promo = {disCountId:promocodeDoc._id,discountValue};
-        return NextResponse.json({ success: true, message: "Promocode created", data: promo }, { status: 200 });
+        return NextResponse.json({ success: true, message: "Promocode added", data: promo }, { status: 200 });
         
     } catch (error) {
         console.log(error)

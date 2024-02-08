@@ -32,12 +32,12 @@ const OrderStatus = ({id,title,productId,img,total,status,slug,mainId}) => {
               <SubmitButton onClick={()=>router.push(`/review/${productId}`)} value="Write a Product Review" className='px-4 h-8 bg-[#333] text-white rounded-md'></SubmitButton>
             </div>
           </div>
-          <div className="flex justify-end flex-wrap gap-x-6 max-sm:justify-center">
+          <div className="flex justify-end  flex-wrap gap-x-6 max-sm:justify-end">
             {orderDetails.map((data,index)=><div key={index}>
               <p className="text-[#333] uppercase ">{data.title}</p>
               <p className="capitalize">{data.value}</p>
             </div>)}
-            <SubmitButton onClick={()=>router.push(`/user/order-status/${mainId}?orderId=${id}`)} value="view Order Details" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
+            <SubmitButton onClick={()=>router.push(`/user/order-status/${mainId}?orderId=${id}`)} value="view Order Details" className='m-2 max-sm:flex-1 border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
           </div>
         </div>
   );

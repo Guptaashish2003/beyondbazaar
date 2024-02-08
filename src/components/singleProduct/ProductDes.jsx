@@ -77,14 +77,14 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
       </div>
       <SubmitButton
       loading={loading}
-        className="my-4 max-lg:my-2 font-bold cartAnimation w-11/12 h-12 max-lg:h-8 border-2 border-solid border-slate-400 text-xl overflow-hidden"
+        className="my-4 max-lg:my-2 font-bold cartAnimation w-11/12 h-12  border-2 border-solid border-slate-400 text-xl overflow-hidden"
         value={"Add To Cart"}
         onClick={addToCartProduct}
         >
         <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />
       </SubmitButton>
       <SubmitButton
-        className="my-4 font-bold max-lg:my-2 orderBounce w-11/12 h-12 max-lg:h-8 border-2 border-solid border-slate-400 text-xl bg-black text-white"
+        className="my-4 font-bold max-lg:my-2 orderBounce w-11/12 h-12  border-2 border-solid border-slate-400 text-xl bg-black text-white"
         value={"Order Now"}
         onClick={orderNow}
         
