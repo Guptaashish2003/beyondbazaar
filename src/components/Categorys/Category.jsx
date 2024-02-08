@@ -11,8 +11,8 @@ function Category() {
     const category = [1,2,3,4,5,6,7,8,9,10,11,12]
 
   return (
-    <div className="flex flex-col justify-center items-center text-center  ">
-      <h1 className="p-8 text-5xl max-md:text-3xl font-bold uppercase">
+    <div className="flex flex-col justify-center items-center text-center px-6 py-2">
+      <h1 className="p-8 text-5xl max-sm:text-3xl  font-bold uppercase">
         Select Your Category{" "}
       </h1>
       <Swiper
@@ -23,27 +23,27 @@ function Category() {
         }}
         breakpoints={{
           "@0.00": {
-            slidesPerView: 1,
-          },
-          "@0.75": {
-            slidesPerView: 2,
-          },
-          "@1.00": {
             slidesPerView: 3,
           },
-          "@1.50": {
+          "@0.75": {
             slidesPerView: 4,
+          },
+          "@1.00": {
+            slidesPerView: 4,
+          },
+          "@1.50": {
+            slidesPerView: 8,
           },
         }}
         modules={[Pagination]}
         className="w-full flex mx-auto p-4 "
       >
         {category.map((cate, index) => (
-          <SwiperSlide  key={index}>
-            <div className="category-card m-3 mx-auto h-72 w-60 max-lg:w-56 max-lg:h-56 flex flex-col items-center justify-evenly">
+          <SwiperSlide  key={index} className='py-10 gap-x-3'>
+            <div className="category-card m-3 mx-auto h-[91%] w-11/12 max-lg:w-56 max-lg:h-56 flex flex-col items-center justify-evenly">
               <Image
                 src={category1}
-                className="w-56 h-56 max-lg:w-48 max-lg:h-48  object-cover  rounded-full"
+                className="w-30 h-30 max-lg:w-48 max-lg:h-48 max-md:w-36 max-md:h-36  object-cover  rounded-full"
                 alt="Category image"
               />
               <div className="ct-title">Mobile</div>

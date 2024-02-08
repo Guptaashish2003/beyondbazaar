@@ -13,7 +13,7 @@ function Navbar() {
   const router = useRouter()
   const session = useSession();
   const [show, setShow] = useState("translate-y-0");
-
+  const [isLogin,setIsLogin] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const controlNavbar = () => {
@@ -28,8 +28,13 @@ function Navbar() {
     }
     setLastScrollY(window.scrollY);
 };
-
+  const login = ()=>{
+    if(localStorage.getItem('token')){
+      setIsLogin(true)
+    }
+  }
 useEffect(() => {
+  login()
     window.addEventListener("scroll", controlNavbar);
     return () => {
         window.removeEventListener("scroll", controlNavbar);
@@ -135,7 +140,7 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
        <li>
          
         { <span onClick={userProfile} className="nav__link  mobileUser">
-           {/* {localStorage.getItem('token') ?"Settings":"Login 😉"} */}
+           {isLogin ?"Settings":"Login 😉"}
          </span>}
        </li>
       </ul>

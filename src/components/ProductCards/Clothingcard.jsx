@@ -35,7 +35,7 @@ function Clothingcard({img,hover,title,price, addToCart,animation}) {
         />
       </div>
       <div className='flex flex-wrap p-3 justify-between w-full text-lg font-bold'>
-        <div className={` card-title max-md:text-sm  overflow-hidden text-ellipsis whitespace-nowrap `} >
+        <div className={` card-title text-lg overflow-hidden text-ellipsis whitespace-nowrap `} >
         {title || "Men's Footwear - Buy Men's Shoes Starts w-full"}
         </div>
         <div className={`card-price  w-full text-center`}>

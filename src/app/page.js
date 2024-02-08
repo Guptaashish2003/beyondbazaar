@@ -18,9 +18,9 @@ export default async function Home(){
     <>
     <Herosection  sliderImage={img} className="navMargin " sliderHieght='sliderHieght'/>
     <Category/>
-    <h2 className='p-8 text-5xl max-md:text-3xl font-bold uppercase text-center'>Select Your Category</h2>
+    <h2 className='p-8 text-5xl max-sm:text-3xl  font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
-      {data?.map((data)=><Productcard animation={true}  id={data._id}  key={data._id}  img={data?.productImage[0]} hover={data?.productImage[1]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
+      {data?.map((data)=><Productcard discount={200} animation={true}  id={data._id}  key={data._id}  img={data?.productImage[0]} hover={data?.productImage[1]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
 
       <Clothingcard animation={true} img={productImg} hover={productImgHover}/>
       <Productcard/>

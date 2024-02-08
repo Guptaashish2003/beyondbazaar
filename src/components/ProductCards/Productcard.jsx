@@ -55,7 +55,7 @@ function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,discount,ani
         </div>
       </div>
       <div className='flex flex-wrap p-3 justify-between w-full text-lg font-bold'>
-        <div className={`line-animate card-title max-md:text-sm  overflow-hidden text-ellipsis whitespace-nowrap ${line?"line-animated":""} ${discount?"w-full":"w-1/2"}`} >
+        <div className={`line-animate card-title   overflow-hidden text-ellipsis whitespace-nowrap ${line?"line-animated":""} ${discount?"w-full":"w-1/2"}`} >
         {title || "Men's Footwear - Buy Men's Shoes Starts"}
         </div>
         <div className={`card-price  ${discount?"flex justify-between w-full":""}`}>

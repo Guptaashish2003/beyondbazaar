@@ -35,11 +35,13 @@ const page =  () => {
   return (
     <div className="py-4 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto navMargin minScreen">
     <div className="flex justify-start item-start space-y-2 flex-col">
-      <p className="text-lg md:text-xl  dark:text-black font-semibold leading-6 xl:leading-5 text-gray-800">
+      <p className="text-lg md:text-3xl mx-5  dark:text-black font-semibold leading-6 xl:leading-5 text-gray-800">
         Your Orders
       </p>
-    </div>
-        {order.map((val,index)=><OrderStatus key={val._id} id={val._id} mainId={val.mainId} productId={val.product._id} status={val.status} slug={val.product.slug} total={val.product.productPrice} title={val.product.productName} img={val.product.productImage[0]}   />)}
+    </div >
+      <div className='px-6 my-4'>
+          {order.map((val,index)=><OrderStatus key={val._id} id={val._id} mainId={val.mainId} productId={val.product._id} status={val.status} slug={val.product.slug} total={val.product.productPrice} title={val.product.productName} img={val.product.productImage[0]}   />)}
+      </div>
     </div>
   )
 }

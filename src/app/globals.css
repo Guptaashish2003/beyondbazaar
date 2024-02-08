@@ -5,6 +5,27 @@
 html {
   font-size: 16px;
 }
+@media (max-width: 498px) {
+  html {
+    font-size: 11px;
+
+  }
+
+}
+/* @media (max-width: 1280px) {
+  html {
+    font-size: 13px;
+
+  }
+
+}
+@media (max-width: 1280px) {
+  html {
+    font-size: 13px;
+
+  }
+
+} */
 
 
 
@@ -548,8 +569,8 @@ a {
 /* open search  */
 .input-box{
   position: relative;
-  height: 55px;
-  max-width: 55px;
+  height: 35px;
+  max-width: 35px;
   width: 90%;
   margin: 0 40px;
   border-radius: 6px;
