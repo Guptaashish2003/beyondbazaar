@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import productImg from "@/assets/productImag1.jpg";
 
-const OrderDetail = ({title,img,price,discription,address,status=2}) => {
+const OrderDetail = ({title,img,price,discription,address,orderDate,status=2}) => {
   const [orderStatus,setOrderStatus] = useState(status);
   return (
     <>
@@ -18,7 +18,7 @@ const OrderDetail = ({title,img,price,discription,address,status=2}) => {
             Order #13432
           </h1>
           <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
-            21st Mart 2021 at 10:34 PM
+             {"    "}{orderDate}
           </p>
         </div>
             
@@ -35,9 +35,9 @@ const OrderDetail = ({title,img,price,discription,address,status=2}) => {
               </a>
             </div>
             <p className="text-sm text-gray-600">
-              Order placed{" "}
-              <time dateTime="2021-03-22" className="font-medium text-gray-900">
-                March 22, 2021
+              Order placed {" "}
+              <time  className="font-medium text-gray-900">
+                { orderDate}
               </time>
             </p>
             <a
@@ -64,7 +64,10 @@ const OrderDetail = ({title,img,price,discription,address,status=2}) => {
                         <a href="#">{title}</a>
                       </h3>
                       <p className="mt-2 text-sm font-medium text-gray-900">
-                        ₹ {price}
+                        {price?.toLocaleString("en-IN", {
+                          style: "currency",
+                          currency: "INR",
+                        })}
                       </p>
                       <p className="mt-3 text-sm text-gray-500">
                         {discription}
@@ -78,9 +81,9 @@ const OrderDetail = ({title,img,price,discription,address,status=2}) => {
                           Delivery address
                         </dt>
                         <dd className="mt-3 text-gray-500">
-                          <span className="block">Floyd Miles</span>
-                          <span className="block">7363 Cynthia Pass</span>
-                          <span className="block">Toronto, ON N3Y 4H8</span>
+                          <span className="block">{address?.houseNo}</span>
+                          <span className="block">{address?.street}</span>
+                          <span className="block">{address?.city} {address?.pincode}</span>
                         </dd>
                       </div>
                       <div>
@@ -88,8 +91,8 @@ const OrderDetail = ({title,img,price,discription,address,status=2}) => {
                           Shipping updates
                         </dt>
                         <dd className="mt-3 space-y-3 text-gray-500">
-                          <p>f•••@example.com</p>
-                          <p>1•••••••••40</p>
+                          <p>{address.email}</p>
+                          <p>{address.number}</p>
                         </dd>
                       </div>
                     </dl>

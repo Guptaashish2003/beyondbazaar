@@ -5,7 +5,7 @@ import SubmitButton from "../Form/SubmitButton";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
-const PriceCheckOut = ({method,btnName,order,total,setDiscount,promo,...props}) => {
+const PriceCheckOut = ({method,btnName,order,total,setDiscount,checkoutBtn=true,className,promo,...props}) => {
   const [promoValue,setPromoValue] = useState('');
   useEffect(()=>{
 
@@ -26,7 +26,7 @@ const PriceCheckOut = ({method,btnName,order,total,setDiscount,promo,...props}) 
     } 
   }
   return (
-    <section className="flex  flex-col justify-center border-solid  border-y-2  p-2 mt-4">
+    <section className={className?`${className}`:"flex  flex-col justify-center border-solid  border-y-2  p-2 mt-4"}>
       <h1 className="font-bold text-black m-auto text-2xl mb-2">
         Order Summary
       </h1>
@@ -61,7 +61,7 @@ const PriceCheckOut = ({method,btnName,order,total,setDiscount,promo,...props}) 
           })}</p>
         </div>
       </div>
-
+{checkoutBtn &&
       <SubmitButton
         {...props}
         className="relative  cursor-pointer inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-black border-2 border-gray-600 rounded-md hover:text-white group hover:bg-gray-50"
@@ -71,7 +71,7 @@ const PriceCheckOut = ({method,btnName,order,total,setDiscount,promo,...props}) 
           <AiOutlineShoppingCart className="w-6 h-auto" />
         </span>
         <span className="relative m-auto ">{btnName}</span>
-      </SubmitButton>
+      </SubmitButton>}
     </section>
   );
 };

@@ -40,16 +40,16 @@ export async function POST(request) {
         else {
           return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
-        let discountValue = 0
+        let discountAmount = 0
         let promocodeDoc
         if(discount){
             promocodeDoc = await Promocode.findById(discount)
-            discountValue = calculateDiscount(promocodeDoc.discountType,promocodeDoc.discountValue,itemsPrice,promocodeDoc.maxDiscount);
+            discountAmount = calculateDiscount(promocodeDoc.discountType,promocodeDoc.discountAmount,itemsPrice,promocodeDoc.maxDiscount);
         }
         const taxPrice = itemsPrice * 0.18;
-        const totalPrice = itemsPrice + taxPrice + shippingPrice - discountValue
+        const totalPrice = itemsPrice + taxPrice + shippingPrice - discountAmount
         shippingInfo = check.address.filter((val)=>{return val._id.valueOf() === shippingInfo})
-        const order = await Order.create({ user:userID, orderItems, shippingInfo:shippingInfo[0], itemsPrice, taxPrice, shippingPrice, totalPrice,discount });
+        const order = await Order.create({ user:userID, orderItems, shippingInfo:shippingInfo[0], itemsPrice, taxPrice, shippingPrice, totalPrice,discount,discountAmount });
         if(!order){
             return NextResponse.json({ success: false, message: "Something went wrong" }, { status: 400 });
         }

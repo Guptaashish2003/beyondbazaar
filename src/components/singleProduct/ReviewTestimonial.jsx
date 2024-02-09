@@ -36,7 +36,7 @@ function ReviewTestimonial({ id,reviewData }) {
                 ))}
               </div>
             </span>
-            <span className="flex flex-col justify-end">{(review.createdAt).slice(0,10)}
+            <span className="flex flex-col justify-end">{(review.createdAt)?.slice(0,10)}
             <MdRateReview className="max-sm:relative max-sm:left-[75%] cursor-pointer mt-2 w-6 h-6"
               onClick={() => {
                 router.push(`/review/${review.productId}?reviewId=${review._id}`);
