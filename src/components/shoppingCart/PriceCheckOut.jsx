@@ -5,7 +5,7 @@ import SubmitButton from "../Form/SubmitButton";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
-const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
+const PriceCheckOut = ({method,btnName,order,total,setDiscount,promo,...props}) => {
   const [promoValue,setPromoValue] = useState('');
   useEffect(()=>{
 
@@ -14,7 +14,7 @@ const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
   const applyPromo = async ()=>{
     try {
       setLoading(true);
-      const res = await usePostDataProtected("/api/apply-promo",{promocode:promoValue,orderItems:order.orderItems,totalPrice:order.itemsPrice});
+      const res = await usePostDataProtected("/api/apply-promo",{promocode:promoValue,orderItems:order.orderItems,method});
       if(res.success){
         setDiscount(res.data)
         setLoading(false);
