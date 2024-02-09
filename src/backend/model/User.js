@@ -41,6 +41,13 @@ const UserSchema = new mongoose.Schema(
         email:{
           type: String,
         },
+        number:{
+          type: Number,
+        },
+        houseNo:{
+          type: String,
+          required: [true, "Please provide your house number"],
+        },
         street: {
           type: String,
           maxlength: [30, "Street cannot be more than 60 characters"],
