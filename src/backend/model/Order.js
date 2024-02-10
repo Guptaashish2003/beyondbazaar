@@ -85,7 +85,7 @@ const OrderSchema = new mongoose.Schema({
     itemsPrice: { type: Number, required: true },
     discount:{ 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Promocode'
+        ref: Promocode
     },
     discountAmount:{type: Number,default: 0},
     // shippingPrice: { type: Number, required: true },
