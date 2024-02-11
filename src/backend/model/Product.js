@@ -23,6 +23,16 @@ const ProductSchema = new mongoose.Schema(
       // required: [true, 'please enter the product slug'],
       unique: true,
     },
+    seo:{
+      title: {
+        type: String,
+        required: [true, 'please enter the product title'],
+      },
+      description: {
+        type: String,
+        required: [true, 'please enter the product description'],
+      }
+    },
     productPrice: {
       type: Number,
       required: [true, 'please enter the product price'],
@@ -50,9 +60,9 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       default: false,
     },
-    size:{
+    size:[{
       type: String,
-    },
+    }],
     rating: {
       type: Number,
       default: 0,

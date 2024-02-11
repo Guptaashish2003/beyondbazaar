@@ -8,11 +8,35 @@ import { useGetData } from "@/redux/api/useGetData";
 import { notFound } from "next/navigation";
 import React from "react";
 
+export async function generateMetadata({ params }) {
+  const { data,success } = await useGetData(`/product/single-product/${params.slug}?fields=seo`);
+  if (!success)
+  return {
+    title: "Not Found",
+    description: "The page is not found",
+  };
+  let title
+  let description
+  if(!data?.seo){
+    title = params.slug
+    description = params.slug
+  }else{
+    title = data.seo.title
+    description = data.seo.description
+  }
+  return {
+    title: title,
+    description:description ,
+    alternates: {
+      canonical: `/${params.slug}`,
+    },
+  }
+}
 
 const page = async ({ params }) => {
   const { slug } = params;
   const { data, success } = await useGetData(`/product/single-product/${slug}`);
-  if (!data) {
+  if (!success) {
     return notFound();
   }
   const reviewData = await useGetData(

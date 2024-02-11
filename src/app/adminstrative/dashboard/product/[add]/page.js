@@ -29,11 +29,14 @@ export default function page() {
   const [productCategory,setSubCategory] = useState([])
   const [categoryName,setCategoryName] = useState('')
   const [SubCategoryName,setSubCategoryName] = useState('')
+  const [size,setSize] = useState([])
 
   const validationSchema = Yup.object().shape({
     productName: Yup.string().required("Name is required"),
     productPrice: Yup.number().required("Price is required"),
     productQuantity: Yup.number().required("Quantity is required"),
+    title: Yup.string().required("Price is required"),
+    description: Yup.string().required("Price is required"),
     productDescription: Yup.string()
       .required("Discription is required")
       .min(20, "Description must be at least 20 characters"),
@@ -211,6 +214,28 @@ export default function page() {
       },
       labelClass: "absolute top-6",
     },
+    {
+      type: "text",
+      value: "Enter Seo Title",
+      id: "title",
+      name: "title",
+      register: {
+        ...register("title", {
+          required: "itle is required",
+        }),
+      },
+    },
+    {
+      type: "text",
+      value: "Enter Seo Discription",
+      id: "description",
+      name: "description",
+      register: {
+        ...register("description", {
+          required: "description is required",
+        }),
+      },
+    },
   ];
 
   const handleTagsChange = (newTags) => {
@@ -258,7 +283,7 @@ export default function page() {
             <textarea
               id="descript"
               name="productDescription"
-              className="my-6 px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white w-11/12"
+              className="my-6 px-8 py-2 mx-auto  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white w-11/12"
               placeholder="Enter Product Description"
               {...register("productDescription", {
                 required: "Description is required",

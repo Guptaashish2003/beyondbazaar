@@ -1,5 +1,11 @@
 import React from 'react';
 
+export const metadata = {
+  title: {
+    absolute: "services Page",
+  },
+  description: "This is the service description",
+};
 const ServicesPage =() => {
   const services = [
     {

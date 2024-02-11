@@ -1,5 +1,11 @@
 import React from "react";
 
+export const metadata = {
+  title: {
+    absolute: "About Page",
+  },
+  description: "This is the about",
+};
 const AboutUs = () => {
   return (
     <div className="bg-white py-10 px-6 navMargin minScreen">

@@ -8,6 +8,7 @@ export async function GET(request){
 
    await connectDB()
    try {
+      console.log('.............all')
       const rawParams = request.url.split('?')[1];
       const keyword = new URLSearchParams(rawParams).get('keyword')
       const limit = new URLSearchParams(rawParams).get('limit')

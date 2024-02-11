@@ -26,7 +26,7 @@ const OrderStatus = ({id,title,productId,img,total,status,slug,mainId}) => {
               <div>
                 <p className="font-bold text-lg max-w-xl max-h-18 max-sm:text-base overflow-hidden text-ellipsis">{title}</p>
                 <SubmitButton onClick={()=>router.push(`/checkout/${slug}?qty=1`)} value="Buy it again" className='m-2 px-4 h-8 bg-[#333] text-white rounded-md'></SubmitButton>
-                <SubmitButton onClick={()=>router.push(`/user/single-product/${slug}`)} value="view your item" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
+                <SubmitButton onClick={()=>router.push(`/single-product/${slug}`)} value="view your item" className='m-2  border-2 px-4 h-8 text-[#333] bg-white rounded-md'></SubmitButton>
 
               </div>
               <SubmitButton onClick={()=>router.push(`/review/${productId}`)} value="Write a Product Review" className='px-4 h-8 bg-[#333] text-white rounded-md'></SubmitButton>

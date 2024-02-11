@@ -65,14 +65,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function FilterComponent({children,keyword,path}) {
+export default function FilterComponent({children,filter=true,keyword,path}) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   return (
     <div className="bg-white navMargin minScreen">
       <div>
         {/* Mobile filter dialog */}
-        <Transition.Root show={mobileFiltersOpen} as={Fragment}>
+       {filter? <Transition.Root show={mobileFiltersOpen} as={Fragment}>
           <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
             <Transition.Child
               as={Fragment}
@@ -127,7 +127,7 @@ export default function FilterComponent({children,keyword,path}) {
               </Transition.Child>
             </div>
           </Dialog>
-        </Transition.Root>
+        </Transition.Root>:""}
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
@@ -205,7 +205,8 @@ export default function FilterComponent({children,keyword,path}) {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block">
+
+              {filter?<form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                   {subCategories.map((category) => (
@@ -215,7 +216,7 @@ export default function FilterComponent({children,keyword,path}) {
                   ))}
                 </ul>
                 <FilterCard filters={filters}></FilterCard>
-              </form>
+              </form>:""}
 
               {/* Product grid */}
               <div className="lg:col-span-3 ">{children}</div>
