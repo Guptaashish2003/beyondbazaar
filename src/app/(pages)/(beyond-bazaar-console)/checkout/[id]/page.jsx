@@ -22,7 +22,7 @@ const PaymentPage = () => {
   const [address, setAddress] = useState([]);
   const [product, setProduct] = useState([]);
   const [discount, setDiscount] = useState({discountValue:0});
-
+  const [method,setMethod] = useState('');
   const [shippingPrice, setShippingPrice] = useState(0);
 
   const [loading,setLoading] = useState(true)
@@ -38,6 +38,7 @@ const PaymentPage = () => {
         setAddress(res.data)
       }
       if (id === 'bycart') {
+        setMethod('bycart')
         const res = await useGetDataProtected("/api/cart/my-cart");
         if(res.success){
           const newData = res.data.map((val)=>{return {...val.productID,qty:val.productQuantity}} )
@@ -47,6 +48,7 @@ const PaymentPage = () => {
 
         }
       } else {
+        setMethod('byproduct')
         const res = await useGetDataProtected(`/api/product/single-product/${id}`);
         if(res.success){
           setProduct([{...res.data,qty:qty}]);
@@ -64,7 +66,7 @@ const PaymentPage = () => {
 
     try {
       const res = await usePostDataProtected("/api/user/order/create",{
-        orderItems:order.orderItems,discount:discount.disCountId,shippingInfo:addressRef.current.value,itemsPrice:order.itemsPrice,shippingPrice:"0",taxPrice:order.itemsPrice*0.18,totalPrice:(order.itemsPrice*0.18 + order.itemsPrice)
+        orderItems:order.orderItems,discount:discount.disCountId,shippingInfo:addressRef.current.value,shippingPrice:"0",method
       });
       if(res.success){
         console.log(res.data)
@@ -114,28 +116,46 @@ if(loading){
               <p className="text-gray-500 text-sm">Add New Address</p>
             </Link>
           </div>
-          <PriceCheckOut setDiscount={setDiscount} order={order} total={shippingPrice - discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))} onClick={onCheckout} promo={true} btnName="Checkout" >
+          <PriceCheckOut method={method}  setDiscount={setDiscount} order={order} total={(shippingPrice - discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))).toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })} onClick={onCheckout} promo={true} btnName="Checkout" >
 
               <div className="flex justify-between">
                 <p>Total items Price</p>
-                <p>₹ {order.itemsPrice}</p>
+                <p>{order.itemsPrice.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
               <div className="flex justify-between">
                 <p>GST Price</p>
-                <p>₹ {Math.ceil(order.itemsPrice*0.18)}</p>
+                <p>{(order.itemsPrice*0.18).toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
               <div className="flex justify-between">
                 <p>Shipping Price</p>
-                <p>₹ {shippingPrice}</p>
+                <p>{shippingPrice.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
               <div className="flex justify-between">
                 <p>Discount</p>
-                <p>₹ {discount.discountValue}</p>
+                <p>{discount.discountValue.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
 
               <div className="flex justify-between">
                 <p>Total Price</p>
-                <p>₹ {shippingPrice - discount.discountValue + order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))}</p>
+                <p>{(shippingPrice - discount.discountValue + order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))).toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
           </PriceCheckOut>
         </div>

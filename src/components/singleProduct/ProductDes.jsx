@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
 import { useRouter } from "next/navigation";
+import InputBtn from "../Form/InputBtn";
 
 const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
   const router = useRouter();
@@ -74,6 +75,17 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
             +
           </button>
         </div>
+      </div>
+      <div  className="">
+            <InputBtn
+            id='size'
+            label="Size:"
+            labelClass="text-center"
+            mainClass="!flex-row w-1/2 gap-x-16 max:lg:text-lg text-black justify-start items-center"
+            className="!w-36 h-10 text-center uppercase"
+            type='dropdown'
+            option={["raj","kumar"]}
+            ></InputBtn>
       </div>
       <SubmitButton
       loading={loading}

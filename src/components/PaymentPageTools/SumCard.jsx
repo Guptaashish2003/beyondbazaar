@@ -24,7 +24,10 @@ function SumCard({ order }) {
                 {val?.productName}
               </span>
               <span className="float-right text-gray-400">product Quantity {val?.qty}</span>
-              <p className="text-lg font-bold">₹ {val?.productPrice}</p>
+              <p className="text-lg font-bold">{val?.productPrice.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
             </div>
           </div>
         ))}
