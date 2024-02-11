@@ -13,10 +13,10 @@ export async function POST(request, context) {
         return check
     }
     const data = await request.json();
-    const {name,email,street,city,state,pincode,country,number,District} = data
+    const {name,email,houseNo,street,city,state,pincode,country,number,District} = data
     console.log(data)
     const user = await User.findById(check._id);
-    user.address.push({name,email,street,city,state,country,pincode,number,District});
+    user.address.push({name,email,houseNo,street,city,state,country,pincode,number,District});
     await user.save({ validateBeforeSave: false });
      return NextResponse.json({ success:true ,message: "address added successfully",data:user.address }, { status: 200 });
       

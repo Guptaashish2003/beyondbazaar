@@ -14,11 +14,11 @@ export async function PUT(request, context) {
     }
     const data = await request.json();
     const id = context.params.id;
-    const {name,email,street,city,state,pincode,country,number,District} = data
+    const {name,email,houseNo,street,city,state,pincode,country,number,District} = data
     const user = await User.findById(check._id);
     const edit = user.address.map(data=>{
       if (data._id.valueOf() === id) {
-        return {_id:id,name,email,street,city,state,pincode,country,number,District}
+        return {_id:id,name,email,houseNo,street,city,state,pincode,country,number,District}
       }
       else{
         return data;

@@ -18,6 +18,7 @@ const page = () => {
     getData()
     setLoading(false);
   },[])
+
   const getData = async ()=>{
     try {
       const res = await useGetDataProtected(`/api/user/order/order-details/${id}`);
@@ -35,10 +36,9 @@ const page = () => {
   if(loading){
     return(<Loading></Loading>)
   }
-  console.log(product)
   return (
     <div className="flex flex-col navMargin minScreen">
-      <OrderDetail status={4} title={product?.product.productName} img={product?.product.productImage[0]} discription={product?.product.productDescription} price={product?.product.productPrice} className="w-[65%]"/>
+      <OrderDetail status={4} id={id} title={product?.product.productName} img={product?.product.productImage[0]} discription={product?.product.productDescription} price={product?.product.productPrice} className="w-[65%]"/>
       <div className="w-11/12 max-md:w-full p-4 rounded-md bg-gray-50 flex mx-auto gap-3 ">
         <ShippingDetail />
         <PriceTotal />

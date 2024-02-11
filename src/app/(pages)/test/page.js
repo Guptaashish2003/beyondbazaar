@@ -1,14 +1,14 @@
 "use client";
-import { usePostDataProtected } from "@/redux/api/usePostData";
-import Image from "next/image";
-import React from "react";
-import InvoiceTemplate from "@/components/Invoice/InvoiceTemplate";
+
 
 
 
 function page() {
     return (
-        <InvoiceTemplate/>
+        <div>
+            {/* <InvoiceTemplate/> */}
+        </div>
+        // <InvoiceTemplate/>
      
     )
     

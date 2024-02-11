@@ -16,7 +16,6 @@ export async function POST(request, context) {
     District : getaddress.data.results[0].components.state_district,
     street: getaddress.data.results[0].components.suburb,
   }
- console.log("adress",adress)
   return NextResponse.json(
     { success: true, message: "GeoCoding", data:adress },
     { status: 200 }

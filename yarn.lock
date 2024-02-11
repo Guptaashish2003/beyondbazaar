@@ -2118,6 +2118,7 @@ __metadata:
     redux: "npm:^4.2.1"
     swiper: "npm:^11.0.4"
     tailwindcss: "npm:^3.3.5"
+    to-words: "npm:^4.0.0"
     uploadthing: "npm:^6.3.3"
     use-debounce: "npm:^10.0.0"
     yup: "npm:^1.3.2"
@@ -4476,6 +4477,13 @@ __metadata:
   dependencies:
     is-number: "npm:^7.0.0"
   checksum: 487988b0a19c654ff3e1961b87f471702e708fa8a8dd02a298ef16da7206692e8552a0250e8b3e8759270f62e9d8314616f6da274734d3b558b1fc7b7724e892
+  languageName: node
+  linkType: hard
+
+"to-words@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "to-words@npm:4.0.0"
+  checksum: 12bb9365dde973867d834fc060996f87d27262a82d1bc9ae15347f73e54e7d5f00772b497efc9302a4643abd1f0216776d452a44da6a340821982f7e4d13345d
   languageName: node
   linkType: hard
 
