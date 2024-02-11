@@ -834,3 +834,26 @@ thead th {
   margin: 0 auto;
 }
 
+
+/* a4sheet size */
+.a4-sheet {
+  width: 2480px ; /* 155 rem * 16 pixels/rem */
+  min-height: 100% !important;
+ 
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .printable-area,
+  .printable-area * {
+    visibility: visible;
+  }
+
+  .printable-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
