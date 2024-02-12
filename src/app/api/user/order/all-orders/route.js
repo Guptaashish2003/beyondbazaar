@@ -7,8 +7,9 @@ export async function GET(request) {
     await connectDB();
     try {
         const check = await isOauth(request);
+        console.log(check);
         if (!check._id) {
-            return check
+            return check 
         }
         const userID = check._id;
         const orders = await Order.find({ user: userID }).populate({

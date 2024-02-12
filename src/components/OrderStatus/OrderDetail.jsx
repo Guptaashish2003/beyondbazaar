@@ -5,12 +5,8 @@ import productImg from "@/assets/productImag1.jpg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-<<<<<<< HEAD
 const OrderDetail = ({id,title,img,price,discription,address,status=2}) => {
   const router = useRouter();
-=======
-const OrderDetail = ({title,img,price,discription,address,orderDate,status=2}) => {
->>>>>>> 554f631c3f2b1486e71a55278b928a0806b5dcd2
   const [orderStatus,setOrderStatus] = useState(status);
 
   return (
@@ -18,7 +14,6 @@ const OrderDetail = ({title,img,price,discription,address,orderDate,status=2}) =
       <div className="bg-gray-50">
         <main className="mx-auto max-w-2xl pb-1 pt-1 sm:px-6 sm:pt-16 lg:max-w-7xl lg:px-8">
           {/* Products */}
-<<<<<<< HEAD
           <section aria-labelledby="products-heading" >
             <div className="flex justify-start item-start   my-8 space-y-2 flex-col">
               <h1 className="text-3xl  dark:text-black lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
@@ -61,44 +56,6 @@ const OrderDetail = ({title,img,price,discription,address,orderDate,status=2}) =
                     <span aria-hidden="true"> →</span>
                   </a>
                 </div>
-=======
-          <section aria-labelledby="products-heading" className="mt-6">
-          <div className="flex justify-start item-start  mt-20 my-8 space-y-2 flex-col">
-          <h1 className="text-3xl  dark:text-black lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
-            Order #13432
-          </h1>
-          <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
-             {"    "}{orderDate}
-          </p>
-        </div>
-            
-            <div className="space-y-8">
-              <div className="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
-          <div className="space-y-2 px-8 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 ">
-            <div className="flex sm:items-baseline my-2 sm:space-x-4">
-              <a
-                href="#"
-                className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block"
-              >
-                View invoice
-                <span aria-hidden="true"> →</span>
-              </a>
-            </div>
-            <p className="text-sm text-gray-600">
-              Order placed {" "}
-              <time  className="font-medium text-gray-900">
-                { orderDate}
-              </time>
-            </p>
-            <a
-              href="#"
-              className="text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:hidden"
-            >
-              View invoice
-              <span aria-hidden="true"> →</span>
-            </a>
-          </div>
->>>>>>> 554f631c3f2b1486e71a55278b928a0806b5dcd2
                 <div className="px-4 py-2 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
                   <div className="sm:flex lg:col-span-7">
                     <div className="aspect-h-1 aspect-w-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
@@ -112,7 +69,7 @@ const OrderDetail = ({title,img,price,discription,address,orderDate,status=2}) =
                     </div>
                     <div className="mt-6 sm:ml-6 sm:mt-0">
                       <h3 className="text-base font-medium text-gray-900">
-                        <a href="#">{id}</a>
+                        <a href="#">{title}</a>
                       </h3>
                       <p className="mt-2 text-sm font-medium text-gray-900">
                         {price?.toLocaleString("en-IN", {

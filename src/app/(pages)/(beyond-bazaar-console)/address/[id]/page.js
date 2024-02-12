@@ -14,7 +14,7 @@ import { useGetDataProtected } from "@/redux/api/useGetData";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
-const CheckOutPage = () => {
+const page = () => {
   const {id} = useParams();
   const router = useRouter()
   const validationSchema = Yup.object().shape({
@@ -428,4 +428,4 @@ if(loadingScreen){
   );
 };
 
-export default CheckOutPage;
+export default page;

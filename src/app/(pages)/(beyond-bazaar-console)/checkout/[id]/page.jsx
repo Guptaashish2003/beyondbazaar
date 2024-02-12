@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-const PaymentPage = () => {
+const page = () => {
   const {id} = useParams();
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -164,4 +164,4 @@ if(loading){
   );
 };
 
-export default PaymentPage;
+export default page;

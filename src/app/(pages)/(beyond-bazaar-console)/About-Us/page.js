@@ -6,7 +6,7 @@ export const metadata = {
   },
   description: "This is the about",
 };
-const AboutUs = () => {
+const page = () => {
   return (
     <div className="bg-white py-10 px-6 navMargin minScreen">
       <div className="max-w-4xl mx-auto">
@@ -19,14 +19,14 @@ const AboutUs = () => {
 
         <h2 className="text-xl font-semibold mb-4">Our Story</h2>
         <p className="text-gray-600 mb-6">
-          Founded in [Year], our company has been dedicated to [describe your
-          mission or purpose]. Over the years, we have built a reputation for
-          [mention any significant achievements or milestones].
+          Founded in Year, our company has been dedicated to describe your
+          mission or purpose. Over the years, we have built a reputation for
+          mention any significant achievements or milestones.
         </p>
 
         <h2 className="text-xl font-semibold mb-4">Meet the Team</h2>
         <p className="text-gray-600 mb-6">
-          At [Your Brand Name], our team is composed of dedicated and talented
+          At Your Brand Name, our team is composed of dedicated and talented
           individuals who work tirelessly to bring you the best products and
           services. Meet some of our key team members:
           {/* Add team member information here */}
@@ -42,20 +42,20 @@ const AboutUs = () => {
 
         <h2 className="text-xl font-semibold mb-4">Careers</h2>
         <p className="text-gray-600 mb-6">
-          Join our growing team and become a part of [Your Brand Name]. We offer
+          Join our growing team and become a part of Your Brand Name. We offer
           exciting career opportunities in various departments. Check our
           Careers page to view current job openings and apply.
-          {/* Add a link to the Careers page here */}
+
         </p>
 
         <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
         <p className="text-gray-600 mb-6">
           If you have any questions or need assistance, please don't hesitate to
-          contact us. You can reach us at [contact information].
+          contact us. You can reach us at contact information.
         </p>
       </div>
     </div>
   );
 };
 
-export default AboutUs;
+export default page;

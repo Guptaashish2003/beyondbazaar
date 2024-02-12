@@ -4,7 +4,6 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { useGetDataProtected } from '@/redux/api/useGetData'
 import SubmitButton from "@/components/Form/SubmitButton";
-import { createColumnHelper, } from "@tanstack/react-table";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import { useParams } from "next/navigation";
 import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
@@ -14,7 +13,6 @@ import { ToWords } from 'to-words';
 
 
 const page = () => {
-  const columnHelper = createColumnHelper()
   const toWords = new ToWords();
 
   const {id} = useParams();
@@ -39,34 +37,7 @@ const page = () => {
   useEffect(()=>{
     getData()
   },[])
-  console.log("data...........",data)
 
-  //  const columns =[
-  //   columnHelper.accessor((row) => row._id, {
-  //     id: "_id",
-  //     Aggregated: ({ value }) => `${value} Names`,
-  //     cell: (info) => <abbr title={info.getValue()} >{Number(info.row.id)+1} </abbr>,
-  //     header: () => <span>id</span>,
-  //   }),
-  //   columnHelper.accessor((row) => row.productName, {
-  //     id: "productName",
-  //     Aggregated: ({ value }) => `${value} Names`,
-  //     cell: (info) => <abbr title={info.getValue()} >{info.getValue()} </abbr>,
-  //     header: () => <span>Product Name</span>,
-  //   }),
-  //   columnHelper.accessor((row) => row.qty, {
-  //     id: "qty",
-  //     Aggregated: ({ value }) => `${value} Names`,
-  //     cell: (info) => <abbr title={info.getValue()} >{info.getValue()} </abbr>,
-  //     header: () => <span>Qty</span>,
-  //   }),
-  //   columnHelper.accessor((row) => row.price, {
-  //     id: "price",
-  //     Aggregated: ({ value }) => `${value} Names`,
-  //     cell: (info) => <abbr title={info.getValue()} >{info.getValue()} </abbr>,
-  //     header: () => <span>Price</span>,
-  //   }),
-  //  ]
   const exortHeader = [
     {name:"S.No"},
     {name:"Product Name"},

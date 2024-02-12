@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function middleware(request) {
   const response = NextResponse.next();
   let cookies = request.cookies.get('next-auth.session-token')?.value || request.cookies.get('token')?.value;
-  console.log("middleware running..",cookies)
   if(cookies === undefined ){
       if (request.nextUrl.pathname.startsWith('/user/shopping-cart') ) {
         return NextResponse.redirect(new URL('/login', request.url))
