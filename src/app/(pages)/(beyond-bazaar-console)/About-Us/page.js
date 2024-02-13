@@ -1,12 +1,6 @@
-import React from "react";
 
-export const metadata = {
-  title: {
-    absolute: "About Page",
-  },
-  description: "This is the about",
-};
-const page = () => {
+export default function Page() {
+
   return (
     <div className="bg-white py-10 px-6 navMargin minScreen">
       <div className="max-w-4xl mx-auto">
@@ -29,7 +23,7 @@ const page = () => {
           At Your Brand Name, our team is composed of dedicated and talented
           individuals who work tirelessly to bring you the best products and
           services. Meet some of our key team members:
-          {/* Add team member information here */}
+
         </p>
 
         <h2 className="text-xl font-semibold mb-4">Employee Handbook</h2>
@@ -37,7 +31,7 @@ const page = () => {
           Our Employee Handbook outlines our company's policies, values, and
           guidelines. It provides important information for our employees to
           ensure a productive and inclusive work environment.
-          {/* Add a link to the Employee Handbook here */}
+
         </p>
 
         <h2 className="text-xl font-semibold mb-4">Careers</h2>
@@ -58,4 +52,3 @@ const page = () => {
   );
 };
 
-export default page;

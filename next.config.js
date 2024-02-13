@@ -5,6 +5,7 @@ const nextConfig = {
       domains: ['images.unsplash.com','source.unsplash.com',"firebasestorage.googleapis.com",'utfs.io'],
     },
     swcMinify: true,
+
 }
 
   

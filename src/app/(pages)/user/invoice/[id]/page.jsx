@@ -9,9 +9,6 @@ import { useParams } from "next/navigation";
 import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
 import { ToWords } from 'to-words';
 
-
-
-
 const page = () => {
   const toWords = new ToWords();
 
@@ -21,23 +18,36 @@ const page = () => {
  
   
 
-  const getData = async () => {
+  
+  const Print = () =>{     
+    const printContents = document.getElementById('invoice').innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  }
 
+  const getData = async () => {
     try {
       const res = await useGetDataProtected(`/api/invoice/${id}`);
       if(res.success){
         setData(res.data)
         setLoading(false);
+
       }
     } catch (error) {
       errorTostHandler(error);
       setLoading(false);
     }
   }
+
   useEffect(()=>{
     getData()
+
+    
   },[])
 
+  
   const exortHeader = [
     {name:"S.No"},
     {name:"Product Name"},
@@ -47,8 +57,8 @@ const page = () => {
   ]
   const totalPriceIsFiniteNumber = Number.isFinite(data?.totalPrice);
   return (
-    <div className=" printable-area absolute w-screen mx-auto !h-full flex justify-center items-center bg-gray-300 z-[1000]">
-      <div className="p-4 a4-sheet mb-2 relative top-12 bottom-12 bg-white mx-auto ">
+    <div className="printable-area absolute w-screen mx-auto px-16  flex justify-center items-center bg-gray-300 z-[1000]">
+      <div id="invoice" className="p-4 a4-sheet relative  left-0 right-0 bg-white mx-auto ">
         <div className="flex  ">
           <Image className="w-20 h-20 " src={logo} alt="logo" />
           <div className="flex pr-3 flex-col ml-auto">
@@ -60,6 +70,7 @@ const page = () => {
             </p>
           </div>
         </div>
+
         <div className=" pl-3 grid grid-cols-2 ">
           <div className="flex flex-col">
             <p className="text-sm text-gray-900 font-bold ">Sold By:</p>
@@ -148,6 +159,7 @@ const page = () => {
             </p>
           </div>
         </div>
+
         <div className="m-2 md:m-10  p-2 md:p-10 rounded-3xl">
           <table className="w-full border-gray-600 border-collapse border">
             <thead>
@@ -265,17 +277,14 @@ const page = () => {
           </table>
           <p className="font-semibold pt-4 mx-auto text-sm text-center text-gray-400 capitalize"  >This is a computer generated invoice only for retail cusotmers, Please note that this invoice is not a demand for payment</p>
         </div>
+        
+        <div>
+      </div>
 
-        {/* <div>
-        <SubmitButton onClick={()=>{
-          console.log('print')
-          window.print()
-        }} className={``}>
+      </div>
+        <SubmitButton onClick={Print} className='absolute bottom-0 left-0 right-0 mx-auto'>
           Print
         </SubmitButton>
-
-      </div> */}
-      </div>
     </div>
   );
 };

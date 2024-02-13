@@ -42,7 +42,6 @@ const OrderSchema = new mongoose.Schema({
           },
           houseNo:{
             type: String,
-            required: [true, "Please provide your house number"],
           },
           city: {
             type: String,

@@ -26,11 +26,11 @@ const ProductSchema = new mongoose.Schema(
     seo:{
       title: {
         type: String,
-        required: [true, 'please enter the product title'],
+        // required: [true, 'please enter the product title'],
       },
       description: {
         type: String,
-        required: [true, 'please enter the product description'],
+        // required: [true, 'please enter the product description'],
       }
     },
     productPrice: {

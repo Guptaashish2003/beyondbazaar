@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import SearchBar from '../SearchBar/SearchBar'
 import { useSession } from "next-auth/react";
+import { Suspense } from 'react'
 function Navbar() {
   const router = useRouter()
   const session = useSession();
@@ -105,7 +106,9 @@ if (session.status === 'authenticated' && localStorage.getItem("token") !== sess
             /> 
         </div>
     <div className="lsc flex justify-center items-center p-4 gap-2 ">
-     <SearchBar/>
+    <Suspense>
+      <SearchBar/>
+    </Suspense>
       {/* cart */}
       <Link href="/user/shopping-cart" onClick={noLoginUser}>
         <div className='w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon'>

@@ -55,6 +55,7 @@ const page = async ({ params }) => {
           discription={data.productDescription}
           price={data.productPrice}
           stock={data.productQuantity}
+          category={data?.productCategory.category.categoryName}
         />
       </div>
       <ProductDetails />

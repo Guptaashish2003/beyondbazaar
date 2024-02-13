@@ -5,18 +5,22 @@ import Productcard from '@/components/ProductCards/Productcard'
 import Clothingcard from '@/components/ProductCards/Clothingcard'
 import productImg from "@/assets/proImg1.jpg"
 import productImgHover from "@/assets/proImg1Hover.jpg"
+import { useGetData } from '@/redux/api/useGetData'
+import { notFound } from 'next/navigation'
 // import store from './store'
 
 // api call 
-import { useGetData } from '@/redux/api/useGetData'
+
+export const dynamic = "force-dynamic";
 
 export default async function Home(){
-  const {data} = await useGetData("/product/all-product?limit=12")
-  const hero = await useGetData("/heroslides")
-  const img = hero.data.map((itm)=>itm.heroImage);
+  const { data, success } = await useGetData(`/product/all-product`);
+  if (!success) {
+    return notFound();
+  }
   return (
     <>
-    <Herosection  sliderImage={img} className="navMargin " sliderHieght='sliderHieght'/>
+    <Herosection  className="navMargin " sliderHieght='sliderHieght'/>
     <Category/>
     <h2 className='p-8 text-5xl max-sm:text-3xl  font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>

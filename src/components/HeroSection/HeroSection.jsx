@@ -1,11 +1,22 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-function HeroSection({sliderImage,sliderHieght,className,...props}) {
-  // const sliderImage = [hero1,hero2,hero3]
+import { useGetData } from '@/redux/api/useGetData';
+ function HeroSection({sliderHieght,className,...props}) {
+  const [sliderImage,setSliderImage] = useState([])
+  const getSlider = async () => {
+    const hero = await useGetData("/api/heroslides")
+     const slide = hero.data.map((itm)=>itm.heroImage);
+     setSliderImage(slide)
+    
+  }
+  useEffect(()=>{
+    getSlider()
+  },[])
+
   return (
    <>
    <Swiper

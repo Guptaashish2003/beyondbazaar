@@ -12,9 +12,6 @@ function Category() {
 
   return (
     <div className="flex flex-col justify-center items-center text-center px-6 py-2">
-      <h1 className="p-8 text-5xl max-sm:text-3xl  font-bold uppercase">
-        Select Your Category{" "}
-      </h1>
       <Swiper
         slidesPerView={1}
         spaceBetween={10}
