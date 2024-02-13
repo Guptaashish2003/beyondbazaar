@@ -97,6 +97,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    byGooglePass:{
+      type: Boolean,
+      default: true
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     emailVerificationToken: String,

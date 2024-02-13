@@ -4,7 +4,6 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import SubmitButton from "../Form/SubmitButton";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
-import { errorTostHandler } from "@/redux/api/errorTostHandler";
 const PriceCheckOut = ({method,btnName,order,total,setDiscount,checkoutBtn=true,className,promo,...props}) => {
   const [promoValue,setPromoValue] = useState('');
   useEffect(()=>{
@@ -22,7 +21,6 @@ const PriceCheckOut = ({method,btnName,order,total,setDiscount,checkoutBtn=true,
       }
     } catch (error) {
       setLoading(false);
-      errorTostHandler(error);
     } 
   }
   return (

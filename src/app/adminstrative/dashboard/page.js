@@ -1,5 +1,5 @@
 "use client"
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useLayoutEffect} from 'react';
 import { GoDotFill } from "react-icons/go";
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { LuIndianRupee } from "react-icons/lu";
@@ -13,6 +13,9 @@ import {  Button,SparkLine,Stacked,PieChart } from '@/components/Admin/index';
 import { useSelector, useDispatch } from 'react-redux'
 import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading';
+import { getUsers } from '@/redux/action/userService';
+import { useRouter } from 'next/navigation';
+
 
 
 
@@ -94,11 +97,19 @@ const medicalproBranding = {
   ],
 };
 function page() {
+  const router = useRouter()
   const [data , setData] = useState([])
   const [loading, setLoading] = useState(false)
 
   const { currentColor, currentMode } = useSelector((state) => state.theme);
+  const {user} = useSelector((state) => state.user.user)
   const dispatch = useDispatch()
+  useLayoutEffect(()=>{
+     dispatch(getUsers())
+   
+    
+  },[])
+
 
   const getAlldashboard = async () => {
 
@@ -122,6 +133,9 @@ function page() {
   }
   useEffect(() => {
     getAlldashboard()
+    // if(!user || user.role !== 'admin'){
+    //   router.push('/')
+    // }
 
   }, [])
   if (loading) {

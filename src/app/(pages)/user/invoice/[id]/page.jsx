@@ -6,7 +6,6 @@ import { useGetDataProtected } from '@/redux/api/useGetData'
 import SubmitButton from "@/components/Form/SubmitButton";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import { useParams } from "next/navigation";
-import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
 import { ToWords } from 'to-words';
 
 const page = () => {

@@ -24,6 +24,9 @@ const handler = NextAuth({
   
     pages: {
       signIn: "/login",
+      signOut: "/",
+      error: "/login",
+      
     },
     callbacks: {
       async session({ session, token, user }) {
@@ -33,12 +36,12 @@ const handler = NextAuth({
         const exist = await User.findOne({email});
         var newUser;
         var userToken;
-        if (exist.length === 0) {
-          newUser = await User.create({name, email,byGoogle: true,twoStepVerification:false,isEmailValid:true});
+        if (!exist) {
+          newUser = await User.create({name, email,byGoogle: true,twoStepVerification:false,
+            byGooglePass:true,isEmailValid:true});
           userToken = await newUser.getSignedToken();
-        }else{
-          userToken = await exist.getSignedToken();
         }
+        userToken = await exist.getSignedToken();
         session.token = userToken;
         cookies().set({
           name: "token",
