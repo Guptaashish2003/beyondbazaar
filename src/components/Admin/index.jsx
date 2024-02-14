@@ -10,5 +10,5 @@ export { default as Stacked } from './Charts/Stacked';
 export { default as PieChart } from './Charts/Pie';
 export { default as ChartsHeader } from './ChartsHeader';
 export { default as Header } from './Header';
-export { default as Polar } from './Charts/polar';
+export { default as Polar } from './Charts/Polar';
 
