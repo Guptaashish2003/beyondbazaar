@@ -50,10 +50,14 @@ const Page = () => {
     password: Yup.string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters long"),
-      confirm_password: Yup.string()
-      .required("Confirm Password is required")
-      .min(6, "Password must be at least 6 characters long")
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+      confirm_password: Yup.string().when(["byGoogle", "byGooglePass"], {
+        is: (byGoogle, byGooglePass) => byGoogle && byGooglePass,
+        then: Yup.string()
+          .required("Confirm Password is required")
+          .min(6, "Password must be at least 6 characters long")
+          .oneOf([Yup.ref("password"), null], "Passwords must match"),
+        else: Yup.string().notRequired(),
+      }),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -73,7 +77,7 @@ const Page = () => {
     try {
       setFullScreenLoader(true);
       const user = await useGetDataProtected("/api/user/sign-out");
-      if (session.token) {
+      if (session?.token) {
         await signOut({ redirect: false });
       }
       if (user.success) {
@@ -106,6 +110,7 @@ const Page = () => {
     }
   }
   const setPassword = async (data) => {
+    console.log("data...............",data )
     try {
 
       setLoader(true);
@@ -175,7 +180,7 @@ const Page = () => {
           </div>:<form
             className="flex flex-col gap-4 py-2"
           >
-           {user?.byGoogle && user.byGoogle ?  <h2 className="font-bold text-center text-2xl text-[--first-color]">
+           {user?.byGoogle && user.byGooglePass ?  <h2 className="font-bold text-center text-2xl text-[--first-color]">
             Set Password
           </h2>:<h2 className="font-bold text-center text-2xl text-[--first-color]">
             User Verification
@@ -220,7 +225,7 @@ const Page = () => {
               </button>
             </div>
             {
-              user?.byGoogle  && user.byGoogle? <div className="relative">
+              user?.byGoogle  && user.byGooglePass? <div className="relative">
               <InputBtn
                 placeholder="confirm Password"
                 type= "password"
@@ -240,9 +245,9 @@ const Page = () => {
               <p className="text-red-500 text-xs">{errors.confirm_password.message}</p>
             )}
             <SubmitButton
-              value="Verify Password"
+              value={user?.byGoogle  && user.byGooglePass? "Set Password":"Verify Password"}
               loading={Loader}
-              onClick={user?.byGoogle  && user.byGoogle? handleSubmit(setPassword) : handleSubmit(verifyPassword)}
+              onClick={user?.byGoogle  && user.byGooglePass? handleSubmit(setPassword) : handleSubmit(verifyPassword)}
               className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
             />
            
