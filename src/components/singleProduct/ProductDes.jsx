@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
 import { useRouter } from "next/navigation";
+import InputBtn from "../Form/InputBtn";
 
-const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
+const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],category='shoes',className}) => {
   const router = useRouter();
   const [productCount,setProductCount] = useState(1)
   const [loading,setLoading] = useState(false)
+  const [size,setSize] = useState(sizeOptions[0])
   const dispatch = useDispatch()
   const increment = () => {
     if (stock > productCount) {
@@ -42,6 +44,9 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
   const orderNow = async () => {
     router.push(`/checkout/${slug}?qty=${productCount}`)
   }
+
+
+
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
       <div className="  my-2 text-bold mr-4">
@@ -75,16 +80,28 @@ const ProductDes = ({id,slug,title,discription,price,stock,className}) => {
           </button>
         </div>
       </div>
+      {category === "shoes" || category === "clothes"  ?<div  className="">
+            <InputBtn
+            id='size'
+            label="Size:"
+            labelClass="text-center"
+            mainClass="!flex-row w-1/2 gap-x-16 max:lg:text-lg text-black justify-start items-center"
+            className="!w-36 h-10 text-center uppercase"
+            type='dropdown'
+            onChange={(e)=>setSize(e.target.value)}
+            option={sizeOptions}
+            ></InputBtn>
+      </div>:""}
       <SubmitButton
       loading={loading}
-        className="my-4 max-lg:my-2 font-bold cartAnimation w-11/12 h-12 max-lg:h-8 border-2 border-solid border-slate-400 text-xl overflow-hidden"
+        className="my-4 max-lg:my-2 font-bold cartAnimation w-11/12 h-12  border-2 border-solid border-slate-400 text-xl overflow-hidden"
         value={"Add To Cart"}
         onClick={addToCartProduct}
         >
         <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />
       </SubmitButton>
       <SubmitButton
-        className="my-4 font-bold max-lg:my-2 orderBounce w-11/12 h-12 max-lg:h-8 border-2 border-solid border-slate-400 text-xl bg-black text-white"
+        className="my-4 font-bold max-lg:my-2 orderBounce w-11/12 h-12  border-2 border-solid border-slate-400 text-xl bg-black text-white"
         value={"Order Now"}
         onClick={orderNow}
         

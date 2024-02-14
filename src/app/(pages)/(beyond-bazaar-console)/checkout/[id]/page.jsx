@@ -3,14 +3,16 @@ import Loading from "@/app/loading";
 import SelectAdres from "@/components/PaymentPageTools/SelectAdres";
 import SumCard from "@/components/PaymentPageTools/SumCard";
 import PriceCheckOut from "@/components/shoppingCart/PriceCheckOut";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import { useGetDataProtected } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-const PaymentPage = () => {
+const page = () => {
   const {id} = useParams();
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -20,15 +22,13 @@ const PaymentPage = () => {
   const [address, setAddress] = useState([]);
   const [product, setProduct] = useState([]);
   const [discount, setDiscount] = useState({discountValue:0});
-
+  const [method,setMethod] = useState('');
   const [shippingPrice, setShippingPrice] = useState(0);
 
   const [loading,setLoading] = useState(true)
   const [order,setOrder]= useState();
   useEffect(()=>{
-    // setDiscount({discountValue:0})
     getData()
-    // test()
   },[])
   const getData = async () => {
     try {
@@ -36,53 +36,44 @@ const PaymentPage = () => {
       const res = await useGetDataProtected("/api/user/address/me");
       if(res.success){
         setAddress(res.data)
-        console.log(res.data)
       }
       if (id === 'bycart') {
+        setMethod('bycart')
         const res = await useGetDataProtected("/api/cart/my-cart");
         if(res.success){
           const newData = res.data.map((val)=>{return {...val.productID,qty:val.productQuantity}} )
           const newOrder = res.data.map((val)=>{return {product:val.productID._id,qty:val.productQuantity}} )
           setProduct(newData)
           setOrder({orderItems:newOrder,itemsPrice:res.totalprice})
-          console.log({orderItems:newOrder,itemsPrice:res.totalprice},'order...')
+
         }
       } else {
+        setMethod('byproduct')
         const res = await useGetDataProtected(`/api/product/single-product/${id}`);
         if(res.success){
           setProduct([{...res.data,qty:qty}]);
-          console.log(res.data._id)
           setOrder({orderItems:[{qty:qty,product:res.data._id}],itemsPrice:res.data.productPrice * qty})
         }
       }
 
       setLoading(false);
     } catch (error) {
-      console.log(error)
+      errorTostHandler(error);
     } 
   }
-  const test = async () => {
-    try {
-      const res = await useGetDataProtected("/api/user/order/all-orders");
-      if(res.success){
-        console.log(res.data)
-      }
-    } catch (error) {
-      console.log(error)
-    } 
-  }
+  
   const onCheckout = async () => {
 
     try {
       const res = await usePostDataProtected("/api/user/order/create",{
-        orderItems:order.orderItems,discount:discount.disCountId,shippingInfo:addressRef.current.value,itemsPrice:order.itemsPrice,shippingPrice:"0",taxPrice:order.itemsPrice*0.18,totalPrice:(order.itemsPrice*0.18 + order.itemsPrice)
+        orderItems:order.orderItems,discount:discount.disCountId,shippingInfo:addressRef.current.value,shippingPrice:"0",method
       });
       if(res.success){
         console.log(res.data)
         router.push("/user/your-orders")
       }
     } catch (error) {
-      console.log(error)
+      errorTostHandler(error);
     } 
   }
 
@@ -92,7 +83,7 @@ if(loading){
 }
   
   return (
-    <section className="flex flex-col navMargin minScreen">
+    <section className="flex flex-col navMargin minScreen px-">
       <div className="flex gap-3 justify-center align-center text-3xl my-4 ">
         <p>Order CheckOut</p>
       </div>
@@ -112,7 +103,7 @@ if(loading){
               <select
                 id="address-select"
                 ref={addressRef}
-                className="h-14 w-full max-w-full bg-[#333] text-white border rounded-md text-center capitalize"
+                className="h-14 w-full max-w-full px-4 bg-[#333] text-white border rounded-md text-center capitalize"
               >
                 {address.map((val,index)=> <option key={index} value={val._id} >{`${val?.street} ${val?.state} ${val?.pincode} ${val?.number}`}</option>)}
               </select>
@@ -125,28 +116,46 @@ if(loading){
               <p className="text-gray-500 text-sm">Add New Address</p>
             </Link>
           </div>
-          <PriceCheckOut setDiscount={setDiscount} order={order} total={shippingPrice +discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))} onClick={onCheckout} promo={true} btnName="Checkout" >
+          <PriceCheckOut method={method}  setDiscount={setDiscount} order={order} total={(shippingPrice - discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))).toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })} onClick={onCheckout} promo={true} btnName="Checkout" >
 
               <div className="flex justify-between">
                 <p>Total items Price</p>
-                <p>₹ {order.itemsPrice}</p>
+                <p>{order.itemsPrice.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
               <div className="flex justify-between">
                 <p>GST Price</p>
-                <p>₹ {Math.ceil(order.itemsPrice*0.18)}</p>
+                <p>{(order.itemsPrice*0.18).toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
               <div className="flex justify-between">
                 <p>Shipping Price</p>
-                <p>₹ {shippingPrice}</p>
+                <p>{shippingPrice.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
               <div className="flex justify-between">
                 <p>Discount</p>
-                <p>₹ {discount.discountValue}</p>
+                <p>{discount.discountValue.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
 
               <div className="flex justify-between">
                 <p>Total Price</p>
-                <p>₹ {shippingPrice +discount.discountValue+ order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))}</p>
+                <p>{(shippingPrice - discount.discountValue + order.itemsPrice + (Math.ceil(order.itemsPrice*0.18))).toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}</p>
               </div>
           </PriceCheckOut>
         </div>
@@ -155,4 +164,4 @@ if(loading){
   );
 };
 
-export default PaymentPage;
+export default page;

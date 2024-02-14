@@ -4,7 +4,7 @@ import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import * as Yup from "yup";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { useGetData, useGetDataProtected } from "@/redux/api/useGetData";
@@ -19,6 +19,7 @@ export default function page() {
   const [category, setCategory] = useState([]);
   const [product, setProduct] = useState([]);
   const [productTag, setProductTag] = useState([]);
+  const {add} = useParams()
   
   const [categoryTags, setCategoryTags] = useState([]);
 
@@ -76,6 +77,15 @@ export default function page() {
         setProduct(data.sort());
         setCategory(res.data.sort());
       }
+      // if(add !== 'add'){
+      //   const res = await useGetDataProtected(
+      //     `/api/admin/promocode/edit/${add}`
+      //   );
+      //   if (res) {
+      //     setProductTag(res.promoProduct);
+      //     setCategoryTags(res.promoCategory);
+      //   }
+      // }
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -240,7 +250,7 @@ export default function page() {
     {
       type: "dropdown",
       label: "select the Category Type",
-      option: ["None",...category.map((itm) =>{return {name:itm.categoryName,value:itm._id}})],
+      option: [{name:"None",value:"None"},...category.map((itm) =>{return {name:itm.categoryName,value:itm._id}})],
       labelClass: "absolute top-6",
       name: "promoCategory",
       register:  {...register("promoCategory", { onChange: handleCategoryTags })}

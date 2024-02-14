@@ -3,30 +3,28 @@ import React, { useEffect,useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import SubmitButton from "../Form/SubmitButton";
 import { usePostDataProtected } from "@/redux/api/usePostData";
-const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
+import { toast } from "react-toastify";
+const PriceCheckOut = ({method,btnName,order,total,setDiscount,checkoutBtn=true,className,promo,...props}) => {
   const [promoValue,setPromoValue] = useState('');
   useEffect(()=>{
 
   },[total]);
   const [loading,setLoading] = useState(false);
   const applyPromo = async ()=>{
-    console.log(promoValue);
-    console.log({orderItems:order.orderItems,totalPrice:order.itemsPrice})
     try {
       setLoading(true);
-      const res = await usePostDataProtected("/api/apply-promo",{promocode:promoValue,orderItems:order.orderItems,totalPrice:order.itemsPrice});
+      const res = await usePostDataProtected("/api/apply-promo",{promocode:promoValue,orderItems:order.orderItems,method});
       if(res.success){
-        console.log(res.data);
         setDiscount(res.data)
         setLoading(false);
+        toast.success(res.message)
       }
     } catch (error) {
-      console.log(error)
       setLoading(false);
     } 
   }
   return (
-    <section className="flex  flex-col justify-center border-solid  border-y-2  p-2 mt-4">
+    <section className={className?`${className}`:"flex  flex-col justify-center border-solid  border-y-2  p-2 mt-4"}>
       <h1 className="font-bold text-black m-auto text-2xl mb-2">
         Order Summary
       </h1>
@@ -61,7 +59,7 @@ const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
           })}</p>
         </div>
       </div>
-
+{checkoutBtn &&
       <SubmitButton
         {...props}
         className="relative  cursor-pointer inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-black border-2 border-gray-600 rounded-md hover:text-white group hover:bg-gray-50"
@@ -71,7 +69,7 @@ const PriceCheckOut = ({btnName,order,total,setDiscount,promo,...props}) => {
           <AiOutlineShoppingCart className="w-6 h-auto" />
         </span>
         <span className="relative m-auto ">{btnName}</span>
-      </SubmitButton>
+      </SubmitButton>}
     </section>
   );
 };

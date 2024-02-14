@@ -1,4 +1,5 @@
 import mongoose,{plugin} from "mongoose";
+import SubCategory from "./SubCategory";
 import slugify from "mongoose-simple-slugify"
 const ProductSchema = new mongoose.Schema(
   {
@@ -22,6 +23,16 @@ const ProductSchema = new mongoose.Schema(
       // required: [true, 'please enter the product slug'],
       unique: true,
     },
+    seo:{
+      title: {
+        type: String,
+        // required: [true, 'please enter the product title'],
+      },
+      description: {
+        type: String,
+        // required: [true, 'please enter the product description'],
+      }
+    },
     productPrice: {
       type: Number,
       required: [true, 'please enter the product price'],
@@ -42,8 +53,19 @@ const ProductSchema = new mongoose.Schema(
     ],
     productCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'SubCategories',
+      ref: SubCategory,
       required: true
+    },
+    mostPoular: {
+      type: Number,
+      default: false,
+    },
+    size:[{
+      type: String,
+    }],
+    rating: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

@@ -2,8 +2,10 @@ import Promocode from "@/backend/model/Promocode"
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB";
 import isOauth from "@/backend/middlewere/isOauth";
+import Cart from "@/backend/model/Cart";
+import Product from "@/backend/model/Product";
 
-function calculateDiscount(promoCodeType,discountValue, totalOrderValue,maxDiscount=0) {
+export function calculateDiscount(promoCodeType,discountValue, totalOrderValue,maxDiscount=0) {
    if(promoCodeType === "Percentage") {
     if (maxDiscount < 0 && ((discountValue/100)*totalOrderValue)>maxDiscount) {
         return maxDiscount;
@@ -22,12 +24,26 @@ export async function POST(request) {
         if (!check._id) {
             return check
         }
-        const { promocode,orderItems,totalPrice,category } = await request.json();
-        // if (!promocode || !orderItems  ) {
-        //     return NextResponse.json({ success: false, message: "promo code not exist" }, { status: 400 });
-        // }
+        const { promocode,orderItems,method } = await request.json();
+        if (!promocode || !orderItems || !method  ) {
+            return NextResponse.json({ success: false, message: "promo code not exist" }, { status: 400 });
+        }
+        let totalPrice 
+        if(method === "bycart") {
+           const cart = await Cart.find({ userID:check._id }).populate("productID", "productPrice productQuantity");
+           totalPrice = cart.reduce((acc, curr) =>{
+            return acc + curr.productID.productPrice * curr.productQuantity;
+         
+         },0)
+        }
+        else if(method === "byproduct") {
+          const product = await Product.findById(orderItems[0].product);
+          console.log(product.productPrice)
+          console.log(orderItems[0].qty)
+          totalPrice = product.productPrice * Number(orderItems[0].qty);
+        }
         const promocodeDoc = await Promocode.findOne({
-            promocode: promocode,
+            promocode: promocode.toUpperCase(),
             active: true,
             startDate: { $lte: new Date() },
             endDate: { $gte: new Date() },
@@ -53,10 +69,9 @@ export async function POST(request) {
           }
           const discountValue = calculateDiscount(promocodeDoc.discountType,promocodeDoc.discountValue,totalPrice,promocodeDoc.maxDiscount);
           const promo = {disCountId:promocodeDoc._id,discountValue};
-        return NextResponse.json({ success: true, message: "Promocode created", data: promo }, { status: 200 });
+        return NextResponse.json({ success: true, message: "Promocode added", data: promo }, { status: 200 });
         
     } catch (error) {
-        console.log(error)
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });     
     }
 }

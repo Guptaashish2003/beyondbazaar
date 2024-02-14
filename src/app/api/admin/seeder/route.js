@@ -23,17 +23,17 @@ export async function GET(request){
         // }
 
         // await User.deleteMany();
-        await Product.deleteMany();
+        // await Product.deleteMany();
         // await Category.deleteMany();
         // await SubCategory.deleteMany();
         console.log("all Data deleted...")
         // await User.insertMany(userdata)
         // await Product.insertMany(product)
 
-        for (let i = 0; i < product.length; i++) {  //insert product using  for loop by creating a unique slug of the product
-            const element = product[i];
-            await Product.create(element);  
-        }
+        // for (let i = 0; i < product.length; i++) { 
+        //     const element = product[i];
+        //     await Product.create(element);  
+        // }
 
 
 

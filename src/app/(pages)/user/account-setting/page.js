@@ -24,19 +24,23 @@ import {useDispatch, useSelector} from "react-redux";
 import {verify} from "@/redux/action/loginSecuritySlice"; 
 import { getUsers } from "@/redux/action/userService";
 import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
+import { GrUserAdmin } from "react-icons/gr";
+import { useUpdateData } from "@/redux/api/useUpdateData";
 
 const Page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const session = useSession();
+  const { data: session, status } = useSession()
   const [Loader,setLoader] = useState();
   const [fullScreenLoader , setFullScreenLoader] = useState(false);
   const [verification,setVerification] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const {user,loading} = useSelector((state) => state.user.user)
+  
   useLayoutEffect(()=>{
     dispatch(getUsers())
+    
   },[])
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
@@ -46,6 +50,10 @@ const Page = () => {
     password: Yup.string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters long"),
+      confirm_password: Yup.string()
+      .required("Confirm Password is required")
+      .min(6, "Password must be at least 6 characters long")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -59,11 +67,13 @@ const Page = () => {
     router.push("/user/your-address");
   };
 
+  console.log("session/........................",user)
+
   const handleSignOut = async () => {
     try {
       setFullScreenLoader(true);
       const user = await useGetDataProtected("/api/user/sign-out");
-      if (session.status === 'authenticated') {
+      if (session.token) {
         await signOut({ redirect: false });
       }
       if (user.success) {
@@ -74,8 +84,8 @@ const Page = () => {
       router.push("/");
     } catch (error) {
       setFullScreenLoader(false);
+      console.error(error);
       router.push("/");
-      errorTostHandler(error);
     }
   };
   const verifyPassword = async (data) => {
@@ -90,15 +100,37 @@ const Page = () => {
     setLoader(false);
     } catch (error) {
       setLoader(false);
-      router.push("/")
-      errorTostHandler(error);
+      // router.push("/")
+      console.error(error);
       
     }
   }
+  const setPassword = async (data) => {
+    try {
+
+      setLoader(true);
+      const user = await useUpdateData(
+        "/api/user/set-password",
+        data
+      );
+      if (user.success) {
+        
+      }
+      
+      setLoader(false);
+      // router.back();
+    } catch (error) {
+      setLoader(false);
+      // router.back();
+      console.error(error);
+    }
+  };
+  
 
   return (
     <>
     {fullScreenLoader && <FullScreenLoader/>}
+    
     <div className="min-h-screen flex justify-center items-center navMargin minScreen">
       <div className="   w-3/4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-sm:gap-4 mx-auto">
 
@@ -143,9 +175,11 @@ const Page = () => {
           </div>:<form
             className="flex flex-col gap-4 py-2"
           >
-            <h2 className="font-bold text-center text-2xl text-[--first-color]">
+           {user?.byGoogle && user.byGoogle ?  <h2 className="font-bold text-center text-2xl text-[--first-color]">
+            Set Password
+          </h2>:<h2 className="font-bold text-center text-2xl text-[--first-color]">
             User Verification
-          </h2>
+          </h2>}
             <InputBtn
               type="email"
               placeholder="Email"
@@ -185,15 +219,33 @@ const Page = () => {
                 )}
               </button>
             </div>
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message}</p>
+            {
+              user?.byGoogle  && user.byGoogle? <div className="relative">
+              <InputBtn
+                placeholder="confirm Password"
+                type= "password"
+                {...register("confirm_password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters long",
+                  },
+                })}
+                className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+              />
+             
+            </div>:""
+            }
+            {errors.confirm_password && (
+              <p className="text-red-500 text-xs">{errors.confirm_password.message}</p>
             )}
             <SubmitButton
               value="Verify Password"
               loading={Loader}
-              onClick={handleSubmit(verifyPassword)}
+              onClick={user?.byGoogle  && user.byGoogle? handleSubmit(setPassword) : handleSubmit(verifyPassword)}
               className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
             />
+           
           </form>}
 
         </Modal>
@@ -218,6 +270,14 @@ const Page = () => {
             description={"Contact us, and we'll be happy to assist you, just like family."}
           />
         </Link>
+        {user?.role === "admin" ? <Link href="/adminstrative/dashboard" passHref>
+          <YourAccSetting
+            onClick ={()=>router.push("/adminstrative/dashboard")}
+            img={<GrUserAdmin className="w-1/3 h-20 max-md:h-12  mx-auto max-md:w-1/2 object-cover" />}
+            title={"Admin"}
+            description={"Admin Panel"}
+          />
+        </Link>:""}
 
  {/* logout button  */}
         <YourAccSetting

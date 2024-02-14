@@ -1,6 +1,7 @@
 import User from "./User";
 import Product from "./Product";
 import mongoose from "mongoose";
+import Promocode from "./Promocode";
 const OrderSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -39,7 +40,9 @@ const OrderSchema = new mongoose.Schema({
             type: String,
             maxlength: [30, "Street cannot be more than 60 characters"],
           },
-  
+          houseNo:{
+            type: String,
+          },
           city: {
             type: String,
             required: [true, "Please provide your city"],
@@ -82,8 +85,9 @@ const OrderSchema = new mongoose.Schema({
     itemsPrice: { type: Number, required: true },
     discount:{ 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Promocode'
+        ref: Promocode
     },
+    discountAmount:{type: Number,default: 0},
     // shippingPrice: { type: Number, required: true },
     taxPrice: { type: Number },
     totalPrice: { type: Number, required: true },

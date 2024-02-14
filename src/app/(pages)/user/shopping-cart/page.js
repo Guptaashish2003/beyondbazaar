@@ -141,7 +141,7 @@ const ShoppingCart = () => {
   }
   return (
     <>
-      <section className="flex flex-col lg:mt-[--nav-spc] mt-12">
+      <section className="flex flex-col navMargin minScreen max-sm:px-6">
         <div className="flex gap-3 justify-center align-center text-3xl my-4 ">
           <span className="relative">
             <div className="absolute flex justify-center items-center text-sm top-0 right-0 w-4 h-4 rounded-full bg-[#333] text-white">{noOfProduct}</div>

@@ -13,6 +13,7 @@ export async function GET(request,context){
                 return NextResponse.json({success:false, message:"Invalid token"},{status:400}) 
             }
             user.isEmailValid = true;
+            user.byGooglePass = false;
             user.emailVerificationToken = undefined;
             user.emailVerificationExpires = undefined;
             await user.save();

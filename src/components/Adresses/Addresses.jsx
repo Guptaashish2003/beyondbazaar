@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
 
-const Addresses = ({id,setAddress,name,email,street,state,city,country,district,pincode,number,withbtn=true,className}) => {
+const Addresses = ({id,setAddress,name,email,houseNo,street,state,city,country,district,pincode,number,withbtn=true,className}) => {
   const [fullScreenLoader , setFullScreenLoader] = useState(false);
   const deleteAdrress = async ()=>{
     try {
@@ -40,6 +40,7 @@ const Addresses = ({id,setAddress,name,email,street,state,city,country,district,
       </div>
       <div className="flex flex-col justify-start gap-1 items-start w-full p-1">
         <p className="text-gray-900 text-lg">{name}</p>
+        <p className="text-gray-900 text-md">{houseNo}</p>
         <p className="text-gray-900 text-md">{street}</p>
         <p className="text-gray-900 text-md">{city}</p>
         <p className="text-gray-900 text-md">{district}</p>

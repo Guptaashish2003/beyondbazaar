@@ -26,7 +26,7 @@ function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,discount,ani
     }
   }
   const moveSingle = () => {
-    router.push(`/user/single-product/${slug}`)
+    router.push(`/single-product/${slug}`)
   }
   const  addToCartProduct = async () => {
     setLoading(true)

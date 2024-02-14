@@ -23,10 +23,12 @@ export async function POST(request) {
       productPrice,
       productQuantity,
       productAvailable,
+      title,
+      description,
       productTags,
       productCategory
     } = data;
-
+      
     if(
       !productName ||
       !productDescription ||
@@ -34,6 +36,8 @@ export async function POST(request) {
       !productPrice ||
       !productQuantity||
       !productAvailable||
+      !title||
+      !description||
       !productTags ||
       !productCategory
     ) {
@@ -49,6 +53,8 @@ export async function POST(request) {
       productImage,
       productPrice,
       productQuantity,
+      seo:{title,description},
+      productTags,
       productAvailable,
       productCategory
     });

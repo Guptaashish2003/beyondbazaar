@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Modal from "@/components/Modal/Modal";
-import { toast } from "react-toastify";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -9,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from "yup";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
-import { useState } from "react";
+import { useState,useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
@@ -29,9 +28,13 @@ const page = () => {
   const nameValidationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
   });
-  if (!isVerify) {
-    router.back();
-  }
+  useLayoutEffect(() => {
+    if (!isVerify) {
+     router.back()
+    }
+
+  }, [isVerify]);
+  
 
   const passwordValidationSchema = Yup.object().shape({
     current_password: Yup.string().required("Current Password is required"),
@@ -349,3 +352,6 @@ const page = () => {
 };
 
 export default page;
+
+
+

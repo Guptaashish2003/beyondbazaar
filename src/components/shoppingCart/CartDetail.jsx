@@ -62,7 +62,7 @@ const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
 
         <div className="flex justify-between  p-4 w-full max-sm:flex-col max-sm:items-start max-sm:gap-y-2">
           <div className="text-[--first-color] pl-1">
-            <p className="font-bold max-w-sm">{title}</p>
+            <p className="font-bold w-[90%]">{title}</p>
             <p className="font-bold">
               {price.toLocaleString("en-IN", {
                 style: "currency",

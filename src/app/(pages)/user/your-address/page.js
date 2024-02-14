@@ -32,14 +32,14 @@ const page =  () => {
   }
   
   return (
-    <div className=" mx-auto w-3/4 navMargin minScreen">
+    <div className=" mx-auto p-12 w-3/4 navMargin minScreen">
       <h1 className=" text-gray-900 my-8 text-2xl font-semibold">Your Addresses</h1>
       <div className="flex   flex-wrap gap-5 max-md:justify-center">
       <Link href="/address/add-new-address" className="flex flex-col h-[16rem] w-[16rem]  items-center rounded-sm cursor-pointer justify-center text-center border-dashed border-2 border-gray-500">
         <FaPlus className="w-8 h-8" />
         <p className="text-gray-500 text-sm">Add New Address</p>
       </Link>
-      {address.map((ads)=><Addresses className='w-[16rem] ' setAddress={setAddress} key={ads._id} id={ads._id} name={ads.name} email={ads.email} number={ads.number} street={ads.street} district={ads.District} state={ads.state} city={ads.city} country={ads.county} pincode={ads.pincode} 
+      {address.map((ads)=><Addresses className='w-[16rem] ' setAddress={setAddress} key={ads._id} id={ads._id} name={ads.name} email={ads.email} houseNo={ads.houseNo} number={ads.number} street={ads.street} district={ads.District} state={ads.state} city={ads.city} country={ads.county} pincode={ads.pincode} 
        />)}
       </div>
     </div>

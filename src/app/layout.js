@@ -11,12 +11,17 @@ import GoogleProvider from '@/components/googleProvider/googleProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'BeyondBazar',
-}
+  metadataBase: new URL(process.env.FrontendURL),
+  title: {
+    default: "beyond Bazar",
+    template: `%s | beyond Bazar`,
+  },
+  description: "beyond bazar",
+};
 
 export default function RootLayout({children,params}) {
   const {isAdmin} = params
-  console.log(params,"parmas layout")
+  
   return (
     <html lang="en">
       <body className={inter.className} > 
