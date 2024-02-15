@@ -36,7 +36,11 @@ const page = () => {
       const res = await useGetDataProtected("/api/user/address/me");
       if(res.success){
         setAddress(res.data)
+        if(res.data.length === 0){
+          router.push("/address/add-new-address")         
+        }
       }
+      
       if (id === 'bycart') {
         setMethod('bycart')
         const res = await useGetDataProtected("/api/cart/my-cart");
@@ -69,7 +73,6 @@ const page = () => {
         orderItems:order.orderItems,discount:discount.disCountId,shippingInfo:addressRef.current.value,shippingPrice:"0",method
       });
       if(res.success){
-        console.log(res.data)
         router.push("/user/your-orders")
       }
     } catch (error) {

@@ -40,6 +40,7 @@ const page = () => {
   const { register, handleSubmit, formState,setValue } = useForm(formOptions);
   const { errors } = formState;
   const [loading,setLoading] = useState(false);
+  const [locationLoader, setLocationLoader] = useState(false);
   const [loadingScreen,setLoadingScreen] = useState(false);
   useEffect(()=>{setUserData();
   },[])
@@ -62,6 +63,7 @@ const page = () => {
   }
   const getLocation = async () => {
     try {
+        setLocationLoader(true);
         const geo = navigator.geolocation;
         const position = await new Promise((resolve, reject) => {
             geo.getCurrentPosition(resolve, reject);
@@ -79,9 +81,11 @@ const page = () => {
                 setValue(key,res.data[key])
               }
             }
+            setLocationLoader(false);
 
     } catch (error) {
-        console.log("Error fetching location", error);
+      setLocationLoader(false);
+      errorTostHandler(error);
     }
 };
 
@@ -122,6 +126,7 @@ if(loadingScreen){
                 <p className="">Time is Money Get Your Location Instant !!</p>
                 <div className="inline-flex items-end">
                   <SubmitButton
+                  loading={locationLoader}
                     onClick={getLocation}
                    className="bg-gray-500 hover:bg-black max-md:h-11 max-md:text-xs text-white font-bold py-2 px-4 rounded">
                     Get Location

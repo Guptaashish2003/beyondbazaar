@@ -39,7 +39,7 @@ const page =  () => {
         <FaPlus className="w-8 h-8" />
         <p className="text-gray-500 text-sm">Add New Address</p>
       </Link>
-      {address.map((ads)=><Addresses className='w-[16rem] ' setAddress={setAddress} key={ads._id} id={ads._id} name={ads.name} email={ads.email} houseNo={ads.houseNo} number={ads.number} street={ads.street} district={ads.District} state={ads.state} city={ads.city} country={ads.county} pincode={ads.pincode} 
+      {address.map((ads)=><Addresses className='w-[16rem] ' setAddress={setAddress} key={ads._id} id={ads._id} name={ads.name} email={ads.email} houseNo={ads.houseNo} phNumber={ads.phNumber} street={ads.street} district={ads.District} state={ads.state} city={ads.city} country={ads.county} pincode={ads.pincode} 
        />)}
       </div>
     </div>

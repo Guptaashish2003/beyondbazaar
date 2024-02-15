@@ -14,6 +14,7 @@ var transporter = nodemailer.createTransport({
 export async function POST(request ) {
   const data = await request.json();
   const {name, email,phone,message} = data;  
+  console.log(name,email,phone,message)
   if(!name || !email || !phone || !message){
     return NextResponse.json(
       { success: false, message: "Invalid Input" },
@@ -21,21 +22,19 @@ export async function POST(request ) {
     );
   }
   const EmailHtml = sendEmail({name,email,phone,message});
- 
   try {
       transporter.sendMail({
       from: email,
       to: "beyondbazaarofficial@gmail.com",
       subject: `Message from ${name} and his phone number is ${phone}`,
-      EmailHtml,
+      html:EmailHtml,
     });
 
     return NextResponse.json(
-      { success: true, message: message },
+      { success: true, message: "send message succesfully" },
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

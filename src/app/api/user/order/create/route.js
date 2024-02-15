@@ -44,7 +44,7 @@ export async function POST(request) {
         let promocodeDoc
         if(discount){
             promocodeDoc = await Promocode.findById(discount)
-            discountAmount = calculateDiscount(promocodeDoc.discountType,promocodeDoc.discountAmount,itemsPrice,promocodeDoc.maxDiscount);
+            discountAmount = calculateDiscount(promocodeDoc.discountType,promocodeDoc.discountValue,itemsPrice,promocodeDoc.maxDiscount);
         }
         const taxPrice = itemsPrice * 0.18;
         const totalPrice = itemsPrice + taxPrice + shippingPrice - discountAmount

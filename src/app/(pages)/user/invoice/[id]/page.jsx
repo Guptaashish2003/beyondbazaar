@@ -217,7 +217,7 @@ const page = () => {
                   Discount
                 </td>
                 <td className="border  text-gray-800 p-2">
-                  {Math.floor(data?.discountPrice)}
+                  {Math.floor(data?.discountAmount)}
                 </td>
               </tr>
               {/* here claculate total price and total qty compulsary  */}

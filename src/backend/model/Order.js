@@ -70,7 +70,7 @@ const OrderSchema = new mongoose.Schema({
             required: [true, "Please provide your country"],
             maxlength: [30, "country cannot be more than 60 characters"],
           },
-          number: {
+          phNumber: {
             type:Number,
           },
         }

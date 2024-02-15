@@ -26,6 +26,7 @@ import { getUsers } from "@/redux/action/userService";
 import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
 import { GrUserAdmin } from "react-icons/gr";
 import { useUpdateData } from "@/redux/api/useUpdateData";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -70,9 +71,6 @@ const Page = () => {
   const handleYourAddress = () => {
     router.push("/user/your-address");
   };
-
-  console.log("session/........................",user)
-
   const handleSignOut = async () => {
     try {
       setFullScreenLoader(true);
@@ -88,7 +86,6 @@ const Page = () => {
       router.push("/");
     } catch (error) {
       setFullScreenLoader(false);
-      console.error(error);
       router.push("/");
     }
   };
@@ -104,13 +101,10 @@ const Page = () => {
     setLoader(false);
     } catch (error) {
       setLoader(false);
-      // router.push("/")
-      console.error(error);
-      
+     errorTostHandler(error);      
     }
   }
   const setPassword = async (data) => {
-    console.log("data...............",data )
     try {
 
       setLoader(true);
@@ -119,15 +113,14 @@ const Page = () => {
         data
       );
       if (user.success) {
-        
+        toast.success(user.message);
       }
-      
       setLoader(false);
-      // router.back();
+      router.back();
     } catch (error) {
       setLoader(false);
-      // router.back();
-      console.error(error);
+      errorTostHandler(error);
+      router.back();
     }
   };
   

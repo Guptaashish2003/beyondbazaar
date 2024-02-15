@@ -5,9 +5,9 @@ import User from "@/backend/model/User";
 const isOauth = async req => {
   try {
     const token = await req.headers.get("Authorization")?.split(" ")[1]
-    if (!token) {
+    if (!token || token === "null" || token === "undefined") {
       return NextResponse.json(
-        { success: false, message: error.message && "You are not Authorized or token is expired"},
+        { success: false, message: "You are not Authorized please login again" },
         { status: 400 }
       );
     }
@@ -31,7 +31,6 @@ const isOauth = async req => {
       req.user = user
     return user
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

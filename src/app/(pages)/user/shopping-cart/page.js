@@ -25,7 +25,6 @@ const ShoppingCart = () => {
   
   if(error){
     router.push("/")
-    errorTostHandler(error)
   }
 
   if(cart.length === 0){

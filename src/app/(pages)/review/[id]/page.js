@@ -18,9 +18,7 @@ export default function page() {
     const ratingValue = [1,2,3,4,5]
     const id = useParams()
     const searchParams = useSearchParams()
-    console.log(searchParams)
     const reviewId = searchParams.get("reviewId")
-    console.log("reviewId",reviewId)
     const [rating,setRating] = useState(0)
     const validationSchema = Yup.object().shape({
       title: Yup.string().required("title is required"),

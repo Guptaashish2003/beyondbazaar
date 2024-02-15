@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { usePostData } from "@/redux/api/usePostData";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -31,40 +32,34 @@ const page = () => {
     try {
       setLoading(true);
     const postdata = await usePostData("api/contactUs", {
+      name: data.name,
       email: data.email,
+      phone: data.phone,
+      message: data.message,
     });
     if (postdata.success) {
       toast(postdata.message);
-    } else {
-      toast.error(postdata.message);
     }
     setLoading(false);
-    // if(!data.email){
-    //     return
-    // }
     } catch (error) {
-      toast.error(error.message);
+      setLoading(false);
+      errorTostHandler(error)
     }
     
   };
   return (
     <>
       {/* ====== Contact Section Start */}
-      <section className="relative z-10 overflow-hidden bg-white dark:bg-dark py-20 lg:py-[120px] navMargin minScreen">
+      <section className="relative z-10 overflow-hidden bg-white dark:bg-dark px-20 lg:py-[120px] navMargin minScreen">
         <div className="container mx-auto">
           <div className="flex flex-wrap -mx-4 lg:justify-between">
             <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
               <div className="mb-12 max-w-[570px] lg:mb-0">
-                <span className="block mb-4 text-base font-semibold text-primary">
-                  Contact Us
-                </span>
-                <h2 className="text-dark text-gray-700 mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
-                  GET IN TOUCH WITH US
-                </h2>
+                <h1 className="text-dark text-gray-700 mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
+                  CONTACT US
+                </h1>
                 <p className="text-base leading-relaxed text-body-color dark:text-dark-6 mb-9">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eius tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim adiqua minim veniam quis nostrud exercitation ullamco
+                Feel the warmth of personalized support at your fingertips! Have questions or need assistance? Connect with our caring team now. Your joy and satisfaction fuel our commitment. Let's make your shopping experience extraordinary—contact us with a smile!
                 </p>
                 <div className="mb-8 flex w-full max-w-[370px]">
                   <div className="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]">
