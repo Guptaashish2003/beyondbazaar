@@ -10,7 +10,8 @@ import { addToCart } from "@/redux/action/Services";
 import { useRouter } from "next/navigation";
 import InputBtn from "../Form/InputBtn";
 
-const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],category='shoes',className}) => {
+const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],className}) => {
+  const category='shoes'
   const router = useRouter();
   const [productCount,setProductCount] = useState(1)
   const [loading,setLoading] = useState(false)
@@ -80,17 +81,25 @@ const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",
           </button>
         </div>
       </div>
-      {category === "shoes" || category === "clothes"  ?<div  className="">
-            <InputBtn
-            id='size'
-            label="Size:"
-            labelClass="text-center"
-            mainClass="!flex-row w-1/2 gap-x-16 max:lg:text-lg text-black justify-start items-center"
-            className="!w-36 h-10 text-center uppercase"
-            type='dropdown'
-            onChange={(e)=>setSize(e.target.value)}
-            option={sizeOptions}
-            ></InputBtn>
+      {category === "shoes" || category === "clothes"  ?<div  className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  p-4">
+        <p>Size:</p>
+        <div className="flex gap-4">
+          {sizeOptions.map((sizeOption) => (
+            <input
+              type="button"
+              disabled = {stock === 0}
+              key={sizeOption}
+              className={`${
+                size === sizeOption
+                  ? "bg-black text-white"
+                  : "bg-gray-200 text-black"
+              } w-10 h-10 text-lg text-center cursor-pointer` }
+              value={sizeOption}
+              onClick={() => setSize(sizeOption)}
+            />
+          ))}
+        </div>
+        
       </div>:""}
       <SubmitButton
       loading={loading}

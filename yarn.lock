@@ -2301,7 +2301,7 @@ __metadata:
     react-toastify: "npm:^9.1.3"
     redux: "npm:^4.2.1"
     sharp: "npm:^0.33.2"
-    swiper: "npm:^11.0.4"
+    swiper: "npm:^11.0.6"
     tailwindcss: "npm:^3.3.5"
     to-words: "npm:^4.0.0"
     uploadthing: "npm:^6.3.3"
@@ -4635,10 +4635,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swiper@npm:^11.0.4":
-  version: 11.0.5
-  resolution: "swiper@npm:11.0.5"
-  checksum: 443d147cdca55708dcf0fd174edfd68f6b55166578a9aedc7c636687c071f520e0bb626dd4ea9fb83feb21d61e4e6e4beda8d1f4b7e664077ebda9e22398d815
+"swiper@npm:^11.0.6":
+  version: 11.0.6
+  resolution: "swiper@npm:11.0.6"
+  checksum: efdf2a207fb4534aced2db42c14b249eebba76ad497e14d6bd0a07019e2afe2509e02602e2e51167b362f65e27e4ab9c4f86e23764dbeba341745549a6f28ff3
   languageName: node
   linkType: hard
 

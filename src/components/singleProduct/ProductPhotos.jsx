@@ -17,9 +17,10 @@ import { FreeMode, Navigation, Thumbs,Pagination,Grid } from 'swiper/modules';
 const ProductPhotos = ({img}) => {
   // const img = [img1, img2, img3, img4, img1, img2, img3];
   const [selectedThumbnail, setSelectedThumbnail] = useState(img[0])
-  const [screenWidth, setScreenWidth] = useState(true);
+  const [screenWidth, setScreenWidth] = useState(false);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [showFullScreen, setShowFullScreen] = useState(false);
+
 
   const openFullScreen = () => {
     setShowFullScreen(!showFullScreen);
@@ -30,7 +31,7 @@ const ProductPhotos = ({img}) => {
 useEffect(() => {
   const width = window.innerWidth;
     window.addEventListener('resize', ()=>setScreenWidth(width>= 1024))
-    if (width<= 1024) {
+    if (width>= 1024) {
       
       setScreenWidth(true)
     } else {
@@ -40,10 +41,10 @@ useEffect(() => {
 
 }, [screenWidth]);
 
-console.log(img)
+console.log(screenWidth)
   return (
     <div className={showFullScreen?"fixed top-0 right-0 w-screen h-screen flex bg-white z-[1000]":"flex w-1/2 max-lg:w-full flex-col gap-y-2 "}>
-      <div className={`mx-auto relative ${showFullScreen?"w-3/4 ":"w-11/12"}` }>
+      <div className={`mx-auto relative ${showFullScreen?"w-3/4 max-sm:w-full bottom-2 ":"w-11/12"}` }>
         <Swiper
           style={{
             '--swiper-navigation-color': '#333',
@@ -74,11 +75,12 @@ console.log(img)
           ))}
     
         </Swiper>
-        <div className={`w-16 h-16 max-lg:w-8 max-lg:h-8 absolute right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full cursor-pointer`} onClick={openFullScreen}>
-          {showFullScreen?<AiFillCloseCircle className="w-[90%] h-[90%]"/>:<TbZoomPan className="w-[90%] h-[90%]"/>}
+        <div className={`w-16 h-16    max-lg:w-8 max-lg:h-8 absolute right-6 ${showFullScreen?"top-6":`bottom-6`}  z-10 bg-[#333] flex justify-center items-center text-white rounded-full cursor-pointer`} onClick={openFullScreen}>
+          {showFullScreen?<AiFillCloseCircle className="w-[90%] h-[90%] max-sm:w-16 max-sm:h-16"/>:<TbZoomPan className="w-[90%] h-[90%]" />}
         </div>
       </div>
-      <div className={`max-lg:hidden ${showFullScreen?"w-3/12 h-full flex border-2 ":" h-32"}`}>
+      {/* pc optins  */}
+      {screenWidth && <div className={`max-lg:hidden ${showFullScreen?"w-3/12 h-full flex border-2 ":" h-32"}`}>
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
@@ -110,7 +112,7 @@ console.log(img)
           </SwiperSlide>
         ))}
       </Swiper>
-      </div>
+      </div>}
      
     </div>
   );
