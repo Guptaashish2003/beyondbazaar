@@ -14,7 +14,7 @@ import { notFound } from 'next/navigation'
 export const dynamic = "force-dynamic";
 
 export default async function Home(){
-  const { data, success } = await useGetData(`/product/all-product`);
+  const { data, success } = await useGetData(`/api/product/all-product`);
   if (!success) {
     return notFound();
   }

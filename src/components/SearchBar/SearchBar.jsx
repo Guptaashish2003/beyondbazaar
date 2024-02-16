@@ -26,7 +26,7 @@ function SearchBar({options}) {
     setSearchText("")
     setSuggest([])
     setSelected(-1)
-    // setHide(false)
+    setHide(false)
   }
     const onSearch = () => {
       if (hide) {
@@ -71,6 +71,7 @@ function SearchBar({options}) {
       }
       if (e.key === 'Enter' && searchText !== "") {
         onSearch()
+
       }
     }
   return (

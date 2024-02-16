@@ -6,6 +6,7 @@ import SocialMedial from '../SocialMediaIcons/SocialMedial';
 import beyondbazaar from '@/assets/beyondbazaar.png'
 
 import Image from 'next/image'
+import Link from 'next/link';
 
 
 const Footer = () => {
@@ -114,8 +115,7 @@ const Footer = () => {
           <p
             className="mt-6 max-w-md text-center leading-relaxed text-gray-500 sm:max-w-xs sm:text-left"
           >
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-            consequuntur amet culpa cum itaque neque.
+            Immerse yourself in a world of trust and emotion. Our eCommerce platform is more than transactions—it's a bond. Experience reliability, care, and joy in every click. Welcome home
           </p>
           <SocialMedial hover={"hover:text-black"} className='gap-4 mt-8 text-2xl' facebook={'https://www.facebook.com/'} instagram={'https://www.facebook.com/'} twitter={'https://www.facebook.com/'} linkedin={'https://www.facebook.com/'}/>
         
@@ -128,48 +128,41 @@ const Footer = () => {
             <p className="text-lg font-medium text-gray-900">About Us</p>
   
             <ul className="mt-8 space-y-4 text-sm">
-              <li>
-                <a
-                  className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
-                >
-                  
-                </a>
-              </li>
+
   
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href="/meet-the-team"
                 >
                   Meet the Team
-                </a>
+                </Link>
               </li>
   
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href="/employee-handbook"
                 >
                   Employee Handbook
-                </a>
+                </Link>
               </li>
   
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href="/careers"
                 >
                   Careers
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition  hover:text-gray-700/75"
-                  href="/"
+                  href="/About-Us"
                 >
                   About-Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -179,39 +172,39 @@ const Footer = () => {
   
             <ul className="mt-8 space-y-4 text-sm">
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
                   href="/"
                 >
                   Web Development
-                </a>
+                </Link>
               </li>
   
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
                   href="/"
                 >
                   Web Design
-                </a>
+                </Link>
               </li>
   
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
                   href="/"
                 >
                   Marketing
-                </a>
+                </Link>
               </li>
   
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
                   href="/"
                 >
                   Google Ads
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -221,54 +214,32 @@ const Footer = () => {
   
             <ul className="mt-8 space-y-4 text-sm">
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition hover:text-gray-700/75"
-                  href="/"
+                  href="/faq"
                 >
                   FAQs
-                </a>
+                </Link>
               </li>
   
           
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition  hover:text-gray-700/75"
-                  href="/"
+                  href="/privacy-policy"
                 >
                   Privacy & Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-gray-700 transition  hover:text-gray-700/75"
-                  href="/"
+                  href="/contact-us"
                 >
                   Support
-                </a>
+                </Link>
               </li>
             
-  
-              <li>
-                <a
-                  className="group flex  gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                  href="/"
-                >
-                  <span
-                    className="text-gray-700 transition group-hover:text-gray-700/75"
-                  >
-                    Live Chat
-                  </span>
-  
-                  <span className="relative flex h-2 w-2">
-                    <span
-                      className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"
-                    ></span>
-                    <span
-                      className="relative inline-flex h-2 w-2 rounded-full bg-teal-500"
-                    ></span>
-                  </span>
-                </a>
-              </li>
             </ul>
           </div>
   
@@ -277,25 +248,25 @@ const Footer = () => {
   
             <ul className="mt-8 space-y-4 text-sm">
               <li>
-                <a
+                <Link
                   className="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                  href="/"
+                  href="mailto:webmaster@example.com"
                 >
                   <CiMail className='h-5 w-5 shrink-0 text-gray-900'/>
   
                   <span className="flex-1 text-gray-700">john@doe.com</span>
-                </a>
+                </Link>
               </li>
   
               <li>
-                <a
+                <Link
                   className="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                  href="/"
+                  href="tel:+919625110498"
                 >
                  <IoCallOutline className="h-5 w-5 shrink-0 text-gray-900" />
   
-                  <span className="flex-1 text-gray-700">0123456789</span>
-                </a>
+                  <span className="flex-1 text-gray-700">9625110498</span>
+                </Link>
               </li>
   
               <li
@@ -317,25 +288,25 @@ const Footer = () => {
           <p className="text-sm text-gray-500">
             <span className="block sm:inline">All rights reserved.</span>
   
-            <a
+            <Link
               className="inline-block text-teal-600 underline transition hover:text-teal-600/75"
-              href="/"
+              href="/terms-and-conditions"
             >
               Terms & Conditions
-            </a>
+            </Link>
   
             <span>&middot;</span>
   
-            <a
+            <Link
               className="inline-block text-teal-600 underline transition hover:text-teal-600/75"
-              href="/"
+              href="/privacy-policy"
             >
               Privacy Policy
-            </a>
+            </Link>
           </p>
   
           <p className="mt-4 text-sm text-gray-500 sm:order-first sm:mt-0">
-            &copy; BytesBazar
+            &copy; beyondBazar
           </p>
         </div>
       </div>

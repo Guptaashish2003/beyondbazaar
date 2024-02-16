@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 export async function generateMetadata({ params }) {
-  const { data,success } = await useGetData(`/product/single-product/${params.slug}?fields=seo`);
+  const { data,success } = await useGetData(`/api/product/single-product/${params.slug}?fields=seo`);
   if (!success)
   return {
     title: "Not Found",
@@ -35,12 +35,12 @@ export async function generateMetadata({ params }) {
 
 const page = async ({ params }) => {
   const { slug } = params;
-  const { data, success } = await useGetData(`/product/single-product/${slug}`);
+  const { data, success } = await useGetData(`/api/product/single-product/${slug}`);
   if (!success) {
     return notFound();
   }
   const reviewData = await useGetData(
-    `/product-review/all-review/${data._id}`
+    `/api/product-review/all-review/${data._id}`
   );
 
   return (
@@ -48,6 +48,7 @@ const page = async ({ params }) => {
       <div className="flex  justify-center flex-wrap  p-4 navMargin minScreen">
         <ProductPhotos img={data.productImage} />
         <ProductDes
+          BaseUrl={process.env.baseURL}
           className="min-h-96"
           id={data._id}
           slug={data.slug}

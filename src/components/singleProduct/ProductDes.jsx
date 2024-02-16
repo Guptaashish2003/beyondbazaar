@@ -7,10 +7,11 @@ import SubmitButton from "../Form/SubmitButton";
 import { toast } from 'react-toastify';
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
-import { useRouter } from "next/navigation";
+import { useRouter,usePathname } from "next/navigation";
 import InputBtn from "../Form/InputBtn";
 
-const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],className}) => {
+const ProductDes = ({BaseUrl,id,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],className}) => {
+  const pathName = usePathname()
   const category='shoes'
   const router = useRouter();
   const [productCount,setProductCount] = useState(1)
@@ -45,7 +46,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",
   const orderNow = async () => {
     router.push(`/checkout/${slug}?qty=${productCount}`)
   }
-
+  console.log("hello",pathName)
 
 
   return (
@@ -81,7 +82,7 @@ const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",
           </button>
         </div>
       </div>
-      {category === "shoes" || category === "clothes"  ?<div  className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  p-4">
+      {category === "shoes" || category === "clothes" || category === "ledLights" ?<div  className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  p-4">
         <p>Size:</p>
         <div className="flex gap-4">
           {sizeOptions.map((sizeOption) => (
@@ -123,10 +124,11 @@ const ProductDes = ({id,slug,title,discription,price,stock,sizeOptions=["s","m",
         <SocialMedial
           hover={"hover:text-black"}
           className="gap-4 text-xl"
-          facebook={"https://www.facebook.com/sharer/sharer.php?u=http%3A//localhost%3A3000/user/single-product/protype-mechanical-keyboard-enhance-your-typing-experience-with-protype-a-mechanical-keyboard-that-offers-tactile-feedback-and-customizable-rgb-lighting-d4e54aeac8"}
-          instagram={"https://www.facebook.com/"}
-          twitter={"https://www.facebook.com/"}
-          linkedin={"https://www.facebook.com/"}
+          facebook={`https://www.facebook.com/sharer/sharer.php?u=${BaseUrl}/${pathName}`}
+          instagram={`https://www.instagram.com/?url=${BaseUrl}/${pathName}`}
+          twitter={`http://www.twitter.com/share?url=${BaseUrl}/${pathName}`}
+          linkedin={` http://www.linkedin.com/shareArticle?mini=true&url=${BaseUrl}/${pathName}`}
+          whatsApp={`https://api.whatsapp.com/send?text=${BaseUrl}/${pathName}`}
           />
       </div>
     </div>

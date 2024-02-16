@@ -1,8 +1,8 @@
 import React from 'react'
 import { BsFacebook,BsLinkedin } from "react-icons/bs";
 import { BiLogoGmail } from "react-icons/bi";
-import { AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
-const SocialMedial = ({className,facebook,instagram,twitter,linkedin,email,hover}) => {
+import { AiFillInstagram, AiFillTwitterCircle ,AiOutlineWhatsApp  } from "react-icons/ai";
+const SocialMedial = ({className,facebook,instagram,twitter,linkedin,email,hover,whatsApp}) => {
   return (
     <ul className={`flex justify-center items-center sm:justify-start md:gap-8  ${className}`}>
       <li>
@@ -20,6 +20,11 @@ const SocialMedial = ({className,facebook,instagram,twitter,linkedin,email,hover
       <li>
       {email?<a target='_blank' href={email} className={`text-inherit cursor-pointer h-full w-auto ${hover}`}> <BiLogoGmail  /></a>:""}
       </li>
+      <li>
+      {whatsApp?<a target='_blank' href={whatsApp} className={`text-inherit cursor-pointer h-full w-auto ${hover}`}> <AiOutlineWhatsApp  /></a>:""}
+      </li>
+
+
 
     </ul>
   )

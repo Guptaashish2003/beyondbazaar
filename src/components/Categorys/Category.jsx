@@ -43,7 +43,7 @@ function Category() {
                 className="w-30 h-30 max-lg:w-48 max-lg:h-48 max-md:w-36 max-md:h-36  object-cover  rounded-full"
                 alt="Category image"
               />
-              <div className="ct-title">Mobile</div>
+              <p className="ct-title">Mobile</p>
             </div>
           </SwiperSlide>
         ))}

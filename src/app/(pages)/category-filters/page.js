@@ -21,15 +21,15 @@ async function page(context) {
   let {page=1,keyword,sort} = context.searchParams
   let link
   if(keyword && sort){
-    link = `/product/all-product?limit=10&keyword=${keyword}&sort=${sort}&page=${page}`
+    link = `/api/product/all-product?limit=10&keyword=${keyword}&sort=${sort}&page=${page}`
 
   }
   else if(keyword){
-    link = `/product/all-product?limit=10&keyword=${keyword}&page=${page}`
+    link = `/api/product/all-product?limit=10&keyword=${keyword}&page=${page}`
 
   }
   else{
-    link = `/product/all-product?limit=10&page=${page}`
+    link = `/api/product/all-product?limit=10&page=${page}`
   }
   const {data,length} = await useGetData(link)
 
