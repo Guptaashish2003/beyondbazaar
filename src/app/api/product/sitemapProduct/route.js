@@ -9,7 +9,7 @@ export async function GET(request){
    try {
      
       const product = await Product.find().select("slug").select("updatedAt");
-      console.log(product);
+      // console.log(product);
       return NextResponse.json({ success: true, message: "products Found", data: product }, { status: 200 });
       
    } catch (error) {

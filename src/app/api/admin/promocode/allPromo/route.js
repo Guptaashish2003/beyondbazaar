@@ -30,7 +30,7 @@ export async function GET(request) {
         const lenPromocode = await Promocode.countDocuments();
         return NextResponse.json({ success: true, length: lenPromocode, message: "Promocode Found", data: promocodes }, { status: 200 });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });
     }
 }

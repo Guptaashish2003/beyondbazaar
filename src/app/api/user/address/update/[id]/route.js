@@ -15,6 +15,12 @@ export async function PUT(request, context) {
     const data = await request.json();
     const id = context.params.id;
     const {name,email,houseNo,street,city,state,pincode,country,phNumber,District} = data
+    if(!name || !email || !houseNo || !street || !city || !state || !pincode || !country || !District ){
+      return NextResponse.json(
+          { success: false, message: "Please fill all the fields" },
+          { status: 400 }
+       );
+    }
     const user = await User.findById(check._id);
     const edit = user.address.map(data=>{
       if (data._id.valueOf() === id) {

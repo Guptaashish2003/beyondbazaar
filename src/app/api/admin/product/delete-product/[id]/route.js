@@ -21,7 +21,7 @@ export async function DELETE(request, context) {
         
       const product = await Product.findByIdAndDelete(id);
     
-      console.log(product);
+      // console.log(product);
     
       return NextResponse.json({ sucess:true ,message: "Deleted-successfully" }, { status: 200 });
     

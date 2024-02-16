@@ -20,7 +20,7 @@ export async function GET(request,context){
 
         return NextResponse.json({success:true , data:product},{status:200})
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return NextResponse.json({success:false, message:error.message},{status:400})
     }
 }

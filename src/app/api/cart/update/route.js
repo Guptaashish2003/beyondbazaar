@@ -19,7 +19,7 @@ export async function PUT(request) {
         }
         const cart = await Cart.findOneAndUpdate({ userID, _id :cartItemId }, { productQuantity }, { new: true });
         const productStock = await Product.findById({_id:cart.productID}).select("productQuantity")
-        console.log(productStock,"productQuantityproductQuantity")
+        // console.log(productStock,"productQuantityproductQuantity")
         if (productQuantity > productStock?.productQuantity) {
             return NextResponse.json({ success: false, message: `limited stock not more than ${productStock.productQuantity}` }, { status: 400 });
         }

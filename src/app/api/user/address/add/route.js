@@ -14,6 +14,9 @@ export async function POST(request, context) {
     }
     const data = await request.json();
     const {name,email,houseNo,street,city,state,pincode,country,phNumber,District} = data
+    if(!name || !email || !houseNo || !street || !city || !state || !pincode || !country || !phNumber || !District){
+      return NextResponse.json({ success: false, message: "Please fill all the fields" }, { status: 400 });
+    }
     const user = await User.findById(check._id);
     user.address.push({name,email,houseNo,street,city,state,country,pincode,phNumber,District});
     await user.save({ validateBeforeSave: false });

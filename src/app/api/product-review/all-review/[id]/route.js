@@ -10,15 +10,14 @@ export async function GET(request, context) {
     let averageRating = 0;
 
     if (!reviews || reviews.length === 0) {
-      console.log("No reviews found for this product");
+      // console.log("No reviews found for this product");
     } else {
       let totalRating = 0;
       reviews.forEach((review) => {
         totalRating += review.rating;
       });
       averageRating = totalRating / reviews.length;
-      console.log("id", id);
-      console.log("averageRating", averageRating);
+    
     }
 
 

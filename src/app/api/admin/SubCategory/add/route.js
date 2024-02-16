@@ -18,7 +18,7 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         }
         const data = await request.json();
-        console.log(data, "data")
+        // console.log(data, "data")
 
         const { category,SubCategoryName  } = data;
 
@@ -29,7 +29,7 @@ export async function POST(request) {
             SubCategoryName,
             category
         });
-        console.log(Subcategory, "Subcategory")
+        // console.log(Subcategory, "Subcategory")
         return NextResponse.json({ success: true,message:"Sub created successfully", data: Subcategory }, { status: 200 });
 
     } catch (error) {

@@ -12,7 +12,7 @@ export async function GET(request,context) {
         }
         const id = context.params.id;
         if(!id){
-            console.log(id)
+            // console.log(id)
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
         const orders = await Order.findOne({ user: check._id ,_id:id }).populate({

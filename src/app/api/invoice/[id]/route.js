@@ -14,7 +14,6 @@ export async function GET(request, context) {
     const id = context.params.id;
 
     if (!id) {
-      console.log(id);
       return NextResponse.json(
         { success: false, message: "Invalid Input" },
         { status: 400 }
@@ -32,8 +31,7 @@ export async function GET(request, context) {
       (acc, item) => acc + item.productDetails.discountedPrice * item.qty,
       0
     );
-    console.log("productDetails...............", discountedPrice);
-
+    
     if (!orders) {
       return NextResponse.json(
         { success: false, message: "Order Not Found" },
@@ -51,10 +49,10 @@ export async function GET(request, context) {
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return NextResponse.json(
       { success: false, message: error.message },
-      { status: 500 }
+      { status: 404 }
     );
   }
 }

@@ -3,7 +3,7 @@ import ConnectDB from "@/backend/DATABASE/ConnectDB";
 import isOauth from "@/backend/middlewere/isOauth";
 import { NextResponse } from "next/server";
 // getting only review data which given by a user for edit
-export async function GET(reqest, context) {
+export async function GET(request, context) {
   await ConnectDB();
   try {
     const check = await isOauth(request);
@@ -19,7 +19,7 @@ export async function GET(reqest, context) {
        
    
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
     
   }

@@ -26,7 +26,7 @@ export async function GET(request){
         // await Product.deleteMany();
         // await Category.deleteMany();
         // await SubCategory.deleteMany();
-        console.log("all Data deleted...")
+        // console.log("all Data deleted...")
         // await User.insertMany(userdata)
         // await Product.insertMany(product)
 

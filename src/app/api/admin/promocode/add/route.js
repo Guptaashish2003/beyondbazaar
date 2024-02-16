@@ -17,9 +17,9 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: "You are not Authorized" }, { status: 400 });
         }
         const { promocode,discountType, discountValue, maxDiscount, minOrder, maxOrder, startDate, endDate, active,limit, product, category } = await request.json();
-        // if (!promocode || !discountType || !limit ||  !discountValue || !maxDiscount || !minOrder || !maxOrder || !startDate || !endDate || !active ) {
-        //     return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
-        // }
+        if (!promocode || !discountType || !limit ||  !discountValue || !maxDiscount  || !maxOrder || !startDate || !endDate  ) {
+            return NextResponse.json({ success: false, message: "Please Provide All Fields" }, { status: 400 });
+        }
     
         const newPromocode = await  Promocode.create({ promocode,discountType, discountValue, maxDiscount, minOrder, maxOrder, startDate:Date.now(), endDate:Date.now(), active,limit, product, category });
 

@@ -60,10 +60,8 @@ export async function POST(request) {
     });
     return NextResponse.json({ success: true, data: product,message:"product added" }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return NextResponse.json(
-
-      
       { success: false, message: error.message },
       { status: 400 }
     );

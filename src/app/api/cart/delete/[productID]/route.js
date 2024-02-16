@@ -16,7 +16,7 @@ export async function DELETE(request,context) {
         if (!productID) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
-        console.log(productID)
+        // console.log(productID)
         const cart = await Cart.findOneAndDelete({  _id:productID,userID });
         const myCart = await Cart.find({ userID:check._id }).populate("productID", "productPrice productQuantity");
         const cartQuantity = myCart.length;

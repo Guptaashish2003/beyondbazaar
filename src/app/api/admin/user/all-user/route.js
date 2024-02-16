@@ -30,7 +30,7 @@ export async function GET(request) {
         return NextResponse.json({ success: true, length: lenUser, message: "User Found", data: users },{ status: 200 });
         
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         return NextResponse.json({ success: false, message: error.message },{ status: 400 });
     }
 }

@@ -5,7 +5,7 @@ import { outhRoles } from "@/backend/middlewere/outhRoles";
 import isOauth from "@/backend/middlewere/isOauth";
 
 export async function POST(request) {
-    console.log("first")
+  
     await connectDB();
     try {
       const check = await isOauth(request);
@@ -29,7 +29,7 @@ export async function POST(request) {
                 },
             },
           ]);
-          console.log(weeklyEarnings, "weeklyEarnings");
+          // console.log(weeklyEarnings, "weeklyEarnings");
             return NextResponse.json({ success: true, message:"weeklyEarnings" }, { status: 200 });
        
     } catch (error) {

@@ -28,7 +28,7 @@ export async function PUT(request) {
             SubcategorySlug,
             category
         });
-        console.log(Subcategory, "Subcategory")
+        // console.log(Subcategory, "Subcategory")
         return NextResponse.json({ success: true,message:"Upadat-successfully", data: Subcategory }, { status: 200 });
 
     } catch (error) {

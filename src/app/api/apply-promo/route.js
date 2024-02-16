@@ -38,8 +38,8 @@ export async function POST(request) {
         }
         else if(method === "byproduct") {
           const product = await Product.findById(orderItems[0].product);
-          console.log(product.productPrice)
-          console.log(orderItems[0].qty)
+          // console.log(product.productPrice)
+          // console.log(orderItems[0].qty)
           totalPrice = product.productPrice * Number(orderItems[0].qty);
         }
         const promocodeDoc = await Promocode.findOne({
@@ -57,7 +57,7 @@ export async function POST(request) {
               return NextResponse.json({ success: false, message: "User not eligible for this promo code" }, { status: 403 });
             }
             let validProducts;
-            console.log(orderItems)
+            // console.log(orderItems)
         if(!promocodeDoc.product.length !== 0) {
             validProducts = orderItems.every((item) => {
                 const productId = item.product; // Assuming productId is available in cart items

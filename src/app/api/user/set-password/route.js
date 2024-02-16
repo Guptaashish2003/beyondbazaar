@@ -7,20 +7,21 @@ export async function PUT(request) {
     //user seting first time password
    try {
     const { email, password } = await request.json();
-    console.log(",,,,,,,,,,,,,,,,,,,",email, password)
+    // console.log(",,,,,,,,,,,,,,,,,,,",email, password)
     const user = await User.findOne({
         email: email,
     });
     if (!user) {
-        return NextResponse.json({ message: "User not found" }, { status: 404 });
+        return NextResponse.json({success:false, message: "User not found" }, { status: 404 });
     }
     user.password = password;
     user.byGooglePass = false;
     await user.save();
-    return NextResponse.json({ message: "Password set successfully" }, { status: 200 });
+    return NextResponse.json({success:true, message: "Password set successfully" }, { status: 200 });
 
     
    } catch (error) {
+    return NextResponse.json({success:false, message: error.message }, { status: 404 });
     
    }
 }

@@ -25,7 +25,7 @@ export async function GET(request) {
            return val.orderItems.map((inside)=>{return ({...inside._doc,mainId:val._id})})
         })
         newOrder = newOrder.flat();
-        // console.log(newOrder,"orders...")
+       // console.log(newOrder,"orders...")
 
         if (!orders) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });

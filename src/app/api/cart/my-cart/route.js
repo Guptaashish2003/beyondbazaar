@@ -21,7 +21,7 @@ export async function GET(request) {
          },0)
         return NextResponse.json({ success: true,quantity:cartQuantity,totalquantity,totalprice, message: "Cart", data: cart }, { status: 200 });
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });
     }
 }
