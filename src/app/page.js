@@ -14,7 +14,7 @@ import { notFound } from 'next/navigation'
 export const dynamic = "force-dynamic";
 
 export default async function Home(){
-  const { data, success } = await useGetData(`/api/product/all-product`);
+  const { data, success } = await useGetData(`/api/product/all-product?limit=12&fields=productName,productPrice,productImage,slug`);
   if (!success) {
     return notFound();
   }
@@ -25,7 +25,8 @@ export default async function Home(){
     <h2 className='p-8 text-5xl max-sm:text-3xl  font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
       {data?.map((data)=><Productcard discount={200} animation={true}  id={data._id}  key={data._id}  img={data?.productImage[0]} hover={data?.productImage[1]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
-
+  
+{/* 
       <Clothingcard animation={true} img={productImg} hover={productImgHover}/>
       <Productcard/>
       <Productcard border={"black"} />
@@ -34,7 +35,7 @@ export default async function Home(){
       <Productcard  discount={600} />
       <Productcard discount={600} bgColor={"#e2e1e6"}/>
       <Productcard />
-      <Productcard addToCartBtn={true}/>
+      <Productcard addToCartBtn={true}/> */}
     </div>
     
       {/* <ProductPage/> */}

@@ -42,16 +42,15 @@ function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,discount,ani
      <div style={{border:`2px solid ${border}`}} className='w-5/12 lg:w-1/4 sm:w-2/5 md:w-1/3 xl:w-1/5 flex flex-col items-center justify-center p-2 m-2 cursor-pointer' onMouseEnter={addAnimation} onMouseLeave={removeAnimation}>
       <div className='w-full flex  flex-col items-center justify-center' onClick={moveSingle}>
       <div className='flex justify-center items-center relative' style={{backgroundColor:`${bgColor}`}}>
-        {imgBlack?<div className='w-full h-full absolute flex justify-center items-center text-white' style={{backgroundColor:"#0b0b0b8c"}}>See More Details...</div>:""}
-        <div className='w-[90%] h-[90%]'>
+        {imgBlack?<div className='w-full h-full absolute flex justify-center items-center text-white rounded-lg' style={{backgroundColor:"#0b0b0b8c"}}>See More Details...</div>:""}
+        <div className='p-2 '>
         <Image
           src={img || productImg}
           alt="Product image"
           height={'500'}
           width={'600'}
-          className='w-full h-full object-contain'
+          className='w-full h-full object-contain rounded-lg'
         />
-          
         </div>
       </div>
       <div className='flex flex-wrap p-3 justify-between w-full text-lg font-bold'>

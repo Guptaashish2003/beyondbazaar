@@ -12,6 +12,7 @@ const isOauth = async req => {
       );
     }
     const decoded =  jwt.verify(token,process.env.JWT_SECRET_KEY )
+   
     if (!decoded) {
 
       return NextResponse.json(
@@ -21,6 +22,7 @@ const isOauth = async req => {
     }
     
     const user = await User.findOne({ _id: decoded.id })
+
     if (!user) {
       return NextResponse.json(
         { success: false, message: "User Not Found or Login again" },

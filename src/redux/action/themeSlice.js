@@ -20,14 +20,12 @@ export const themeSlice = createSlice({
         state.isClicked = { ...state.isClicked, [action.payload]: true }
       },
       setIsClicked: (state, action) => {
-        console.log(action.payload)
         state.isClicked = {
           userProfile: false,
           notification: false,
         }
       },
       setActiveMenu: (state, action) => {
-        console.log(action.payload)
         state.activeMenu = action.payload
       },
       setScreenSize: (state, action) => {

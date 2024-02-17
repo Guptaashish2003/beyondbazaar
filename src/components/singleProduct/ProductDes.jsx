@@ -10,9 +10,8 @@ import { addToCart } from "@/redux/action/Services";
 import { useRouter,usePathname } from "next/navigation";
 import InputBtn from "../Form/InputBtn";
 
-const ProductDes = ({BaseUrl,id,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],className}) => {
+const ProductDes = ({BaseUrl,id,category,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],className}) => {
   const pathName = usePathname()
-  const category='shoes'
   const router = useRouter();
   const [productCount,setProductCount] = useState(1)
   const [loading,setLoading] = useState(false)

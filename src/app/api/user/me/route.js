@@ -6,9 +6,9 @@ import isOauth from "@/backend/middlewere/isOauth";
 
 export async function GET(request, context) {
   await connectDB();
-
   try {
-     const check =  await isOauth(request);
+    
+    const check =  await isOauth(request);
       const user = request.user;    
       if (!check._id) {
           return check

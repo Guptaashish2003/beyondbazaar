@@ -31,6 +31,8 @@ function Clothingcard({img,hover,title,price, addToCart,animation}) {
         <Image
           src={imgs}
           alt="Product image"
+          width={300}
+          height={300}
           className=' w-full h-full object-contain rounded-lg'
         />
       </div>

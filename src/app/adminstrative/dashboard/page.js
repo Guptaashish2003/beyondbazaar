@@ -15,6 +15,7 @@ import { useGetDataProtected } from '@/redux/api/useGetData';
 import Loading from '@/app/loading';
 import { getUsers } from '@/redux/action/userService';
 import { useRouter } from 'next/navigation';
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
 
 
 
@@ -106,6 +107,7 @@ function page() {
   const dispatch = useDispatch()
   useLayoutEffect(()=>{
      dispatch(getUsers())
+     
    
     
   },[])
@@ -127,7 +129,7 @@ function page() {
     }
     } catch (error) {
       setLoading(false)
-      console.error(error)
+      errorTostHandler(error)
 
     }
   }
