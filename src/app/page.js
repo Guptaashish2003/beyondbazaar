@@ -15,6 +15,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home(){
   const { data, success } = await useGetData(`/api/product/all-product?limit=12&fields=productName,productPrice,productImage,slug`);
+  
   if (!success) {
     return notFound();
   }

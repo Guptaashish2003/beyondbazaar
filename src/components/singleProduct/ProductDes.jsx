@@ -10,7 +10,7 @@ import { addToCart } from "@/redux/action/Services";
 import { useRouter,usePathname } from "next/navigation";
 import InputBtn from "../Form/InputBtn";
 
-const ProductDes = ({BaseUrl,id,category,slug,title,discription,price,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],className}) => {
+const ProductDes = ({BaseUrl,id,category,slug,title,price,metaDescription,stock,sizeOptions=["s","m",'l',"xl","2xl","3xl"],className}) => {
   const pathName = usePathname()
   const router = useRouter();
   const [productCount,setProductCount] = useState(1)
@@ -55,7 +55,7 @@ const ProductDes = ({BaseUrl,id,category,slug,title,discription,price,stock,size
           {title || 'Samsung curved display'}
         </h1>
         <p className="para text-start text-base ">
-          {discription || "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odioerror ullam optio quod corporis"}
+          {metaDescription || "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odioerror ullam optio quod corporis"}
         </p>
        
 

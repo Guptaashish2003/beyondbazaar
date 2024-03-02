@@ -39,10 +39,10 @@ if(cookies) {
       const userData = await userResponse.json();
       if (userData?.data?.role !== 'admin') {
         
-        return NextResponse.redirect(new URL('/', request.url));
+        // return NextResponse.redirect(new URL('/', request.url));
       }
     } catch (error) {
-      return NextResponse.redirect(new URL('/error', request.url)); 
+      // return NextResponse.redirect(new URL('/error', request.url)); 
     }
   }
   

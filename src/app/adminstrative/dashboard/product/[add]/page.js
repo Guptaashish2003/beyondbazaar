@@ -108,7 +108,7 @@ export default function page() {
       const data = await useGetData(
         "/api/subcategory/all?limit=1000&fields=_id,SubCategoryName"
       );
-      console.log(res.data)
+      console.log(res.data,"category")
       console.log(data)
       if (res) {
         setCategory(res.data.sort());
@@ -244,7 +244,7 @@ export default function page() {
   const handleChange = (event) => {
     setMethod(event.target.value);
   };
-  
+  console.log(category,"cat")
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="app" title="Add Product" />
@@ -318,6 +318,7 @@ export default function page() {
                       placeholder='category Name'
                       label='category Name'
                       name='categoryName'
+                      onSelect={(e)=>setCategoryName(e.target.value)}
                       onChange={(e)=>setCategoryName(e.target.value)}
                       className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
                         >
@@ -348,8 +349,8 @@ export default function page() {
                           type="dropdown"
                           id="dropdown"
                           name="category"
-                          label="select Category"
-                          option={[...category.map((itm) =>{return {name:itm.categoryName,value:itm._id}})]}
+                          label="select SubCategory"
+                          option={[{name:"None",value:"None"},...category.map((itm) =>{return {name:itm.categoryName,value:itm._id}})]}
                           onChange={(e)=>setIsCategory(e.target.value)}
                           labelClass={`text-xs mt-4 text-[--first-color] ml-6 absolute top-6`}
                           mainClass="w-full"

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
 
-const ProductDetails = () => {
+const ProductDetails = ({discription}) => {
   const [showDescription, setShowDescription] = useState(true);
 
   const toggleDescription = () => {
@@ -40,7 +40,7 @@ const ProductDetails = () => {
                 <h2 className="text-2xl font-semibold text-[--first-color]">Description</h2>
                 <p>Insert your description text here.</p>
                 <div className="mt-2 text-base">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis nulla dolor distinctio soluta, debitis ullam! Placeat deserunt totam a animi soluta explicabo eius maiores quis voluptate iste accusamus, veniam iusto quos sit minima error? Consequuntur exercitationem saepe id porro sed, sapiente vero quia, natus laborum culpa nobis laudantium quidem nulla vel dolore similique veritatis dignissimos assumenda consectetur laboriosam maxime totam numquam. Suscipit eius possimus architecto accusantium ea asperiores animi unde error tempora.
+                 {discription || "GET YOUR PRODUCT DESCRIPTION AND BUY IT" }
                 </div>
               </div>
             ) : (

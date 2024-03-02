@@ -53,13 +53,15 @@ const page = async ({ params }) => {
           id={data._id}
           slug={data.slug}
           title={data.productName}
-          discription={data.productDescription}
+          metaDescription={data.seo?.description}
           price={data.productPrice}
           stock={data.productQuantity}
           category={data?.productCategory.category.categoryName}
         />
       </div>
-      <ProductDetails />
+      <ProductDetails
+       discription={data?.productDescription}
+        />
      { reviewData.data.length > 0 && <section className="mt-10 flex  max-w-[90%] max-md:flex-col mx-auto gap-x-4">
         <ProductReview className="mb-4" reviewData={reviewData} />
         <ReviewTestimonial id={data._id} reviewData={reviewData.data} />
