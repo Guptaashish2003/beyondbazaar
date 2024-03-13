@@ -7,7 +7,7 @@ import productImg from "@/assets/productImag1.jpg"
 import { useDispatch } from 'react-redux'
 import { addToCart } from '@/redux/action/Services'
 import SubmitButton from '../Form/SubmitButton'
-function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,discount,animation,border}) {
+function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,animation,border}) {
   const [loading,setLoading] = useState(false)
   const [line, setLine] = useState(false)
   const dispatch = useDispatch();
@@ -37,6 +37,8 @@ function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,discount,ani
 
     // meta.
   };
+  const discountPrice = (Number(price) + (Number(price) * 0.5)).toFixed()
+  
   return (
     <>
      <div style={{border:`2px solid ${border}`}} className='w-5/12 lg:w-1/4 sm:w-2/5 md:w-1/3 xl:w-1/5 flex flex-col items-center justify-center p-2 m-2 cursor-pointer' onMouseEnter={addAnimation} onMouseLeave={removeAnimation}>
@@ -54,12 +56,12 @@ function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,discount,ani
         </div>
       </div>
       <div className='flex flex-wrap p-3 justify-between w-full text-lg font-bold'>
-        <div className={`line-animate card-title   overflow-hidden text-ellipsis whitespace-nowrap ${line?"line-animated":""} ${discount?"w-full":"w-1/2"}`} >
+        <div className={`line-animate card-title   overflow-hidden text-ellipsis whitespace-nowrap ${line?"line-animated":""} ${discountPrice?"w-full":"w-1/2"}`} >
         {title || "Men's Footwear - Buy Men's Shoes Starts"}
         </div>
-        <div className={`card-price  ${discount?"flex justify-between w-full":""}`}>
+        <div className={`card-price  ${discountPrice?"flex justify-between w-full":""}`}>
           <p>₹{price|| 500}</p>
-          {discount?<del className='text-slate-400'>₹{discount}</del>:""}
+          {discountPrice?<del className='text-slate-400'>₹{discountPrice}</del>:""}
         </div>
       </div>
       </div>
