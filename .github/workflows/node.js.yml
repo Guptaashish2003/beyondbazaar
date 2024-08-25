@@ -10,12 +10,13 @@ on:
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [20.17.0]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     env:
       APIKEY: ${{ secrets.APIKEY }}
       APP_ID: ${{ secrets.APP_ID }}
@@ -42,7 +43,8 @@ jobs:
       UPLOADTHING_SECRET: ${{ secrets.UPLOADTHING_SECRET }}
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
@@ -53,8 +55,8 @@ jobs:
     - name: Install dependencies
       run: yarn install --frozen-lockfile
 
-    - name: Build
+    - name: Build the project
       run: yarn build
 
     - name: Run tests
-
+      run: yarn test
