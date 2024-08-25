@@ -1,0 +1,55 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [20.17.0]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    env:
+      APIKEY: ${{ secrets.APIKEY }}
+      APP_ID: ${{ secrets.APP_ID }}
+      BASEURL: ${{ secrets.BASEURL }}
+      BGDATAURL: ${{ secrets.BGDATAURL }}
+      BIGDATACLOUDKEY: ${{ secrets.BIGDATACLOUDKEY }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      DB_URI: ${{ secrets.DB_URI }}
+      EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+      EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      FRONTENDURL: ${{ secrets.FRONTENDURL }}
+      GOOGLE_AUTH_API_KEY: ${{ secrets.GOOGLE_AUTH_API_KEY }}
+      JWT_ALGORITHM: ${{ secrets.JWT_ALGORITHM }}
+      JWT_COOKIE_EXPIRE: ${{ secrets.JWT_COOKIE_EXPIRE }}
+      JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+      MESSAGING_ID: ${{ secrets.MESSAGING_ID }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      NODE_ENV: ${{ secrets.NODE_ENV }}
+      UPLOADTHING_APP_ID: ${{ secrets.UPLOADTHING_APP_ID }}
+      UPLOADTHING_SECRET: ${{ secrets.UPLOADTHING_SECRET }}
+
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
