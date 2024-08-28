@@ -6,6 +6,6 @@ export default function robots() {
         allow: ['/single-product/*','/about/*', '/','/login','/refister','/forgot-password'],
         disallow: ['/adminstrative/*','/address/*','/checkout/*','/review/*','/user/*'],
       },
-      sitemap: `${process.env.FrontendURL}/sitemap.xml`,
+      sitemap: `${process.env.FRONTENDURL}/sitemap.xml`,
     }
   }

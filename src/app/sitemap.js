@@ -2,7 +2,7 @@ import { useGetData } from "@/redux/api/useGetData";
 
 export const dynamic = "force-dynamic";
 export default async function sitemap() {
-  const baseUrl = process.env.FrontendURL;
+  const baseUrl = process.env.FRONTENDURL;
 
   const {data} = await useGetData("/product/sitemapProduct");
   const postUrls = data.map((post) => ({

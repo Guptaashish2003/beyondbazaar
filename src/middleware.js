@@ -28,7 +28,7 @@ if(cookies) {
 
   if (request.nextUrl.pathname.startsWith('/adminstrative/')) {
     try {
-      const userResponse = await fetch(new URL(`${process.env.baseURL}/api/user/me`).href, {
+      const userResponse = await fetch(new URL(`${process.env.BASEURL}/api/user/me`).href, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

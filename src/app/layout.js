@@ -11,7 +11,7 @@ import GoogleProvider from '@/components/googleProvider/googleProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  metadataBase: new URL(process.env.FrontendURL),
+  metadataBase: new URL(process.env.FRONTENDURL),
   title: {
     default: "beyond Bazar",
     template: `%s | beyond Bazar`,
