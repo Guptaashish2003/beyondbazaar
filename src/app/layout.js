@@ -21,6 +21,7 @@ export const metadata = {
 
 export default function RootLayout({children,params}) {
   const {isAdmin} = params
+  console.log(process.env.FRONTENDURL,"............");
   
   return (
     <html lang="en">
