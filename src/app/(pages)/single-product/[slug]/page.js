@@ -42,13 +42,12 @@ const page = async ({ params }) => {
   const reviewData = await useGetData(
     `/api/product-review/all-review/${data._id}`
   );
-
   return (
     <>
       <div className="flex  justify-center flex-wrap  p-4 navMargin minScreen">
         <ProductPhotos img={data.productImage} />
         <ProductDes
-          BaseUrl={process.env.baseURL}
+          BaseUrl={process.env.BASEURL}
           className="min-h-96"
           id={data._id}
           slug={data.slug}
