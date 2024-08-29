@@ -51,6 +51,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - name: Create .env file
+      run: |
+        echo "BASEURL=${{ secrets.BASEURL }}" > .env
+        echo "FRONTENDURL=${{ secrets.FRONTENDURL }}" >> .env
+        echo "DB_URI=${{ secrets.DB_URI }}" >> .env
     - run: npm run build --if-present
     - name: Change Directory
       run: cd /home/biyondbytes/biyondbazaar/actions-runner/_work/beyondbazaar/beyondbazaar || exit 1
