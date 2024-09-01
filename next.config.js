@@ -34,7 +34,6 @@ const nextConfig = {
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
     MESSAGING_ID: process.env.MESSAGING_ID,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NODE_ENV: process.env.NODE_ENV,
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
   },
