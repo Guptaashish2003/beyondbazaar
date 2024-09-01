@@ -3,6 +3,9 @@ import GoogleProvider from "next-auth/providers/google";
 import User from "@/backend/model/User";
 import ConnectDB from "@/backend/DATABASE/ConnectDB";
 import { cookies } from "next/headers";
+import { log } from "console";
+import { redirect } from "next/navigation";
+import { env } from "process";
 
 const cookieOptions = {
   expires: new Date(
@@ -28,6 +31,10 @@ const handler = NextAuth({
     
   },
   callbacks: {
+     async redirect({ baseUrl }) {
+      
+      return process.env.BASEURL || baseUrl;
+    },
     async session({ session, token, user }) {
       await ConnectDB();
 
