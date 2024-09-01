@@ -21,6 +21,7 @@ jobs:
       APIKEY: ${{ secrets.APIKEY }}
       APP_ID: ${{ secrets.APP_ID }}
       BASEURL: ${{ secrets.BASEURL }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
       BGDATAURL: ${{ secrets.BGDATAURL }}
       BIGDATACLOUDKEY: ${{ secrets.BIGDATACLOUDKEY }}
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
