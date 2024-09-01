@@ -57,6 +57,8 @@ jobs:
         echo "BASEURL=${{ secrets.BASEURL }}" > .env
         echo "FRONTENDURL=${{ secrets.FRONTENDURL }}" >> .env
         echo "DB_URI=${{ secrets.DB_URI }}" >> .env
+        echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env
+
     - run: npm run build --if-present
     - name: Change Directory
       run: cd /home/biyondbytes/biyondbazaar/actions-runner/_work/beyondbazaar/beyondbazaar || exit 1
