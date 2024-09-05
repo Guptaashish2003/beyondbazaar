@@ -73,7 +73,7 @@ const page = () => {
         <div className=" pl-3 grid grid-cols-2 ">
           <div className="flex flex-col">
             <p className="text-sm text-gray-900 font-bold ">Sold By:</p>
-            <p className="text-sm text-gray-700"> Beyond Bazaar </p>
+            <p className="text-sm text-gray-700"> biyond Bazaar </p>
             <p className="text-sm text-gray-700"> 123, Main Road, </p>
             <p className="text-sm text-gray-700"> New Delhi, 110001</p>
             <p className="text-sm pt-2 text-gray-700">
@@ -242,7 +242,7 @@ const page = () => {
                 {/* signature  */}
                 <td className="border  text-gray-800 p-2" colSpan="3"></td>
                 <td className="border  text-gray-800 p-2" colSpan="3">
-                  For Beyond Bazaar
+                  For biyond Bazaar
                   <Image
                     className="w-20 h-20 "
                     src={logo}

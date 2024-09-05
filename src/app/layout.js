@@ -13,10 +13,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   metadataBase: new URL(process.env.FRONTENDURL),
   title: {
-    default: "beyond Bazar",
-    template: `%s | beyond Bazar`,
+    default: "biyond Bazar",
+    template: `%s | biyond Bazar`,
   },
-  description: "beyond bazar",
+  description: "biyond bazar",
 };
 
 export default function RootLayout({children,params}) {
