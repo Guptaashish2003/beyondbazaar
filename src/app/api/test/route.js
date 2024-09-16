@@ -19,6 +19,8 @@ export async function GET(request) {
             GOOGLE_AUTH_API_KEY: process.env.GOOGLE_AUTH_API_KEY  // Corrected here
         }
     ];
+
+    return NextResponse.redirect(new URL("/user/your-orders", request.url));
     
     return NextResponse.json({ message: "Hello, World!", data: envals });
 }
