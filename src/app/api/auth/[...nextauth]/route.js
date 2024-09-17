@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/backend/model/User";
 import ConnectDB from "@/backend/DATABASE/ConnectDB";
 import { cookies } from "next/headers";
-
 
 const cookieOptions = {
   expires: new Date(
@@ -11,6 +11,7 @@ const cookieOptions = {
   ),
   secure: false,
 };
+
 const handler = NextAuth({
   session: {
     strategy: "jwt",
@@ -19,41 +20,76 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text", placeholder: "email@example.com" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        await ConnectDB();
+        // Check if credentials are provided
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error('Please enter your email and password');
+        }
+
+        const user = await User.findOne({ email: credentials.email }).select("+password");
+        if (!user) {
+          throw new Error('email not found');
+        }
+
+        const PasswordMatch = await user.matchPassword(credentials.password);
+        if (!PasswordMatch) {
+          throw new Error('Invalid email or password');
+
+        }
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        };
+      },
     }),
   ],
   trustHost: true,
-
   pages: {
     signIn: "/login",
     signOut: "/",
-    
   },
   callbacks: {
-     async redirect({ baseUrl }) {
-      console.log(baseUrl);
-      return process.env.NEXTAUTH_URL || baseUrl;
-
+    async redirect({ url, baseUrl }) {
+      console.log(process.env.NEXTAUTH_URL, "lkj")
+      return process.env.NEXTAUTH_URL;
     },
     async session({ session, token, user }) {
       await ConnectDB();
-
-      const { name, email } = session.user;
+      const { name, email, role } = session.user;
       const exist = await User.findOne({ email });
-      var newUser;
-      var userToken;
+      let userToken;
       if (!exist) {
-        newUser = await User.create({
+        const newUser = await User.create({
           name,
           email,
-          byGoogle: true,
+          byGoogle: user ? false : true,
           twoStepVerification: false,
-          byGooglePass: true,
+          byGooglePass: user ? true : false,
           isEmailValid: true,
         });
         userToken = await newUser.getSignedToken();
+      } else {
+        userToken = await exist.getSignedToken();
       }
-      userToken = await exist.getSignedToken();
       session.token = userToken;
+      session.role = role;
       cookies().set({
         name: "token",
         value: userToken,
@@ -62,6 +98,12 @@ const handler = NextAuth({
         expires: cookieOptions.expires,
       });
       return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
