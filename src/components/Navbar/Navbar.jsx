@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import SearchBar from "../SearchBar/SearchBar";
 import { Suspense } from "react";
+import { useSession } from "next-auth/react";
 function Navbar() {
   const router = useRouter();
   const [show, setShow] = useState("translate-y-0");
@@ -27,6 +28,7 @@ function Navbar() {
   };
 
   useEffect(() => {
+    
     window.addEventListener("scroll", controlNavbar);
     return () => {
       window.removeEventListener("scroll", controlNavbar);

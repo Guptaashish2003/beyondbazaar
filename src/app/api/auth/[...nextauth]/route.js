@@ -12,7 +12,7 @@ const cookieOptions = {
   secure: false,
 };
 
-const handler = NextAuth({
+const authOptions = {
   session: {
     strategy: "jwt",
   },
@@ -36,21 +36,20 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         await ConnectDB();
-        // Check if credentials are provided
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Please enter your email and password');
         }
 
         const user = await User.findOne({ email: credentials.email }).select("+password");
         if (!user) {
-          throw new Error('email not found');
+          throw new Error('Email not found');
         }
 
         const PasswordMatch = await user.matchPassword(credentials.password);
         if (!PasswordMatch) {
           throw new Error('Invalid email or password');
-
         }
+
         return {
           id: user._id.toString(),
           email: user.email,
@@ -67,7 +66,7 @@ const handler = NextAuth({
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      console.log(process.env.NEXTAUTH_URL, "lkj")
+      console.log(process.env.NEXTAUTH_URL, "lkj");
       return process.env.NEXTAUTH_URL;
     },
     async session({ session, token, user }) {
@@ -89,7 +88,7 @@ const handler = NextAuth({
         userToken = await exist.getSignedToken();
       }
       session.token = userToken;
-      session.role = role;
+      session.user.role = token.role;
       cookies().set({
         name: "token",
         value: userToken,
@@ -107,6 +106,8 @@ const handler = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions);
+
+export { authOptions, handler as GET, handler as POST };
