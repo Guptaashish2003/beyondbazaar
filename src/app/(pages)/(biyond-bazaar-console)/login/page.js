@@ -82,7 +82,7 @@ const Login = () => {
                   message: "Invalid email address",
                 },
               })}
-              className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+
             />
             <div className="relative">
               <InputBtn
@@ -95,7 +95,6 @@ const Login = () => {
                     message: "Password must be at least 6 characters long",
                   },
                 })}
-                className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
               />
               <button
                 type="button"
