@@ -5,8 +5,7 @@ import { useGetData } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
-const Category = ({register,btnClass}) => {
+const Category = ({register,btnClass,slider}) => {
     const [category, setCategory] = useState([])
     const [productCategory, setSubCategory] = useState([])
     const [categoryName, setCategoryName] = useState('')
@@ -86,10 +85,10 @@ const Category = ({register,btnClass}) => {
         type="dropdown"
         id="dropdown"
         name="productCategory"
-        label="select Category"
+        label="select Category"       
         option={[
           ...productCategory.map((itm) => {
-            return { name: itm.SubCategoryName, value: itm._id };
+            return { name: itm.SubCategoryName, value: [itm._id] };
           }),
         ]}
         labelClass={`text-xs mt-4 text-[--first-color] ml-6 absolute top-6`}

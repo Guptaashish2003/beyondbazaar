@@ -59,7 +59,7 @@ const page = async ({ params }) => {
         />
       </div>
       <ProductDetails
-       discription={data?.productDescription}
+       description={data?.productDescription}
         />
      { reviewData.data.length > 0 && <section className="mt-10 flex  max-w-[90%] max-md:flex-col mx-auto gap-x-4">
         <ProductReview className="mb-4" reviewData={reviewData} />

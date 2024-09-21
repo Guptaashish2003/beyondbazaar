@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { Header } from "@/components/Admin";
 import { TagsInput } from "react-tag-input-component";
 import { TiImage } from "react-icons/ti";
+import AddVarients from "../_components/AddVarients";
 // import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { uploadImage } from '@/components/Admin/uploadImage';
@@ -25,6 +26,7 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import TextEditor from "../_components/TextEditor";
+import { stringify } from "querystring";
 export default function page() {
   const router = useRouter();
 
@@ -33,6 +35,7 @@ export default function page() {
   const [imageU, setImageU] = useState(null);
   const [slider, setSlider] = useState([])
   const [method, setMethod] = useState("firebase")
+  const [rows, setRows] = useState([{ varientType: '', price: '', stockAvailable: false,stock:0 }]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -63,39 +66,44 @@ export default function page() {
     productName: Yup.string().required("Name is required"),
     productPrice: Yup.number().required("Price is required"),
     productQuantity: Yup.number().required("Quantity is required"),
-    title: Yup.string().required("Price is required"),
+    title: Yup.string().required("Title is required"),
     description: Yup.string().required("Price is required"),
     productCategory: Yup.string().required("Category is required"),
     productAvailable: Yup.string().required("Stock Availiblity is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-   const { register, handleSubmit, reset, formState } = useForm(formOptions);
+   const { register, handleSubmit, reset, formState,watch  } = useForm(formOptions);
   const { errors } = formState;
 
 
 
+  
+
   const onSubmit = async (productData) => {
     productData.productTags = tag;
     productData.productImage = slider;
-    alert(JSON.stringify(productData));
-    // setLoading(true);
-    // try {
-    //   const res = await usePostDataProtected("/api/admin/product/add-product", productData);
-    //   setLoading(false);
-    //   console.log(res)
-    //   if (res?.success) {
-    //     toast.success(res?.message);
-    //     reset();
-    //   } else {
-    //     toast.error(res?.message);
-    //   }
+    productData.variants = rows;
+    productData.productDescription = JSON.stringify(editor.getHTML())
+    console.log(productData)
+    // alert(JSON.stringify(productData));
+    setLoading(true);
+    try {
+      const res = await usePostDataProtected("/api/admin/product/add-product", productData);
+      setLoading(false);
+      console.log(res)
+      if (res?.success) {
+        toast.success(res?.message);
+        reset();
+      } else {
+        toast.error(res?.message);
+      }
 
-    // } catch (error) {
-    //   setLoading(false);
-    //   console.log(error);
-    //   toast.error(error?.message);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error(error?.message);
 
-    // }
+    }
 
   };
 
@@ -224,7 +232,8 @@ export default function page() {
                 </div>
               ))}
             </div>
-            <Category register={register} btnClass={btnClass}/>
+            <Category register={register} btnClass={btnClass} slider={slider}/>
+            <AddVarients  btnClass={btnClass} rows={rows} setRows={setRows}  />
 
           </div>
           {/* select method  */}
