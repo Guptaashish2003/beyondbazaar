@@ -63,18 +63,7 @@ const AddVarients = ({ subCategory, btnClass,rows,setRows }) => {
               <tbody>
                 {rows.map((row, index) => (
                   <tr key={index}>
-                    {Object.keys(row).map((key, i) => {
-                      return (
-                        <td key={i}>
-                          <InputBtn
-                            type="text"
-                            name={key}
-                            value={row[key]}
-                            onChange={(e) => handleInputChange(index, e)}
-                          />
-                        </td>
-                      );
-                    })}
+                    
                   </tr>
                 ))}
               </tbody>

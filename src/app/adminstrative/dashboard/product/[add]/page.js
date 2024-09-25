@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { Header } from "@/components/Admin";
 import { TagsInput } from "react-tag-input-component";
 import { TiImage } from "react-icons/ti";
-import AddVarients from "../_components/AddVarients";
+import Addvariants from "../_components/Addvariants";
 // import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { uploadImage } from '@/components/Admin/uploadImage';
@@ -27,6 +27,8 @@ import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import TextEditor from "../_components/TextEditor";
 import { stringify } from "querystring";
+
+
 export default function page() {
   const router = useRouter();
 
@@ -35,7 +37,7 @@ export default function page() {
   const [imageU, setImageU] = useState(null);
   const [slider, setSlider] = useState([])
   const [method, setMethod] = useState("firebase")
-  const [rows, setRows] = useState([{ varientType: '', price: '', stockAvailable: false,stock:0 }]);
+  const [rows, setRows] = useState([{ variantType: '', varientDetails: [{ color: '', price: '', stock: '', isAvailable: true, variantImage: '' }] }]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -60,6 +62,7 @@ export default function page() {
     `,
   })
   const [size, setSize] = useState([])
+  console.log(rows,'kk')
 
 
   const validationSchema = Yup.object().shape({
@@ -75,9 +78,6 @@ export default function page() {
    const { register, handleSubmit, reset, formState,watch  } = useForm(formOptions);
   const { errors } = formState;
 
-
-
-  
 
   const onSubmit = async (productData) => {
     productData.productTags = tag;
@@ -233,7 +233,7 @@ export default function page() {
               ))}
             </div>
             <Category register={register} btnClass={btnClass} slider={slider}/>
-            <AddVarients  btnClass={btnClass} rows={rows} setRows={setRows}  />
+            <Addvariants  btnClass={btnClass} rows={rows} setRows={setRows}  />
 
           </div>
           {/* select method  */}

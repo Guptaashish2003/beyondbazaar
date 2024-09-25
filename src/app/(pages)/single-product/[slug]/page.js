@@ -36,6 +36,7 @@ export async function generateMetadata({ params }) {
 const page = async ({ params }) => {
   const { slug } = params;
   const { data, success } = await useGetData(`/api/product/single-product/${slug}`);
+  // console.log(data)
   if (!success) {
     return notFound();
   }
@@ -56,6 +57,7 @@ const page = async ({ params }) => {
           price={data.productPrice}
           stock={data.productQuantity}
           category={data?.productCategory.category.categoryName}
+          variants={data?.variants}
         />
       </div>
       <ProductDetails

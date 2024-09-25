@@ -1,9 +1,36 @@
-import mongoose, { plugin } from "mongoose";
+import mongoose, { plugin, Schema } from "mongoose";
 import SubCategory from "./SubCategory";
 import slugify from "mongoose-simple-slugify";
 import { size } from "@/app/(pages)/single-product/[slug]/opengraph-image";
-import { type } from "os";
-import { color } from "framer-motion";
+
+const VariantSchema = new mongoose.Schema({
+  color: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: [true, "Please enter the price for this variant"], 
+  },
+  stock: {
+    type: Number,
+    required: [true, "Please enter the stock quantity"], 
+  },
+  isAvailable: {
+    type: Boolean,
+    default: true, 
+  },
+  variantImage: {
+    type: String, // Optional: Image for this specific color/size combination
+  },
+});
+const VariantTypeSchema = new mongoose.Schema({
+  variantType: {
+    type: String,
+    required: true,
+  },
+  varientDetails: [VariantSchema], // Array of color-price combinations
+});
 const ProductSchema = new mongoose.Schema(
   {
     productName: {
@@ -63,31 +90,7 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       default: false,
     },
-    variants: [
-      {
-        varientType: {
-          type: String,
-        },
-        color: {
-          type: String,
-        },
-        price: {
-          type: Number,
-          required: [true, "Please enter the price for this variant"], 
-        },
-        stock: {
-          type: Number,
-          required: [true, "Please enter the stock quantity"], 
-        },
-        isAvailable: {
-          type: Boolean,
-          default: true, 
-        },
-        variantImage: {
-          type: String, // Optional: Image for this specific color/size combination
-        },
-      },
-    ],
+    variants: [VariantTypeSchema], // Array of variant types
     rating: {
       type: Number,
       default: 0,
@@ -99,3 +102,6 @@ const ProductSchema = new mongoose.Schema(
 const Product =
   mongoose.models.Products || mongoose.model("Products", ProductSchema);
 export default Product;
+
+
+

@@ -75,7 +75,7 @@ export async function POST(request) {
     } else {
       // Validate variants if they exist
       for (const variant of variants) {
-        if (!variant.varientType  || !variant.price || !variant.stock) {
+        if (!variant.variantType  || !variant.price || !variant.stock) {
           return NextResponse.json(
             { success: false, message: "Each variant must have size, color, price, and stock" },
             { status: 400 }
@@ -90,24 +90,24 @@ export async function POST(request) {
         }
       }
     }
-    console.log(",..............................")
+    console.log(",..............................",variants)
 
     // Create the product, supporting both cases (with or without variants)
-    const product = await Product.create({
-      productName,
-      productDescription,
-      productImage,
-      productPrice:productPrice,  // Only include productPrice if no variants
-      productQuantity:productQuantity,  // Only include productQuantity if no variants
-      productAvailable,
-      seo: { title, description },
-      productTags,
-      productCategory,
-      variants  // Include variants if present, or leave undefined if not
-    });
+    // const product = await Product.create({
+    //   productName,
+    //   productDescription,
+    //   productImage,
+    //   productPrice:productPrice,  // Only include productPrice if no variants
+    //   productQuantity:productQuantity,  // Only include productQuantity if no variants
+    //   productAvailable,
+    //   seo: { title, description },
+    //   productTags,
+    //   productCategory,
+    //   variants  // Include variants if present, or leave undefined if not
+    // });
 
     // Return success response
-    return NextResponse.json({ success: true, data: product, message: "Product added" }, { status: 200 });
+    return NextResponse.json({ success: true, data: "product", message: "Product added" }, { status: 200 });
   } catch (error) {
     // Error handling
     console.error(error);
