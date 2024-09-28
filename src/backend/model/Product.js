@@ -90,6 +90,10 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       default: false,
     },
+    isVariantAvailable: {
+      type: Boolean,
+      default: false,
+    },
     variants: [VariantTypeSchema], // Array of variant types
     rating: {
       type: Number,
