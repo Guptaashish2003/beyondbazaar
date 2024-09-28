@@ -37,7 +37,12 @@ export default function page() {
   const [imageU, setImageU] = useState(null);
   const [slider, setSlider] = useState([])
   const [method, setMethod] = useState("firebase")
-  const [rows, setRows] = useState([{ variantType: '', varientDetails: [{ color: '', price: '', stock: '', isAvailable: true, variantImage: '' }] }]);
+  const [rows, setRows] = useState([
+    {
+      variantType: "",
+      varientDetails: [{ color: "", price: "", stock: "", isAvailable: true, variantImage: "" }],
+    },
+  ]);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -61,9 +66,6 @@ export default function page() {
       ${typeof window !== 'undefined' && localStorage?.getItem("content")}
     `,
   })
-  const [size, setSize] = useState([])
-  console.log(rows,'kk')
-
 
   const validationSchema = Yup.object().shape({
     productName: Yup.string().required("Name is required"),

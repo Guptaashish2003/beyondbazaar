@@ -41,7 +41,7 @@ const ProductDetails = ({description}) => {
             {showDescription ? (
               <div className="lg:ml-4">
 
-                <div className='tiptap !border-none' dangerouslySetInnerHTML={{ __html: content }} />
+                <div className='tiptap !h-max !border-none' dangerouslySetInnerHTML={{ __html: content }} />
               </div>
             ) : (
               <div className="lg:ml-4">
