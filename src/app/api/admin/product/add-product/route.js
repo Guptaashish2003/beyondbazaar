@@ -33,6 +33,7 @@ export async function POST(request) {
       title,
       description,
       productTags,
+      isVariantAvailable,
       productCategory,
       variants  // Optional: Variants with size, color, price, and stock
     } = data;
@@ -64,6 +65,7 @@ export async function POST(request) {
     
     // Validate either default price/quantity or variants
     console.log(data.title,data.variants,"data");
+    if (isVariantAvailable){
     if (!variants || variants.length === 0) {
       // For products without variants, ensure productPrice and productQuantity are provided
       if (!productPrice || !productQuantity) {
@@ -90,6 +92,7 @@ export async function POST(request) {
         }
       }
     }
+  }
     console.log(",..............................",variants)
 
     // Create the product, supporting both cases (with or without variants)

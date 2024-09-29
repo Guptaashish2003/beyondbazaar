@@ -4,6 +4,7 @@ import Modal from "@/components/Modal/Modal";
 import { useGetData } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import React, { useEffect, useState } from "react";
+
 import { toast } from "react-toastify";
 const Category = ({register,btnClass,slider}) => {
     const [category, setCategory] = useState([])
@@ -80,8 +81,8 @@ const Category = ({register,btnClass,slider}) => {
         }
       }
   return (
-    <div className="w-full flex justify-evenly">
-      <InputBtn
+    <div className="w-full flex gap-x-3 mx-7">
+      <div className="w-1/2"><InputBtn
         type="dropdown"
         id="dropdown"
         name="productCategory"
@@ -92,11 +93,12 @@ const Category = ({register,btnClass,slider}) => {
           }),
         ]}
         labelClass={`text-xs mt-4 text-[--first-color] ml-6 absolute top-6`}
-        mainClass="w-2/5 min-w-[16] mx-2"
+        mainClass=" min-w-[16] mx-2"
         {...register("productCategory", {
           required: "Category is required",
         })}
-      />
+      /></div>
+      <div className=" w-1/2 flex gap-x-7 ml-3">
       <Modal btnClass={`${btnClass} px-4`} btnName="Add Category">
         <div className="flex flex-col">
           <InputBtn
@@ -146,6 +148,7 @@ const Category = ({register,btnClass,slider}) => {
           ></SubmitButton>
         </div>
       </Modal>
+      </div>
     </div>
   );
 };

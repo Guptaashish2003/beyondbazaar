@@ -13,20 +13,19 @@ import { TiImage } from "react-icons/ti";
 import Addvariants from "../_components/Addvariants";
 // import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
-import { uploadImage } from '@/components/Admin/uploadImage';
-import { UploadButton } from "@/backend/utils/uploadthing"
+import { uploadImage } from "@/components/Admin/uploadImage";
+import { UploadButton } from "@/backend/utils/uploadthing";
 import Category from "../_components/Category";
 import { useEditor } from "@tiptap/react";
-import Link from '@tiptap/extension-link'
-import StarterKit from '@tiptap/starter-kit'
-import Image  from '@tiptap/extension-image'
-import Youtube from '@tiptap/extension-youtube'
-import Table from '@tiptap/extension-table'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
-import TableRow from '@tiptap/extension-table-row'
+import Link from "@tiptap/extension-link";
+import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+import Youtube from "@tiptap/extension-youtube";
+import Table from "@tiptap/extension-table";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import TableRow from "@tiptap/extension-table-row";
 import TextEditor from "../_components/TextEditor";
-import { stringify } from "querystring";
 
 
 export default function page() {
@@ -35,18 +34,26 @@ export default function page() {
   const [loading, setLoading] = useState();
   const [tag, setTag] = useState(["papaya"]);
   const [imageU, setImageU] = useState(null);
-  const [slider, setSlider] = useState([])
-  const [method, setMethod] = useState("firebase")
+  const [slider, setSlider] = useState([]);
+  const [method, setMethod] = useState("firebase");
   const [rows, setRows] = useState([
     {
       variantType: "",
-      varientDetails: [{ color: "", price: "", stock: "", isAvailable: true, variantImage: "" }],
+      varientDetails: [
+        {
+          color: "",
+          price: "",
+          stock: "",
+          isAvailable: true,
+          variantImage: "",
+        },
+      ],
     },
   ]);
   const editor = useEditor({
     extensions: [
       StarterKit,
-      
+
       Image,
       Link.configure({
         openOnClick: false,
@@ -63,9 +70,9 @@ export default function page() {
       TableCell,
     ],
     content: `
-      ${typeof window !== 'undefined' && localStorage?.getItem("content")}
+      ${typeof window !== "undefined" && localStorage?.getItem("content")}
     `,
-  })
+  });
 
   const validationSchema = Yup.object().shape({
     productName: Yup.string().required("Name is required"),
@@ -75,47 +82,46 @@ export default function page() {
     description: Yup.string().required("Price is required"),
     productCategory: Yup.string().required("Category is required"),
     productAvailable: Yup.string().required("Stock Availiblity is required"),
+    // isvarieant availble is boolean and set by default to false
+    isVariantAvailable: Yup.boolean(),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-   const { register, handleSubmit, reset, formState,watch  } = useForm(formOptions);
+  const { register, handleSubmit, reset, formState, watch } =
+    useForm(formOptions);
   const { errors } = formState;
-
 
   const onSubmit = async (productData) => {
     productData.productTags = tag;
     productData.productImage = slider;
-    productData.variants = rows;
-    productData.productDescription = JSON.stringify(editor.getHTML())
-    console.log(productData)
+    if(productData.isVariantAvailable) productData.variants = rows;
+    productData.productDescription = JSON.stringify(editor.getHTML());
+    console.log(productData);
     // alert(JSON.stringify(productData));
     setLoading(true);
     try {
-      const res = await usePostDataProtected("/api/admin/product/add-product", productData);
+      const res = await usePostDataProtected(
+        "/api/admin/product/add-product",
+        productData
+      );
       setLoading(false);
-      console.log(res)
+      console.log(res);
       if (res?.success) {
         toast.success(res?.message);
         reset();
       } else {
         toast.error(res?.message);
       }
-
     } catch (error) {
       setLoading(false);
       console.log(error);
       toast.error(error?.message);
-
     }
-
   };
 
   useEffect(() => {
-    const path = 'product'
+    const path = "product";
     imageU && uploadImage(path, imageU, slider, setSlider);
   }, [imageU]);
-
-
-
 
   const btnClass =
     "bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300";
@@ -197,9 +203,13 @@ export default function page() {
     setMethod(event.target.value);
   };
 
-  if(!editor){
-    return null
+  if (!editor) {
+    return null;
   }
+  const isVariantAvailable = watch("isVariantAvailable");
+  console.log("isVariantAvailable", isVariantAvailable);
+
+
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
@@ -234,19 +244,33 @@ export default function page() {
                 </div>
               ))}
             </div>
-            <Category register={register} btnClass={btnClass} slider={slider}/>
-            <Addvariants  btnClass={btnClass} rows={rows} setRows={setRows}  />
-
+            <Category register={register} btnClass={btnClass} slider={slider} />
+            <div className="flex mx-6 my-3 gap-x-4 px-3 w-full justify-evenly">
+              <label className="inline-flex w-1/2 items-center mb-5 cursor-pointer my-6">
+                <input
+                  type="checkbox"
+                  value=""
+                  {...register("isVariantAvailable")}
+                  className="sr-only peer"
+                />
+                <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Variant Available
+                </span>
+                <div className="relative mx-2 w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gray-800"></div>
+              </label>
+              <div className="w-1/2 m-auto">{isVariantAvailable && (
+                <Addvariants btnClass={btnClass} rows={rows} setRows={setRows} />)}</div>
+            </div>
           </div>
           {/* select method  */}
-          <div className='flex justify-center gap-x-4 mx-auto my-2'>
+          <div className="flex justify-center gap-x-4 mx-auto my-2">
             <label>
               <input
                 type="radio"
                 name="method"
                 id="uploadthing"
                 value="uploadthing"
-                checked={method === 'uploadthing'}
+                checked={method === "uploadthing"}
                 onChange={handleChange}
                 className="mx-2"
               />
@@ -258,7 +282,7 @@ export default function page() {
                 name="method"
                 id="firebase"
                 value="firebase"
-                checked={method === 'firebase'}
+                checked={method === "firebase"}
                 onChange={handleChange}
                 className="mx-2"
               />
@@ -270,49 +294,53 @@ export default function page() {
                 name="method"
                 id="aws"
                 value="aws"
-                checked={method === 'aws'}
+                checked={method === "aws"}
                 onChange={handleChange}
                 className="mx-2"
               />
               aws
             </label>
           </div>
-
-
-          {method === "firebase" && <div
-            className="relative w-[90%] h-36 rounded-lg shadow-inner border-1 my-2 mx-auto"
-          >
-            <input type="file" id="file-upload" onChange={(e) => {
-              setImageU(e.target.files[0]);
-            }} className="hidden" />
-            <label
-              htmlFor="file-upload"
-              className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer"
-            >
-              <p className="z-10 text-xs font-light text-center text-gray-500">
-                Drag &amp; Drop your files here
-              </p>
-              <TiImage width={'12px'} />
-            </label>
-          </div>}
-          {method === "uploadthing" && <div>
-            <UploadButton
-              className=" bg-[#333] text-white px-10 py-2 "
-              endpoint="imageUploader"
-              onClientUploadComplete={res => {
-                if (slider.length > 0) {
-                  setSlider([...slider, res[0].url])
-                } else {
-
-                  setSlider([res[0].url])
-                }
-              }}
-              onUploadError={error => {
-                // Do something with the error.
-                alert(`ERROR! ${error.message}`)
-              }}
-            />
-          </div>}
+          {method === "firebase" && (
+            <div className="relative w-[90%] h-36 rounded-lg shadow-inner border-1 my-2 mx-auto">
+              <input
+                type="file"
+                id="file-upload"
+                onChange={(e) => {
+                  setImageU(e.target.files[0]);
+                }}
+                className="hidden"
+              />
+              <label
+                htmlFor="file-upload"
+                className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer"
+              >
+                <p className="z-10 text-xs font-light text-center text-gray-500">
+                  Drag &amp; Drop your files here
+                </p>
+                <TiImage width={"12px"} />
+              </label>
+            </div>
+          )}
+          {method === "uploadthing" && (
+            <div>
+              <UploadButton
+                className=" bg-[#333] text-white px-10 py-2 "
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  if (slider.length > 0) {
+                    setSlider([...slider, res[0].url]);
+                  } else {
+                    setSlider([res[0].url]);
+                  }
+                }}
+                onUploadError={(error) => {
+                  // Do something with the error.
+                  alert(`ERROR! ${error.message}`);
+                }}
+              />
+            </div>
+          )}
           {/* previewImage */}
           <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
             {slider.map((itm, index) => (
@@ -340,7 +368,6 @@ export default function page() {
           />
           <TextEditor editor={editor} />
           {/* submit button  */}/
-
           <SubmitButton
             value="Add Product"
             // type="submit"
