@@ -1,5 +1,3 @@
-
-
 function AdminstrativeLayout({children,params}) {
     params.isAdmin = true;
   return (

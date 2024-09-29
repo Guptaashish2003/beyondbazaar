@@ -314,7 +314,7 @@ export default function page() {
             />
           </div>}
           {/* previewImage */}
-          {/* <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
+          <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
             {slider.map((itm, index) => (
               <div key={index} className="relative w-24 h-full">
                 <div className="w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10">
@@ -329,7 +329,7 @@ export default function page() {
                 />
               </div>
             ))}
-          </div> */}
+          </div>
           {/* tag */}
           <TagsInput
             value={tag}

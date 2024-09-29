@@ -13,7 +13,8 @@ function Navbar() {
   const router = useRouter();
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
-
+  const [isAuth,setIsAuth] = useState('')
+  const { data: session, status } = useSession();
   const controlNavbar = () => {
     if (window.scrollY > 200) {
       if (window.scrollY > lastScrollY) {
@@ -29,6 +30,7 @@ function Navbar() {
 
   useEffect(() => {
     
+    setIsAuth(status)
     window.addEventListener("scroll", controlNavbar);
     return () => {
       window.removeEventListener("scroll", controlNavbar);
@@ -110,14 +112,20 @@ function Navbar() {
   };
 
   const userProfile = () => {
-    router.push("/user/account-setting");
-    showMenu();
+    if (status === "authenticated") {
+      router.push("/user/account-setting");
+      showMenu();
+    } else {
+      router.push("/login");
+      showMenu();
+
+    }
   };
 
   return (
     <>
       {/* mobile cart  */}
-      <Link href="/user/shopping-cart" className="mobileCart ">
+      <Link  href={isAuth === "authenticated"?"/user/shopping-cart":"/login"} className="mobileCart ">
         <div className="w-14 h-14 bg-[--first-color] text-white rounded-full flex justify-center items-center">
           <BiSolidCart className="w-[75%] h-[75%] text-inherit cursor-pointer " />
         </div>
@@ -144,18 +152,18 @@ function Navbar() {
                 <SearchBar />
               </Suspense>
               {/* cart */}
-              <Link href="/user/shopping-cart">
+              <Link href={isAuth === "authenticated"?"/user/shopping-cart":"/login"}>
                 <div className="w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon">
                   <BiSolidCart className="w-[75%] h-[75%] text-inherit cursor-pointer " />
                 </div>
               </Link>
               {/* user  */}
-              <Link
-                href="/user/account-setting"
+              <div
+                onClick={userProfile}
                 className="w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon"
               >
                 <BiSolidUser className="w-[75%] h-[75%] text-inherit cursor-pointer " />
-              </Link>
+              </div>
             </div>
 
             <div className="nav__toggle" onClick={showMenu} ref={navToggleRef}>
@@ -182,7 +190,7 @@ function Navbar() {
               <li>
                 {
                   <span onClick={userProfile} className="nav__link  mobileUser">
-                    {"isLogin" ? "Settings" : "Login 😉"}
+                    {isAuth === "authenticated" ? "Settings" : "Login 😉"}
                   </span>
                 }
               </li>
