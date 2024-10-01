@@ -19,7 +19,6 @@ const page = () => {
   const router = useRouter();
   const qty = searchParams.get("qty");
   const addressRef = useRef();
-  const cart = [1, 2, 4];
   const [address, setAddress] = useState([]);
   const [product, setProduct] = useState([]);
   const [discount, setDiscount] = useState({ discountValue: 0 });
@@ -27,16 +26,15 @@ const page = () => {
   const [shippingPrice, setShippingPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState();
-  useEffect(() => {
-    getData();
-  }, []);
+
   const getData = async () => {
     try {
       setLoading(true);
       const res = await useGetDataProtected("/api/user/address/me");
+      console.log("res", res?.data);
       if (res.success) {
-        setAddress(res.data);
-        if (res.data.length === 0) {
+        setAddress(res?.data);
+        if (res?.data.length === 0) {
           router.push("/address/add-new-address");
         }
       }
@@ -45,10 +43,10 @@ const page = () => {
         setMethod("bycart");
         const res = await useGetDataProtected("/api/cart/my-cart");
         if (res.success) {
-          const newData = res.data.map((val) => {
+          const newData = res?.data.map((val) => {
             return { ...val.productID, qty: val.productQuantity };
           });
-          const newOrder = res.data.map((val) => {
+          const newOrder = res?.data.map((val) => {
             return { product: val.productID._id, qty: val.productQuantity };
           });
           setProduct(newData);
@@ -60,16 +58,17 @@ const page = () => {
           `/api/product/single-product/${id}`
         );
         if (res.success) {
-          setProduct([{ ...res.data, qty: qty }]);
+          setProduct([{ ...res?.data, qty: qty }]);
           setOrder({
-            orderItems: [{ qty: qty, product: res.data._id }],
-            itemsPrice: res.data.productPrice * qty,
+            orderItems: [{ qty: qty, product: res?.data._id }],
+            itemsPrice: res?.data.productPrice * qty,
           });
         }
       }
 
       setLoading(false);
     } catch (error) {
+      console.log(error);
       errorTostHandler(error);
     }
   };
@@ -77,8 +76,6 @@ const page = () => {
   const onCheckout = async () => {
     try {
       const orderId = await useGetData("/api/user/order/gen-order-Id");
-      console.log("hellowwwwwww//////////")
-
       const paymentRes = await usePostDataProtected(
         "/api/user/payment/session-create-order",
         {
@@ -129,6 +126,9 @@ const page = () => {
       errorTostHandler(error);
     }
   };
+  useEffect(() => {
+    getData();
+  }, []);
 
   if (loading) {
     return <Loading />;

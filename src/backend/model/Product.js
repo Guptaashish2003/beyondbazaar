@@ -6,7 +6,6 @@ import { size } from "@/app/(pages)/single-product/[slug]/opengraph-image";
 const VariantSchema = new mongoose.Schema({
   color: {
     type: String,
-    required: true,
   },
   price: {
     type: Number,
@@ -29,7 +28,7 @@ const VariantTypeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  varientDetails: [VariantSchema], // Array of color-price combinations
+  variantDetails: [VariantSchema], // Array of color-price combinations
 });
 const ProductSchema = new mongoose.Schema(
   {

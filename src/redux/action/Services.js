@@ -13,10 +13,10 @@ export const getUserCart = createAsyncThunk(
     try {
       const res = await useGetDataProtected("/api/cart/my-cart");
 
-      // console.log('res',res);
+      console.log('res',res);
       return res;
     } catch (error) {
-      // console.log('errer',error);
+      // console.log('errorrrr',error);
       const message =
         (error.response &&
           error.response.data &&

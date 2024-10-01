@@ -13,7 +13,7 @@ function Navbar() {
   const router = useRouter();
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isAuth,setIsAuth] = useState('')
+  const [isAuth, setIsAuth] = useState("");
   const { data: session, status } = useSession();
   const controlNavbar = () => {
     if (window.scrollY > 200) {
@@ -29,13 +29,12 @@ function Navbar() {
   };
 
   useEffect(() => {
-    
-    setIsAuth(status)
+    setIsAuth(status);
     window.addEventListener("scroll", controlNavbar);
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY,status]);
 
   const dropdownItems = [
     {
@@ -118,14 +117,17 @@ function Navbar() {
     } else {
       router.push("/login");
       showMenu();
-
     }
   };
+  console.log(isAuth,"kkkkk")
 
   return (
     <>
       {/* mobile cart  */}
-      <Link  href={isAuth === "authenticated"?"/user/shopping-cart":"/login"} className="mobileCart ">
+      <Link
+        href={isAuth === "authenticated" ? "/user/shopping-cart" : "/login"}
+        className="mobileCart "
+      >
         <div className="w-14 h-14 bg-[--first-color] text-white rounded-full flex justify-center items-center">
           <BiSolidCart className="w-[75%] h-[75%] text-inherit cursor-pointer " />
         </div>
@@ -152,18 +154,27 @@ function Navbar() {
                 <SearchBar />
               </Suspense>
               {/* cart */}
-              <Link href={isAuth === "authenticated"?"/user/shopping-cart":"/login"}>
+              <Link
+                href={
+                  isAuth === "authenticated" ? "/user/shopping-cart" : "/login"
+                }
+              >
                 <div className="w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon">
                   <BiSolidCart className="w-[75%] h-[75%] text-inherit cursor-pointer " />
                 </div>
               </Link>
               {/* user  */}
-              <div
-                onClick={userProfile}
-                className="w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon"
+              <Link
+                href={
+                  isAuth === "authenticated"
+                    ? "/user/account-setting"
+                    : "/login"
+                }
               >
-                <BiSolidUser className="w-[75%] h-[75%] text-inherit cursor-pointer " />
-              </div>
+                <div className="w-8 h-8 bg-[--first-color] text-white rounded-full flex justify-center items-center hidden-nav-icon">
+                  <BiSolidUser className="w-[75%] h-[75%] text-inherit cursor-pointer " />
+                </div>
+              </Link>
             </div>
 
             <div className="nav__toggle" onClick={showMenu} ref={navToggleRef}>

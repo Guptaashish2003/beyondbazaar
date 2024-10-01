@@ -8,9 +8,6 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
 import { useRouter, usePathname } from "next/navigation";
-import InputBtn from "../Form/InputBtn";
-import { input } from "@nextui-org/theme";
-import { type } from "os";
 
 const ProductDes = ({
   BaseUrl,
@@ -29,7 +26,10 @@ const ProductDes = ({
   const [productCount, setProductCount] = useState(1);
   const [loading, setLoading] = useState(false);
   const [size, setSize] = useState();
+  const [variantDetails, setVariantDetails] = useState([]);
+  const [variantColor, setVariantColor] = useState();
   const dispatch = useDispatch();
+  console.log("variantsdetilasss", variantColor?._id);
   const increment = () => {
     if (stock > productCount) {
       setProductCount(productCount + 1);
@@ -44,16 +44,45 @@ const ProductDes = ({
       toast.warn("somthing was wrong!", { autoClose: 2000 });
     }
   };
-
   const addToCartProduct = async () => {
     setLoading(true);
-    dispatch(addToCart({ productID: id, productQuantity: productCount }));
+    if (size && variantColor) {
+      dispatch(
+        addToCart({
+          productID: id,
+          productQuantity: productCount,
+          productSize: size,
+          productColor: variantColor?.color,
+          variantId: variantColor?._id,
+        })
+      );
+    } else if (size) {
+      dispatch(
+        addToCart({
+          productID: id,
+          productQuantity: productCount,
+          productSize: size,
+        })
+      );
+    } else {
+      dispatch(
+        addToCart({
+          productID: id,
+          productQuantity: productCount,
+        })
+      );
+    }
     setLoading(false);
   };
   const orderNow = async () => {
-    router.push(`/checkout/${slug}?qty=${productCount}`);
+    if (size && variantColor) {
+      router.push(`/checkout/${id}?qty=${productCount}&size=${size}&color=${variantColor?.color}`);
+    } else if (size) {
+      router.push(`/checkout/${id}?qty=${productCount}&size=${size}`);
+    } else {
+      router.push(`/checkout/${id}?qty=${productCount}`);
+    }
   };
-  console.log("hello", variants);
 
   return (
     <div className={`p-8   w-1/2 max-lg:w-full ${className}`}>
@@ -66,12 +95,21 @@ const ProductDes = ({
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odioerror ullam optio quod corporis"}
         </p>
         <span className="inline-block my-2 text-[--first-color] font-bold text-xl cursor-text max-lg:my-2">
-          <p className="border-b-2 inline border-slate-400 border-solid ">
-            {price.toLocaleString("en-IN", {
-              style: "currency",
-              currency: "INR",
-            }) || 2999}
-          </p>
+          {variantColor?.price ? (
+            <p className="border-b-2 inline border-slate-400 border-solid ">
+              {variantColor?.price.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              }) || 2999}
+            </p>
+          ) : (
+            <p className="border-b-2 inline border-slate-400 border-solid ">
+              {price.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              }) || 2999}
+            </p>
+          )}
         </span>
         <hr className="mt-8 border border-slate-200" />
       </div>
@@ -102,10 +140,37 @@ const ProductDes = ({
                     : "bg-gray-200 text-black"
                 } w-10 h-10 text-lg text-center cursor-pointer`}
                 value={variant?.variantType}
-                onClick={() => setSize(variant?.variantType)}
+                o
+                onClick={() => {
+                  setSize(variant?.variantType);
+                  setVariantDetails(variant?.variantDetails);
+                }}
               />
             ))}
           </div>
+
+          {variantDetails[0]?.color && (
+            <div className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container ">
+              <p>Color:</p>
+              <div className="flex gap-2">
+                {variantDetails.map((variant, index) => (
+                  <input
+                    type="button"
+                    key={variant?._id}
+                    className={`${
+                      variantColor === variant
+                        ? "bg-black text-white"
+                        : "bg-gray-200 text-black"
+                    } w-20 h-10 text-lg text-center cursor-pointer`}
+                    value={variant?.color}
+                    onClick={() => {
+                      setVariantColor(variant);
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
       <SubmitButton

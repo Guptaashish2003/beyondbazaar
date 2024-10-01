@@ -24,8 +24,10 @@ const ShoppingCart = () => {
   }
   
   if(error){
-    router.push("/")
+    console.log(error)
+    // router.push("/")
   }
+  // console.log(dispatch)
 
   if(cart.length === 0){
     return(

@@ -1,34 +1,51 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import Modal from "@/components/Modal/Modal";
 import { IoIosAddCircle } from "react-icons/io";
 
-const AddVarients = ({ btnClass,rows, setRows }) => {
+const Addvariants = ({ btnClass, rows, setRows }) => {
+  const [isColor, setIsColor] = useState(false);
+  const [val,setVal] = useState({});
+  
 
-
+  useEffect(() => {
+    if (isColor) {
+      setVal({
+        color: "",
+        price: 0,
+        stock: 0,
+        isAvailable: true,
+        variantImage: "",
+      })
+      setRows([...rows, { variantType: "", variantDetails: [{
+        color: "",
+        price: 0,
+        stock: 0,
+        isAvailable: true,
+        variantImage: "",
+      }] }]);
+    } else {
+      setVal({ price: 0, stock: 0, isAvailable: true, variantImage: "" });
+      setRows([...rows, { variantType: "", variantDetails:[{ price: 0, stock: 0, isAvailable: true, variantImage: "" }] }]);
+    }
+  }, [isColor]);
 
   const addRow = () => {
     setRows([
       ...rows,
       {
         variantType: "",
-        varientDetails: [{ color: "", price: "", stock: "", isAvailable: true, variantImage: "" }],
+        variantDetails: [val],
       },
     ]);
   };
-
+console.log(isColor,"isColor")
   // Handle adding a new variant detail row
-  const addVarientDetailRow = (index) => {
+  const addvariantDetailRow = (index) => {
     const newRows = [...rows];
-    newRows[index].varientDetails.push({
-      color: "",
-      price: "",
-      stock: "",
-      isAvailable: true,
-      variantImage: "",
-    });
+    newRows[index].variantDetails.push(val);
     setRows(newRows);
   };
 
@@ -37,22 +54,45 @@ const AddVarients = ({ btnClass,rows, setRows }) => {
     const newRows = [...rows];
 
     if (variantIndex !== null) {
-      newRows[index].varientDetails[variantIndex][name] = value;
+      if (name === "price" || name === "stock") {
+        newRows[index].variantDetails[variantIndex][name] = parseInt(value);
+      } else {
+        newRows[index].variantDetails[variantIndex][name] = value;
+      }
     } else {
       newRows[index][name] = value;
     }
     setRows(newRows);
   };
 
-
-console.log(rows);
-  const header = ["variantType", "varientDetails"];
-  const DetailHeader = ["color", "price", "isAvailable", "stock"];
+  console.log(rows);
+  const header = ["variantType", "variantDetails"];
+  const DetailHeader = [
+    `${isColor ? "color" : ""}`,
+    "price",
+    "isAvailable",
+    "stock",
+  ];
 
   return (
     <div>
       <Modal btnClass={`${btnClass} px-4`} btnName="Add SubCategory">
+        <div className="flex mx-6 my-3 gap-x-4 px-3 w-full justify-evenly">
+          <label className="inline-flex w-1/2 items-center mb-5 cursor-pointer my-6">
+            <input
+              type="checkbox"
+              value=""
+              className="sr-only peer"
+              onChange={() => setIsColor(!isColor)}
+            />
+            <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+              with color
+            </span>
+            <div className="relative mx-2 w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gray-800"></div>
+          </label>
+        </div>
         <div className="flex flex-col gap-y-2">
+          <h1 className="text-lg font-bold">Add Variants</h1>
           <div>
             <table border="1">
               <thead>
@@ -82,34 +122,46 @@ console.log(rows);
                           </tr>
                         </thead>
                         <tbody>
-                          {row.varientDetails.map((varitant, idx) => (
+                          {row.variantDetails.map((varitant, idx) => (
                             <tr key={idx}>
-                              <td>
-                                <InputBtn
-                                  name="color"
-                                  value={varitant.color}
-                                  onChange={(event) => handleInputChange(index, event, idx)}
-                                />
-                              </td>
+                              {isColor && (
+                                <td>
+                                  <InputBtn
+                                    name="color"
+                                    value={varitant.color}
+                                    onChange={(event) =>
+                                      handleInputChange(index, event, idx)
+                                    }
+                                  />
+                                </td>
+                              )}
                               <td>
                                 <InputBtn
                                   name="price"
                                   value={varitant.price}
-                                  onChange={(event) => handleInputChange(index, event, idx)}
+                                  type="number"
+                                  onChange={(event) =>
+                                    handleInputChange(index, event, idx)
+                                  }
                                 />
                               </td>
                               <td>
                                 <InputBtn
                                   name="isAvailable"
                                   value={varitant.isAvailable}
-                                  onChange={(event) => handleInputChange(index, event, idx)}
+                                  onChange={(event) =>
+                                    handleInputChange(index, event, idx)
+                                  }
                                 />
                               </td>
                               <td>
                                 <InputBtn
                                   name="stock"
+                                  type="number"
                                   value={varitant.stock}
-                                  onChange={(event) => handleInputChange(index, event, idx)}
+                                  onChange={(event) =>
+                                    handleInputChange(index, event, idx)
+                                  }
                                 />
                               </td>
                             </tr>
@@ -118,7 +170,9 @@ console.log(rows);
                       </table>
                     </td>
                     <td>
-                      <IoIosAddCircle onClick={() => addVarientDetailRow(index)} />
+                      <IoIosAddCircle
+                        onClick={() => addvariantDetailRow(index)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -137,4 +191,4 @@ console.log(rows);
   );
 };
 
-export default AddVarients;
+export default Addvariants;

@@ -19,7 +19,13 @@ const CartSchema = new mongoose.Schema(
     },
     productSize:{
       type:String,   
-    }
+    },
+    variantId:{
+      type:mongoose.Schema.Types.ObjectId
+    },
+    productColor:{
+      type:String, 
+  },
   },
   { timestamps: true }
 )

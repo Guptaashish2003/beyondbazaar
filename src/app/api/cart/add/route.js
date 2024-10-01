@@ -13,6 +13,7 @@ export async function POST(request) {
         }
         const userID = check._id;
         const data = await request.json();
+        console.log("data", data)
         const {  productID, productQuantity } = data;
         if (!productID || !productQuantity) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
@@ -27,7 +28,8 @@ export async function POST(request) {
             await updateQuantity[0].save()
             return NextResponse.json({ success: true, message: "update Quantity successfully", data: updateQuantity }, { status: 200 });  
         }
-        const cart = await Cart.create({ userID, productID, productQuantity });
+        const cart = await Cart.create({ userID, productID, productQuantity,productSize:data.productSize,productColor:data.productColor,variantId:data.variantId });
+        console.log(cart)
         return NextResponse.json({ success: true, message: "Added to cart", data: cart }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });

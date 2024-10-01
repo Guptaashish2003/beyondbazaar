@@ -14,7 +14,7 @@ function DashboardLayout({children}) {
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode');
         const currentThemeMode = localStorage.getItem('themeMode');
-        if(status ==! 'authenticated' ||session.user.role ==! 'admin'  ){
+        if(status ==! 'authenticated' ||session?.user.role ==! 'admin'  ){
           router.push('/');
         }
         if (currentThemeColor && currentThemeMode) {

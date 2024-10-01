@@ -1,5 +1,5 @@
 "use client";
-import { React, useEffect, useRef, useState } from "react";
+import { React, useEffect, useState } from "react";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
@@ -28,6 +28,7 @@ import TableRow from "@tiptap/extension-table-row";
 import TextEditor from "../_components/TextEditor";
 
 
+
 export default function page() {
   const router = useRouter();
 
@@ -39,11 +40,11 @@ export default function page() {
   const [rows, setRows] = useState([
     {
       variantType: "",
-      varientDetails: [
+      variantDetails: [
         {
           color: "",
-          price: "",
-          stock: "",
+          price: 0,
+          stock: 0,
           isAvailable: true,
           variantImage: "",
         },
@@ -74,6 +75,7 @@ export default function page() {
     `,
   });
 
+
   const validationSchema = Yup.object().shape({
     productName: Yup.string().required("Name is required"),
     productPrice: Yup.number().required("Price is required"),
@@ -90,10 +92,82 @@ export default function page() {
     useForm(formOptions);
   const { errors } = formState;
 
+  const testData = {
+    "productName": "Stylish T-Shirt",
+    "productDescription": "A comfortable and stylish t-shirt available in various colors.",
+    "productImage": [
+      "https://example.com/images/tshirt-front.jpg",
+      "https://example.com/images/tshirt-back.jpg"
+    ],
+    "slug": "stylish-t-shirt88",
+      "title": "Stylish T-Shirt for Men",
+      "description": "A high-quality t-shirt that comes in multiple colors and sizes.",
+    "productPrice": 25.99,
+    "productQuantity": 200,
+    "productAvailable": true,
+    "productTags": ["t-shirt", "fashion", "men", "clothing"],
+    "productCategory": "65e2e68fbcd8462865848477",  // Example ObjectId of a SubCategory
+    "mostPopular": true,
+    "isVariantAvailable": true,
+    "variants": [
+      {
+        "variantType": "color",
+        "varientDetails": [
+          {
+            "color": "Red",
+            "price": 25.99,
+            "stock": 50,
+            "isAvailable": true,
+            "variantImage": "https://example.com/images/tshirt-red.jpg"
+          },
+          {
+            "color": "Blue",
+            "price": 26.99,
+            "stock": 30,
+            "isAvailable": true,
+            "variantImage": "https://example.com/images/tshirt-blue.jpg"
+          },
+          {
+            "color": "Green",
+            "price": 24.99,
+            "stock": 20,
+            "isAvailable": false,
+            "variantImage": "https://example.com/images/tshirt-green.jpg"
+          }
+        ]
+      },
+      {
+        "variantType": "size",
+        "varientDetails": [
+          {
+            "color": "Small",
+            "price": 25.99,
+            "stock": 50,
+            "isAvailable": true
+          },
+          {
+            "color": "Medium",
+            "price": 26.99,
+            "stock": 30,
+            "isAvailable": true
+          },
+          {
+            "color": "Large",
+            "price": 24.99,
+            "stock": 20,
+            "isAvailable": false
+          }
+        ]
+      }
+    ],
+    "rating": 4.5
+  }
+  
+
   const onSubmit = async (productData) => {
     productData.productTags = tag;
     productData.productImage = slider;
-    if(productData.isVariantAvailable) productData.variants = rows;
+    if (productData.isVariantAvailable) productData.variants = rows;
     productData.productDescription = JSON.stringify(editor.getHTML());
     console.log(productData);
     // alert(JSON.stringify(productData));
@@ -101,6 +175,7 @@ export default function page() {
     try {
       const res = await usePostDataProtected(
         "/api/admin/product/add-product",
+        // testData
         productData
       );
       setLoading(false);
@@ -121,6 +196,7 @@ export default function page() {
   useEffect(() => {
     const path = "product";
     imageU && uploadImage(path, imageU, slider, setSlider);
+    
   }, [imageU]);
 
   const btnClass =
@@ -207,9 +283,7 @@ export default function page() {
     return null;
   }
   const isVariantAvailable = watch("isVariantAvailable");
-  console.log("isVariantAvailable", isVariantAvailable);
-
-
+  console.log("isVariantAvailable", typeof slider);
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
@@ -258,8 +332,15 @@ export default function page() {
                 </span>
                 <div className="relative mx-2 w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gray-800"></div>
               </label>
-              <div className="w-1/2 m-auto">{isVariantAvailable && (
-                <Addvariants btnClass={btnClass} rows={rows} setRows={setRows} />)}</div>
+              <div className="w-1/2 m-auto">
+                {isVariantAvailable && (
+                  <Addvariants
+                    btnClass={btnClass}
+                    rows={rows}
+                    setRows={setRows}
+                  />
+                )}
+              </div>
             </div>
           </div>
           {/* select method  */}
@@ -307,6 +388,7 @@ export default function page() {
                 type="file"
                 id="file-upload"
                 onChange={(e) => {
+                  console.log("file", e.target.files[0]);
                   setImageU(e.target.files[0]);
                 }}
                 className="hidden"
@@ -328,10 +410,14 @@ export default function page() {
                 className=" bg-[#333] text-white px-10 py-2 "
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
-                  if (slider.length > 0) {
-                    setSlider([...slider, res[0].url]);
+                  if (Array.isArray(res) && res[0]?.url) {
+                    if (slider.length > 0) {
+                      setSlider((prevSlider) => [...prevSlider, res[0].url]);
+                    } else {
+                      setSlider([res[0].url]);
+                    }
                   } else {
-                    setSlider([res[0].url]);
+                    console.error("Unexpected response format: ", res);
                   }
                 }}
                 onUploadError={(error) => {
@@ -342,8 +428,8 @@ export default function page() {
             </div>
           )}
           {/* previewImage */}
-          <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
-            {slider.map((itm, index) => (
+          {/* <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
+            {slider?.map((itm, index) => (
               <div key={index} className="relative w-24 h-full">
                 <div className="w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10">
                   <span>{index}</span>
@@ -357,7 +443,7 @@ export default function page() {
                 />
               </div>
             ))}
-          </div>
+          </div> */}
           {/* tag */}
           <TagsInput
             value={tag}
