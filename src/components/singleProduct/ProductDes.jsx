@@ -25,11 +25,11 @@ const ProductDes = ({
   const router = useRouter();
   const [productCount, setProductCount] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [size, setSize] = useState();
+  const [variant, setVariant] = useState();
   const [variantDetails, setVariantDetails] = useState([]);
-  const [variantColor, setVariantColor] = useState();
+  const [variantData, setVariantData] = useState();
   const dispatch = useDispatch();
-  console.log(size,"variantsdetilasss", variantColor?._id);
+  console.log(variant,"variantsdetilasss", variantData);
   const increment = () => {
     if (stock > productCount) {
       setProductCount(productCount + 1);
@@ -46,25 +46,16 @@ const ProductDes = ({
   };
   const addToCartProduct = async () => {
     setLoading(true);
-    if (size && variantColor) {
+    if (variant && variantData) {
       dispatch(
         addToCart({
           productID: id,
           productQuantity: productCount,
-          productSize: size,
-          productColor: variantColor?.color,
-          variantId: variantColor?._id,
+          variantId: variant?._id,
+          variantDetailId: variantDetails?._id,
         })
       );
-    } else if (size) {
-      dispatch(
-        addToCart({
-          productID: id,
-          productQuantity: productCount,
-          productSize: size,
-        })
-      );
-    } else {
+    }  else {
       dispatch(
         addToCart({
           productID: id,
@@ -75,10 +66,8 @@ const ProductDes = ({
     setLoading(false);
   };
   const orderNow = async () => {
-    if (size && variantColor) {
-      router.push(`/checkout/${id}?qty=${productCount}&size=${size}&color=${variantColor?.color}`);
-    } else if (size) {
-      router.push(`/checkout/${id}?qty=${productCount}&size=${size}`);
+    if (variant && variantData) {
+      router.push(`/checkout/${id}?qty=${productCount}&variant=${variant}&variantDetails=${variantDetails?._id}`);
     } else {
       router.push(`/checkout/${id}?qty=${productCount}`);
     }
@@ -95,9 +84,9 @@ const ProductDes = ({
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem odioerror ullam optio quod corporis"}
         </p>
         <span className="inline-block my-2 text-[--first-color] font-bold text-xl cursor-text max-lg:my-2">
-          {variantColor?.price ? (
+          {variantData?.price ? (
             <p className="border-b-2 inline border-slate-400 border-solid ">
-              {variantColor?.price.toLocaleString("en-IN", {
+              {variantData?.price.toLocaleString("en-IN", {
                 style: "currency",
                 currency: "INR",
               }) || 2999}
@@ -129,20 +118,21 @@ const ProductDes = ({
         <div className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  py-4">
           <p>Size:</p>
           <div className="flex gap-2">
-            {variants.map((variant, index) => (
+            {variants.map((vart, index) => (
               <input
                 type="button"
-                disabled={variant?.stock === 0}
-                key={variant?._id}
+                disabled={vart?.stock === 0}
+                key={vart?._id}
                 className={`${
-                  size === variant?.variantType
+                  variant === vart?._id
                     ? "bg-black text-white"
                     : "bg-gray-200 text-black"
                 } w-10 h-10 text-lg text-center cursor-pointer`}
-                value={variant?.variantType}
+                value={vart?.variantType}
                 onClick={() => {
-                  setSize(variant?.variantType);
-                  setVariantDetails(variant?.variantDetails);
+                  setVariant(vart?._id);
+                  setVariantDetails(vart?.variantDetails);
+                  setVariantData(vart.variantDetails[0]);
                 }}
               />
             ))}
@@ -152,18 +142,18 @@ const ProductDes = ({
             <div className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container ">
               <p>Color:</p>
               <div className="flex gap-2">
-                {variantDetails.map((variant, index) => (
+                {variantDetails.map((vart, index) => (
                   <input
                     type="button"
-                    key={variant?._id}
+                    key={vart?._id}
                     className={`${
-                      variantColor === variant
+                      variantData === vart
                         ? "bg-black text-white"
                         : "bg-gray-200 text-black"
                     } w-20 h-10 text-lg text-center cursor-pointer`}
-                    value={variant?.color}
+                    value={vart?.color}
                     onClick={() => {
-                      setVariantColor(variant);
+                      setVariantData(vart);
                     }}
                   />
                 ))}
