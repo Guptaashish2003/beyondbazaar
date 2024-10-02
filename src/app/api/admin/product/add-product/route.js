@@ -65,34 +65,34 @@ export async function POST(request) {
     
     // Validate either default price/quantity or variants
     console.log(data.title,data.variants,"data");
-  //   if (isVariantAvailable){
-  //   if (!variants || variants.length === 0) {
-  //     // For products without variants, ensure productPrice and productQuantity are provided
-  //     if (!productPrice || !productQuantity) {
-  //       return NextResponse.json(
-  //         { success: false, message: "Price and Quantity are required for products without variants" },
-  //         { status: 400 }
-  //       );
-  //     }
-  //   } else {
-  //     // Validate variants if they exist
-  //     for (const variant of variants) {
-  //       if (!variant.variantType  || !variant.variantDetails) {
-  //         return NextResponse.json(
-  //           { success: false, message: "Each variant must have size, color, price, and stock" },
-  //           { status: 400 }
-  //         );
-  //       }
-  //       if (variant.stock < 1) {
-  //         productQuantity += variant.stock;
-  //         return NextResponse.json(
-  //           { success: false, message: `Variant with size ${variant.size} and color ${variant.color} is out of stock` },
-  //           { status: 400 }
-  //         );
-  //       }
-  //     }
-  //   }
-  // }
+    if (isVariantAvailable){
+    if (!variants || variants.length === 0) {
+      // For products without variants, ensure productPrice and productQuantity are provided
+      if (!productPrice || !productQuantity) {
+        return NextResponse.json(
+          { success: false, message: "Price and Quantity are required for products without variants" },
+          { status: 400 }
+        );
+      }
+    } else {
+      // Validate variants if they exist
+      for (const variant of variants) {
+        if (!variant.variantType  || !variant.variantDetails) {
+          return NextResponse.json(
+            { success: false, message: "Each variant must have size, color, price, and stock" },
+            { status: 400 }
+          );
+        }
+        if (variant.stock < 1) {
+          productQuantity += variant.stock;
+          return NextResponse.json(
+            { success: false, message: `Variant with size ${variant.size} and color ${variant.color} is out of stock` },
+            { status: 400 }
+          );
+        }
+      }
+    }
+  }
     console.log(",..............................",variants[0].variantDetails)
     
     // Create the product, supporting both cases (with or without variants)
@@ -106,6 +106,7 @@ export async function POST(request) {
       seo: { title, description },
       productTags,
       productCategory,
+      isVariantAvailable,
       variants  // Include variants if present, or leave undefined if not
     });
     

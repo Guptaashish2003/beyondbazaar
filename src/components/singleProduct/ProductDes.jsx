@@ -29,7 +29,7 @@ const ProductDes = ({
   const [variantDetails, setVariantDetails] = useState([]);
   const [variantColor, setVariantColor] = useState();
   const dispatch = useDispatch();
-  console.log("variantsdetilasss", variantColor?._id);
+  console.log(size,"variantsdetilasss", variantColor?._id);
   const increment = () => {
     if (stock > productCount) {
       setProductCount(productCount + 1);
@@ -140,7 +140,6 @@ const ProductDes = ({
                     : "bg-gray-200 text-black"
                 } w-10 h-10 text-lg text-center cursor-pointer`}
                 value={variant?.variantType}
-                o
                 onClick={() => {
                   setSize(variant?.variantType);
                   setVariantDetails(variant?.variantDetails);

@@ -46,7 +46,7 @@ export default function page() {
           price: 0,
           stock: 0,
           isAvailable: true,
-          variantImage: "",
+
         },
       ],
     },
@@ -456,9 +456,8 @@ export default function page() {
           {/* submit button  */}/
           <SubmitButton
             value="Add Product"
-            // type="submit"
+            type="submit"
             loading={loading}
-            // onSubmit={handleSubmit(onSubmit)}
             className={btnClass}
           />
         </form>

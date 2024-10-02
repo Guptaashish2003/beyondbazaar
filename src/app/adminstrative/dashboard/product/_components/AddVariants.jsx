@@ -7,8 +7,12 @@ import { IoIosAddCircle } from "react-icons/io";
 
 const Addvariants = ({ btnClass, rows, setRows }) => {
   const [isColor, setIsColor] = useState(false);
-  const [val,setVal] = useState({});
-  
+  const [headerDetail, setHeaderDeatil] = useState([
+    "price",
+    "isAvailable",
+    "stock",
+  ]);
+  const [val, setVal] = useState({});
 
   useEffect(() => {
     if (isColor) {
@@ -17,18 +21,30 @@ const Addvariants = ({ btnClass, rows, setRows }) => {
         price: 0,
         stock: 0,
         isAvailable: true,
-        variantImage: "",
-      })
-      setRows([...rows, { variantType: "", variantDetails: [{
-        color: "",
-        price: 0,
-        stock: 0,
-        isAvailable: true,
-        variantImage: "",
-      }] }]);
+      });
+      setRows([
+        {
+          variantType: "",
+          variantDetails: [
+            {
+              color: "",
+              price: 0,
+              stock: 0,
+              isAvailable: true,
+            },
+          ],
+        },
+      ]);
     } else {
-      setVal({ price: 0, stock: 0, isAvailable: true, variantImage: "" });
-      setRows([...rows, { variantType: "", variantDetails:[{ price: 0, stock: 0, isAvailable: true, variantImage: "" }] }]);
+      setVal({ price: 0, stock: 0, isAvailable: true });
+      setRows([
+        {
+          variantType: "",
+          variantDetails: [
+            { price: 0, stock: 0, isAvailable: true },
+          ],
+        },
+      ]);
     }
   }, [isColor]);
 
@@ -41,7 +57,7 @@ const Addvariants = ({ btnClass, rows, setRows }) => {
       },
     ]);
   };
-console.log(isColor,"isColor")
+  console.log(isColor, "isColor");
   // Handle adding a new variant detail row
   const addvariantDetailRow = (index) => {
     const newRows = [...rows];
@@ -67,23 +83,26 @@ console.log(isColor,"isColor")
 
   console.log(rows);
   const header = ["variantType", "variantDetails"];
-  const DetailHeader = [
-    `${isColor ? "color" : ""}`,
-    "price",
-    "isAvailable",
-    "stock",
-  ];
+
+  const setColorHandler = () => {
+    if(headerDetail.length === 3){
+      setHeaderDeatil(["color", "price", "isAvailable", "stock"]);
+    }else{
+      setHeaderDeatil(["price", "isAvailable", "stock"]);
+    }
+    setIsColor(!isColor);
+  };
 
   return (
     <div>
-      <Modal btnClass={`${btnClass} px-4`} btnName="Add SubCategory">
+      <Modal btnClass={`${btnClass} px-4`} btnName="Add variant">
         <div className="flex mx-6 my-3 gap-x-4 px-3 w-full justify-evenly">
           <label className="inline-flex w-1/2 items-center mb-5 cursor-pointer my-6">
             <input
               type="checkbox"
               value=""
               className="sr-only peer"
-              onChange={() => setIsColor(!isColor)}
+              onChange={setColorHandler}
             />
             <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
               with color
@@ -116,7 +135,7 @@ console.log(isColor,"isColor")
                       <table border="1">
                         <thead>
                           <tr>
-                            {DetailHeader.map((key, index) => (
+                            {headerDetail.map((key, index) => (
                               <th key={index}>{key}</th>
                             ))}
                           </tr>
@@ -149,6 +168,8 @@ console.log(isColor,"isColor")
                                 <InputBtn
                                   name="isAvailable"
                                   value={varitant.isAvailable}
+                                  type="dropdown"
+                                  option={["true", "false"]}
                                   onChange={(event) =>
                                     handleInputChange(index, event, idx)
                                   }
@@ -180,11 +201,12 @@ console.log(isColor,"isColor")
             </table>
           </div>
 
-          <SubmitButton
-            value="Add Row"
-            className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-101 duration-300"
+          <div
+            className={btnClass}
             onClick={addRow}
-          />
+          >
+            Add Row
+          </div>
         </div>
       </Modal>
     </div>
