@@ -51,7 +51,7 @@ const ProductDes = ({
         addToCart({
           productID: id,
           productQuantity: productCount,
-          variantId: variant?._id,
+          variantId: variant,
           variantDetailId: variantData?._id,
         })
       );

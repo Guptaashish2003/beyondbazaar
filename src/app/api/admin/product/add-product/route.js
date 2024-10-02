@@ -39,14 +39,7 @@ export async function POST(request) {
     } = data;
     
     // Validate required fields for the main product
-    console.log(productCategory ,
-      !productDescription ,
-      !productImage ,
-      !productAvailable ,
-      !title ,
-      !description ,
-      !productTags ,
-      !productCategory,"isTrue")
+
     if (
       !productName ||
       !productDescription ||
@@ -64,18 +57,15 @@ export async function POST(request) {
     }
     
     // Validate either default price/quantity or variants
-    console.log(data.title,data.variants,"data");
     if (isVariantAvailable){
     if (!variants || variants.length === 0) {
       // For products without variants, ensure productPrice and productQuantity are provided
-      if (!productPrice || !productQuantity) {
-        return NextResponse.json(
-          { success: false, message: "Price and Quantity are required for products without variants" },
-          { status: 400 }
-        );
-      }
+      return NextResponse.json(
+        { success: false, message: "Price and Quantity are required for products without variants" },
+        { status: 400 }
+      );
     } else {
-      // Validate variants if they exist
+      let newQuantity = 0;
       for (const variant of variants) {
         if (!variant.variantType  || !variant.variantDetails) {
           return NextResponse.json(
@@ -83,35 +73,37 @@ export async function POST(request) {
             { status: 400 }
           );
         }
-        if (variant.stock < 1) {
-          productQuantity += variant.stock;
-          return NextResponse.json(
-            { success: false, message: `Variant with size ${variant.size} and color ${variant.color} is out of stock` },
-            { status: 400 }
-          );
+        for (const detail of variant.variantDetails) {
+          if (!detail.price || !detail.stock) {
+            return NextResponse.json(
+              { success: false, message: "Each variant detail must have price and stock" },
+              { status: 400 }
+            );
+          }
+          newQuantity += detail.stock;
         }
+        
+
       }
+      productQuantity = newQuantity;
     }
   }
-    console.log(",..............................",variants[0].variantDetails)
-    
+
     // Create the product, supporting both cases (with or without variants)
     const product = await Product.create({
       productName,
       productDescription,
       productImage,
       productPrice:productPrice,  // Only include productPrice if no variants
-      productQuantity:productQuantity,  // Only include productQuantity if no variants
+      productQuantity:productQuantity,  
       productAvailable,
       seo: { title, description },
       productTags,
       productCategory,
       isVariantAvailable,
-      variants  // Include variants if present, or leave undefined if not
+      variants 
     });
     
-    console.log(",..........................product....",product)
-    // Return success response
     return NextResponse.json({ success: true, data: "product", message: "Product added" }, { status: 200 });
   } catch (error) {
     // Error handling
