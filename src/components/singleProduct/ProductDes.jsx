@@ -52,7 +52,7 @@ const ProductDes = ({
           productID: id,
           productQuantity: productCount,
           variantId: variant?._id,
-          variantDetailId: variantDetails?._id,
+          variantDetailId: variantData?._id,
         })
       );
     }  else {
@@ -67,7 +67,7 @@ const ProductDes = ({
   };
   const orderNow = async () => {
     if (variant && variantData) {
-      router.push(`/checkout/${id}?qty=${productCount}&variant=${variant}&variantDetails=${variantDetails?._id}`);
+      router.push(`/checkout/${id}?qty=${productCount}&variant=${variant}&variantDetails=${variantData?._id}`);
     } else {
       router.push(`/checkout/${id}?qty=${productCount}`);
     }
