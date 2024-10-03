@@ -58,6 +58,7 @@ const page = async ({ params }) => {
           stock={data.productQuantity}
           category={data?.productCategory.category.categoryName}
           variants={data?.variants}
+          isVariantAvailable={data?.isVariantAvailable}
         />
       </div>
       <ProductDetails

@@ -67,19 +67,28 @@ const Addvariants = ({ btnClass, rows, setRows }) => {
 
   const handleInputChange = (index, event, variantIndex = null) => {
     const { name, value } = event.target;
+    
     const newRows = [...rows];
-
+    console.log(newRows, "newRows")
+    newRows[index] = { ...newRows[index], variantDetails: [...newRows[index].variantDetails] };  // Deep copy variantDetails
+    console.log(newRows[index], "newRows")
+  
     if (variantIndex !== null) {
+      newRows[index].variantDetails[variantIndex] = { ...newRows[index].variantDetails[variantIndex] };  // Deep copy the specific variant
+  
       if (name === "price" || name === "stock") {
-        newRows[index].variantDetails[variantIndex][name] = parseInt(value);
+        const parsedValue = parseInt(value);
+        newRows[index].variantDetails[variantIndex][name] = isNaN(parsedValue) ? 0 : parsedValue;
       } else {
         newRows[index].variantDetails[variantIndex][name] = value;
       }
     } else {
       newRows[index][name] = value;
     }
+  
     setRows(newRows);
   };
+  
 
   console.log(rows);
   const header = ["variantType", "variantDetails"];

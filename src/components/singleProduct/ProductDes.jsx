@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiFastForward } from "react-icons/fi";
 import SocialMedial from "@/components/SocialMediaIcons/SocialMedial";
@@ -20,6 +20,7 @@ const ProductDes = ({
   stock,
   className,
   variants,
+  isVariantAvailable=false
 }) => {
   const pathName = usePathname();
   const router = useRouter();
@@ -29,7 +30,13 @@ const ProductDes = ({
   const [variantDetails, setVariantDetails] = useState([]);
   const [variantData, setVariantData] = useState();
   const dispatch = useDispatch();
-  console.log(variant,"variantsdetilasss", variantData);
+  console.log(variant, "variantsdetilasss", variantData);
+  useEffect(() => {
+    if (variants) {
+      setVariant(variants[0]?._id);
+      setVariantDetails(variants[0]?.variantDetails);
+    }
+  }, [variants]);
   const increment = () => {
     if (stock > productCount) {
       setProductCount(productCount + 1);
@@ -38,6 +45,7 @@ const ProductDes = ({
     }
   };
   const decrement = () => {
+    // if(variants)
     if (productCount > 0) {
       setProductCount(productCount - 1);
     } else {
@@ -55,7 +63,7 @@ const ProductDes = ({
           variantDetailId: variantData?._id,
         })
       );
-    }  else {
+    } else {
       dispatch(
         addToCart({
           productID: id,
@@ -67,7 +75,9 @@ const ProductDes = ({
   };
   const orderNow = async () => {
     if (variant && variantData) {
-      router.push(`/checkout/${id}?qty=${productCount}&variant=${variant}&variantDetails=${variantData?._id}`);
+      router.push(
+        `/checkout/${id}?qty=${productCount}&variant=${variant}&variantDetails=${variantData?._id}`
+      );
     } else {
       router.push(`/checkout/${id}?qty=${productCount}`);
     }
@@ -114,7 +124,7 @@ const ProductDes = ({
           </button>
         </div>
       </div>
-      {variants && (
+      {isVariantAvailable && (
         <div className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  py-4">
           <p>Size:</p>
           <div className="flex gap-2">

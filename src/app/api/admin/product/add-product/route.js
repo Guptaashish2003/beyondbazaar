@@ -56,7 +56,6 @@ export async function POST(request) {
       );
     }
     
-    // Validate either default price/quantity or variants
     if (isVariantAvailable){
     if (!variants || variants.length === 0) {
       // For products without variants, ensure productPrice and productQuantity are provided
@@ -85,6 +84,7 @@ export async function POST(request) {
         
 
       }
+      console.log(newQuantity);
       productQuantity = newQuantity;
     }
   }
