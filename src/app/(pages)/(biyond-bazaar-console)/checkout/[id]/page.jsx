@@ -18,6 +18,8 @@ const page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const qty = searchParams.get("qty");
+  const variantId = searchParams.get("variantId");
+  const variantDetailId = searchParams.get("variantDetailId");
   const addressRef = useRef();
   const [address, setAddress] = useState([]);
   const [product, setProduct] = useState([]);
@@ -44,24 +46,52 @@ const page = () => {
         const res = await useGetDataProtected("/api/cart/my-cart");
         if (res.success) {
           const newData = res?.data.map((val) => {
-            let variantPrice
-            if(val.isVariantAvailable){
+            let variantPrice;
+            if (val.isVariantAvailable) {
               val.productID.variants.map((item) => {
                 if (item._id.toString() === val.variantId.toString()) {
-                    return item.variantDetails.map((item2) => {
-                        if (item2._id.toString() === val.variantDetailId.toString()) {
-                            variantPrice = item2.price;
-                            return item2
-                        }
-                    })
+                  return item.variantDetails.map((item2) => {
+                    if (
+                      item2._id.toString() === val.variantDetailId.toString()
+                    ) {
+                      variantPrice = item2.price;
+                      return item2;
+                    }
+                  });
                 }
-            });
+              });
             }
-            return { ...val.productID, qty: val.productQuantity, isVariantAvailable:val.isVariantAvailable,variantPrice };
+            return {
+              ...val.productID,
+              qty: val.productQuantity,
+              isVariantAvailable: val.isVariantAvailable,
+              variantPrice,
+            };
           });
           const newOrder = res?.data.map((val) => {
-            let price = val.productID.productPrice
-            return { product: val.productID._id, qty: val.productQuantity,price };
+            let price = val.productID.productPrice;
+            if (val.isVariantAvailable) {
+              val.productID.variants.map((item) => {
+                if (item._id.toString() === val.variantId.toString()) {
+                  return item.variantDetails.map((item2) => {
+                    if (
+                      item2._id.toString() === val.variantDetailId.toString()
+                    ) {
+                      price = item2.price;
+                      return item2;
+                    }
+                  });
+                }
+              });
+            }
+            return {
+              product: val.productID._id,
+              qty: val.productQuantity,
+              price,
+              isVariantAvailable: val.isVariantAvailable,
+              variantId: val.variantId,
+              variantDetailId: val.variantDetailId,
+            };
           });
           setProduct(newData);
           setOrder({ orderItems: newOrder, itemsPrice: res.totalprice });
@@ -72,10 +102,39 @@ const page = () => {
           `/api/product/single-product/${id}`
         );
         if (res.success) {
-          setProduct([{ ...res?.data, qty: qty }]);
+          let price = res?.data.productPrice;
+          if (res.data.isVariantAvailable) {
+            res.data.productID.variants.map((item) => {
+              if (item._id.toString() === variantId.toString()) {
+                return item.variantDetails.map((item2) => {
+                  if (item2._id.toString() === variantDetailId.toString()) {
+                    variantPrice = item2.price;
+                    return item2;
+                  }
+                });
+              }
+            });
+          }
+          setProduct([
+            {
+              ...res?.data,
+              qty: qty,
+              isVariantAvailable: res.data.isVariantAvailable,
+              price,
+            },
+          ]);
           setOrder({
-            orderItems: [{ qty: qty, product: res?.data._id }],
-            itemsPrice: res?.data.productPrice * qty,
+            orderItems: [
+              {
+                qty: qty,
+                product: res?.data._id,
+                price,
+                variantDetailId,
+                variantId,
+                isVariantAvailable: res.data.isVariantAvailable,
+              },
+            ],
+            itemsPrice: price * qty,
           });
         }
       }
@@ -191,6 +250,8 @@ const page = () => {
             method={method}
             setDiscount={setDiscount}
             order={order}
+            variantDetailId={variantDetailId}
+            variantId={variantId}
             total={(
               shippingPrice -
               discount.discountValue +

@@ -14,6 +14,14 @@ const OrderSchema = new mongoose.Schema(
       {
         qty: { type: Number, required: true },
         price: { type: Number, required: true },
+        isVariantAvailable: {
+          type: Boolean,
+          default: false,
+        },
+        variantId:{
+          type:mongoose.Schema.Types.ObjectId,
+        },
+        variantDetailId:{type:mongoose.Schema.Types.ObjectId},
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: Product,
