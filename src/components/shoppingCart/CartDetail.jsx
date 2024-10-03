@@ -108,7 +108,7 @@ const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
           <div className="flex flex-col text-left  pl-1 max-sm:hidden">
             <p className="font-bold">Total</p>
             <p>
-              {(price * quantity).toLocaleString("en-IN", {
+              {(price * productQty).toLocaleString("en-IN", {
                 style: "currency",
                 currency: "INR",
               })}

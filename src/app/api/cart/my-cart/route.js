@@ -2,7 +2,6 @@ import Cart from "@/backend/model/Cart";
 import { NextResponse } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import isOauth from "@/backend/middlewere/isOauth";
-import Product from "@/backend/model/Product";
 export async function GET(request) {
   await connectDB();
   try {
@@ -15,14 +14,29 @@ export async function GET(request) {
       "productID",
       "productName productPrice productImage productQuantity variants"
     );
-    
+
 
     const cartQuantity = cart.length;
     const totalquantity = cart.reduce((acc, curr) => {
       return acc + curr.productQuantity;
     }, 0);
     const totalprice = cart.reduce((acc, curr) => {
-      return acc + curr.productID.productPrice * curr.productQuantity;
+      if (curr.isVariantAvailable) {
+        let variantPrice = 0;
+        curr.productID.variants.map((item) => {
+          if (item._id.toString() === curr.variantId.toString()) {
+            return item.variantDetails.map((item2) => {
+              if (item2._id.toString() === curr.variantDetailId.toString()) {
+                variantPrice = item2.price;
+                return item2
+              }
+            })
+          }
+        });
+        return acc + (variantPrice * curr.productQuantity);
+      }else{
+        return acc + (curr.productID.productPrice * curr.productQuantity);
+      }
     }, 0);
     return NextResponse.json(
       {

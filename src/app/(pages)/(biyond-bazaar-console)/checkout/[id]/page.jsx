@@ -44,10 +44,24 @@ const page = () => {
         const res = await useGetDataProtected("/api/cart/my-cart");
         if (res.success) {
           const newData = res?.data.map((val) => {
-            return { ...val.productID, qty: val.productQuantity };
+            let variantPrice
+            if(val.isVariantAvailable){
+              val.productID.variants.map((item) => {
+                if (item._id.toString() === val.variantId.toString()) {
+                    return item.variantDetails.map((item2) => {
+                        if (item2._id.toString() === val.variantDetailId.toString()) {
+                            variantPrice = item2.price;
+                            return item2
+                        }
+                    })
+                }
+            });
+            }
+            return { ...val.productID, qty: val.productQuantity, isVariantAvailable:val.isVariantAvailable,variantPrice };
           });
           const newOrder = res?.data.map((val) => {
-            return { product: val.productID._id, qty: val.productQuantity };
+            let price = val.productID.productPrice
+            return { product: val.productID._id, qty: val.productQuantity,price };
           });
           setProduct(newData);
           setOrder({ orderItems: newOrder, itemsPrice: res.totalprice });

@@ -35,17 +35,25 @@ const ProductDes = ({
     if (variants) {
       setVariant(variants[0]?._id);
       setVariantDetails(variants[0]?.variantDetails);
+      setVariantData(variants[0]?.variantDetails[0]);
     }
   }, [variants]);
   const increment = () => {
-    if (stock > productCount) {
-      setProductCount(productCount + 1);
-    } else {
-      toast.warn("Out Of Stock", { autoClose: 2000 });
+    if(isVariantAvailable){
+      if (variantData.stock > productCount) {
+        setProductCount(productCount + 1);
+      } else {
+        toast.warn("Out Of Stock", { autoClose: 2000 });
+      }
+    }else{
+      if (stock > productCount) {
+        setProductCount(productCount + 1);
+      } else {
+        toast.warn("Out Of Stock", { autoClose: 2000 });
+      }
     }
   };
   const decrement = () => {
-    // if(variants)
     if (productCount > 0) {
       setProductCount(productCount - 1);
     } else {
@@ -61,6 +69,7 @@ const ProductDes = ({
           productQuantity: productCount,
           variantId: variant,
           variantDetailId: variantData?._id,
+          isVariantAvailable:true
         })
       );
     } else {
