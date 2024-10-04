@@ -10,18 +10,11 @@ import Order from "@/backend/model/Order";
 
 
 export async function POST(request) {
-  console.log("hellowww...............................")
   await connectDB();
   try {
     Cashfree.XClientId = process.env.CASHFREE_APP_ID;
     Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
     Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
-
-    console.log(
-      Cashfree.XClientId,
-      Cashfree.XClientSecret,
-      Cashfree.XEnvironment
-    );
     const check = await isOauth(request);
     if (!check._id) {
       return check;
@@ -30,7 +23,7 @@ export async function POST(request) {
     const data = await request.json();
     let { orderItems, shippingInfo, shippingPrice, discount, method, orderId } =
       data;
-
+    console.log(data)
     if (!orderItems || !shippingInfo || !shippingPrice || !method) {
       return NextResponse.json(
         { success: false, message: "Invalid Input" },
@@ -43,13 +36,46 @@ export async function POST(request) {
     if (method === "bycart") {
       const cart = await Cart.find({ userID: check._id }).populate(
         "productID",
-        "productPrice productQuantity"
+        "productPrice productQuantity variantId variantDetailId isVariantAvailable variants"
       );
-      itemsPrice = cart.reduce((acc, curr) => {
-        return acc + curr.productID.productPrice * curr.productQuantity;
+      const CartCalcPrice = cart.map((item) => {
+        let productCost = 0;
+        if (item.productID.variants.length > 0 &&item.productID.isVariantAvailable) {
+          const variants = item.productID.variants.map((item2) => {
+            if (item2 && item2._id && item2._id.toString() === item.variantId.toString()) {
+              return item2.variantDetails.map((item3) => {                
+                if (item3._id.toString() === item.variantDetailId.toString()) {
+                  productCost += item3.price;
+                  return item3;
+                }
+              });
+            }
+          });
+
+        }
+        else {
+          productCost += item.productID.productPrice;
+        }
+        return productCost;
+      });
+      itemsPrice = cart.reduce((acc, curr,index) => {
+        return acc + CartCalcPrice[index] * curr.productQuantity;
       }, 0);
     } else if (method === "byproduct") {
       product = await Product.findById(orderItems[0].product);
+      if(orderItems[0].variantId && orderItems[0].variantDetailId && product.variants.length > 0 && product.isVariantAvailable){
+        const variants = product.variants.map((item) => {
+          if (item && item._id && item._id.toString() === orderItems[0].variantId.toString()) {
+            return item.variantDetails.map((item2) => {
+              if (item2._id.toString() === orderItems[0].variantDetailId.toString()) {
+                product.productPrice = item2.price;
+                return item2;
+              }
+            });
+          }
+        });
+        console.log("variant....",variants)
+      }
       itemsPrice = product.productPrice * Number(orderItems[0].qty);
     } else {
       return NextResponse.json(
@@ -78,8 +104,6 @@ export async function POST(request) {
       promocodeDoc.userRestriction.push(check._id);
       await promocodeDoc.save();
     }
-
-    console.log("data.....", orderId);
     const order = await Order.create({
       user: userID,
       orderItems,
@@ -118,6 +142,9 @@ export async function POST(request) {
       promocodeDoc.userRestriction.push(check._id);
       await promocodeDoc.save();
     }
+    if(method === 'bycart'){
+      await Cart.findOneAndDelete({userID:check._id})
+     }
     return NextResponse.json(
       {
         success: true,
@@ -129,7 +156,7 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log("error", error);
+    console.log("error......", error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

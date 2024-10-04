@@ -7,7 +7,7 @@ import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import { useGetData, useGetDataProtected } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { redirect, useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -18,8 +18,8 @@ const page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const qty = searchParams.get("qty");
-  const variantId = searchParams.get("variantId");
-  const variantDetailId = searchParams.get("variantDetailId");
+  const variantId = searchParams.get("variant");
+  const variantDetailId = searchParams.get("variantDetails");
   const addressRef = useRef();
   const [address, setAddress] = useState([]);
   const [product, setProduct] = useState([]);
@@ -28,6 +28,8 @@ const page = () => {
   const [shippingPrice, setShippingPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState();
+  console.log("variantId", variantId,"variantDetailId", variantDetailId);
+
 
   const getData = async () => {
     try {
@@ -101,10 +103,12 @@ const page = () => {
         const res = await useGetDataProtected(
           `/api/product/single-product/${id}`
         );
+        console.log("res................", res);
         if (res.success) {
           let price = res?.data.productPrice;
-          if (res.data.isVariantAvailable) {
-            res.data.productID.variants.map((item) => {
+          let variantPrice;
+          if (res?.data.isVariantAvailable) {
+            res?.data.variants.map((item) => {
               if (item._id.toString() === variantId.toString()) {
                 return item.variantDetails.map((item2) => {
                   if (item2._id.toString() === variantDetailId.toString()) {
@@ -121,6 +125,7 @@ const page = () => {
               qty: qty,
               isVariantAvailable: res.data.isVariantAvailable,
               price,
+              variantPrice,
             },
           ]);
           setOrder({
@@ -134,7 +139,7 @@ const page = () => {
                 isVariantAvailable: res.data.isVariantAvailable,
               },
             ],
-            itemsPrice: price * qty,
+            itemsPrice: (variantPrice ? variantPrice : price) * qty,
           });
         }
       }
@@ -162,36 +167,29 @@ const page = () => {
       );
       if (paymentRes.success) {
         const { session, expiry } = paymentRes.data;
+        
         const cashfree = await getCashfreeInstance();
-
-        let checkoutOptions = {
-          paymentSessionId: session,
-          redirectTarget: document.getElementById("cf_checkout"),
-          appearance: {
-            width: "425px",
-            height: "700px",
-          },
+       let checkoutOptions = {
+            paymentSessionId: session, 
+            redirectTarget: "_modal",
         };
-
         cashfree.checkout(checkoutOptions).then((result) => {
-          if (result.error) {
-            // This will be true when there is any error during the payment
-            console.log(
-              "There is some payment error, Check for Payment Status"
-            );
-            console.log(result.error);
-          }
-          if (result.redirect) {
-            // This will be true when the payment redirection page couldnt be opened in the same window
-            // This is an exceptional case only when the page is opened inside an inAppBrowser
-            // In this case the customer will be redirected to return url once payment is completed
-            console.log("Payment will be redirected");
-          }
-          if (result.paymentDetails) {
-            // This will be called whenever the payment is completed irrespective of transaction status
-            console.log("Payment has been completed, Check for Payment Status");
-            console.log(result.paymentDetails.paymentMessage);
-          }
+            if(result.error){
+                // This will be true whenever user clicks on close icon inside the modal or any error happens during the payment
+                console.log("User has closed the popup or there is some payment error, Check for Payment Status");
+                console.log(result.error);
+            }
+            if(result.redirect){
+                // This will be true when the payment redirection page couldnt be opened in the same window
+                // This is an exceptional case only when the page is opened inside an inAppBrowser
+                // In this case the customer will be redirected to return url once payment is completed
+                console.log("Payment will be redirected");
+            }
+            if(result.paymentDetails){
+                // This will be called whenever the payment is completed irrespective of transaction status
+                console.log("Payment has been completed, Check for Payment Status");
+                console.log(result.paymentDetails.paymentMessage);
+            }
         });
       }
     } catch (error) {
