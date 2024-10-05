@@ -4,6 +4,7 @@ import isOauth from "@/backend/middlewere/isOauth";
 import Cart from "@/backend/model/Cart";
 import Product from "@/backend/model/Product";
 import Promocode from "@/backend/model/Promocode";
+import crypto from "crypto";
 import { calculateDiscount } from "@/app/api/apply-promo/route";
 import { Cashfree } from "cashfree-pg";
 import Order from "@/backend/model/Order";
@@ -20,19 +21,24 @@ export async function POST(request) {
       return check;
     }
     const userID = check._id;
+
     const data = await request.json();
-    let { orderItems, shippingInfo, shippingPrice, discount, method, orderId } =
+    let { orderItems, shippingInfo, shippingPrice, discount, method } =
       data;
-    console.log(data)
     if (!orderItems || !shippingInfo || !shippingPrice || !method) {
       return NextResponse.json(
         { success: false, message: "Invalid Input" },
         { status: 400 }
       );
     }
+    const count = await Order.countDocuments();
+    const timestamp = Date.now().toString(); // Current timestamp
+    const randomStr = crypto.randomBytes(4).toString("hex"); // Random string
+    let orderId = `ORD-${timestamp}-${randomStr}-000${count + 1}`;
 
     let itemsPrice;
     let product;
+
     if (method === "bycart") {
       const cart = await Cart.find({ userID: check._id }).populate(
         "productID",
@@ -40,10 +46,10 @@ export async function POST(request) {
       );
       const CartCalcPrice = cart.map((item) => {
         let productCost = 0;
-        if (item.productID.variants.length > 0 &&item.productID.isVariantAvailable) {
+        if (item.productID.variants.length > 0 && item.productID.isVariantAvailable) {
           const variants = item.productID.variants.map((item2) => {
             if (item2 && item2._id && item2._id.toString() === item.variantId.toString()) {
-              return item2.variantDetails.map((item3) => {                
+              return item2.variantDetails.map((item3) => {
                 if (item3._id.toString() === item.variantDetailId.toString()) {
                   productCost += item3.price;
                   return item3;
@@ -58,12 +64,12 @@ export async function POST(request) {
         }
         return productCost;
       });
-      itemsPrice = cart.reduce((acc, curr,index) => {
+      itemsPrice = cart.reduce((acc, curr, index) => {
         return acc + CartCalcPrice[index] * curr.productQuantity;
       }, 0);
     } else if (method === "byproduct") {
       product = await Product.findById(orderItems[0].product);
-      if(orderItems[0].variantId && orderItems[0].variantDetailId && product.variants.length > 0 && product.isVariantAvailable){
+      if (orderItems[0].variantId && orderItems[0].variantDetailId && product.variants.length > 0 && product.isVariantAvailable) {
         const variants = product.variants.map((item) => {
           if (item && item._id && item._id.toString() === orderItems[0].variantId.toString()) {
             return item.variantDetails.map((item2) => {
@@ -74,7 +80,7 @@ export async function POST(request) {
             });
           }
         });
-        console.log("variant....",variants)
+        console.log("variant....", variants)
       }
       itemsPrice = product.productPrice * Number(orderItems[0].qty);
     } else {
@@ -142,9 +148,9 @@ export async function POST(request) {
       promocodeDoc.userRestriction.push(check._id);
       await promocodeDoc.save();
     }
-    if(method === 'bycart'){
-      await Cart.findOneAndDelete({userID:check._id})
-     }
+    if (method === 'bycart') {
+      await Cart.findOneAndDelete({ userID: check._id })
+    }
     return NextResponse.json(
       {
         success: true,

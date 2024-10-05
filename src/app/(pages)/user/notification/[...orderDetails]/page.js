@@ -36,12 +36,12 @@ const Page = () => {
     }
   };
 
-  useEffect(() => {
-    onRelode();
-  }, []);
+  // useEffect(() => {
+  //   onRelode();
+  // }, []);
 
   return (
-    <div className="w-screen h-screen top-0 left-0 z-50 flex flex-col justify-center items-center text-center m-auto p-32 text-2xl ">
+    <div className="w-screen h-screen top-0 left-0 z-[1000] flex flex-col justify-center items-center text-center m-auto p-32 text-2xl ">
       <p>Order ID: {orderId}</p>
       <p>Status: success</p>
     </div>

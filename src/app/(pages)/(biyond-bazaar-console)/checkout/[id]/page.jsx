@@ -151,12 +151,10 @@ const page = () => {
 
   const onCheckout = async () => {
     try {
-      const orderId = await useGetData("/api/user/order/gen-order-Id");
       const paymentRes = await usePostDataProtected(
         "/api/user/payment/session-create-order",
         {
           orderItems: order.orderItems,
-          orderId: orderId.data,
           discount: discount.disCountId,
           shippingInfo: addressRef.current.value,
           shippingPrice: "0",
