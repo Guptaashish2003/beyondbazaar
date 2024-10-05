@@ -28,14 +28,13 @@ const page = () => {
   const [shippingPrice, setShippingPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState();
-  console.log("variantId", variantId,"variantDetailId", variantDetailId);
+  // console.log("variantId", variantId,"variantDetailId", variantDetailId);
 
 
   const getData = async () => {
     try {
       setLoading(true);
       const res = await useGetDataProtected("/api/user/address/me");
-      console.log("res", res?.data);
       if (res.success) {
         setAddress(res?.data);
         if (res?.data.length === 0) {
@@ -103,10 +102,9 @@ const page = () => {
         const res = await useGetDataProtected(
           `/api/product/single-product/${id}`
         );
-        console.log("res................", res);
         if (res.success) {
-          let price = res?.data.productPrice;
-          let variantPrice;
+
+          let variantPrice = res?.data.productPrice;
           if (res?.data.isVariantAvailable) {
             res?.data.variants.map((item) => {
               if (item._id.toString() === variantId.toString()) {
@@ -124,7 +122,6 @@ const page = () => {
               ...res?.data,
               qty: qty,
               isVariantAvailable: res.data.isVariantAvailable,
-              price,
               variantPrice,
             },
           ]);
@@ -133,20 +130,21 @@ const page = () => {
               {
                 qty: qty,
                 product: res?.data._id,
-                price,
+                price:variantPrice,
                 variantDetailId,
                 variantId,
                 isVariantAvailable: res.data.isVariantAvailable,
               },
             ],
-            itemsPrice: (variantPrice ? variantPrice : price) * qty,
+            itemsPrice: (variantPrice) * qty,
           });
         }
       }
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      router.back()
       errorTostHandler(error);
     }
   };
@@ -171,7 +169,7 @@ const page = () => {
         const cashfree = await getCashfreeInstance();
        let checkoutOptions = {
             paymentSessionId: session, 
-            redirectTarget: "_modal",
+            redirectTarget: "_top",
         };
         cashfree.checkout(checkoutOptions).then((result) => {
             if(result.error){
@@ -188,12 +186,12 @@ const page = () => {
             if(result.paymentDetails){
                 // This will be called whenever the payment is completed irrespective of transaction status
                 console.log("Payment has been completed, Check for Payment Status");
-                console.log(result.paymentDetails.paymentMessage);
+                // console.log(result.paymentDetails.paymentMessage);
             }
         });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       errorTostHandler(error);
     }
   };
@@ -232,7 +230,7 @@ const page = () => {
                   <option
                     key={index}
                     value={val._id}
-                  >{`${val?.street} ${val?.state} ${val?.pincode} ${val?.number}`}</option>
+                  >{`${val?.street} ${val?.state} ${val?.pincode} ${val?.phNumber}`}</option>
                 ))}
               </select>
             </div>

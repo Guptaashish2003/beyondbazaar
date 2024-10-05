@@ -85,10 +85,10 @@ const ProductDes = ({
   const orderNow = async () => {
     if (variant && variantData) {
       router.push(
-        `/checkout/${id}?qty=${productCount}&variant=${variant}&variantDetails=${variantData?._id}`
+        `/checkout/${slug}?qty=${productCount}&variant=${variant}&variantDetails=${variantData?._id}`
       );
     } else {
-      router.push(`/checkout/${id}?qty=${productCount}`);
+      router.push(`/checkout/${slug}?qty=${productCount}`);
     }
   };
 

@@ -5,10 +5,22 @@ import productImg from "@/assets/productImag1.jpg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const OrderDetail = ({id,title,img,price,discription,address,status=2}) => {
+const OrderDetail = ({id,title,img,price,discription,quantity,address,orderId,orderDate,status=2}) => {
   const router = useRouter();
   const [orderStatus,setOrderStatus] = useState(status);
-
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+  }
   return (
     <>
       <div className="bg-gray-50">
@@ -17,10 +29,10 @@ const OrderDetail = ({id,title,img,price,discription,address,status=2}) => {
           <section aria-labelledby="products-heading" >
             <div className="flex justify-start item-start   my-8 space-y-2 flex-col">
               <h1 className="text-3xl  dark:text-black lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
-                Order #13432
+                Order #{orderId}
               </h1>
               <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
-                21st Mart 2021 at 10:34 PM
+                {formatDate(orderDate)}
               </p>
             </div>
 
@@ -45,7 +57,7 @@ const OrderDetail = ({id,title,img,price,discription,address,status=2}) => {
                       dateTime="2021-03-22"
                       className="font-medium text-gray-900"
                     >
-                      March 22, 2021
+                       {formatDate(orderDate)}
                     </time>
                   </p>
                   <a
@@ -76,6 +88,9 @@ const OrderDetail = ({id,title,img,price,discription,address,status=2}) => {
                           style: "currency",
                           currency: "INR",
                         })}
+                      </p>
+                      <p className="mt-3 text-sm text-gray-500">
+                        Quantity: {quantity}
                       </p>
                       <p className="mt-3 text-sm text-gray-500">
                         {discription}

@@ -29,6 +29,7 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: "promo code not exist" }, { status: 400 });
         }
         let totalPrice 
+        
         if(method === "bycart") {
            const cart = await Cart.find({ userID:check._id }).populate("productID", "productPrice productQuantity");
            totalPrice = cart.reduce((acc, curr) =>{
@@ -69,11 +70,14 @@ export async function POST(request) {
               }
           });
 
+          }else{
+            totalPrice = product.productPrice * Number(orderItems[0].qty);
+          }
           }
           // console.log(product.productPrice)
           // console.log(orderItems[0].qty)
-          totalPrice = product.productPrice * Number(orderItems[0].qty);
-        }
+        
+        console.log(totalPrice,"price")
         const promocodeDoc = await Promocode.findOne({
             promocode: promocode.toUpperCase(),
             active: true,
@@ -82,6 +86,7 @@ export async function POST(request) {
             limit: { $gte: 0 },
             maxOrder: { $gte: totalPrice },
           });
+
           if (!promocodeDoc ) {
               return NextResponse.json({ success: false, message: "Invalid or inactive promo code" }, { status: 404 });
             }
@@ -104,6 +109,7 @@ export async function POST(request) {
         return NextResponse.json({ success: true, message: "Promocode added", data: promo }, { status: 200 });
         
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });     
     }
 }

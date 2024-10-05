@@ -19,6 +19,7 @@ export async function GET(request, context) {
     
     const res = await Cashfree.PGOrderFetchPayments("2023-08-01", orderID)
     const paymentDetails = res.data[0];
+    console.log("paymentDetails", paymentDetails);
      return NextResponse.json({ success: true, data: paymentDetails }, { status: 200 });
   } catch (error) {
     console.log("error", error);

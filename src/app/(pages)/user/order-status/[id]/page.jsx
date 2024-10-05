@@ -9,7 +9,7 @@ import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import PriceCheckOut from '@/components/shoppingCart/PriceCheckOut';
 const page = () => {
   const [loading,setLoading] = useState(true)
-  const [order,setOrder] = useState([]);
+  const [order,setOrder] = useState();
   const [product,setProduct] = useState();
   const {id} = useParams();
   const searchParams = useSearchParams()
@@ -40,9 +40,14 @@ const page = () => {
   }
   console.log(order);
   console.log(product);
+
+  const getOrderStatus = ()=>{
+    
+  }
+
   return (
     <div className="flex flex-col navMargin minScreen">
-      <OrderDetail status={4} id={id} title={product?.product.productName} img={product?.product.productImage[0]} discription={product?.product.productDescription} price={product?.product.productPrice} address={order.shippingInfo} className="w-[65%]"/>
+      <OrderDetail status={4} id={id} quantity={product.qty} title={product?.product.productName} img={product?.product.productImage[0]} discription={product?.product.seo.description} price={product?.price} address={order.shippingInfo} orderDate={order.createdAt} orderId={order.orderId} className="w-[65%]"/>
       <div className="w-11/12 max-md:w-full p-4 rounded-md bg-gray-50 flex mx-auto gap-3 ">
         <ShippingDetail />
         <PriceCheckOut className="bg-white mx-auto flex justify-center flex-col w-11/12 items-stretch w- space-y-2

@@ -20,7 +20,7 @@ export async function GET(request,context) {
             populate: [
               {
                 path: 'product',
-                select: 'productName productImage productDescription productPrice',
+                select: 'productName productImage seo productPrice',
               },
             ],
           });

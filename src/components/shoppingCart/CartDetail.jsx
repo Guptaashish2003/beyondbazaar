@@ -8,7 +8,7 @@ import { removeFromCart, updateCartItemQty } from "@/redux/action/Services";
 import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
 import { toast } from 'react-toastify';
 
-const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
+const CartDetail = ({dispatch,variants,id,title,img,price,quantity,stock,cart}) => {
   const [productQty, setProductQty] = useState(quantity)
   const [fullScreenLoader , setFullScreenLoader] = useState(false);
   
@@ -69,8 +69,8 @@ const CartDetail = ({dispatch,id,title,img,price,quantity,stock,cart}) => {
                 currency: "INR",
               })}
             </p>
-            {/* <p>Color : White/Pink</p>
-            <p>Size : White/Pink</p> */}
+            {variants.isVariantAvailable && <><p>{variants?.variant?.color && `Color : ${variants?.variant?.color}`}</p>
+            <p>Size :{variants?.variant?.size} </p></>}
             {stock ? (
               <p className="text-green-500">In Stock</p>
             ) : (
