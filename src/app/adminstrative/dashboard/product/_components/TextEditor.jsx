@@ -19,7 +19,7 @@ import ImageUploadModal from './ImageUploadModal';
 
 
 const TextEditor = ({editor}) => {
-  const [preImage, setPreImage] = useState({src:"",alt:""});
+  const [preImage, setPreImage] = useState([]);
   const heroImageRef = useRef(null);
   const altRef = useRef(null);
   const [showImageModal, setShowImageModal] = useState(false);
@@ -44,15 +44,12 @@ const TextEditor = ({editor}) => {
         editor.chain().focus().extendMarkRange('link').setLink({ href: url })
           .run()
       }
-      const addImage = (url,alt) => {
+      const addImage = (url) => {
         if (url) {
-          editor.chain().focus().setImage({ src: url,alt:alt }).run()
+          editor.chain().focus().setImage({ src: url }).run()
         }
         setShowImageModal(false)
-        setPreImage({src:"",alt:""})
-        if(heroImageRef.current){
-          heroImageRef.current.value = ""
-        }
+        setPreImage([...preImage,url])
       };
       const onClose = () => {
         setShowImageModal(false);

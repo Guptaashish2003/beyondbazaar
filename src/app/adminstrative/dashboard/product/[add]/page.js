@@ -1,5 +1,5 @@
 "use client";
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
@@ -9,11 +9,9 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { Header } from "@/components/Admin";
 import { TagsInput } from "react-tag-input-component";
-import { TiImage } from "react-icons/ti";
 import Addvariants from "../_components/Addvariants";
 // import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
-import { uploadImage } from "@/components/Admin/uploadImage";
 import { UploadButton } from "@/backend/utils/uploadthing";
 import Category from "../_components/Category";
 import { useEditor } from "@tiptap/react";
@@ -26,16 +24,18 @@ import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TextEditor from "../_components/TextEditor";
+import ImageUploadModal from "../_components/ImageUploadModal";
 
 
 
 export default function page() {
   const router = useRouter();
-
   const [loading, setLoading] = useState();
   const [tag, setTag] = useState(["papaya"]);
-  const [imageU, setImageU] = useState(null);
+
+  const heroImageRef = useRef(null);
   const [slider, setSlider] = useState([]);
+  const [preImage, setPreImage] = useState([]);
   const [method, setMethod] = useState("firebase");
   const [rows, setRows] = useState([
     {
@@ -100,8 +100,8 @@ export default function page() {
       "https://example.com/images/tshirt-back.jpg"
     ],
     "slug": "stylish-t-shirt88",
-      "title": "Stylish T-Shirt for Men",
-      "description": "A high-quality t-shirt that comes in multiple colors and sizes.",
+    "title": "Stylish T-Shirt for Men",
+    "description": "A high-quality t-shirt that comes in multiple colors and sizes.",
     "productPrice": 25.99,
     "productQuantity": 200,
     "productAvailable": true,
@@ -162,7 +162,7 @@ export default function page() {
     ],
     "rating": 4.5
   }
-  
+
 
   const onSubmit = async (productData) => {
     productData.productTags = tag;
@@ -193,11 +193,7 @@ export default function page() {
     }
   };
 
-  useEffect(() => {
-    const path = "product";
-    imageU && uploadImage(path, imageU, slider, setSlider);
-    
-  }, [imageU]);
+
 
   const btnClass =
     "bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300";
@@ -275,15 +271,13 @@ export default function page() {
   const handleTagsChange = (newTags) => {
     setTag(newTags);
   };
-  const handleChange = (event) => {
-    setMethod(event.target.value);
-  };
+
 
   if (!editor) {
     return null;
   }
   const isVariantAvailable = watch("isVariantAvailable");
-  console.log("isVariantAvailable", typeof slider);
+
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
@@ -344,101 +338,24 @@ export default function page() {
             </div>
           </div>
           {/* select method  */}
-          <div className="flex justify-center gap-x-4 mx-auto my-2">
-            <label>
-              <input
-                type="radio"
-                name="method"
-                id="uploadthing"
-                value="uploadthing"
-                checked={method === "uploadthing"}
-                onChange={handleChange}
-                className="mx-2"
-              />
-              uploadthing
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="method"
-                id="firebase"
-                value="firebase"
-                checked={method === "firebase"}
-                onChange={handleChange}
-                className="mx-2"
-              />
-              firebase
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="method"
-                id="aws"
-                value="aws"
-                checked={method === "aws"}
-                onChange={handleChange}
-                className="mx-2"
-              />
-              aws
-            </label>
-          </div>
-          {method === "firebase" && (
-            <div className="relative w-[90%] h-36 rounded-lg shadow-inner border-1 my-2 mx-auto">
-              <input
-                type="file"
-                id="file-upload"
-                onChange={(e) => {
-                  console.log("file", e.target.files[0]);
-                  setImageU(e.target.files[0]);
-                }}
-                className="hidden"
-              />
-              <label
-                htmlFor="file-upload"
-                className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer"
-              >
-                <p className="z-10 text-xs font-light text-center text-gray-500">
-                  Drag &amp; Drop your files here
-                </p>
-                <TiImage width={"12px"} />
-              </label>
-            </div>
-          )}
-          {method === "uploadthing" && (
-            <div>
-              <UploadButton
-                className=" bg-[#333] text-white px-10 py-2 "
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  if (Array.isArray(res) && res[0]?.url) {
-                    if (slider.length > 0) {
-                      setSlider((prevSlider) => [...prevSlider, res[0].url]);
-                    } else {
-                      setSlider([res[0].url]);
-                    }
-                  } else {
-                    console.error("Unexpected response format: ", res);
-                  }
-                }}
-                onUploadError={(error) => {
-                  // Do something with the error.
-                  alert(`ERROR! ${error.message}`);
-                }}
-              />
-            </div>
-          )}
+          <ImageUploadModal
+            preImage={preImage}
+            setPreImage={setPreImage}
+            button={<div>lll</div>}
+            heroImageRef={heroImageRef}
+          />
           {/* previewImage */}
           {/* <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
-            {slider?.map((itm, index) => (
+            {preImage?.map((itm, index) => (
               <div key={index} className="relative w-24 h-full">
                 <div className="w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10">
-                  <span>{index}</span>
+                  <span onClick={()=>console.log(itm)}>{index}</span>
                 </div>
                 <Image
                   src={itm}
                   width={300}
                   height={400}
-                  alt="hero image"
+                  alt={itm}
                   className="object-fill hover:bg-black h-full w-full"
                 />
               </div>
@@ -453,7 +370,7 @@ export default function page() {
             placeHolder="Enter a tag"
           />
           <TextEditor editor={editor} />
-          {/* submit button  */}/
+          {/* submit button  */}
           <SubmitButton
             value="Add Product"
             type="submit"
