@@ -6,8 +6,9 @@ import { usePostDataProtected } from "@/redux/api/usePostData";
 import React, { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
-const Category = ({register,btnClass,slider}) => {
+const Category = ({register,btnClass}) => {
     const [category, setCategory] = useState([])
+    const [image,setImage] = useState([])
     const [productCategory, setSubCategory] = useState([])
     const [categoryName, setCategoryName] = useState('')
     const [SubCategoryName, setSubCategoryName] = useState('')
@@ -45,7 +46,7 @@ const Category = ({register,btnClass,slider}) => {
             "/api/admin/Category/add",
             {
               categoryName,
-              categoryImage: slider
+              categoryImage: image
             }
           );
           console.log(res.data)
@@ -101,6 +102,12 @@ const Category = ({register,btnClass,slider}) => {
       <div className=" w-1/2 flex gap-x-7 ml-3">
       <Modal btnClass={`${btnClass} px-4`} btnName="Add Category">
         <div className="flex flex-col">
+          <InputBtn
+            type="text"
+            placeholder="image"
+            name="image"
+            onChange={(e) => setImage([e.target.value])}
+          ></InputBtn>
           <InputBtn
             type="text"
             placeholder="category Name"

@@ -1,5 +1,5 @@
 "use client";
-import { React, useEffect, useRef, useState } from "react";
+import { React, useRef, useState } from "react";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
@@ -25,18 +25,15 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TextEditor from "../_components/TextEditor";
 import ImageUploadModal from "../_components/ImageUploadModal";
-
+import PreviewImage from "../_components/PreviewImage";
 
 
 export default function page() {
   const router = useRouter();
   const [loading, setLoading] = useState();
   const [tag, setTag] = useState(["papaya"]);
-
   const heroImageRef = useRef(null);
-  const [slider, setSlider] = useState([]);
   const [preImage, setPreImage] = useState([]);
-  const [method, setMethod] = useState("firebase");
   const [rows, setRows] = useState([
     {
       variantType: "",
@@ -166,7 +163,7 @@ export default function page() {
 
   const onSubmit = async (productData) => {
     productData.productTags = tag;
-    productData.productImage = slider;
+    productData.productImage = preImage;
     if (productData.isVariantAvailable) productData.variants = rows;
     productData.productDescription = JSON.stringify(editor.getHTML());
     console.log(productData);
@@ -312,7 +309,7 @@ export default function page() {
                 </div>
               ))}
             </div>
-            <Category register={register} btnClass={btnClass} slider={slider} />
+            <Category register={register} btnClass={btnClass} />
             <div className="flex mx-6 my-3 gap-x-4 px-3 w-full justify-evenly">
               <label className="inline-flex w-1/2 items-center mb-5 cursor-pointer my-6">
                 <input
@@ -341,26 +338,12 @@ export default function page() {
           <ImageUploadModal
             preImage={preImage}
             setPreImage={setPreImage}
-            button={<div>lll</div>}
+            button={<div className={`${btnClass} w-2/3 mx-auto text-center px-2 py-1`}>Add Image</div>}
             heroImageRef={heroImageRef}
           />
           {/* previewImage */}
-          {/* <div className=" min-w-20 flex  gap-2 justify-center flex-wrap max-h-24 p-1 ">
-            {preImage?.map((itm, index) => (
-              <div key={index} className="relative w-24 h-full">
-                <div className="w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10">
-                  <span onClick={()=>console.log(itm)}>{index}</span>
-                </div>
-                <Image
-                  src={itm}
-                  width={300}
-                  height={400}
-                  alt={itm}
-                  className="object-fill hover:bg-black h-full w-full"
-                />
-              </div>
-            ))}
-          </div> */}
+             {preImage.length > 0 && <PreviewImage preImage={preImage} />}   
+
           {/* tag */}
           <TagsInput
             value={tag}

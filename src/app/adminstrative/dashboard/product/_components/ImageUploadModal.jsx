@@ -35,7 +35,7 @@ const ImageUploadModal = ({
       setDialog={setDialogRef}
       btnClass="w-full"
       className="!px-20 "
-      button={button}
+      btnName={button}
     >
       <div className="flex justify-center gap-x-4 mx-auto my-6">
         <label>
