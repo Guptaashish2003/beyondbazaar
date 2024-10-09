@@ -181,13 +181,13 @@ const ShoppingCart = () => {
     let isVariantAvailable = product.isVariantAvailable;
     let size = null;
     let color = null;
-    if(product.isVariantAvailable){
+    if(isVariantAvailable){
         product.productID.variants.map((variant)=>{
           if(variant?._id === product?.variantId){
             size = variant?.variantType;
             variant?.variantDetails.map((item)=>{
-              if(item._id === product.variantDetailId){
-                color = item.color;
+              if(item._id === product?.variantDetailId){
+                color = item?.color;
               }
             })
           }
