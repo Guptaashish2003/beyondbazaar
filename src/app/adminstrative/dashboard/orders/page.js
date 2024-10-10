@@ -72,8 +72,8 @@ const Orders = () => {
       header: () => <span>Name</span>,
     }),
   
-    columnHelper.accessor((row) => row.itemsPrice, {
-      accessorKey: "itemsPrice",
+    columnHelper.accessor((row) => row.price, {
+      accessorKey: "price",
       cell: (info) => info.getValue(),
       header: () => <span>price</span>,
     }),
@@ -140,18 +140,20 @@ const Orders = () => {
     return(<Loading></Loading>)
   }
   const exortHead = [
-    [ "_id","productName", "mainId", "itemsPrice", "shippingInfo", "status","ctmName","number"],
-    ...data.map(({ _id,productName,mainId,itemsPrice,shippingInfo,status,ctmName,number }) => [
+    [ "_id","productName", "mainId", "price", "shippingInfo", "status","ctmName","number"],
+    ...data.map(({ _id,productName,mainId,price,shippingInfo,status,ctmName,number }) => [
          _id,
         productName,
         mainId,
-        itemsPrice,
+        price,
         shippingInfo,
         status,
         ctmName,
         number
       ]),
   ];
+
+  console.log(data,"data..")
 
   return (
     <>

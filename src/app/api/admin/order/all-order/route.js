@@ -21,7 +21,7 @@ export async function GET(request) {
         const page = new URLSearchParams(rawParams).get('page')
         const limit = new URLSearchParams(rawParams).get('limit')
         const apiFeatures = new Apifeatures(Order.find(),{page,limit})
-        .paginate()
+        .paginate().sort()
       const orders = await apiFeatures.query.populate({
         path: 'orderItems',
         populate: [
