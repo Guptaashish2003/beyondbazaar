@@ -12,6 +12,7 @@ import { useUpdateDataProtected } from '@/redux/api/useUpdateData';
 import FullScreenLoader from '@/components/FullScreenLoader/FullScreenLoader';
 import { toast } from "react-toastify";
 import { errorTostHandler } from '@/redux/api/errorTostHandler';
+import Modal from '@/components/Modal/Modal';
 
 const columnHelper = createColumnHelper();
 
@@ -29,14 +30,14 @@ const Orders = () => {
   const router = useRouter();
   
   
-  const cancelOrder = async (id,mainId) => {
+  const updateStatus = async (id,mainId,status) => {
     try {
       setFullScreenLoader(true);
-      const res = await useUpdateDataProtected(`/api/admin/order/update/${mainId}`,{status:"cancelled",orderId:id});
+      const res = await useUpdateDataProtected(`/api/admin/order/update/${mainId}`,{status:status,orderId:id});
       if(res.success){
         const val = data.map((val)=>  {
           if(val._id === id){
-            val.status = "cancelled";
+            val.status = status;
           } 
           return val;
         })
@@ -100,8 +101,12 @@ const Orders = () => {
     columnHelper.accessor("actions", {
       accessorKey: "actions",
       cell: (info) => <Actions id={info.row.original._id} actions={
-        [{name:"cancel",task:()=>{cancelOrder(info.row.original._id,info.row.original.mainId)}},
-        {name:"view details",task:()=>{router.push(`/user/order-status/${info.row.original.mainId}?orderId=${info.row.original._id}`)}}]
+        [{name:"delivered",task:()=>{updateStatus(info.row.original._id,info.row.original.mainId,"delivered")}},
+          {name:"view details",task:()=>{router.push(`/user/order-status/${info.row.original.mainId}?orderId=${info.row.original._id}`)}},
+          {name:"shipped",task:()=>{updateStatus(info.row.original._id,info.row.original.mainId,"shipped")}},
+          {name:"pending",task:()=>{updateStatus(info.row.original._id,info.row.original.mainId,"pending")}},
+          {name:"cancel",task:()=>{updateStatus(info.row.original._id,info.row.original.mainId,"cancelled")}},
+          ]
         
       }></Actions>,
       header: () => <span>actions</span>,
