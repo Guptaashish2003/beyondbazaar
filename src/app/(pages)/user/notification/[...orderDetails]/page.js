@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 const Page = () => {
   const router = useRouter();
   const { orderDetails } = useParams();
+  console.log(orderDetails, "orderDetails");
   const orderId = orderDetails[0];
   const [status,setStatus] = useState([])
 

@@ -4,16 +4,17 @@ import Order from "@/backend/model/Order";
 import isOauth from "@/backend/middlewere/isOauth";
 
 export async function PUT(request) {
+  console.log("Request.............:");
   await connectDB();
   try {
     const check = await isOauth(request);
     const userID = check._id;
+    console.log("User ID:", userID);
     const { data, payment_method } = await request.json();
 
     // Debugging: Check if you have the correct order ID
-    console.log("Existing Order:", data);
     // Find the existing order
-    const existingOrder = await Order.findOne({ orderId: data?.data?.order_id });
+    const existingOrder = await Order.findOne({ orderId: data?.order_id });
     if (!existingOrder) {
       return NextResponse.json(
         { success: false, message: "Order not found" },
@@ -22,27 +23,28 @@ export async function PUT(request) {
     }
     // Prepare Payment Details
     const PaymentDetails = {
-      order_amount: data?.data?.order_amount,
-      payment_currency: data?.data?.payment_currency,
-      payment_completion_time: data?.data?.payment_completion_time,
-      gateway_name: data?.data?.gateway_name,
+      order_amount: data?.order_amount,
+      payment_currency: data?.payment_currency,
+      payment_completion_time: data?.payment_completion_time,
+      gateway_name: data?.gateway_name,
       payment_method: JSON.stringify(payment_method),
-      payment_status: data?.data?.payment_status,
-      payment_group: data?.data?.payment_group,
-      payment_time: data?.data?.payment_time,
+      payment_status: data?.payment_status,
+      payment_group: data?.payment_group,
+      payment_time: data?.payment_time,
     };
 
     // Update the payment status
-    const isPaid = data?.data?.payment_status === "SUCCESS";
+    const isPaid = data?.payment_status === "SUCCESS";
 
     // Update the order with new payment details
     const updatedOrder = await Order.findOneAndUpdate(
-      { orderId: data?.data?.order_id },
+      { orderId: data?.order_id },
       {
         $set: {
           Paymentdetails: PaymentDetails, // Ensure it's Paymentdetails with lowercase "d"
           isPaid: isPaid,
         },
+        isPaid: isPaid,
       },
       { new: true } // Return the updated document
     );
@@ -56,7 +58,7 @@ export async function PUT(request) {
         { status: 500 }
       );
     }
-    // if(data?.data?.payemnt_status === "SUCCESS"){
+    // if(data?.payemnt_status === "SUCCESS"){
 
 
     // }

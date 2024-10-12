@@ -157,6 +157,7 @@ export async function POST(request) {
         data: {
           session: getSession.data.payment_session_id,
           expiry: getSession.data.order_expiry_time,
+          orderId: orderId,
         },
       },
       { status: 200 }

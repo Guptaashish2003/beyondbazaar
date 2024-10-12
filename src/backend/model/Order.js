@@ -92,6 +92,7 @@ const OrderSchema = new mongoose.Schema(
     },
     discountAmount: { type: Number, default: 0 },
     taxPrice: { type: Number },
+    isPaid: { type: Boolean, default: false },
     totalPrice: { type: Number, required: true },
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
