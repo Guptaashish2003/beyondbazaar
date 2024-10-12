@@ -7,6 +7,8 @@ import SubmitButton from "@/components/Form/SubmitButton";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import { useParams } from "next/navigation";
 import { ToWords } from 'to-words';
+import { padStart } from "@fullcalendar/core/internal";
+import { formatDates } from "@/backend/utils/basicTools";
 
 const page = () => {
   const toWords = new ToWords();
@@ -30,6 +32,7 @@ const page = () => {
     try {
       const res = await useGetDataProtected(`/api/invoice/${id}`);
       if(res.success){
+        console.log("res....",res.data,"ress")
         setData(res.data)
         setLoading(false);
 
@@ -46,7 +49,6 @@ const page = () => {
     
   },[])
 
-  
   const exortHeader = [
     {name:"S.No"},
     {name:"Product Name"},
@@ -104,13 +106,15 @@ const page = () => {
               <span className="text-sm text-gray-900 mt-2 font-bold">
                 Order Number:
               </span>{" "}
-              07AABCB1491A1ZQ
+              {data?.orderId}
             </p>
             <p className="text-sm text-gray-700">
               <span className="text-sm text-gray-900 mt-4 font-bold">
                 Order Date:
               </span>{" "}
-              07AABCB1491A1ZQ
+              {/* foramt this date */}
+
+              {formatDates(data?.createdAt)}
             </p>
             <p className="text-sm text-gray-700">
               <span className="text-sm text-gray-900 mt-4 font-bold">
@@ -128,7 +132,7 @@ const page = () => {
               <span className="text-sm text-gray-900 mt-4 font-bold">
                 Invoice Date:
               </span>{" "}
-              07AABCB1491A1ZQ
+              {formatDates(data?.Paymentdetails?.payment_time)}
             </p>
           </div>
           <div className=" pr-3 pt-2 text-end flex flex-col">
@@ -185,7 +189,7 @@ const page = () => {
                     <span className="font-thin text-gray-900">Pcs</span>{" "}
                   </td>
                   <td className="border  text-gray-800 p-2">
-                    {item.productDetails?.productPrice}
+                    {item.price}
                   </td>
                   <td className="border  text-gray-800 p-2">
                     {item.productDetails?.productPrice * item.qty}
@@ -268,8 +272,9 @@ const page = () => {
               <tr>
                 <td className="border  text-gray-800 p-2">Payment</td>
                 <td className="border  text-gray-800 p-2">{data?.createdAt}</td>
-                <td className="border  text-gray-800 p-2">{Math.floor(data?.totalPrice)}</td>
-                <td className="border  text-gray-800 p-2">Cash</td>
+                <td className="border  text-gray-800 p-2">{Math.floor(data?.Paymentdetails?.order_amount)}</td>
+                <td className="border  text-gray-800 p-2">{data?.Paymentdetails?.payment_group.toUpperCase()
+                }</td>
               </tr>
             </tbody>
 

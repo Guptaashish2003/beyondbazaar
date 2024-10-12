@@ -12,6 +12,7 @@ export async function GET(request, context) {
       return check;
     }
     const id = context.params.id;
+    console.log("id",id)
 
     if (!id) {
       return NextResponse.json(
@@ -43,7 +44,7 @@ export async function GET(request, context) {
       ...orders.toObject(),
       orderItems: productDetails,
     };
-
+    console.log("orderWithProductDetails",orderWithProductDetails)
     return NextResponse.json(
       { success: true, message: "Order Found", data: orderWithProductDetails },
       { status: 200 }
