@@ -175,7 +175,7 @@ const page = () => {
             console.log(
               "User has closed the popup or there is some payment error, Check for Payment Status"
             );
-            errorTostHandler("Payment failed");
+            toast("Payment failed", { type: "error" });
           }
           if (result.redirect) {
             // This will be true when the payment redirection page couldnt be opened in the same window

@@ -20,6 +20,7 @@ const page =  () => {
       setLoading(true);
       const res = await useGetDataProtected("/api/user/order/all-orders");
       if(res.success){
+        console.log(res.data)
         setOrder(res.data);
         console.log(res.data)
       }
