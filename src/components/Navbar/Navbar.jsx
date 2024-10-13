@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import SearchBar from "../SearchBar/SearchBar";
 import { Suspense } from "react";
 import { useSession } from "next-auth/react";
+import axios from "axios";
 function Navbar() {
   const router = useRouter();
   const [show, setShow] = useState("translate-y-0");
@@ -29,11 +30,16 @@ function Navbar() {
   };
 
   useEffect(() => {
+    (async () => {
+     const res = await axios.get("api/category/with-subcategory");
+     console.log(res.data);
+    })();
     setIsAuth(status);
     window.addEventListener("scroll", controlNavbar);
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
+
   }, [lastScrollY,status]);
 
   const dropdownItems = [

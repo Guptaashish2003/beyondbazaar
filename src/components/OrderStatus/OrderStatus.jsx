@@ -8,7 +8,7 @@ const OrderStatus = ({id,isVariantAvailable,variantId,variantDetailId,title,prod
   const orderDetails = [{"title":"place order","value":status},{"title":"price","value":`${price.toLocaleString('en-IN', {
     style: 'currency',
     currency: 'INR'
-  })}`},{"title":"Order ID","value":"0348820840928904"}]
+  })}`},{"title":"Order ID","value":id}]
   const router = useRouter()
 
   const checkoutValue = ()=>{

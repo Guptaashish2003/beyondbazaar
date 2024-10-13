@@ -456,7 +456,7 @@ a {
   }
 
   .dropdown__item:hover>.dropdown__container {
-    top: 7.5rem;
+    top: 6.5rem;
     opacity: 1;
     pointer-events: initial;
     cursor: initial;

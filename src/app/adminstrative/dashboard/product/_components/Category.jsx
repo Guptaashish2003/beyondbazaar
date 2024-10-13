@@ -13,6 +13,7 @@ const Category = ({register,btnClass}) => {
     const [categoryName, setCategoryName] = useState('')
     const [SubCategoryName, setSubCategoryName] = useState('')
     const [isCategory, setIsCategory] = useState()
+    const [loading,setLoading] = useState(false)
     useEffect(() => {
         console.log("hello")
         const getCategorys = async () => {
@@ -42,6 +43,7 @@ const Category = ({register,btnClass}) => {
 
     const addCategory = async () => {
         try {
+          setLoading(true)
           const res = await usePostDataProtected(
             "/api/admin/Category/add",
             {
@@ -55,7 +57,9 @@ const Category = ({register,btnClass}) => {
           } else {
             toast.error(res?.message);
           }
+          setLoading(false);
         } catch (error) {
+          setLoading(false);
           console.log(error);
           toast.error(error?.message);
     
@@ -66,6 +70,7 @@ const Category = ({register,btnClass}) => {
         console.log(category)
     
         try {
+          setLoading(true)
           const res = await usePostDataProtected(
             "/api/admin/SubCategory/add",
             { SubCategoryName, category: isCategory }
@@ -75,7 +80,9 @@ const Category = ({register,btnClass}) => {
           } else {
             toast.error(res?.message);
           }
+          setLoading(false);
         } catch (error) {
+          setLoading(false);
           console.log(error);
           toast.error(error?.message);
     
@@ -119,7 +126,8 @@ const Category = ({register,btnClass}) => {
 
           <SubmitButton
             onClick={addCategory}
-            value="submit"
+            value="button"
+            loading={loading}
             className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
           ></SubmitButton>
         </div>
@@ -149,7 +157,8 @@ const Category = ({register,btnClass}) => {
             mainClass="w-full"
           />
           <SubmitButton
-            value="Submit"
+            value="button"
+            loading={loading}
             onClick={addSubCategory}
             className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
           ></SubmitButton>
