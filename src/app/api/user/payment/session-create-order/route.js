@@ -14,7 +14,7 @@ export async function POST(request) {
   try {
     Cashfree.XClientId = process.env.CASHFREE_APP_ID;
     Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
-    Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
+    Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
     const check = await isOauth(request);
     if (!check._id) {
       return check;
