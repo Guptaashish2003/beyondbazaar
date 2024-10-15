@@ -95,8 +95,8 @@ const page = () => {
                     <h4 className="mb-1 text-xl font-bold text-dark text-gray-700">
                       Email Address
                     </h4>
-                    <a href="mailto:beyondbazaarofficial@gmail.com?subject=Subject%20of%20the%20email&body=Body%20of%20the%20email" className="text-base text-body-color text-gray-600">
-                      beyondbazaarofficial@gmail.com
+                    <a href="mailto:biyondbazaar@gmail.com?subject=Subject%20of%20the%20email&body=Body%20of%20the%20email" className="text-base text-body-color text-gray-600">
+                      biyondbazaar@gmail.com
                     </a>
                   </div>
                 </div>

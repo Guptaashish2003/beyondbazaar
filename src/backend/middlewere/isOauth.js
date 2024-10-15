@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken"
 import { NextResponse } from "next/server";
 import User from "@/backend/model/User";
+import { cookies } from "next/headers";
 
 const isOauth = async req => {
   try {
-    const token = await req.headers.get("Authorization")?.split(" ")[1]
+    const cookieStore = cookies();
+    const token = cookieStore.get('token')?.value || "";
     if (!token || token === "null" || token === "undefined") {
       return NextResponse.json(
         { success: false, message: "You are not Authorized please login again" },
@@ -13,8 +15,7 @@ const isOauth = async req => {
     }
     const decoded =  jwt.verify(token,process.env.JWT_SECRET_KEY )
    
-    if (!decoded) {
-
+    if (!decoded ) {
       return NextResponse.json(
         { success: false, message:"Invalid Token , You are not Authorized and DeAuthorized"  },
         { status: 400 }

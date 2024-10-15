@@ -281,7 +281,7 @@ export default function page() {
                   {...itm?.register}
                   labelClass={`text-xs mt-4 text-[--first-color] ml-6 ${itm?.labelClass}`}
                   mainClass="w-full min-w-[16] mx-2"
-                  className="px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white "
+          
                 />
                 {errors?.[itm?.name] && (
                   <span className="text-red-500 text-xs mt-2">

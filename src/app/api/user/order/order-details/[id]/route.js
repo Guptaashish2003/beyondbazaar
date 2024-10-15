@@ -16,14 +16,16 @@ export async function GET(request,context) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }
         const orders = await Order.findOne({ user: check._id ,_id:id }).populate({
+            select: 'orderItems orderStatus orderTotal orderDate',
             path: 'orderItems',
             populate: [
               {
                 path: 'product',
-                select: 'productName productImage productDescription productPrice',
+                select: 'productName productImage seo productPrice variants',
               },
             ],
           });
+        // console.log("orders",orders)
         if (!orders||orders.length===0) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });
         }

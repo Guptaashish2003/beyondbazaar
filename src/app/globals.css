@@ -456,7 +456,7 @@ a {
   }
 
   .dropdown__item:hover>.dropdown__container {
-    top: 7.5rem;
+    top: 6.5rem;
     opacity: 1;
     pointer-events: initial;
     cursor: initial;
@@ -841,3 +841,187 @@ thead th {
   min-height: 100% !important;
  
 }
+
+
+
+/* tip top editor  */
+
+.tiptap{
+  height: 50vh;
+  overflow: scroll;
+  outline: none !important;
+  border: 2px solid #333;
+  border-radius: 0px 0 20px 20px;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+}
+@media  screen and (max-width:800px) {
+  .tiptap{
+    padding: 0.5rem ;
+  }
+  .tiptap img {
+    width: 100%;
+    margin: 1rem auto !important;
+  }
+}
+.tiptap h2{
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 1rem 0;
+  text-transform: capitalize;
+  letter-spacing: 0;
+}
+.tiptap h3{
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0.8rem 0;
+  text-transform: capitalize;
+  letter-spacing: 0;
+}
+.tiptap h4{
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0.6rem 0;
+  text-transform: capitalize;
+}
+.tiptap h5{
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.4rem 0;
+  text-transform: capitalize;
+}
+.tiptap h6{
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.2rem 0;
+  text-transform: capitalize;
+}
+
+.tiptap ul{
+  padding: 0 1rem;
+  list-style: disc !important;
+}
+.tiptap ol {
+  padding: 0 1rem;
+  list-style: decimal !important;
+}
+.tiptap a {
+  color: #36c;
+  cursor: pointer;
+}
+.tiptap img {
+  width: 80%;
+  margin: 1rem auto !important;
+}
+.tiptap div[data-youtube-video]{
+  display: flex;
+  justify-content: center;
+}
+
+.tiptap pre {
+  background: #0d0d0d;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  overflow: scroll;
+}
+.tiptap pre code {
+  background: none;
+  color: inherit;
+  font-size: 0.8rem;
+  padding: 0;
+
+}
+
+.tiptap blockquote {
+  border-left: 3px solid #00CC8F;
+  color: #1a1a1a;
+  font-family: Georgia, Times, "Times New Roman", serif;
+  font-size: 1.25em;
+  font-style: italic;
+  line-height: 1.8em;
+  margin: 1.1em -1em;
+  padding: 1em 2em;
+  position: relative;
+  transition: 0.2s border ease-in-out;
+  z-index: 0;
+}
+.tiptap blockquote::before{
+  font-family:Arial;
+  content: "\201C";
+  color:#78C0A8;
+  font-size:4em;
+  position: absolute;
+  left: 2px;
+  top:20px;
+}
+
+.tiptap blockquote::after{
+  content: '';
+}
+
+
+
+.tiptap table {
+  border-collapse: collapse;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+.tiptap table td, .tiptap table th {
+  border: 2px solid #ced4da;
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 3px 5px;
+  position: relative;
+  vertical-align: top;
+}
+.tiptap table td > *, .tiptap table th > * {
+  margin-bottom: 0;
+}
+.tiptap table th {
+  background-color: #f1f3f5;
+  font-weight: bold;
+  text-align: left;
+}
+.tiptap table .selectedCell:after {
+  background: rgba(200, 200, 255, 0.4);
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+.tiptap table .column-resize-handle {
+  background-color: #adf;
+  bottom: -2px;
+  position: absolute;
+  right: -2px;
+  pointer-events: none;
+  top: 0;
+  width: 4px;
+}
+.tiptap table p {
+  margin: 0;
+}
+.tableWrapper {
+  padding: 1rem 0;
+  overflow-x: auto;
+}
+.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+
+@media not all and (min-width: 640px) {
+  .tiptap img {
+    width: 100%;
+    margin: 1rem auto !important;
+  }
+}
+

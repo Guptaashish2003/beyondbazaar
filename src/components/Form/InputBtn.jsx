@@ -28,7 +28,7 @@ function InputBtn(
         </label>
       )}
       {type === 'dropdown' ? (
-        <select name={name} id={id} ref={ref} onClick={onClick}  className={`w-full 
+        <select name={name} id={id} ref={ref} onClick={onClick}  className={`w-full px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white 
         ${className}`} {...props}>
          {typeof option[0] === 'object'? option.map((itm,index)=><option key={index} value={itm.value}>{itm.name}</option>): option.map((itm,index)=><option key={index} value={itm}>{itm}</option>)}
         </select>
@@ -38,7 +38,7 @@ function InputBtn(
           ref={ref}
           type={type}
           name={name}
-          className={`w-full 
+          className={`w-full px-8 py-2  rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white outline-none 
      ${className}`}
           placeholder={placeholder}
           {...props}

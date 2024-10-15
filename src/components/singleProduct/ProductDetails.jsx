@@ -1,7 +1,8 @@
 "use client"
 import React, { useState } from "react";
+import { content } from "tailwindcss/defaultTheme";
 
-const ProductDetails = ({discription}) => {
+const ProductDetails = ({description}) => {
   const [showDescription, setShowDescription] = useState(true);
 
   const toggleDescription = () => {
@@ -10,38 +11,37 @@ const ProductDetails = ({discription}) => {
 
   const toggleSpecification = () => {
     setShowDescription(false);
-  };
+  }; 
+  // console.log(description)
+  const content = JSON.parse(description)
 
   return (
     <div>
       <hr className="mt-12 border border-slate-500 mx-auto w-[80%]" />
       <section className="bg-white shadow w-[80%] mx-auto overflow-hidden mt-4">
         <div className="container flex flex-start p-6 lg:ml-4  text-gray-600 capitalize dark:text-gray-300">
-          <a
-            className={`text-gray-800 cursor-pointer  border-b-2 mx-1.5 sm:mx-6 ${
+          <h2
+            className={`text-gray-800 text-lg cursor-pointer  border-b-2 mx-1.5 sm:mx-6 ${
               showDescription ? "border-blue-500" : "border-transparent"
             }`}
             onClick={toggleDescription}
           >
             Description
-          </a>
-          <a
+          </h2>
+          {/* <a
             className={`border-b-2  text-gray-800 cursor-pointer mx-1.5 sm:mx-6 ${
               showDescription ? "border-transparent" : "border-blue-500"
             }`}
             onClick={toggleSpecification}
           >
             Specification
-          </a>
+          </a> */}
         </div>
-          <div className="p-6 mt-4 lg:ml-4 text-[--first-color] dark:text-gray-500">
+          <div className="p-2 lg:ml-4 text-[--first-color] dark:text-gray-500">
             {showDescription ? (
               <div className="lg:ml-4">
-                <h2 className="text-2xl font-semibold text-[--first-color]">Description</h2>
-                <p>Insert your description text here.</p>
-                <div className="mt-2 text-base">
-                 {discription || "GET YOUR PRODUCT DESCRIPTION AND BUY IT" }
-                </div>
+
+                <div className='tiptap !h-max !border-none' dangerouslySetInnerHTML={{ __html: content }} />
               </div>
             ) : (
               <div className="lg:ml-4">

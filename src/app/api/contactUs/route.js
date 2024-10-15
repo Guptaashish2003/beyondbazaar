@@ -14,7 +14,7 @@ var transporter = nodemailer.createTransport({
 export async function POST(request ) {
   const data = await request.json();
   const {name, email,phone,message} = data;  
-  console.log(name,email,phone,message)
+  // console.log(name,email,phone,message)
   if(!name || !email || !phone || !message){
     return NextResponse.json(
       { success: false, message: "Invalid Input" },

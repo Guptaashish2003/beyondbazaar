@@ -21,7 +21,7 @@ export async function GET(request) {
         const page = new URLSearchParams(rawParams).get('page')
         const limit = new URLSearchParams(rawParams).get('limit')
         const apiFeatures = new Apifeatures(Order.find(),{page,limit})
-        .paginate()
+        .paginate().sort()
       const orders = await apiFeatures.query.populate({
         path: 'orderItems',
         populate: [
@@ -35,7 +35,7 @@ export async function GET(request) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });
         }
         let newOrder = orders.map((val)=>{
-            return val.orderItems.map((inside)=>{return ({...inside._doc,ctmName:val.shippingInfo.name,number:val.shippingInfo.number,mainId:val._id,itemsPrice:val.itemsPrice,shippingInfo:`${val.shippingInfo.street} ${val.shippingInfo.city}`})})
+            return val.orderItems.map((inside)=>{return ({...inside._doc,ctmName:val.shippingInfo.name,number:val.shippingInfo.phNumber,mainId:val._id,itemsPrice:val.itemsPrice,shippingInfo:`${val.shippingInfo.street} ${val.shippingInfo.city}`})})
          })
          newOrder = newOrder.flat();
          newOrder = newOrder.map((itm)=>{return ({...itm,productName:itm.product.productName})})

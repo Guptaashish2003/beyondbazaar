@@ -13,42 +13,41 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   metadataBase: new URL(process.env.FRONTENDURL),
   title: {
-    default: "beyond Bazar",
-    template: `%s | beyond Bazar`,
+    default: "biyond Bazar",
+    template: `%s | biyond Bazar`,
   },
-  description: "beyond bazar",
+  description: "biyond bazar",
 };
 
-export default function RootLayout({children,params}) {
-  const {isAdmin} = params
-  console.log(process.env.FRONTENDURL,"............");
-  
+export default function RootLayout({ children, params }) {
+  const { isAdmin } = params
+
   return (
     <html lang="en">
-      <body className={inter.className} > 
-      <GoogleProvider>
+      <body className={inter.className} >
+        <GoogleProvider>
           <Providers>
-            {isAdmin?"":<Navbar/>}
+            {isAdmin ? "" : <Navbar />}
             {children}
-            {isAdmin?"":<>
-            <CompanyTrust/>
-            <Footer/>
+            {isAdmin ? "" : <>
+              <CompanyTrust />
+              <Footer />
             </>}
-            
+
           </Providers>
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
           />
-      </GoogleProvider>
+        </GoogleProvider>
       </body>
     </html>
   )

@@ -12,23 +12,25 @@ import Link from "next/link";
 const ShoppingCart = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const {loading,cart,error} = useSelector((state) => state.cart.userCart)
-  const {noOfProduct,totalPrice,totalProduct} = useSelector((state) => state.cart)
-  useEffect(()=>{
+  const { loading, cart, error } = useSelector((state) => state.cart.userCart)
+  const { noOfProduct, totalPrice, totalProduct } = useSelector((state) => state.cart)
+  useEffect(() => {
     dispatch(getUserCart())
-       
-  },[])
-  
+
+  }, [])
+
   if (loading) {
     return Loading();
   }
-  
-  if(error){
-    router.push("/")
-  }
 
-  if(cart.length === 0){
-    return(
+  if (error) {
+    // console.log(error)
+    // router.push("/")
+  }
+  // console.log(dispatch)
+
+  if (cart.length === 0) {
+    return (
       <div className="flex justify-center items-center max-md:flex-col navMargin minScreen">
         <div className="flex w-[50%] text-center  flex-col justify-center items-center ">
           <h1 id="error_404" className="text-4xl mt-6 mb-4">
@@ -138,6 +140,65 @@ const ShoppingCart = () => {
       </div>
     );
   }
+  const getPrice = (product) => {
+    if(product.isVariantAvailable){
+      let price = product?.productID.productPrice;
+        product.productID.variants.map((variant)=>{
+          if(variant?._id === product?.variantId){
+            variant?.variantDetails.map((item)=>{
+              if(item._id === product.variantDetailId){
+                price = item.price
+              }
+            })
+          }
+        })
+        return price;
+    }else{
+      return product?.productID.productPrice;
+    }
+    }
+
+  const getStock = (product) => {
+     if(product.isVariantAvailable){
+      let stock = product?.productID.productQuantity;
+        product.productID.variants.map((variant)=>{
+          if(variant?._id === product?.variantId){
+            variant?.variantDetails.map((item)=>{
+              if(item._id === product.variantDetailId){
+                stock = item.stock
+              }
+            })
+          }
+        })
+        return stock;
+
+    }else{
+      return product?.productID.productQuantity;
+    }
+  }
+
+  const getVariant = (product)=>{
+    let isVariantAvailable = product.isVariantAvailable;
+    let size = null;
+    let color = null;
+    if(isVariantAvailable){
+        product.productID.variants.map((variant)=>{
+          if(variant?._id === product?.variantId){
+            size = variant?.variantType;
+            variant?.variantDetails.map((item)=>{
+              if(item._id === product?.variantDetailId){
+                color = item?.color;
+              }
+            })
+          }
+        })
+
+    }
+    // console.log(isVariantAvailable,"valll.l.l")
+    return {isVariantAvailable,variant:{size,color}}
+
+  }
+
   return (
     <>
       <section className="flex flex-col navMargin minScreen max-sm:px-6">
@@ -146,15 +207,15 @@ const ShoppingCart = () => {
             <div className="absolute flex justify-center items-center text-sm top-0 right-0 w-4 h-4 rounded-full bg-[#333] text-white">{noOfProduct}</div>
             <HiOutlineShoppingBag />
           </span>
-        <p>My Bag</p>
+          <p>My Bag</p>
         </div>
         <div className="flex w-full flex-wrap  justify-between h-[100%] flex-wap">
-          <div className="w-[65%] max-lg:w-full max-lg:px-20 max-md:px-5 "> 
-          {cart?.map((items)=><CartDetail dispatch={dispatch} id={items._id}  key={items._id} title={items?.productID.productName} price={items?.productID.productPrice} stock={items?.productID.productQuantity} quantity={items.productQuantity} img={items.productID.productImage[0]} cart={cart} loading={loading}/>)}
+          <div className="w-[65%] max-lg:w-full max-lg:px-20 max-md:px-5 ">
+            {cart?.map((items) => <CartDetail variants={getVariant(items)} dispatch={dispatch} id={items._id} key={items._id} title={items?.productID.productName} price={getPrice(items)} stock={getStock(items)} quantity={items.productQuantity} img={items.productID.productImage[0]} cart={cart} loading={loading}  />)}
           </div>
           <div className="w-[35%] px-10 max-lg:w-full max-lg:px-20 max-md:px-5">
-            <PriceCheckOut  total={totalPrice} onClick={()=>router.push("/checkout/bycart")}  btnName="Process to pay">
-            
+            <PriceCheckOut total={totalPrice} onClick={() => router.push("/checkout/bycart")} btnName="Process to pay">
+
               <div className="flex justify-between">
                 <p>Number Of items</p>
                 <p>{noOfProduct}</p>
@@ -172,11 +233,11 @@ const ShoppingCart = () => {
                   currency: 'INR'
                 })}</p>
               </div>
-        
-              </PriceCheckOut >
+
+            </PriceCheckOut >
           </div>
         </div>
-      </section> 
+      </section>
     </>
   );
 };

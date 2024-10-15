@@ -45,7 +45,7 @@ import { errorTostHandler } from '@/redux/api/errorTostHandler';
         <div className='w-[75%]'>
           <h1 className='text-lg font-bold'>{isVerify?'Verification Successful 🎉':"Verification Failed 🚫"}</h1>
           <p>{isVerify?'Your account has been successfully verified. Thank you for ensuring the security of your account.':"We regret to inform you that your account verification was unsuccessful. Please review the provided information and try again."}</p>
-          Beyond Bazar
+          biyond Bazar
         </div>
       </Modal>
     </div>

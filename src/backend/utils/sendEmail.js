@@ -20,9 +20,9 @@ const sendEmail = (option) => {
       // send mail with defined transport object
       transport.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
+          // console.log(error);
         } else {
-          console.log('Email sent:'+ info.response);
+          // console.log('Email sent:'+ info.response);
         }
       });
   
@@ -48,9 +48,9 @@ const contactUsMail = (option) => {
       // send mail with defined transport object
       transport.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
+          // console.log(error);
         } else {
-          console.log('Email sent:'+ info.response);
+          // console.log('Email sent:'+ info.response);
         }
       });
   

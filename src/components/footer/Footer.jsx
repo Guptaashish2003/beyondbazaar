@@ -250,11 +250,11 @@ const Footer = () => {
               <li>
                 <Link
                   className="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                  href="mailto:webmaster@example.com"
+                  href="mailto:biyondbazaar@gmail.com"
                 >
                   <CiMail className='h-5 w-5 shrink-0 text-gray-900'/>
   
-                  <span className="flex-1 text-gray-700">john@doe.com</span>
+                  <span className="flex-1 text-gray-700">biyondbazaar@gmail.com</span>
                 </Link>
               </li>
   
@@ -306,7 +306,7 @@ const Footer = () => {
           </p>
   
           <p className="mt-4 text-sm text-gray-500 sm:order-first sm:mt-0">
-            &copy; beyondBazar
+            &copy; BiyondBazaar
           </p>
         </div>
       </div>

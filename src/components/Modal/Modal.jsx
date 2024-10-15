@@ -8,16 +8,16 @@ function Modal({withoutBtn,onclose,btnClass,btnName="Button", children, classNam
   },[])
   return (
     <>
-      {withoutBtn?"":<button
+      {withoutBtn?"":<div
         onClick={() => showRef?.current?.showModal()}
         {...props}
-        className={`${btnClass}   flex justify-center items-center`}
+        className={`${btnClass} cursor-pointer  flex justify-center items-center`}
       >
        { btnName}
-      </button>}
+      </div>}
       <dialog ref={showRef} id="dialog" {...props} className={`px-6 py-12 rounded-3xl border-none 
       shadow-[0_5px_30px_0_rgba(0, 0, 0, 0.1)] m-auto text-center ${className}`}>
-        <button
+        <div
           onClick={() => {
             showRef?.current?.close();
             if (onclose) {
@@ -29,7 +29,7 @@ function Modal({withoutBtn,onclose,btnClass,btnName="Button", children, classNam
           className="x cursor-pointer  border-none absolute top-4 right-3"
         >
           ❌
-        </button>
+        </div>
         {children}
       </dialog>
     </>

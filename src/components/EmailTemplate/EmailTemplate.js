@@ -156,7 +156,7 @@ export default ({url,msg,mailid}) => {
 
 </div>
 <div class="reset-container">
-  <h1>Welcome to BeyondBazar!</h1>
+  <h1>Welcome to BiyondBazaar!</h1>
   <br />
   <p>
     <H3>hello, you're a click away</H3>
@@ -165,7 +165,7 @@ export default ({url,msg,mailid}) => {
   <a href="${url}"><button>yes it's me </button></a>
   <p>this link will be active for 10 minutes. if you weren't expexting this email,someone else may have entered your email address by accident Questions? You can always contact us at ${mailid}</p>
   <p style="font-weight: bold;">Thanks,</p>
-  <p style="font-weight: bold;">BeyondBazar</p>
+  <p style="font-weight: bold;">BiyondBazaar</p>
 </div>
 <div class="reset-btn">
   <p>We're happy to help!</p>

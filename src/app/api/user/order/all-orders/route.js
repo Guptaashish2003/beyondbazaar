@@ -7,12 +7,14 @@ export async function GET(request) {
     await connectDB();
     try {
         const check = await isOauth(request);
-        console.log(check);
         if (!check._id) {
             return check 
         }
         const userID = check._id;
-        const orders = await Order.find({ user: userID }).populate({
+        const orders = await Order.find({ user: userID, $or: [
+          { isCod: true },
+          { isPaid: true }
+        ]}).populate({
             path: 'orderItems',
             populate: [
               {
@@ -21,11 +23,12 @@ export async function GET(request) {
               },
             ],
           }).sort({ createdAt: -1 }).select(["_id","orderItems"]);
+          // console.log(orders, "orders...")
         let newOrder = orders.map((val)=>{
            return val.orderItems.map((inside)=>{return ({...inside._doc,mainId:val._id})})
         })
         newOrder = newOrder.flat();
-       // console.log(newOrder,"orders...")
+      //  console.log(newOrder,"orders...")
 
         if (!orders) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });

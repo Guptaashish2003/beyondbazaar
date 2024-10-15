@@ -25,7 +25,7 @@ export async function DELETE(request,context) {
         if (!img) {
             return NextResponse.json({ success: false, message: "Image Not Found" }, { status: 400 });
         }
-        console.log(img.heroImage,"img.heroImage")
+        // console.log(img.heroImage,"img.heroImage")
         const delte = await deleteImage(img.heroImage);
 
         return NextResponse.json({ success: true, data: delte }, { status: 200 });

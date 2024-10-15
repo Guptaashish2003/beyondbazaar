@@ -17,9 +17,14 @@ const CartSchema = new mongoose.Schema(
       required: true,
       default: 1
     },
-    productSize:{
-      type:String,   
-    }
+    isVariantAvailable: {
+      type: Boolean,
+      default: false,
+    },
+    variantId:{
+      type:mongoose.Schema.Types.ObjectId,
+    },
+    variantDetailId:{type:mongoose.Schema.Types.ObjectId}
   },
   { timestamps: true }
 )

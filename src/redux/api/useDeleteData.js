@@ -1,5 +1,4 @@
 import axiosBaseUrl from "@/redux/axiosBaseUrl";
-import { NextResponse } from "next/server";
 export const useDeleteData = async (url) => {
     const config = {
       headers: {Authorization: `Bearer ${localStorage.getItem("token")}`},

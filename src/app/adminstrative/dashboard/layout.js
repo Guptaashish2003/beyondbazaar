@@ -5,27 +5,18 @@ import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentColor,setCurrentMode,setThemeSettings } from '@/redux/action/themeSlice';
 import { Navbar,Footer,Sidebar,ThemeSettings } from '@/components/Admin';
-import { useGetDataProtected } from '@/redux/api/useGetData';
+import { useSession } from 'next-auth/react';
 function DashboardLayout({children}) {
   const router = useRouter();
     const { currentMode, activeMenu, currentColor, themeSettings}  = useSelector((state) => state.theme)
-    const getUsers = async () => {
-      try {
-        const res = await useGetDataProtected('/api/user/me');
-        if(res?.data?.role !== 'admin'){
-          router.back()
-        }
-      } catch (error) {
-        router.back()
-        
-      }
-
-    }
+    const { data: session, status } = useSession();
     const dispatch = useDispatch()
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode');
         const currentThemeMode = localStorage.getItem('themeMode');
-        getUsers()
+        if(status ==! 'authenticated' ||session?.user.role ==! 'admin'  ){
+          router.push('/');
+        }
         if (currentThemeColor && currentThemeMode) {
           dispatch(setCurrentColor(currentThemeColor));
           dispatch(setCurrentMode(currentThemeMode));

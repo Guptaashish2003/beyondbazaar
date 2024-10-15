@@ -20,7 +20,9 @@ const page =  () => {
       setLoading(true);
       const res = await useGetDataProtected("/api/user/order/all-orders");
       if(res.success){
+        // console.log(res.data)
         setOrder(res.data);
+        // console.log(res.data)
       }
       setLoading(false);
     } catch (error) {
@@ -40,7 +42,7 @@ const page =  () => {
       </p>
     </div >
       <div className='px-6 my-4'>
-          {order.map((val,index)=><OrderStatus key={val._id} id={val._id} mainId={val.mainId} productId={val.product._id} status={val.status} slug={val.product.slug} total={val.product.productPrice} title={val.product.productName} img={val.product.productImage[0]}   />)}
+          {order.map((val,index)=><OrderStatus isVariantAvailable={val.isVariantAvailable} variantDetailId={val.variantDetailId} variantId={val.variantId} key={val._id} id={val._id} mainId={val.mainId} productId={val.product._id} status={val.status} slug={val.product.slug} price={val.price} title={val.product.productName} img={val.product.productImage[0]}   />)}
       </div>
     </div>
   )

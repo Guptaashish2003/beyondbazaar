@@ -91,7 +91,7 @@ async function onSubmit(data) {
               type="text"
               placeholder="Name"
               {...register("name", { required: true, maxLength: 20 })}
-              className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+
             />
             <InputBtn
               type="email"
@@ -103,7 +103,7 @@ async function onSubmit(data) {
                   message: "Invalid email address",
                 },
               })}
-              className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+
             />
             <div className="relative">
               <InputBtn
@@ -117,7 +117,6 @@ async function onSubmit(data) {
                     message: "Password must be at least 6 characters long",
                   },
                 })}
-                className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
               />
               <button
                 type="button"

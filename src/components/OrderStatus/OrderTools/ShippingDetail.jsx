@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ShippingDetail = () => {
+const ShippingDetail = ({shippingPrice=0}) => {
   return (
     <div className="flex flex-col justify-center px-4  md:p-1 xl:p-2 w-full bg-white  space-y-3">
                 <h3 className="text-xl  dark:text-black font-semibold leading-5 text-gray-800">
@@ -17,16 +17,19 @@ const ShippingDetail = () => {
                     </div>
                     <div className="flex flex-col justify-start items-center">
                       <p className="text-lg leading-6  dark:text-black font-semibold text-gray-800">
-                        DPD Delivery
+                         Delhivery Delivery
                         <br />
                         <span className="font-normal">
-                          Delivery with 24 Hours
+                          Delivery with in time frame
                         </span>
                       </p>
                     </div>
                   </div>
                   <p className="text-lg font-semibold leading-6  dark:text-black text-gray-900">
-                    $8.00
+                    {shippingPrice.toLocaleString("en-IN", {
+                      style: "currency",
+                      currency: "INR",
+                    })}
                   </p>
                 </div>
                 <div className="w-full flex justify-center items-center">

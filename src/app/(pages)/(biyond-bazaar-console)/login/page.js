@@ -1,5 +1,5 @@
 "use client"
-import {React,useState} from "react";
+import { React, useState } from "react";
 import loginp from "@/assets/loginp.jpg";
 import Image from "next/image";
 import InputBtn from "@/components/Form/InputBtn";
@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from 'next/navigation'
 import * as Yup from "yup";
-import { usePostData } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
@@ -18,7 +17,7 @@ import { errorTostHandler } from "@/redux/api/errorTostHandler";
 const Login = () => {
 
   const router = useRouter()
-  const [loading,setLoading] = useState();
+  const [loading, setLoading] = useState();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -34,23 +33,26 @@ const Login = () => {
 
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
- 
+
   async function onSubmit(data) {
     try {
       setLoading(true);
-    const user = await usePostData("/api/user/login", data);
-    if (user.success) {
-      localStorage.setItem("token",user.token);
-      router.push("/");
-      toast.success(user.message,{autoClose: 1000, })
+      const { email, password } = data
+      // console.log(email, password)
+      await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+      toast.success("login successful", { autoClose: 1000, })
+      router.push("/")
       setLoading(false);
-    }
     } catch (error) {
       setLoading(false);
       router.push("/")
       errorTostHandler(error);
     }
-    
+
 
   }
   return (
@@ -80,7 +82,7 @@ const Login = () => {
                   message: "Invalid email address",
                 },
               })}
-              className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+
             />
             <div className="relative">
               <InputBtn
@@ -93,7 +95,6 @@ const Login = () => {
                     message: "Password must be at least 6 characters long",
                   },
                 })}
-                className="px-8 py-2 rounded-md font-medium  border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
               />
               <button
                 type="button"
@@ -127,13 +128,13 @@ const Login = () => {
 
           <SubmitButton
             value="Login with Google"
-            onClick={()=>signIn("google")}
+            onClick={() => signIn("google")}
             className="bg-white border py-2 w-full flex-row-reverse rounded-lg mt-5 text-sm hover:scale-105 duration-300 text-[--first-color]"
           >
             <FcGoogle className="text-2xl" />
           </SubmitButton>
 
-          <div className="mt-5 text-xs border-b cursor-pointer border-gray-400 py-4 text-[#002D74]"            onClick={()=>router.push("/forgot-password")}>
+          <div className="mt-5 text-xs border-b cursor-pointer border-gray-400 py-4 text-[#002D74]" onClick={() => router.push("/forgot-password")}>
             <a>Forgot your password?</a>
           </div>
 
@@ -141,7 +142,7 @@ const Login = () => {
             <p>Don't have an account?</p>
             <SubmitButton
               value="Register"
-              onClick={()=>router.push("/register")}
+              onClick={() => router.push("/register")}
               className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
             ></SubmitButton>
           </div>

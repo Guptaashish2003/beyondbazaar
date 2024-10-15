@@ -30,11 +30,11 @@ function dropdown({title,dropLink}) {
 }
 
   return (
-    <li className="dropdown__item" ref={itemRef}>
+    <li className="dropdown__item " ref={itemRef}>
     <div className="nav__link dropdown__button" onClick={showItem}>
       {title} <BiDownArrowAlt className='text-color'/>
     </div>
-    <div className="dropdown__container">
+    <div className="dropdown__container z-10">
       <div className="dropdown__content">
 
        {dropLink.map((items,index)=><div key={index} className="dropdown__group">

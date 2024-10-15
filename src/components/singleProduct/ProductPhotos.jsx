@@ -41,7 +41,7 @@ useEffect(() => {
 
 }, [screenWidth]);
 
-console.log(screenWidth)
+// console.log(screenWidth)
   return (
     <div className={showFullScreen?"fixed top-0 right-0 w-screen h-screen flex bg-white z-[1000]":"flex w-1/2 max-lg:w-full flex-col gap-y-2 "}>
       <div className={`mx-auto relative ${showFullScreen?"w-3/4 max-sm:w-full bottom-2 ":"w-11/12"}` }>

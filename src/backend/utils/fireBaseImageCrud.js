@@ -13,10 +13,10 @@ export const imageUpload = (data,path) => {
   
   const formData = data;
   const file = formData.get("file");
-    console.log(file,path,"files")
+    // console.log(file,path,"files")
     const dateTime = giveCurrentDateTime();
-    console.log(dateTime,"dateTime")
-    console.log(storage)
+    // console.log(dateTime,"dateTime")
+    // console.log(storage)
     // const name = `${path}/${dateTime}${file.name}`;
     const name = new Date().getTime() + file.name;
     const storageRef = ref(storage, name);
@@ -27,7 +27,7 @@ export const imageUpload = (data,path) => {
     (snapshot) => {
       const progress =
         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
+      // console.log("Upload is " + progress + "% done");
       switch (snapshot.state) {
         case "paused":
           console.log("Upload is paused");
@@ -40,7 +40,7 @@ export const imageUpload = (data,path) => {
     (error) => {console.log(error)},
     () => {
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log(downloadURL)
+        // console.log(downloadURL)
          return (downloadURL);
       });
     }
@@ -51,9 +51,9 @@ export async function deleteImage(imageUrl) {
   try {
     // Extract the file path from the URL
     const filePath = imageUrl.split('?')[0]; // Remove query parameters
-    console.log(filePath,"filePath")
+    // console.log(filePath,"filePath")
     const fileName = imageUrl.split('/').pop();
-    console.log(fileName,"fileName")
+    // console.log(fileName,"fileName")
     // Create a reference to the file
     const imageRef = ref(storage, filePath);
 
@@ -62,7 +62,7 @@ export async function deleteImage(imageUrl) {
 
     return "Image deleted successfully";
   } catch (error) {
-    console.error("Error deleting image:", error);
+    // console.error("Error deleting image:", error);
     return error;
   }
 }

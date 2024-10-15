@@ -577,7 +577,7 @@ export default ({ url,name }) => {
                                     <td class="content-cell">
                                         <div class="f-fallback">
                                             <h1>Hi ${name},</h1>
-                                            <p>You recently requested to reset your password for your BeyondBazaar
+                                            <p>You recently requested to reset your password for your BiyondBazaar
                                                 account. Use the button below to reset it. <strong>This password reset
                                                     is only valid for the next 24 hours.</strong></p>
                                             <!-- Action -->
@@ -605,7 +605,7 @@ export default ({ url,name }) => {
                                                     href="{{support_url}}">contact support</a> if you have questions.
                                             </p>
                                             <p>Thanks,
-                                                <br>The BeyondBazar team
+                                                <br>The BiyondBazar team
                                             </p>
                                             <!-- Sub copy -->
                                             <table class="body-sub" role="presentation">
@@ -631,7 +631,7 @@ export default ({ url,name }) => {
                                 <tr>
                                     <td class="content-cell" align="center">
                                         <p class="f-fallback sub align-center">
-                                            Beyond Bazar
+                                            Biyond Bazar
                                         </p>
                                     </td>
                                 </tr>
