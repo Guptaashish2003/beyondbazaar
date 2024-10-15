@@ -15,6 +15,7 @@ const OrderDetail = ({
   address,
   orderId,
   orderDate,
+  isCod,
   status = 2,
 }) => {
   const router = useRouter();
@@ -113,6 +114,7 @@ const OrderDetail = ({
                       <p className="mt-3 text-sm text-gray-500">
                         {discription}
                       </p>
+                      
                     </div>
                   </div>
                   <div className="mt-6 lg:col-span-5 lg:mt-0">
@@ -135,10 +137,13 @@ const OrderDetail = ({
                         </dt>
                         <dd className="mt-3 space-y-3 text-gray-500">
                           <p>{address.email}</p>
-                          <p>{address.number}</p>
+                          <p>+91 {address.phNumber}</p>
                         </dd>
                       </div>
                     </dl>
+                  <p className="mt-3 text-md font-medium text-gray-900">
+                        {isCod ? "Cash on delivery" : "Online payment"}
+                      </p>
                   </div>
                 </div>
                 <div className="border-t border-gray-200 px-4 py-3 sm:px-6 lg:p-8">

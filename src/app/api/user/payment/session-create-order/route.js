@@ -9,7 +9,6 @@ import { calculateDiscount } from "@/app/api/apply-promo/route";
 import { Cashfree } from "cashfree-pg";
 import Order from "@/backend/model/Order";
 
-
 export async function POST(request) {
   await connectDB();
   try {
@@ -23,8 +22,9 @@ export async function POST(request) {
     const userID = check._id;
 
     const data = await request.json();
-    let { orderItems, shippingInfo, shippingPrice, discount, method } =
+    let { orderItems, shippingInfo, shippingPrice, discount, method, isCod } =
       data;
+    console.log("isCod....", isCod);
     if (!orderItems || !shippingInfo || !shippingPrice || !method) {
       return NextResponse.json(
         { success: false, message: "Invalid Input" },
@@ -46,9 +46,16 @@ export async function POST(request) {
       );
       const CartCalcPrice = cart.map((item) => {
         let productCost = 0;
-        if (item.productID.variants.length > 0 && item.productID.isVariantAvailable) {
+        if (
+          item.productID.variants.length > 0 &&
+          item.productID.isVariantAvailable
+        ) {
           const variants = item.productID.variants.map((item2) => {
-            if (item2 && item2._id && item2._id.toString() === item.variantId.toString()) {
+            if (
+              item2 &&
+              item2._id &&
+              item2._id.toString() === item.variantId.toString()
+            ) {
               return item2.variantDetails.map((item3) => {
                 if (item3._id.toString() === item.variantDetailId.toString()) {
                   productCost += item3.price;
@@ -57,9 +64,7 @@ export async function POST(request) {
               });
             }
           });
-
-        }
-        else {
+        } else {
           productCost += item.productID.productPrice;
         }
         return productCost;
@@ -69,18 +74,30 @@ export async function POST(request) {
       }, 0);
     } else if (method === "byproduct") {
       product = await Product.findById(orderItems[0].product);
-      if (orderItems[0].variantId && orderItems[0].variantDetailId && product.variants.length > 0 && product.isVariantAvailable) {
+      if (
+        orderItems[0].variantId &&
+        orderItems[0].variantDetailId &&
+        product.variants.length > 0 &&
+        product.isVariantAvailable
+      ) {
         const variants = product.variants.map((item) => {
-          if (item && item._id && item._id.toString() === orderItems[0].variantId.toString()) {
+          if (
+            item &&
+            item._id &&
+            item._id.toString() === orderItems[0].variantId.toString()
+          ) {
             return item.variantDetails.map((item2) => {
-              if (item2._id.toString() === orderItems[0].variantDetailId.toString()) {
+              if (
+                item2._id.toString() ===
+                orderItems[0].variantDetailId.toString()
+              ) {
                 product.productPrice = item2.price;
                 return item2;
               }
             });
           }
         });
-        console.log("variant....", variants)
+        console.log("variant....", variants);
       }
       itemsPrice = product.productPrice * Number(orderItems[0].qty);
     } else {
@@ -119,6 +136,7 @@ export async function POST(request) {
       taxPrice,
       shippingPrice,
       totalPrice,
+      isCod,
       discount,
       discountAmount,
     });
@@ -128,40 +146,51 @@ export async function POST(request) {
         { status: 400 }
       );
     }
-    var request = {
-      order_amount: Math.ceil(totalPrice),
-      order_currency: "INR",
-      order_id: orderId,
-      customer_details: {
-        customer_id: shippingInfo[0]._id,
-        customer_phone: `${shippingInfo[0].phNumber}`,
-        customer_email: shippingInfo[0].email,
-        customer_name: shippingInfo[0].name,
-      },
-      order_meta: {
-        return_url: `${process.env.BASEURL}/user/notification/${orderId}/${userID}`,
-      },
-      order_note: "",
-    };
-    const getSession = await Cashfree.PGCreateOrder("2022-09-01", request);
-    if (discount && check.role !== "admin") {
-      promocodeDoc.userRestriction.push(check._id);
-      await promocodeDoc.save();
-    }
-    if (method === 'bycart') {
-      await Cart.findOneAndDelete({ userID: check._id })
-    }
-    return NextResponse.json(
-      {
-        success: true,
-        data: {
-          session: getSession.data.payment_session_id,
-          expiry: getSession.data.order_expiry_time,
-          orderId: orderId,
+    if (isCod) {
+      if (method === "bycart") {
+        await Cart.findOneAndDelete({ userID: check._id });
+      }
+      return NextResponse.json(
+        { success: true, message: "Order Created", data: order },
+        { status: 201 }
+      );
+    } else {
+      var request = {
+        order_amount: Math.ceil(totalPrice),
+        order_currency: "INR",
+        order_id: orderId,
+        customer_details: {
+          customer_id: shippingInfo[0]._id,
+          customer_phone: `${shippingInfo[0].phNumber}`,
+          customer_email: shippingInfo[0].email,
+          customer_name: shippingInfo[0].name,
         },
-      },
-      { status: 200 }
-    );
+        order_meta: {
+          return_url: `${process.env.BASEURL}/user/notification/${orderId}/${userID}`,
+        },
+        order_note: "",
+      };
+      const getSession = await Cashfree.PGCreateOrder("2022-09-01", request);
+      if (discount && check.role !== "admin") {
+        promocodeDoc.userRestriction.push(check._id);
+        await promocodeDoc.save();
+      }
+      if (method === "bycart") {
+        await Cart.findOneAndDelete({ userID: check._id });
+      }
+      return NextResponse.json(
+        {
+          success: true,
+          data: {
+            session: getSession.data.payment_session_id,
+            expiry: getSession.data.order_expiry_time,
+            isCod: isCod,
+            orderId: orderId,
+          },
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     console.log("error......", error);
     return NextResponse.json(

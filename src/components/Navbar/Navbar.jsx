@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import SearchBar from "../SearchBar/SearchBar";
 import { Suspense } from "react";
 import { useSession } from "next-auth/react";
-import axios from "axios";
+import { useGetData } from "@/redux/api/useGetData";
 function Navbar() {
   const router = useRouter();
   const [show, setShow] = useState("translate-y-0");
@@ -31,7 +31,7 @@ function Navbar() {
 
   useEffect(() => {
     (async () => {
-     const res = await axios.get("api/category/with-subcategory");
+     const res = await useGetData("api/category/with-subcategory");
      console.log(res.data);
     })();
     setIsAuth(status);

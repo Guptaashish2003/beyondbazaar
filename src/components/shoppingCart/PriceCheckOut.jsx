@@ -5,7 +5,7 @@ import SubmitButton from "../Form/SubmitButton";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import { toast } from "react-toastify";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
-const PriceCheckOut = ({method,variantId,variantDetailId,btnName,order,total,setDiscount,checkoutBtn=true,className,promo,...props}) => {
+const PriceCheckOut = ({method,variantId,variantDetailId,btnName,order,isCod,setIsCod,total,setDiscount,checkoutBtn=true,className,orderLoader,promo,...props}) => {
   const [promoValue,setPromoValue] = useState('');
   useEffect(()=>{
 
@@ -61,9 +61,10 @@ const PriceCheckOut = ({method,variantId,variantDetailId,btnName,order,total,set
           })}</p>
         </div>
       </div>
-{checkoutBtn &&
+      {checkoutBtn &&
       <SubmitButton
         {...props}
+        loading={orderLoader}
         className="relative  cursor-pointer inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-black border-2 border-gray-600 rounded-md hover:text-white group hover:bg-gray-50"
       >
         <span className="absolute left-0 block w-full h-0 transition-all bg-gray-800 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease" />

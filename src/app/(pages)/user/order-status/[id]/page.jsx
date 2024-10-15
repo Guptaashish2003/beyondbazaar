@@ -71,7 +71,7 @@ const page = () => {
 
   return (
     <div className="flex flex-col navMargin minScreen">
-      <OrderDetail variants={getVariant(product)} status={getOrderStatus(product.status)} id={id} quantity={product.qty} title={product?.product.productName} img={product?.product.productImage[0]} discription={product?.product.seo.description} price={product?.price} address={order.shippingInfo} orderDate={order.createdAt} orderId={order.orderId} className="w-[65%]"/>
+      <OrderDetail variants={getVariant(product)} status={getOrderStatus(product.status)} id={id} quantity={product.qty} title={product?.product.productName} img={product?.product.productImage[0]} discription={product?.product.seo.description} price={product?.price} address={order.shippingInfo} orderDate={order.createdAt} orderId={order.orderId} isCod={order.isCod} className="w-[65%]"/>
       <div className="w-11/12 max-md:w-full p-4 rounded-md bg-gray-50 flex mx-auto gap-3 ">
         <ShippingDetail />
         <PriceCheckOut className="bg-white mx-auto flex justify-center flex-col w-11/12 items-stretch w- space-y-2

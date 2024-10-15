@@ -78,12 +78,12 @@ const page = () => {
             <p className="text-sm text-gray-700"> biyond Bazaar </p>
             <p className="text-sm text-gray-700"> 123, Main Road, </p>
             <p className="text-sm text-gray-700"> New Delhi, 110001</p>
-            <p className="text-sm pt-2 text-gray-700">
+            {/* <p className="text-sm pt-2 text-gray-700">
               <span className="text-sm text-gray-900 mt-2 font-bold">
                 GSTIN:
               </span>{" "}
               07AABCB1491A1ZQ
-            </p>
+            </p> */}
           </div>
           <div className=" pr-3 pt-2 text-end flex flex-col">
             <p className="text-sm text-gray-900 font-bold ">Billig Address :</p>
@@ -205,14 +205,14 @@ const page = () => {
                   Sub Total
                 </td>
                 <td className="border  text-gray-800 p-2">
-                  {data?.totalPrice}
+                  {data?.itemsPrice}
                 </td>
               </tr>
               <tr>
                 <td className="border  text-gray-800 p-2" colSpan="3"></td>
-                <td className="border font-bold text-gray-800 p-2">Tax</td>
+                <td className="border font-bold text-gray-800 p-2">Charges</td>
                 <td className="border  text-gray-800 p-2">
-                  {Math.floor(data?.taxPrice)}
+                  {Math.ceil(data?.taxPrice)}
                 </td>
               </tr>
               <tr>
@@ -232,7 +232,7 @@ const page = () => {
                 </td>
                 <td className="border font-bold  text-gray-800 p-2">Total</td>
                 <td className="border font-bold text-gray-800 p-2">
-                  {Math.floor(data?.totalPrice)}
+                  {Math.ceil(data?.totalPrice)}
                 </td>
               </tr>
 
@@ -272,7 +272,7 @@ const page = () => {
               <tr>
                 <td className="border  text-gray-800 p-2">Payment</td>
                 <td className="border  text-gray-800 p-2">{data?.createdAt}</td>
-                <td className="border  text-gray-800 p-2">{Math.floor(data?.Paymentdetails?.order_amount)}</td>
+                <td className="border  text-gray-800 p-2">{Math.ceil(data?.Paymentdetails?.order_amount)}</td>
                 <td className="border  text-gray-800 p-2">{data?.Paymentdetails?.payment_group.toUpperCase()
                 }</td>
               </tr>

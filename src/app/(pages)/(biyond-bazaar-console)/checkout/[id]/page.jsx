@@ -7,12 +7,13 @@ import { errorTostHandler } from "@/redux/api/errorTostHandler";
 import { useGetData, useGetDataProtected } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import Link from "next/link";
-import {useParams,useRouter,useSearchParams} from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getCashfreeInstance } from "@/backend/utils/cashfreePay";
 import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
+
 
 const page = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const page = () => {
   const router = useRouter();
   const qty = searchParams.get("qty");
   const variantId = searchParams.get("variant");
+  const [orderLoader, setOrderLoader] = useState(false);
   const variantDetailId = searchParams.get("variantDetails");
   const addressRef = useRef();
   const [address, setAddress] = useState([]);
@@ -29,6 +31,7 @@ const page = () => {
   const [shippingPrice, setShippingPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState();
+  const [isCod, setIsCod] = useState(false);
   // console.log("variantId", variantId,"variantDetailId", variantDetailId);
 
   const getData = async () => {
@@ -150,17 +153,23 @@ const page = () => {
 
   const onCheckout = async () => {
     try {
+      setOrderLoader(true);
       const paymentRes = await usePostDataProtected(
         "/api/user/payment/session-create-order",
         {
           orderItems: order.orderItems,
           discount: discount.disCountId,
           shippingInfo: addressRef.current.value,
+          isCod,
           shippingPrice: "0",
           method,
         }
       );
-      if (paymentRes.success) {
+      if(paymentRes.success && paymentRes?.data?.isCod ){
+        router.push("/user/your-orders");
+      }
+      
+      if (paymentRes.success && !isCod) {
         const { session, expiry } = paymentRes.data;
 
         const cashfree = await getCashfreeInstance();
@@ -199,7 +208,7 @@ const page = () => {
                   const res = await useGetDataProtected(
                     `/api/user/payment/status/${orderId}`
                   );
-                  console.log(res, "res");  
+                  console.log(res, "res");
                   const data = res?.data;
                   const status = data?.payment_status;
                   const payment_method = data?.payment_method;
@@ -208,6 +217,7 @@ const page = () => {
                     { data: data, payment_method: payment_method }
                   );
                   router.push("/user/your-orders");
+
                 } catch (error) {
                   console.error("An error occurred:", error);
                 }
@@ -218,7 +228,9 @@ const page = () => {
           }
         });
       }
+      setOrderLoader(false);
     } catch (error) {
+      setOrderLoader(false);
       // console.log(error);
       errorTostHandler(error);
     }
@@ -270,12 +282,16 @@ const page = () => {
               <p className="text-gray-500 text-sm">Add New Address</p>
             </Link>
           </div>
+
           <PriceCheckOut
             method={method}
             setDiscount={setDiscount}
             order={order}
             variantDetailId={variantDetailId}
             variantId={variantId}
+            isCod={isCod}
+            orderLoader={orderLoader}
+            setIsCod={setIsCod}
             total={(
               shippingPrice -
               discount.discountValue +
@@ -287,7 +303,7 @@ const page = () => {
             })}
             onClick={onCheckout}
             promo={true}
-            btnName="Checkout"
+            btnName={isCod ? "Place Order" : "Pay Now"}
           >
             <div className="flex justify-between">
               <p>Total items Price</p>
@@ -339,6 +355,19 @@ const page = () => {
                   currency: "INR",
                 })}
               </p>
+            </div>
+            <div className="flex justify-between">
+              <p>Cash On Delivery</p>
+              <label className="inline-flex mb-1 cursor-pointer ">
+                <input
+                  type="checkbox"
+                  value=""
+                  checked={isCod}
+                  onChange={() => setIsCod(!isCod)}
+                  className="sr-only peer"
+                />
+                <div className="relative ml-2 w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gray-800"></div>
+              </label>
             </div>
           </PriceCheckOut>
         </div>

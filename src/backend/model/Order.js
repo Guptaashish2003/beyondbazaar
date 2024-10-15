@@ -95,6 +95,7 @@ const OrderSchema = new mongoose.Schema(
     isPaid: { type: Boolean, default: false },
     totalPrice: { type: Number, required: true },
     isDelivered: { type: Boolean, default: false },
+    isCod: { type: Boolean, default: false },
     deliveredAt: { type: Date },
   },
   { timestamps: true }

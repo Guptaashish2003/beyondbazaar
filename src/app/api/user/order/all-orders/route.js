@@ -11,7 +11,10 @@ export async function GET(request) {
             return check 
         }
         const userID = check._id;
-        const orders = await Order.find({ user: userID }).populate({
+        const orders = await Order.find({ user: userID, $or: [
+          { isCod: true },
+          { isPaid: true }
+        ]}).populate({
             path: 'orderItems',
             populate: [
               {
