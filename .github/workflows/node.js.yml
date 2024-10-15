@@ -42,6 +42,9 @@ jobs:
       NODE_ENV: ${{ secrets.NODE_ENV }}
       UPLOADTHING_APP_ID: ${{ secrets.UPLOADTHING_APP_ID }}
       UPLOADTHING_SECRET: ${{ secrets.UPLOADTHING_SECRET }}
+      CASHFREE_APP_ID: ${{ secrets.CASHFREE_APP_ID }}
+      CASHFREE_SECRET_KEY: ${{ secrets.CASHFREE_SECRET_KEY }}
+      DELHIVERY_API_TOKEN: ${{ secrets.DELHIVERY_API_TOKEN }}
 
 
     steps:
