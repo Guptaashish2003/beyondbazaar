@@ -66,7 +66,7 @@ const authOptions = {
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      console.log(process.env.NEXTAUTH_URL, "lkj");
+      // console.log(process.env.NEXTAUTH_URL, "lkj");
       return process.env.NEXTAUTH_URL;
     },
     async session({ session, token, user }) {

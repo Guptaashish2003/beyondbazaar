@@ -80,7 +80,7 @@ export async function POST(request) {
             });
           }
         });
-        console.log("variant....", variants)
+        // console.log("variant....", variants)
       }
       itemsPrice = product.productPrice * Number(orderItems[0].qty);
     } else {
@@ -163,7 +163,7 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log("error......", error);
+    // console.log("error......", error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

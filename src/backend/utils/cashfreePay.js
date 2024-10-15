@@ -9,7 +9,7 @@ const initializeSDK = async () => {
     });
     return cashfree; // Return the initialized cashfree object
   } catch (error) {
-    console.error('Error initializing Cashfree SDK:', error);
+    // console.error('Error initializing Cashfree SDK:', error);
     throw error;
   }
 };

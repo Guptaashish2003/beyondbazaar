@@ -25,7 +25,7 @@ export async function GET(request,context) {
               },
             ],
           });
-        console.log("orders",orders)
+        // console.log("orders",orders)
         if (!orders||orders.length===0) {
             return NextResponse.json({ success: false, message: "Order Not Found" }, { status: 400 });
         }

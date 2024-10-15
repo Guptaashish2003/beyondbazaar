@@ -19,7 +19,7 @@ export async function POST(request) {
         }
         const data = await request.json();
         const { categoryName,categoryImage } = data;
-        console.log(categoryName, categoryImage)
+        // console.log(categoryName, categoryImage)
         if (!categoryName || !categoryImage ) {
             return NextResponse.json({ success: false, message: "Invalid Input" }, { status: 400 });
         }

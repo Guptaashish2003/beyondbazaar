@@ -45,7 +45,7 @@ export async function POST(request) {
             return NextResponse.json({ success: true, message: "update Quantity successfully", data: updateQuantity }, { status: 200 });  
         }
         const cart = await Cart.create({ userID, productID, productQuantity,variantId,variantDetailId,isVariantAvailable });
-        console.log(cart)
+        // console.log(cart)
         return NextResponse.json({ success: true, message: "Added to cart", data: cart }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });

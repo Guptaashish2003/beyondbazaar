@@ -17,11 +17,11 @@ export async function GET(request, context) {
     // }
     
     const res = await Cashfree.PGOrderFetchPayments("2023-08-01", orderID)
-    console.log("res", res);
+    // console.log("res", res);
     const paymentDetails = res.data[0];
      return NextResponse.json({ success: true, data: paymentDetails }, { status: 200 });
   } catch (error) {
-    console.log("error", error);
+    // console.log("error", error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

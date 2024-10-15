@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 
 const MainProductPage = () => {
-  console.log(process.env.NAME)
+  // console.log(process.env.NAME)
   return (
     <>
     <div>

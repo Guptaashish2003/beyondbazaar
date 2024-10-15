@@ -214,7 +214,7 @@ const ProductSpecification = () => {
   
   <button onClick={()=>{
     const data = JSON.stringify(editor.getHTML())
-    console.log(data)
+    // console.log(data)
     // console.log(editor.getJSON())
     // console.log(editor.getText())
     }}>

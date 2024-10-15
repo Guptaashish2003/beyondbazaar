@@ -24,7 +24,7 @@ const ShoppingCart = () => {
   }
 
   if (error) {
-    console.log(error)
+    // console.log(error)
     // router.push("/")
   }
   // console.log(dispatch)
@@ -194,7 +194,7 @@ const ShoppingCart = () => {
         })
 
     }
-    console.log(isVariantAvailable,"valll.l.l")
+    // console.log(isVariantAvailable,"valll.l.l")
     return {isVariantAvailable,variant:{size,color}}
 
   }
