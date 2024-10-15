@@ -172,7 +172,7 @@ export async function POST(request) {
           customer_name: shippingInfo[0].name,
         },
         order_meta: {
-          return_url: `${process.env.m}/user/notification/${orderId}/${userID}`,
+          return_url: `${process.env.BASEURL}/user/your-orders`,
         },
         order_note: "",
       };
