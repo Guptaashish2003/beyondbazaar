@@ -24,7 +24,7 @@ export async function POST(request) {
     const data = await request.json();
     let { orderItems, shippingInfo, shippingPrice, discount, method, isCod } =
       data;
-    console.log("isCod....", isCod);
+    // console.log("isCod....", isCod);
     if (!orderItems || !shippingInfo || !shippingPrice || !method) {
       return NextResponse.json(
         { success: false, message: "Invalid Input" },
@@ -140,6 +140,7 @@ export async function POST(request) {
       discount,
       discountAmount,
     });
+  
     if (!order) {
       return NextResponse.json(
         { success: false, message: "Something went wrong" },
@@ -150,6 +151,11 @@ export async function POST(request) {
       if (method === "bycart") {
         await Cart.findOneAndDelete({ userID: check._id });
       }
+      if(discount && check.role !== "admin"){
+        promocodeDoc.userRestriction.push(check._id);
+        await promocodeDoc.save();
+      }
+
       return NextResponse.json(
         { success: true, message: "Order Created", data: order },
         { status: 201 }

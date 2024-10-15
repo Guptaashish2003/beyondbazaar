@@ -35,6 +35,13 @@ export async function PUT(request) {
 
     // Update the payment status
     const isPaid = data?.payment_status === "SUCCESS";
+    if(existingOrder.discount){
+      const updatePromo = await Promocode.findById(existingOrder.discount);
+      if(updatePromo){
+        updatePromo.userRestriction.push(userID);
+        await updatePromo.save();
+      }
+    }
 
     // Update the order with new payment details
     const updatedOrder = await Order.findOneAndUpdate(

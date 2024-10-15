@@ -4,7 +4,7 @@ import SelectAdres from "@/components/PaymentPageTools/SelectAdres";
 import SumCard from "@/components/PaymentPageTools/SumCard";
 import PriceCheckOut from "@/components/shoppingCart/PriceCheckOut";
 import { errorTostHandler } from "@/redux/api/errorTostHandler";
-import { useGetData, useGetDataProtected } from "@/redux/api/useGetData";
+import { useGetDataProtected } from "@/redux/api/useGetData";
 import { usePostDataProtected } from "@/redux/api/usePostData";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";

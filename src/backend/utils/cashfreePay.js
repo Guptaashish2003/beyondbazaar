@@ -5,7 +5,7 @@ let cashfree;
 const initializeSDK = async () => {
   try {
     cashfree = await load({
-      mode: 'sandbox', // or 'production' based on your environment
+      mode: process.env.CASHFREE_MODE, // or 'production' based on your environment
     });
     return cashfree; // Return the initialized cashfree object
   } catch (error) {
