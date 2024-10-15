@@ -36,7 +36,7 @@ const Page = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
     // Additional logic for submission
   };

@@ -7,9 +7,9 @@ export async function deleteImage(imageUrl) {
   try {
     // Extract the file path from the URL
     const filePath = imageUrl.split('?')[0]; // Remove query parameters
-    console.log(filePath,"filePath")
+    // console.log(filePath,"filePath")
     const fileName = imageUrl.split('/').pop();
-    console.log(fileName,"fileName")
+    // console.log(fileName,"fileName")
     // Create a reference to the file
     const imageRef = ref(storage, filePath);
 
@@ -18,7 +18,7 @@ export async function deleteImage(imageUrl) {
 
     return "Image deleted successfully";
   } catch (error) {
-    console.error("Error deleting image:", error);
+    // console.error("Error deleting image:", error);
     return error;
   }
 }

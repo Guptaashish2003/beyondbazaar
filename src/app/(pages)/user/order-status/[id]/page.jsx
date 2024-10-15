@@ -38,8 +38,8 @@ const page = () => {
   if(loading){
     return(<Loading></Loading>)
   }
-  console.log(order);
-  console.log(product);
+  // console.log(order);
+  // console.log(product);
 
   const getOrderStatus = (orderStatus)=>{
     const state = {"pending":1, "processing":3, "shipped":6, "delivered":8, "cancelled":10}

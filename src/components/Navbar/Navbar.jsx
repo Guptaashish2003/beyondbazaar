@@ -31,8 +31,8 @@ function Navbar() {
 
   useEffect(() => {
     (async () => {
-     const res = await useGetData("api/category/with-subcategory");
-     console.log(res.data);
+     const res = await axios.get("api/category/with-subcategory");
+    //  console.log(res.data);
     })();
     setIsAuth(status);
     window.addEventListener("scroll", controlNavbar);
@@ -125,7 +125,7 @@ function Navbar() {
       showMenu();
     }
   };
-  console.log(isAuth,"kkkkk")
+  // console.log(isAuth,"kkkkk")
 
   return (
     <>

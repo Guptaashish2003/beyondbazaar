@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 function SumCard({ order }) {
-  console.log(order,"order...")
+  // console.log(order,"order...")
   const getPrices = (val) => {
     let price = 0;
     if (val.isVariantAvailable) {

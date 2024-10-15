@@ -84,7 +84,7 @@ export async function POST(request) {
         
 
       }
-      console.log(newQuantity);
+      // console.log(newQuantity);
       productQuantity = newQuantity;
     }
   }
@@ -107,7 +107,7 @@ export async function POST(request) {
     return NextResponse.json({ success: true, data: "product", message: "Product added" }, { status: 200 });
   } catch (error) {
     // Error handling
-    console.error(error);
+    // console.error(error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

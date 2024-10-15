@@ -30,7 +30,7 @@ const ProductDes = ({
   const [variantDetails, setVariantDetails] = useState([]);
   const [variantData, setVariantData] = useState();
   const dispatch = useDispatch();
-  console.log(variant, "variantsdetilasss", variantData);
+  // console.log(variant, "variantsdetilasss", variantData);
   useEffect(() => {
     if (variants) {
       setVariant(variants[0]?._id);

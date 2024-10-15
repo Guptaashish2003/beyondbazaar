@@ -12,7 +12,7 @@ const ProductDetails = ({description}) => {
   const toggleSpecification = () => {
     setShowDescription(false);
   }; 
-  console.log(description)
+  // console.log(description)
   const content = JSON.parse(description)
 
   return (

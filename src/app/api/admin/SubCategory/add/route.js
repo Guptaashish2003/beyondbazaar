@@ -21,7 +21,7 @@ export async function POST(request) {
         // console.log(data, "data")
 
         const { category,SubCategoryName  } = data;
-        console.log(category,SubCategoryName, "category,SubCategoryName")
+        // console.log(category,SubCategoryName, "category,SubCategoryName")
         if (!SubCategoryName || !category ) {
             return NextResponse.json({ success: false, message: "Please fill all the fields" }, { status: 400 });
         }

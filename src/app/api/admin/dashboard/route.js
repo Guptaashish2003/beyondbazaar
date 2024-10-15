@@ -47,7 +47,7 @@ export async function GET(request) {
           }
       }
   ]);
-    console.log(totalEarnings, "totalEarnings");
+    // console.log(totalEarnings, "totalEarnings");
     const totalReviews = await Order.aggregate([
       {
         $group: {
@@ -98,7 +98,7 @@ export async function GET(request) {
         },
       },
     ]);
-    console.log(totalOrderByUser, "totalOrderByUser")
+    // console.log(totalOrderByUser, "totalOrderByUser")
 
     const data = {
       totalSales: totalSales[0].totalSales,
@@ -124,7 +124,7 @@ export async function GET(request) {
       });
     } else {
       const id = await Dashboard.find();
-      console.log("hello");
+      // console.log("hello");
       DashBoardData = await Dashboard.findByIdAndUpdate(
         { _id: id[0]._id },
         {
@@ -141,7 +141,7 @@ export async function GET(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

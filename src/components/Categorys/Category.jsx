@@ -8,6 +8,7 @@ import { Pagination } from 'swiper/modules';
 import Image from 'next/image'
 import category1 from "@/assets/category1.png"
 import axios from 'axios';
+import { errorTostHandler } from '@/redux/api/errorTostHandler';
 function Category() {
     const [category,setCategory] = useState([])
   
@@ -15,12 +16,13 @@ function Category() {
       try {
         const getCategory = async()=>{
           const res = await axios.get("/api/category/all-category")
-          console.log(res?.data?.data);
+          // console.log(res?.data?.data);
           setCategory(res?.data?.data);
         }
         getCategory()
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        errorTostHandler(error)
 
       }
     }, []);

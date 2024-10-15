@@ -26,7 +26,7 @@ const jwtToken = async (user, statusCode, msg) => {
       status: statusCode,
     }
   );
-  console.log(cookieOptions.expires)
+  // console.log(cookieOptions.expires)
   cookies().set({
     name: "token",
     value: token,

@@ -4,12 +4,12 @@ import Order from "@/backend/model/Order";
 import isOauth from "@/backend/middlewere/isOauth";
 
 export async function PUT(request) {
-  console.log("Request.............:");
+  // console.log("Request.............:");
   await connectDB();
   try {
     const check = await isOauth(request);
     const userID = check._id;
-    console.log("User ID:", userID);
+    // console.log("User ID:", userID);
     const { data, payment_method } = await request.json();
 
     // Debugging: Check if you have the correct order ID
@@ -50,7 +50,7 @@ export async function PUT(request) {
     );
 
     // Check if the update was successful
-    console.log("Updated Order:", updatedOrder);
+    // console.log("Updated Order:", updatedOrder);
 
     if (!updatedOrder) {
       return NextResponse.json(
@@ -68,7 +68,7 @@ export async function PUT(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error occurred:", error);
+    // console.error("Error occurred:", error);
     return NextResponse.json(
       { success: false, message: error.message },
       { status: 400 }

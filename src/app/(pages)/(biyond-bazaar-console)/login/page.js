@@ -38,7 +38,7 @@ const Login = () => {
     try {
       setLoading(true);
       const { email, password } = data
-      console.log(email, password)
+      // console.log(email, password)
       await signIn('credentials', {
         redirect: false,
         email,

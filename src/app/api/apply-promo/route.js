@@ -77,7 +77,7 @@ export async function POST(request) {
           // console.log(product.productPrice)
           // console.log(orderItems[0].qty)
         
-        console.log(totalPrice,"price")
+        // console.log(totalPrice,"price")
         const promocodeDoc = await Promocode.findOne({
             promocode: promocode.toUpperCase(),
             active: true,
@@ -109,7 +109,7 @@ export async function POST(request) {
         return NextResponse.json({ success: true, message: "Promocode added", data: promo }, { status: 200 });
         
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });     
     }
 }

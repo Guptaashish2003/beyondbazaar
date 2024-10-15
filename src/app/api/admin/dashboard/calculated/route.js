@@ -55,8 +55,8 @@ export async function GET(request) {
     const totalProductByDate = await Product.countDocuments(query);
     const totalOrderByDate = await Order.countDocuments(query);
    
-    console.log(totalSalesByDate, "totalSalesByDate")
-    console.log(totalUsers, totalUserByDate, "totalUserByDate")
+    // console.log(totalSalesByDate, "totalSalesByDate")
+    // console.log(totalUsers, totalUserByDate, "totalUserByDate")
     const totalUserChange = calculatePercentageChange(
       totalUsers+totalUserByDate,
       totalUsers 
@@ -82,8 +82,8 @@ export async function GET(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
-    console.log(error);
+    // console.error(error);
+    // console.log(error);
     return NextResponse.json(
       { success: false, message: "Server Error" },
       { status: 500 }

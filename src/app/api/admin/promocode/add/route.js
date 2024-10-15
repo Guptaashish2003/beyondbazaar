@@ -26,7 +26,7 @@ export async function POST(request) {
         return NextResponse.json({ success: true, message: "Promocode created", data: newPromocode }, { status: 200 });
         
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return NextResponse.json({ success: false, message: error.message }, { status: 400 });     
     }
 }
