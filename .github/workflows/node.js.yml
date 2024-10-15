@@ -46,6 +46,7 @@ jobs:
       CASHFREE_SECRET_KEY: ${{ secrets.CASHFREE_SECRET_KEY }}
       CASHFREE_MODE: ${{ secrets.CASHFREE_MODE }}
       DELHIVERY_API_TOKEN: ${{ secrets.DELHIVERY_API_TOKEN }}
+      SUPPORTMAIL: ${{ secrets.SUPPORTMAIL }}
 
 
     steps:
