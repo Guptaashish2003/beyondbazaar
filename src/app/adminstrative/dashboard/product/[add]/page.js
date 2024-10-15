@@ -9,10 +9,10 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { Header } from "@/components/Admin";
 import { TagsInput } from "react-tag-input-component";
-import Addvariants from "@/app/adminstrative/dashboard/product/components/Addvariants";
+import Addvariants from "@/components/Admin/components/AddVariants";
 // import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
-import Category from "@/app/adminstrative/dashboard/product/components/Category";
+import Category from "@/components/Admin/components/Category";
 import { useEditor } from "@tiptap/react";
 import Link from "@tiptap/extension-link";
 import StarterKit from "@tiptap/starter-kit";
@@ -22,9 +22,9 @@ import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
-import TextEditor from "@/app/adminstrative/dashboard/product/components/TextEditor";
-import ImageUploadModal from "@/app/adminstrative/dashboard/product/components/ImageUploadModal";
-import PreviewImage from "@/app/adminstrative/dashboard/product/components/PreviewImage";
+import TextEditor from "@/components/Admin/components/TextEditor";
+import ImageUploadModal from "@/components/Admin/components/ImageUploadModal";
+import PreviewImage from "@/components/Admin/components/PreviewImage";
 
 
 export default function page() {
