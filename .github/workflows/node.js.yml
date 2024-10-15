@@ -61,6 +61,8 @@ jobs:
         echo "FRONTENDURL=${{ secrets.FRONTENDURL }}" >> .env
         echo "DB_URI=${{ secrets.DB_URI }}" >> .env
         echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env
+        echo "CASHFREE_APP_ID=${{ secrets.CASHFREE_APP_ID }}" >> .env
+        echo "CASHFREE_SECRET_KEY=${{ secrets.CASHFREE_SECRET_KEY }}" >> .env
 
     - run: npm run build --if-present
     - name: Change Directory
