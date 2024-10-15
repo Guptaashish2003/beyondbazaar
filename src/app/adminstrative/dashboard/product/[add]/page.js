@@ -12,7 +12,6 @@ import { TagsInput } from "react-tag-input-component";
 import Addvariants from "../_components/Addvariants";
 // import Image from "next/image";
 import { usePostDataProtected } from "@/redux/api/usePostData";
-import { UploadButton } from "@/backend/utils/uploadthing";
 import Category from "../_components/Category";
 import { useEditor } from "@tiptap/react";
 import Link from "@tiptap/extension-link";
