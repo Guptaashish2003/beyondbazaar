@@ -171,14 +171,14 @@ const page = () => {
       
       if (paymentRes.success && !isCod) {
         const { session, expiry } = paymentRes.data;
-        console.log(paymentRes,session, expiry, "session");
+        // console.log(paymentRes,session, expiry, "session");
         const cashfree = await getCashfreeInstance();
         let checkoutOptions = {
           paymentSessionId: session,
           redirectTarget: "_modal",
         };
         cashfree.checkout(checkoutOptions).then((result) => {
-          console.log(result, "result");
+          // console.log(result, "result");
           if (result.error) {
             // This will be true whenever user clicks on close icon inside the modal or any error happens during the payment
             // console.log(

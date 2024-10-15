@@ -39,13 +39,18 @@ const Login = () => {
       setLoading(true);
       const { email, password } = data
       // console.log(email, password)
-      await signIn('credentials', {
+      const res = await signIn('credentials', {
         redirect: false,
         email,
         password,
       });
-      toast.success("login successful", { autoClose: 1000, })
-      router.push("/")
+      if (res.error) {
+        toast.error(res?.error, { autoClose: 1000, })
+      }else{
+        toast.success("login successful", { autoClose: 1000, })
+        router.push("/")
+
+      }
       setLoading(false);
     } catch (error) {
       setLoading(false);

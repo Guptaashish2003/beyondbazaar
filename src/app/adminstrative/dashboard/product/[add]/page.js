@@ -165,7 +165,7 @@ export default function page() {
     productData.productImage = preImage;
     if (productData.isVariantAvailable) productData.variants = rows;
     productData.productDescription = JSON.stringify(editor.getHTML());
-    console.log(productData);
+    // console.log(productData);
     // alert(JSON.stringify(productData));
     setLoading(true);
     try {
@@ -175,7 +175,7 @@ export default function page() {
         productData
       );
       setLoading(false);
-      console.log(res);
+      // console.log(res);
       if (res?.success) {
         toast.success(res?.message);
         reset();

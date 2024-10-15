@@ -5,6 +5,7 @@ import User from "@/backend/model/User";
 import ConnectDB from "@/backend/DATABASE/ConnectDB";
 import { cookies } from "next/headers";
 
+
 const cookieOptions = {
   expires: new Date(
     Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -40,12 +41,16 @@ const authOptions = {
           throw new Error('Please enter your email and password');
         }
 
-        const user = await User.findOne({ email: credentials.email }).select("+password");
+        const user = await User.findOne({ email: credentials.email}).select("+password");
         if (!user) {
           throw new Error('Email not found');
         }
+        if(!user.isEmailValid){
+          throw new Error('Please verify your email');
+        }
 
         const PasswordMatch = await user.matchPassword(credentials.password);
+        
         if (!PasswordMatch) {
           throw new Error('Invalid email or password');
         }
@@ -72,7 +77,8 @@ const authOptions = {
     async session({ session, token, user }) {
       await ConnectDB();
       const { name, email, role } = session.user;
-      const exist = await User.findOne({ email });
+      const exist = await User.findOne({ email
+       });
       let userToken;
       if (!exist) {
         const newUser = await User.create({
