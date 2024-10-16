@@ -57,11 +57,11 @@ async function onSubmit(data) {
 
 
   return (
-    <section className="bg-image max-md:items-center  flex items-start justify-center navMargin minScreen">
+    <section className="bg-image max-md:items-center  flex items-start justify-center navMargin minScreen max-sm:mx-auto max-sm:w-3/4">
       {/* <!-- login container --> */}
       <div className="bg-white mt-16 flex rounded-2xl max-md:m-4 shadow-lg max-w-3xl p-5 items-center">
         {/* <!-- form --> */}
-        <div className="md:w-1/2 px-8 md:px-16">
+        <div className="!md:w-1/2 px-8 md:px-16">
           <h2 className="font-bold text-center capitalize text-2xl text-[--first-color]">
             Register
           </h2>
@@ -140,6 +140,14 @@ async function onSubmit(data) {
               className="bg-[--first-color] rounded-sm text-white py-2 hover:scale-105 duration-300"
             />
           </form>
+          <div className="mt-3 text-xs flex justify-between items-center text-[--first-color]">
+            <p>Already have an account?</p>
+            <SubmitButton
+              value="login"
+              onClick={() => router.push("/login")}
+              className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
+            ></SubmitButton>
+          </div>
 
           <div className="mt-3 text-xs flex justify-between items-center text-[--first-color]">
             <p className="mt-6 text-xs text-gray-600 text-center">

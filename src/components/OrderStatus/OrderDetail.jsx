@@ -41,8 +41,8 @@ const OrderDetail = ({
         <main className="mx-auto max-w-2xl pb-1 pt-1 sm:px-6 sm:pt-16 lg:max-w-7xl lg:px-8">
           {/* Products */}
           <section aria-labelledby="products-heading">
-            <div className="flex justify-start item-start   my-8 space-y-2 flex-col">
-              <h1 className="text-3xl  dark:text-black lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
+            <div className="flex justify-start item-start max-sm:px-4 my-8 space-y-2 flex-col">
+              <h1 className="text-3xl max-sm:text-base dark:text-black lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
                 Order #{orderId}
               </h1>
               <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
@@ -54,7 +54,7 @@ const OrderDetail = ({
               <div className="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
                 <div className="space-y-2 px-8 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 ">
                   <div className="flex sm:items-baseline my-2 sm:space-x-4">
-                    <Link href={`/user/invoice/${id}`}>
+                    <Link target="_blank" href={`/user/invoice/${id}`}>
                       <p className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">
                         View invoice
                         <span aria-hidden="true"> →</span>
@@ -161,7 +161,7 @@ const OrderDetail = ({
                         }}
                       />
                     </div>
-                    <div className="mt-6 hidden grid-cols-4 text-sm font-medium text-gray-600 sm:grid">
+                    <div className="mt-6 max-md:flex max-md:justify-between grid-cols-4 text-sm font-medium text-gray-600 sm:grid">
                       <div className={` ${orderStatus === 10 ?"text-red-600":"text-indigo-600"}`}>Pending</div>
                       <div
                         className={`text-center ${

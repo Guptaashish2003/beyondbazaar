@@ -20,7 +20,7 @@ const ProductDes = ({
   stock,
   className,
   variants,
-  isVariantAvailable=false
+  isVariantAvailable = false,
 }) => {
   const pathName = usePathname();
   const router = useRouter();
@@ -39,13 +39,13 @@ const ProductDes = ({
     }
   }, [variants]);
   const increment = () => {
-    if(isVariantAvailable){
+    if (isVariantAvailable) {
       if (variantData.stock > productCount) {
         setProductCount(productCount + 1);
       } else {
         toast.warn("Out Of Stock", { autoClose: 2000 });
       }
-    }else{
+    } else {
       if (stock > productCount) {
         setProductCount(productCount + 1);
       } else {
@@ -69,7 +69,7 @@ const ProductDes = ({
           productQuantity: productCount,
           variantId: variant,
           variantDetailId: variantData?._id,
-          isVariantAvailable:true
+          isVariantAvailable: true,
         })
       );
     } else {
@@ -134,9 +134,10 @@ const ProductDes = ({
         </div>
       </div>
       {isVariantAvailable && (
-        <div className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  py-4">
-          <p>Size:</p>
+        <div className="flex max:lg:text-lg max-sm:flex-col text-black max-lg:gap-2 gap-4 items-center container  py-4">
           <div className="flex gap-2">
+            <p className="max-sm:ml-2">Size:</p>
+            <div className="flex gap-2 max-sm:ml-2.5">
             {variants.map((vart, index) => (
               <input
                 type="button"
@@ -154,7 +155,9 @@ const ProductDes = ({
                   setVariantData(vart.variantDetails[0]);
                 }}
               />
+
             ))}
+            </div>
           </div>
 
           {variantDetails[0]?.color && (

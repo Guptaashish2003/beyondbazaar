@@ -50,10 +50,10 @@ const page = () => {
   return (
     <>
       {/* ====== Contact Section Start */}
-      <section className="relative z-10 overflow-hidden bg-white dark:bg-dark px-20 lg:py-[120px] navMargin minScreen">
-        <div className="container mx-auto">
+      <section className="relative z-10 overflow-hidden bg-white dark:bg-dark px-20 max-sm:px-12 lg:py-[120px] navMargin minScreen">
+        <div className="max-sm:w-full mx-auto">
           <div className="flex flex-wrap -mx-4 lg:justify-between">
-            <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
+            <div className="w-full px-4 max-sm:w-11/12 lg:w-1/2 xl:w-6/12">
               <div className="mb-12 max-w-[570px] lg:mb-0">
                 <h1 className="text-dark text-gray-700 mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
                   CONTACT US
@@ -61,7 +61,7 @@ const page = () => {
                 <p className="text-base leading-relaxed text-body-color dark:text-dark-6 mb-9">
                 Feel the warmth of personalized support at your fingertips! Have questions or need assistance? Connect with our caring team now. Your joy and satisfaction fuel our commitment. Let's make your shopping experience extraordinary—contact us with a smile!
                 </p>
-                <div className="mb-8 flex w-full max-w-[370px]">
+                <div className="mb-8 flex w-full max-w-[370px] max-sm:w-11/12">
                   <div className="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]">
                     <RiHomeOfficeLine className="w-1/2 h-1/2" />
                   </div>

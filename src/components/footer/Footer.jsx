@@ -4,7 +4,7 @@ import { IoCallOutline } from "react-icons/io5";
 import { GrLocation } from "react-icons/gr";
 import SocialMedial from '../SocialMediaIcons/SocialMedial';
 import beyondbazaar from '@/assets/beyondbazaar.png'
-
+import { MdOutlineContactPage } from "react-icons/md";
 import Image from 'next/image'
 import Link from 'next/link';
 
@@ -13,7 +13,7 @@ const Footer = () => {
   return (
   
   <footer className="bg-white">
-    <div className="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+    <div className="mx-auto w-11/12 px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-24">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div>
           <div className="flex justify-center text-teal-600 sm:justify-start">
@@ -113,7 +113,7 @@ const Footer = () => {
           </div>
   
           <p
-            className="mt-6 max-w-md text-center leading-relaxed text-gray-500 sm:max-w-xs sm:text-left"
+            className="mt-6 max-w-md text-center leading-relaxed text-gray-500 sm:max-w-full sm:text-left"
           >
             Immerse yourself in a world of trust and emotion. Our eCommerce platform is more than transactions—it's a bond. Experience reliability, care, and joy in every click. Welcome home
           </p>
@@ -124,7 +124,7 @@ const Footer = () => {
         <div
           className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:col-span-2"
         >
-          <div className="mx-12 sm:text-left">
+          <div className="lg:mx-12 !max-md:ml-0 sm:text-left">
             <p className="text-lg font-medium text-gray-900">About Us</p>
   
             <ul className="mt-8 space-y-4 text-sm">
@@ -167,7 +167,7 @@ const Footer = () => {
             </ul>
           </div>
   
-          <div className="mx-12 sm:text-left">
+          <div className="lg:mx-12 sm:text-left">
             <p className="text-lg font-medium text-gray-900">Our Services</p>
   
             <ul className="mt-8 space-y-4 text-sm">
@@ -209,7 +209,7 @@ const Footer = () => {
             </ul>
           </div>
   
-          <div className="mx-12 sm:text-left">
+          <div className="lg:mx-12 sm:text-left">
             <p className="text-lg font-medium text-gray-900">Helpful Links</p>
   
             <ul className="mt-8 space-y-4 text-sm">
@@ -243,7 +243,7 @@ const Footer = () => {
             </ul>
           </div>
   
-          <div className="mx-12 sm:text-left">
+          <div className="lg:mx-12 sm:text-left">
             <p className="text-lg font-medium text-gray-900">Contact Us</p>
   
             <ul className="mt-8 space-y-4 text-sm">
@@ -254,7 +254,7 @@ const Footer = () => {
                 >
                   <CiMail className='h-5 w-5 shrink-0 text-gray-900'/>
   
-                  <span className="flex-1 text-gray-700">biyondbazaar@gmail.com</span>
+                  <span className="flex-1 text-gray-700">E-Mail</span>
                 </Link>
               </li>
   
@@ -265,7 +265,17 @@ const Footer = () => {
                 >
                  <IoCallOutline className="h-5 w-5 shrink-0 text-gray-900" />
   
-                  <span className="flex-1 text-gray-700">9625110498</span>
+                  <span className="flex-1 text-gray-700">Helpline Number</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
+                  href="/contact-us"
+                >
+                 <MdOutlineContactPage className="h-5 w-5 shrink-0 text-gray-900" />
+  
+                  <span className="flex-1 text-gray-700">Contact Us</span>
                 </Link>
               </li>
   

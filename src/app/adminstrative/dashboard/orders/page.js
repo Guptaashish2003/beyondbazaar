@@ -158,8 +158,6 @@ const Orders = () => {
       ]),
   ];
 
-  console.log(data,"data..")
-
   return (
     <>
     {fullScreenLoader && <FullScreenLoader/>}
