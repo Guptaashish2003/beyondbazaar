@@ -44,7 +44,6 @@ export default function page() {
   const handleChange = (event) => {
     setMethod(event.target.value);
   };
-  console.log("preview image",preImage)
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl dark:bg-secondary-dark-bg dark:text-gray-300 bg-white">
       <Header category="Apps" title="Hero slider" />
