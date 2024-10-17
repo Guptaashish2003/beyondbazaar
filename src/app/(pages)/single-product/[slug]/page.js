@@ -43,6 +43,7 @@ const page = async ({ params }) => {
   const reviewData = await useGetData(
     `/api/product-review/all-review/${data._id}`
   );
+  console.log("data",data)
   return (
     <>
       <div className="flex  justify-center flex-wrap  p-4 navMargin minScreen">
@@ -53,6 +54,7 @@ const page = async ({ params }) => {
           id={data._id}
           slug={data.slug}
           title={data.productName}
+          productAvailable= {data.productAvailable}
           metaDescription={data.seo?.description}
           price={data.productPrice}
           stock={data.productQuantity}

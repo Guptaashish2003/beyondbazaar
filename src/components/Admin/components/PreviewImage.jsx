@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { toast } from "react-toastify";
 
 const PreviewImage = ({ preImage }) => {
   return (
@@ -7,7 +8,10 @@ const PreviewImage = ({ preImage }) => {
       {preImage?.map((itm, index) => (
         <div
           key={index}
-          onClick={() =>  navigator.clipboard.writeText(itm)}
+          onClick={() => { 
+            navigator.clipboard.writeText(itm)
+            toast.success("Copied to clipboard")
+          }}
           className="relative w-24 h-36 cursor-pointer"
         >
           <div className="w-full h-full absolute top-0 left-0 hover:bg-[#0000006d] hover:text-white text-transparent  flex justify-center items-center text-4xl z-10">

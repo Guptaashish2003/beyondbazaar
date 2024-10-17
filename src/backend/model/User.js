@@ -27,6 +27,9 @@ const UserSchema = new mongoose.Schema(
       minlength: [10, "Phone number cannot be less than 10 numbers"],
       maxlength: [10, "Phone number cannot be more than 10 numbers"],      
     },
+    image:{
+      type: String,
+    },
 
     role: {
       type: String,

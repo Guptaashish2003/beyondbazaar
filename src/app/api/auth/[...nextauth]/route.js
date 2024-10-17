@@ -76,7 +76,7 @@ const authOptions = {
     },
     async session({ session, token, user }) {
       await ConnectDB();
-      const { name, email, role } = session.user;
+      const { name, email, role,image } = session.user;
       const exist = await User.findOne({ email
        });
       let userToken;
@@ -84,6 +84,7 @@ const authOptions = {
         const newUser = await User.create({
           name,
           email,
+          image,
           byGoogle: user ? false : true,
           twoStepVerification: false,
           byGooglePass: user ? true : false,

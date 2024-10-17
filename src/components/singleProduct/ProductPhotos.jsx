@@ -41,6 +41,7 @@ useEffect(() => {
 
 }, [screenWidth]);
 
+
 // console.log(screenWidth)
   return (
     <div className={showFullScreen?"fixed top-0 right-0 w-screen h-screen flex bg-white z-[1000]":"flex w-1/2 max-lg:w-full flex-col gap-y-2 "}>
@@ -98,9 +99,12 @@ useEffect(() => {
           <SwiperSlide
             key={index}
             className={`cursor-pointer  ${showFullScreen?"!h-28 !w-3/12":"w-7"}  inline-block rounded-md ${
-              selectedThumbnail === img[index] ? 'border-2 border-gray-900' : ''
+              selectedThumbnail === img ? 'border-2 border-gray-900' : ''
             }` }
-            onClick={()=>setSelectedThumbnail(img[index])}
+            onClick={()=>{
+              // console.log(selectedThumbnail,"selectedThubnail",img,img[index],"selected")
+              setSelectedThumbnail(img)
+            }}
           >
             <Image
               src={img}

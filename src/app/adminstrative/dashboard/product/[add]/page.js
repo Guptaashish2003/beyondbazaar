@@ -1,10 +1,10 @@
 "use client";
-import { React, useRef, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import InputBtn from "@/components/Form/InputBtn";
 import SubmitButton from "@/components/Form/SubmitButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { Header } from "@/components/Admin";
@@ -25,14 +25,22 @@ import TableRow from "@tiptap/extension-table-row";
 import TextEditor from "@/components/Admin/components/TextEditor";
 import ImageUploadModal from "@/components/Admin/components/ImageUploadModal";
 import PreviewImage from "@/components/Admin/components/PreviewImage";
+import { useGetData } from "@/redux/api/useGetData";
+import { parse } from "path";
+import { errorTostHandler } from "@/redux/api/errorTostHandler";
+import { useUpdateDataProtected } from "@/redux/api/useUpdateData";
 
 
 export default function page() {
   const router = useRouter();
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [loading, setLoading] = useState();
-  const [tag, setTag] = useState(["papaya"]);
+  const [tag, setTag] = useState(["all"]);
   const heroImageRef = useRef(null);
   const [preImage, setPreImage] = useState([]);
+  const [content, setContent] = useState("");
   const [rows, setRows] = useState([
     {
       variantType: "",
@@ -84,7 +92,7 @@ export default function page() {
     isVariantAvailable: Yup.boolean(),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-  const { register, handleSubmit, reset, formState, watch } =
+  const { register, handleSubmit,setValue, reset, formState, watch } =
     useForm(formOptions);
   const { errors } = formState;
 
@@ -169,11 +177,12 @@ export default function page() {
     // alert(JSON.stringify(productData));
     setLoading(true);
     try {
-      const res = await usePostDataProtected(
-        "/api/admin/product/add-product",
-        // testData
-        productData
-      );
+      let res;
+      if(params.add === "add"){
+        res = await usePostDataProtected("/api/admin/product/add-product", productData);}
+      else{ 
+        res = await useUpdateDataProtected(`/api/admin/product/update-product/${id}`, productData);
+      }
       setLoading(false);
       // console.log(res);
       if (res?.success) {
@@ -267,11 +276,52 @@ export default function page() {
   const handleTagsChange = (newTags) => {
     setTag(newTags);
   };
+  useEffect(() => {
+    (async () => {
+      try {
+        if(params.add !== 'add'){
+          console.log(params.add,"params");
+          const res = await useGetData(`/api/product/single-product/${params.add}`);
+          console.log(res,"res");
+          if(res?.success){
+            const {data} = res;
+            setValue("productName",data.productName);
+            setValue("productPrice",data.productPrice);
+            setValue("productQuantity",data.productQuantity);
+            setValue("title",data.seo.title);
+            setValue("description",data.seo.description);
+            setValue("productAvailable",data.productAvailable);
+            setTag(data.productTags);
+            const content = JSON.parse(data.productDescription);
+            setContent(content);
+            setPreImage(data.productImage);
+            if(data.isVariantAvailable){
+              
+              setValue("isVariantAvailable",true);
+              setRows(data.variants);
+            }
+
+        }
+      }
+        
+      } catch (error) {
+        errorTostHandler(error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if(editor && !!content && params.add !== "add"){
+      editor.commands.setContent(content);
+    }
+  }, [editor,content]);
 
 
   if (!editor) {
     return null;
   }
+
+  
   const isVariantAvailable = watch("isVariantAvailable");
 
 
@@ -354,7 +404,7 @@ export default function page() {
           <TextEditor editor={editor} />
           {/* submit button  */}
           <SubmitButton
-            value="Add Product"
+            value={params.add === "add" ? "Add Product" : "Update Product"}
             type="submit"
             loading={loading}
             className={btnClass}
