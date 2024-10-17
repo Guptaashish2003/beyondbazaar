@@ -17,6 +17,7 @@ const ProductDes = ({
   title,
   price,
   metaDescription,
+  productAvailable,
   stock,
   className,
   variants,
@@ -121,84 +122,91 @@ const ProductDes = ({
         </span>
         <hr className="mt-8 border border-slate-200" />
       </div>
-      <div className=" flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  py-4 ">
-        <p>Quantity:</p>
-        <div className="flex border-2 border-solid border-slate-300 text-2xl">
-          <button onClick={decrement} className="px-4 py-1">
-            -
-          </button>
-          <span className="px-4 py-1"> {productCount} </span>
-          <button onClick={increment} className="px-4 py-1">
-            +
-          </button>
-        </div>
-      </div>
-      {isVariantAvailable && (
-        <div className="flex max:lg:text-lg max-sm:flex-col text-black max-lg:gap-2 gap-4 items-center container  py-4">
-          <div className="flex gap-2">
-            <p className="max-sm:ml-2">Size:</p>
-            <div className="flex gap-2 max-sm:ml-2.5">
-            {variants.map((vart, index) => (
-              <input
-                type="button"
-                disabled={vart?.stock === 0}
-                key={vart?._id}
-                className={`${
-                  variant === vart?._id
-                    ? "bg-black text-white"
-                    : "bg-gray-200 text-black"
-                } w-10 h-10 text-lg text-center cursor-pointer`}
-                value={vart?.variantType}
-                onClick={() => {
-                  setVariant(vart?._id);
-                  setVariantDetails(vart?.variantDetails);
-                  setVariantData(vart.variantDetails[0]);
-                }}
-              />
-
-            ))}
+      {productAvailable && stock > 0 ? (
+        <div>
+          <div className=" flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container  py-4 ">
+            <p>Quantity:</p>
+            <div className="flex border-2 border-solid border-slate-300 text-2xl">
+              <button onClick={decrement} className="px-4 py-1">
+                -
+              </button>
+              <span className="px-4 py-1"> {productCount} </span>
+              <button onClick={increment} className="px-4 py-1">
+                +
+              </button>
             </div>
           </div>
-
-          {variantDetails[0]?.color && (
-            <div className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container ">
-              <p>Color:</p>
+          {isVariantAvailable && (
+            <div className="flex max:lg:text-lg max-sm:flex-col text-black max-lg:gap-2 gap-4 items-center container  py-4">
               <div className="flex gap-2">
-                {variantDetails.map((vart, index) => (
-                  <input
-                    type="button"
-                    key={vart?._id}
-                    className={`${
-                      variantData === vart
-                        ? "bg-black text-white"
-                        : "bg-gray-200 text-black"
-                    } w-20 h-10 text-lg text-center cursor-pointer`}
-                    value={vart?.color}
-                    onClick={() => {
-                      setVariantData(vart);
-                    }}
-                  />
-                ))}
+                <p className="max-sm:ml-2">Size:</p>
+                <div className="flex gap-2 max-sm:ml-2.5">
+                  {variants.map((vart, index) => (
+                    <input
+                      type="button"
+                      disabled={vart?.stock === 0}
+                      key={vart?._id}
+                      className={`${
+                        variant === vart?._id
+                          ? "bg-black text-white"
+                          : "bg-gray-200 text-black"
+                      } w-max px-2 h-10 text-lg text-center cursor-pointer`}
+                      value={vart?.variantType}
+                      onClick={() => {
+                        setVariant(vart?._id);
+                        setVariantDetails(vart?.variantDetails);
+                        setVariantData(vart.variantDetails[0]);
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
+
+              {variantDetails[0]?.color && (
+                <div className="flex max:lg:text-lg text-black max-lg:gap-2 gap-4 items-center container ">
+                  <p>Color:</p>
+                  <div className="flex gap-2">
+                    {variantDetails.map((vart, index) => (
+                      <input
+                        type="button"
+                        key={vart?._id}
+                        className={`${
+                          variantData === vart
+                            ? "bg-black text-white"
+                            : "bg-gray-200 text-black"
+                        } w-max px-2 h-10 text-lg text-center cursor-pointer`}
+                        value={vart?.color}
+                        onClick={() => {
+                          setVariantData(vart);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
+          <SubmitButton
+            loading={loading}
+            className="my-4 max-lg:my-2 font-bold cartAnimation w-11/12 h-12  border-2 border-solid border-slate-400 text-xl overflow-hidden"
+            value={"Add To Cart"}
+            onClick={addToCartProduct}
+          >
+            <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />
+          </SubmitButton>
+          <SubmitButton
+            className="my-4 font-bold max-lg:my-2 orderBounce w-11/12 h-12  border-2 border-solid border-slate-400 text-xl bg-black text-white"
+            value={"Order Now"}
+            onClick={orderNow}
+          >
+            <FiFastForward className="arrowAnime w-6 h-auto" />
+          </SubmitButton>
+        </div>
+      ) : (
+        <div className="flex w-full h-20  lg:text-xl  text-red-600 text-left">
+          <p>Currently Unvailable</p>
         </div>
       )}
-      <SubmitButton
-        loading={loading}
-        className="my-4 max-lg:my-2 font-bold cartAnimation w-11/12 h-12  border-2 border-solid border-slate-400 text-xl overflow-hidden"
-        value={"Add To Cart"}
-        onClick={addToCartProduct}
-      >
-        <AiOutlineShoppingCart className="cartmotion w-6 h-auto" />
-      </SubmitButton>
-      <SubmitButton
-        className="my-4 font-bold max-lg:my-2 orderBounce w-11/12 h-12  border-2 border-solid border-slate-400 text-xl bg-black text-white"
-        value={"Order Now"}
-        onClick={orderNow}
-      >
-        <FiFastForward className="arrowAnime w-6 h-auto" />
-      </SubmitButton>
 
       <div className="flex gap-5 ">
         <span className="text-xl"> share:</span>

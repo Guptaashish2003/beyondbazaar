@@ -53,6 +53,7 @@ const page = async ({ params }) => {
           id={data._id}
           slug={data.slug}
           title={data.productName}
+          productAvailable= {data.productAvailable}
           metaDescription={data.seo?.description}
           price={data.productPrice}
           stock={data.productQuantity}

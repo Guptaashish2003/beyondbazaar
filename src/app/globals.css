@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-  font-size: 16px;
+  font-size: 14px;
 }
 @media (max-width: 498px) {
   html {
@@ -52,6 +52,10 @@ html {
   --z-fixed: 40;
   /* swiper pagination css  */
   --swiper-pagination-color: var(--first-color);
+}
+.swiper-wrapper{
+  width: max-content !important;
+  margin: 0 auto !important;
 }
 
 .text-color {
