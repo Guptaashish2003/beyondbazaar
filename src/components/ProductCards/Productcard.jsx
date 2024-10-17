@@ -41,7 +41,7 @@ function Productcard({id,img,title,price,slug,bgColor, addToCartBtn,animation,bo
   
   return (
     <>
-     <div style={{border:`2px solid ${border}`}} className='w-5/12 lg:w-1/4 sm:w-2/5 md:w-1/3 xl:w-1/5 flex flex-col items-center justify-center p-2 m-2 cursor-pointer' onMouseEnter={addAnimation} onMouseLeave={removeAnimation}>
+     <div style={{border:`2px solid ${border}`}} className='w-5/12 lg:w-1/4 sm:w-2/5 md:w-1/3 xl:w-1/5 flex flex-col items-center justify-center p-2 m-2 cursor-pointer aspect-[3/4] ' onMouseEnter={addAnimation} onMouseLeave={removeAnimation}>
       <div className='w-full flex  flex-col items-center justify-center' onClick={moveSingle}>
       <div className='flex justify-center items-center relative' style={{backgroundColor:`${bgColor}`}}>
         {imgBlack?<div className='w-full h-full absolute flex justify-center items-center text-white rounded-lg' style={{backgroundColor:"#0b0b0b8c"}}>See More Details...</div>:""}

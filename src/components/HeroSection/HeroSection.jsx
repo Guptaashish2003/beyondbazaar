@@ -34,6 +34,7 @@ import { useGetData } from '@/redux/api/useGetData';
         <Image
           src={img}
           width={600}
+          priority
           height={600}
           style={{objectFit: "cover" }}
           alt="hero image"

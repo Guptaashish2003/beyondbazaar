@@ -23,7 +23,7 @@ export default async function Home(){
  
   return (
     <>
-    <Herosection  className="navMargin " sliderHieght='sliderHieght'/>
+    <Herosection  className="navMargin w-full aspect-[16/9] " sliderHieght='sliderHieght'/>
     <Category/>
     <h2 className='p-8 text-5xl max-sm:text-3xl  font-bold uppercase text-center'>Select Your Category</h2>
     <div className='flex flex-wrap justify-evenly'>
