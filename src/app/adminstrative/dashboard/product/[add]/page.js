@@ -193,7 +193,6 @@ export default function page() {
       }
     } catch (error) {
       setLoading(false);
-      console.log(error);
       toast.error(error?.message);
     }
   };
@@ -280,9 +279,7 @@ export default function page() {
     (async () => {
       try {
         if(params.add !== 'add'){
-          console.log(params.add,"params");
           const res = await useGetData(`/api/product/single-product/${params.add}`);
-          console.log(res,"res");
           if(res?.success){
             const {data} = res;
             setValue("productName",data.productName);

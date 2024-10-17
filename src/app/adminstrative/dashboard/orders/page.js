@@ -27,9 +27,7 @@ const Orders = () => {
   const limitValue = searchParams.get("limit")
   const [limit,setLimit] = useState(limitValue)
   const [page,setPage] = useState(1)
-  const router = useRouter();
-  
-  
+  const router = useRouter();  
   const updateStatus = async (id,mainId,status) => {
     try {
       setFullScreenLoader(true);
@@ -63,7 +61,7 @@ const Orders = () => {
     columnHelper.accessor((row) => row.productName, {
       accessorKey: "productName",
       cell: (info) => <div style={{gridTemplateColumns:"6rem 1fr"}} className='grid  grid-rows-2 text-start'>
-      <Image className='row-start-1 row-end-3 w-12 h-12 bg-black rounded-full object-fill' src={info.row.original.productImage[0]}
+      <Image className='row-start-1 row-end-3 w-12 h-12 bg-black rounded-full object-fill' src={info.row.original?.product?.productImage[0]}
         width={500}
         height={500}
         alt="Picture of the author"/>

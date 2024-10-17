@@ -82,7 +82,8 @@ class Apifeatures {
                 populate: {  // Nested populate for subcategories (if subCategory is a separate model)
                     path: 'subCategories',  // Adjust this based on your model field names
                     match: {
-                        ...(this.queryStr.subcategoryName && { subCategoryName: this.queryStr.subcategoryName })  // Match by subcategory name
+                        ...(this.queryStr.subcategoryName && { subCategoryName: this.queryStr.subcategoryName })
+                         // Match by subcategory name
                     },
                     select: 'subCategoryName',  // Select only subCategoryName from the populated subCategories
                 }

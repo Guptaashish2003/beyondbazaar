@@ -33,7 +33,6 @@ export async function GET(request) {
          .sort()
          .limitFields()
       const productcount = await Product.countDocuments(countQuery.query);
-      console.log(productcount)
       return NextResponse.json({ success: true, length: productcount, message: "products Found", data: product }, { status: 200 });
 
    } catch (error) {

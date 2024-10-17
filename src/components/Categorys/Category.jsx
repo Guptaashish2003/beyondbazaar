@@ -54,7 +54,7 @@ function Category() {
       >
         {category.map((cate, index) => (
           <SwiperSlide  key={index} className='py-10 gap-x-3'>
-            <div className="category-card m-3 mx-auto h-[91%] w-11/12 max-lg:w-56 max-lg:h-56 flex flex-col items-center justify-evenly">
+            <div className="category-card m-3 mx-auto h-[91%] w-11/12 max-lg:w-56 max-lg:h-56 flex flex-col items-center cursor-pointer justify-evenly">
               <Image
                 src={cate.categoryImage[0] ? cate.categoryImage[0] : category1}
                 className="w-24 h-24 max-lg:w-48 max-lg:h-48 max-md:w-36 max-md:h-36  object-cover  rounded-full"

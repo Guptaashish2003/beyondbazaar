@@ -8,6 +8,7 @@ import { Providers } from '@/redux/provider'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GoogleProvider from '@/components/googleProvider/googleProvider'
+import { GoogleTagManager } from '@next/third-parties/google' 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({ children, params }) {
   return (
     <html lang="en">
       <body className={inter.className} >
+      <GoogleTagManager gtmId="GTM-PN22X6ZG" />
         <GoogleProvider>
           <Providers>
             {isAdmin ? "" : <Navbar />}
