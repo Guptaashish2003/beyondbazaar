@@ -37,7 +37,7 @@ const page = async ({ params }) => {
   const { slug } = params;
   const { data, success } = await useGetData(`/api/product/single-product/${slug}`);
   // console.log(data)
-  if (!success) {
+  if (!success && !data) {
     return notFound();
   }
   const reviewData = await useGetData(
