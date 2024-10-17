@@ -36,8 +36,8 @@ export async function generateMetadata({ params }) {
 const page = async ({ params }) => {
   const { slug } = params;
   const { data, success } = await useGetData(`/api/product/single-product/${slug}`);
-  // console.log(data)
-  if (!success && !data) {
+  // console.log(data,"data..")
+  if (!success ||data === null) {
     return notFound();
   }
   const reviewData = await useGetData(

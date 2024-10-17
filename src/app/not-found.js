@@ -3,7 +3,7 @@ import Link from 'next/link'
 function notfound() {
     return (
         <>
-            <div className="static top-0 left-0 w-full flex md:flex-row flex-col items-center h-screen">
+            <div className="static top-0 left-0 w-full flex md:flex-row flex-col items-center navMargin minScreen">
                 <div className="flex w-[50%] text-center  flex-col justify-center items-center ">
                     <h1 id="error_404" className="text-4xl mt-6 mb-4">
                         404 - Page Not Found
