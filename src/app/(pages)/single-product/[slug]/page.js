@@ -43,7 +43,6 @@ const page = async ({ params }) => {
   const reviewData = await useGetData(
     `/api/product-review/all-review/${data._id}`
   );
-  console.log("data",data)
   return (
     <>
       <div className="flex  justify-center flex-wrap  p-4 navMargin minScreen">
