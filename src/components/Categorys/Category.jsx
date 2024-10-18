@@ -28,7 +28,7 @@ function Category() {
     }, []);
 
   return (
-    <div className="flex flex-col aspect-auto justify-center items-center text-center px-6 py-2">
+    <div className="flex flex-col aspect-[188:33] justify-center items-center text-center px-6 py-2">
       <Swiper
         slidesPerView={1}
         spaceBetween={10}
