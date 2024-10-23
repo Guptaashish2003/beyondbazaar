@@ -24,7 +24,7 @@ export async function GET(request) {
          .sort()
          .limitFields()
          .paginate()
-         .categoryAndSubcategory();
+         // .categoryAndSubcategory();
       // Execute the query to get the products
       const product = await apiFeatures.query;
       const countQuery = new Apifeatures(Product.find(), { keyword, limit, page, fields, sort })

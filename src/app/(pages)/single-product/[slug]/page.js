@@ -15,7 +15,8 @@ import { images } from "../../../../../next.config";
 import { alt } from "./opengraph-image";
 
 export async function generateMetadata({ params }) {
-  const { data,success } = await useGetData(`/api/product/single-product/${params.slug}?fields=seo`);
+  const { data,success } = await useGetData(`/api/product/single-product/${params.slug}?fields=seo productImage`);
+  console.log(data,"data..")
   if (!success)
   return {
     title: "Not Found",
@@ -23,6 +24,7 @@ export async function generateMetadata({ params }) {
   };
   let title
   let description
+  let image = data?.productImage[0]
   if(!data?.seo){
     title = params.slug
     description = params.slug
@@ -38,8 +40,8 @@ export async function generateMetadata({ params }) {
     },
     openGraph: {
         images: [{
-          url: product.data.data.productImage[0],
-          alt: product.data.data.productImage[0],
+          url: image,
+          alt: image,
           width: 1200,
           height: 630,
         }],

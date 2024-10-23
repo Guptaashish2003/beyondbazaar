@@ -1,24 +1,20 @@
-import { useGetData } from "@/redux/api/useGetData";
 import { ImageResponse } from 'next/og'
-import { title } from "process";
-import style from "styled-jsx/style";
-import { fontSize, width, height } from "tailwindcss/defaultTheme";
-
-
-export const contentType = "image/png";
-// Image metadata
-export const alt = 'product image'
+ 
+export const runtime = 'edge'
+ 
+export const alt = 'About Acme'
 export const size = {
   width: 1200,
   height: 630,
 }
-
-
-export default async function Image({params}) {
-    const { data } = await useGetData(`/product/single-product/${params.slug}`);
-
-
-    return new ImageResponse(
+export const contentType = 'image/png'
+ 
+export default async function Image({ params }) {
+  const data = await fetch(`/api/product/single-product/${params.slug}?fields=productName`).then((res) =>
+    res.json()
+  )
+ 
+  return new ImageResponse(
     (
       <div
         style={{
@@ -38,5 +34,4 @@ export default async function Image({params}) {
       ...size,
     }
   )
-  }
-
+}
