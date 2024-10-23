@@ -5,8 +5,14 @@ import ProductPhotos from "@/components/singleProduct/ProductPhotos";
 import ProductReview from "@/components/singleProduct/ProductReview";
 import ReviewTestimonial from "@/components/singleProduct/ReviewTestimonial";
 import { useGetData } from "@/redux/api/useGetData";
+import src from "@tiptap/extension-link";
+import { url } from "inspector";
+import image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
+import { width, height } from "tailwindcss/defaultTheme";
+import { images } from "../../../../../next.config";
+import { alt } from "./opengraph-image";
 
 export async function generateMetadata({ params }) {
   const { data,success } = await useGetData(`/api/product/single-product/${params.slug}?fields=seo`);
@@ -30,6 +36,14 @@ export async function generateMetadata({ params }) {
     alternates: {
       canonical: `/${params.slug}`,
     },
+    openGraph: {
+        images: [{
+          url: product.data.data.productImage[0],
+          alt: product.data.data.productImage[0],
+          width: 1200,
+          height: 630,
+        }],
+      },
   }
 }
 

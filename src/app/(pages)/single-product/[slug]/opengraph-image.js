@@ -1,5 +1,8 @@
 import { useGetData } from "@/redux/api/useGetData";
 import { ImageResponse } from 'next/og'
+import { title } from "process";
+import style from "styled-jsx/style";
+import { fontSize, width, height } from "tailwindcss/defaultTheme";
 
 
 export const contentType = "image/png";
@@ -16,24 +19,24 @@ export default async function Image({params}) {
 
 
     return new ImageResponse(
-      (
-        // ImageResponse JSX element
-        <div tw="relative flex items-center justify-center">
-        <img src={data?.productImage[0]} alt={data?.productName}
+    (
+      <div
         style={{
-          objectFit:"contain"
+          fontSize: 48,
+          background: 'white',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
-         />
-        <div tw="absolute flex items-center bottam-8 w-full ">
-          <p tw="text-white text-4xl flex font-bold m-5">{data?.productName}</p>
-        </div>
+      >
+        {data.data.productName}
       </div>
-      ),
-      // ImageResponse options
-      {
-        ...size,
-       
-      }
-    )
+    ),
+    {
+      ...size,
+    }
+  )
   }
 
