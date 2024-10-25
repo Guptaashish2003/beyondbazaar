@@ -34,7 +34,7 @@ function HeroSection({ sliderHieght, className, ...props }) {
         {...props}
       >
         {sliderImage.map((img, index) => (
-          <SwiperSlide onClick={() => {Router.push("/single-product/esportic-built-in-21000-classic-games-wireless-console-game-stick-video-game-console-9-bit-mini-retro-controller-hdmi-output-dual-player-4k-ultra-hd-game-stick-perfect-gift-for-kids-adults")}} key={index} className={`w-full  ${sliderHieght}`}>
+          <SwiperSlide onDoubleClick={() => {Router.push("/single-product/esportic-built-in-21000-classic-games-wireless-console-game-stick-video-game-console-9-bit-mini-retro-controller-hdmi-output-dual-player-4k-ultra-hd-game-stick-perfect-gift-for-kids-adults")}} key={index} className={`w-full  ${sliderHieght}`}>
             <Image
               src={img}
               width={600}
