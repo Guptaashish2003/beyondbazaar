@@ -14,16 +14,19 @@ import { errorTostHandler } from '@/redux/api/errorTostHandler';
     useEffect(()=>{
       verify()
 
-    },[loading])
+    },[])
     const  verify = async () => {
       try {
         setLoading(true)
         const data = await useGetData(`/api/user/verifyemail/${id}`)
       setLoading(false);
+      // console.log(data)
       if (data.success) {
         setIsVerify(true);
-      }
+        // router.push('/login')
+      }else{
         setIsVerify(false); 
+      }
 
       } catch (error) {
         setLoading(false);
@@ -42,7 +45,7 @@ import { errorTostHandler } from '@/redux/api/errorTostHandler';
   return (
     <div className='w-screen  flex justify-center items-center navMargin minScreen'>
       <Modal withoutBtn={true} onclose={()=>router.push("/login")}>
-        <div className='w-[75%]'>
+        <div className='w-[75%] flex flex-col justify-center items-center mx-auto'>
           <h1 className='text-lg font-bold'>{isVerify?'Verification Successful 🎉':"Verification Failed 🚫"}</h1>
           <p>{isVerify?'Your account has been successfully verified. Thank you for ensuring the security of your account.':"We regret to inform you that your account verification was unsuccessful. Please review the provided information and try again."}</p>
           biyond Bazar

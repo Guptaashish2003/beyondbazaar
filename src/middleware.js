@@ -9,7 +9,10 @@ export async function middleware(request) {
   // console.log(token)
   if(!token){
       if (request.nextUrl.pathname.startsWith('/user/') ) {
-        return NextResponse.redirect(new URL('/login', request.url))
+        console.log(request.nextUrl.pathname.startsWith('/user/verify-email/'),"itshmee")
+        if(request.nextUrl.pathname.startsWith('/user/verify-email/') !== true){
+          return NextResponse.redirect(new URL('/login', request.url))
+        }
     }
     if (request.nextUrl.pathname.startsWith('/adminstrative/') ) {
       return NextResponse.redirect(new URL('/', request.url))

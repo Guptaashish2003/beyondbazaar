@@ -163,6 +163,7 @@ UserSchema.method("getEmailVerificationToken",function getEmailVerificationToken
       .update(emailToken)
       .digest("hex");
   this.emailVerificationExpires = Date.now() + 10 * 60 * 1000;
+  console.log(emailToken)
   return emailToken;
 })
 

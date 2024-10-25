@@ -7,6 +7,7 @@ export async function GET(request,context){
     try {
         const id = context.params.id;
         const emailVerificationToken = crypto.createHash('sha256').update(id).digest('hex');
+
         const user = await User.findOne({ emailVerificationToken,
             emailVerificationExpires: { $gt: Date.now() }})
             if (!user) {

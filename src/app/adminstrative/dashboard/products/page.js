@@ -82,7 +82,7 @@ const Products = () => {
       cell: (info) => info.getValue(),
       header: () => <span>stock</span>,
     }),
-    columnHelper.accessor((row) => row.productCategory, {
+    columnHelper.accessor((row) => row.productCategory._id, {
       accessorKey: "productCategory",
       cell: (info) => info.getValue(),
       header: () => <span>category</span>,

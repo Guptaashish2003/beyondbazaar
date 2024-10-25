@@ -75,23 +75,10 @@ class Apifeatures {
     categoryAndSubcategory() {
         const { categoryName, subcategoryName } = this.queryStr;
         const filter = {};
-        if (subcategoryName) {
-            filter['productCategory'] = {
-                $elemMatch: {
-                    SubCategoryName: { $regex: subcategoryName, $options: 'i' }
-                }
-            };
-        }
-    
-        if (categoryName) {
-            filter['productCategory.category.categoryName'] = { $regex: categoryName, $options: 'i' }; 
-        }
-        
-        console.log(categoryName, subcategoryName,this.query);
-        if (Object.keys(filter).length) {
-            this.query = this.query.find(filter);
-        }
-        return this;
+        if (categoryName) filter.categoryName = categoryName;
+        if (subcategoryName) filter.SubcategoryName = subcategoryName;
+        this.query = this.query.find(filter);
+                return this;
     }
     
     
