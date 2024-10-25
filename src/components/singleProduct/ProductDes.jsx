@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/action/Services";
 import { useRouter, usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const ProductDes = ({
   BaseUrl,
@@ -31,6 +32,7 @@ const ProductDes = ({
   const [variantDetails, setVariantDetails] = useState([]);
   const [variantData, setVariantData] = useState();
   const dispatch = useDispatch();
+  const { data: session, status } = useSession();
   // console.log(variant, "variantsdetilasss", variantData);
   useEffect(() => {
     if (variants) {
@@ -62,6 +64,11 @@ const ProductDes = ({
     }
   };
   const addToCartProduct = async () => {
+    if (!session) {
+      router.push("/login");
+      toast.warn("Please Login First", { autoClose: 2000 });
+      return;
+    }
     setLoading(true);
     if (variant && variantData) {
       dispatch(
@@ -84,6 +91,11 @@ const ProductDes = ({
     setLoading(false);
   };
   const orderNow = async () => {
+    if (!session) {
+      router.push("/login");
+      toast.warn("Please Login First", { autoClose: 2000 });
+      return;
+    }
     if (variant && variantData) {
       router.push(
         `/checkout/${slug}?qty=${productCount}&variant=${variant}&variantDetails=${variantData?._id}`

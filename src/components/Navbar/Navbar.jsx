@@ -146,16 +146,16 @@ function Navbar() {
       >
         <nav className="nav w-full p-2 ">
           <div className="nav__data   flex justify-between items-center w-full h-2/3">
-            <div
+            <Link
               className="logo h-full overflow-hidden"
-              onClick={() => router.push("/")}
+              href="/"
             >
               <Image
                 src={logo}
                 className="w-full object-contain cursor-pointer"
                 alt="logo"
               />
-            </div>
+            </Link>
             <div className="lsc flex justify-center items-center p-4 gap-2 ">
               <Suspense>
                 <SearchBar />

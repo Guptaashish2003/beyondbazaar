@@ -48,7 +48,7 @@ const Login = () => {
         toast.error(res?.error, { autoClose: 1000, })
       }else{
         toast.success("login successful", { autoClose: 1000, })
-        router.push("/")
+        router.back()
 
       }
       setLoading(false);

@@ -18,7 +18,17 @@ export async function GET(request) {
       const sort = new URLSearchParams(rawParams).get('sort')
       const categoryName = new URLSearchParams(rawParams).get('category')
       const subcategoryName = new URLSearchParams(rawParams).get('subcategory')
-      const apiFeatures = new Apifeatures(Product.find(), { keyword, limit, page, fields, sort,categoryName,subcategoryName })
+      const query = Product.find().populate({
+         path: 'productCategory',
+         select: 'SubCategoryName category',
+         populate: [
+             {
+                 path: 'category',
+                 select: 'categoryName',
+             },
+         ]
+     })
+      const apiFeatures = new Apifeatures(query, { keyword, limit, page, fields, sort,categoryName,subcategoryName })
          .search()
          .filter()
          .sort()

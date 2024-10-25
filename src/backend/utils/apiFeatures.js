@@ -1,3 +1,5 @@
+const { match } = require("assert");
+
 class Apifeatures {
     constructor(query, queryStr) {
         this.query = query;
@@ -8,11 +10,11 @@ class Apifeatures {
     search() {
         const keyword = this.queryStr.keyword
             ? {
-                  productTags: {
-                      $regex: this.queryStr.keyword,
-                      $options: 'i',
-                  },
-              }
+                productTags: {
+                    $regex: this.queryStr.keyword,
+                    $options: 'i',
+                },
+            }
             : {};
         this.query = this.query.find({ ...keyword });
         return this;
@@ -23,7 +25,7 @@ class Apifeatures {
         const copyquery = { ...this.queryStr };
 
         // Removing filters for the query
-        const remvefilter = ['keyword', 'limit', 'page', 'sort', 'fields',"categoryName","subcategoryName"];
+        const remvefilter = ['keyword', 'limit', 'page', 'sort', 'fields', "categoryName", "subcategoryName"];
         remvefilter.forEach((qr) => delete copyquery[qr]);
 
         // Advance filter option
@@ -70,27 +72,30 @@ class Apifeatures {
         return this;
     }
 
-    // Category and Subcategory search
     categoryAndSubcategory() {
-        if (this.queryStr.categoryName || this.queryStr.subcategoryName) {
-            this.query = this.query.populate({
-                path: 'productCategory', // Populates the productCategory field (reference to Category model)
-                match: {
-                    ...(this.queryStr.categoryName && { categoryName: this.queryStr.categoryName }),  // Filters by categoryName
-                    ...(this.queryStr.subcategoryName && { subCategoryName: this.queryStr.subcategoryName })  // Filters by subCategoryName
-                },
-                populate: {  // Nested populate for subcategories (if subCategory is a separate model)
-                    path: 'subCategories',  // Adjust this based on your model field names
-                    match: {
-                        ...(this.queryStr.subcategoryName && { subCategoryName: this.queryStr.subcategoryName })
-                         // Match by subcategory name
-                    },
-                    select: 'subCategoryName',  // Select only subCategoryName from the populated subCategories
+        const { categoryName, subcategoryName } = this.queryStr;
+        const filter = {};
+        if (subcategoryName) {
+            filter['productCategory'] = {
+                $elemMatch: {
+                    SubCategoryName: { $regex: subcategoryName, $options: 'i' }
                 }
-            });
+            };
+        }
+    
+        if (categoryName) {
+            filter['productCategory.category.categoryName'] = { $regex: categoryName, $options: 'i' }; 
+        }
+        
+        console.log(categoryName, subcategoryName,this.query);
+        if (Object.keys(filter).length) {
+            this.query = this.query.find(filter);
         }
         return this;
     }
+    
+    
+
 }
 
 module.exports = Apifeatures;
