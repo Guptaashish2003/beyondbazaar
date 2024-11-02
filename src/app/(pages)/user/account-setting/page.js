@@ -79,7 +79,6 @@ const Page = () => {
         await signOut({ redirect: false });
       }
       if (user.success) {
-        localStorage.removeItem("token");
         toast.success(user.message);
       }
       setFullScreenLoader(false);

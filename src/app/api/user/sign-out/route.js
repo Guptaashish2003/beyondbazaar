@@ -1,7 +1,8 @@
-import { NextResponse,NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import isOauth from "@/backend/middlewere/isOauth";
 import { cookies } from 'next/headers'
+import { signOut } from "next-auth/react";
 //getuserdata
 
 export async function GET(request, context) {
@@ -9,17 +10,18 @@ export async function GET(request, context) {
 
   try {
     const check = await isOauth(request);
-    if (!check._id) {
-        return check
-    }
-    cookies().delete('token')
-     return NextResponse.json({ success:true ,message: "logout-successfully" }, { status: 200 });
-      
-   } catch (error) {
-       return NextResponse.json(
-          { success: false, message: error.message },
-          { status: 400 }
-       );
-      
-   }
+    const cookieStore = cookies();
+    cookieStore.getAll().forEach((cookie) => {
+      cookieStore.delete(cookie.name);
+    });
+    await signOut()
+    return NextResponse.json({ success: true, message: "logout-successfully" }, { status: 200 });
+
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 400 }
+    );
+
+  }
 }

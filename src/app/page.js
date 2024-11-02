@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home(){
   const { data, success } = await useGetData(`/api/product/all-product?limit=12&fields=productName,productPrice,productImage,slug`);
-  const {data:res} = await useGetData(`/api/product/all-product?limit=12&fields=productName,productPrice,productImage,slug&sort=createdAt`);
+  const {data:popular} = await useGetData(`/api/product/all-product?limit=12&fields=productName,productPrice,productImage,slug&sort=createdAt&keyword=popular`);
   
   if (!success) {
     return notFound();
@@ -30,7 +30,7 @@ export default async function Home(){
     <Category/>
     <h2 className='p-8 text-5xl max-sm:text-3xl  font-bold uppercase text-center'>Popular Products</h2>
     <div className='flex flex-wrap justify-evenly'>
-      {res?.map((data)=><Productcard  animation={true}  id={data._id}  key={data._id}  img={data?.productImage[0]} hover={data?.productImage[1]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
+      {popular?.map((data)=><Productcard  animation={true}  id={data._id}  key={data._id}  img={data?.productImage[0]} hover={data?.productImage[1]} price={data.productPrice} title={data.productName} slug={data.slug}/>)}
   
 {/* 
       <Clothingcard animation={true} img={productImg} hover={productImgHover}/>
