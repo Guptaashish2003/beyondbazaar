@@ -75,10 +75,8 @@ const Page = () => {
     try {
       setFullScreenLoader(true);
       const user = await useGetDataProtected("/api/user/sign-out");
-      if (session?.token) {
-        await signOut({ redirect: false });
-      }
       if (user.success) {
+        await signOut({ redirect: false });
         toast.success(user.message);
       }
       setFullScreenLoader(false);

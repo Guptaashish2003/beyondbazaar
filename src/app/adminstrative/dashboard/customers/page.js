@@ -25,7 +25,8 @@ const Customers = () => {
   
   const limitValue = searchParams.get("limit")
   const [limit,setLimit] = useState(limitValue)
-  const [page,setPage] = useState(1)
+  const pageValue = searchParams.get("page")
+  const [page,setPage] = useState(pageValue || 1)
   
   
   const suspend = async (id,suspend) => {

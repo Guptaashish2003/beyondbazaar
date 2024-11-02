@@ -23,8 +23,9 @@ const Products = () => {
   const [documentCount, setDoumentCount] = useState(1);
   const searchParams = useSearchParams()
   const limitValue = searchParams.get("limit")
+  const pageValue = searchParams.get("page")
+  const [page,setPage] = useState(pageValue || 1)
   const [limit,setLimit] = useState(limitValue)
-  const [page,setPage] = useState(1)
   const router= useRouter()
   
   const available = async (id,productAvailable) => {
@@ -108,6 +109,7 @@ const Products = () => {
         setLimit(10)
       }
       const data = await useGetDataProtected(link);
+      console.log(page,data)
       
       if (data) {
         setData(data.data);

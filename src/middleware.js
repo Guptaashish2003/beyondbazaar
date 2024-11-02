@@ -8,7 +8,7 @@ export async function middleware(request) {
   const token = await getToken({ req: request, secret });
   // console.log(token)
   if(!token){
-      if (request.nextUrl.pathname.startsWith('/user/') ) {
+    if (request.nextUrl.pathname.startsWith('/user/') ) {
         console.log(request.nextUrl.pathname.startsWith('/user/verify-email/'),"itshmee")
         if(request.nextUrl.pathname.startsWith('/user/verify-email/') !== true){
           return NextResponse.redirect(new URL('/login', request.url))

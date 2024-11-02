@@ -24,6 +24,7 @@ export default function Table({ label,exportData,setPage,limit=10,page,documentC
   const [columnOrder, setColumnOrder] = useState({});
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  console.log(page<=documentCount/limit,"doct")
 
   function DebouncedInput({
     value: initialValue,
@@ -209,16 +210,16 @@ export default function Table({ label,exportData,setPage,limit=10,page,documentC
 
       <div className="flex items-center gap-2 mx-auto justify-center mt-6">
         <button
-          className="p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
+          className={`p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md ${page<=1?" bg-slate-500":"bg-[#333]"}`}
           onClick={() => setPage(page-1)}
           disabled={page<=1}
         >
           {"Pre <"}
         </button>
         <button
-          className="p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md "
+          className={`p-2 flex justify-center items-center h-8 bg-[#333] text-white  dark:text-[#333] dark:bg-white shadow-md ${page>=documentCount/limit?" bg-slate-500":"bg-[#333]"}`}
           onClick={() => setPage(page+1)}
-          disabled={page<=documentCount/limit}
+          disabled={page>=documentCount/limit}
         >
           {"Next >"}
         </button>

@@ -2,7 +2,6 @@ import { NextResponse, NextRequest } from "next/server";
 import connectDB from "@/backend/DATABASE/ConnectDB"; //database connection
 import isOauth from "@/backend/middlewere/isOauth";
 import { cookies } from 'next/headers'
-import { signOut } from "next-auth/react";
 //getuserdata
 
 export async function GET(request, context) {
@@ -14,7 +13,7 @@ export async function GET(request, context) {
     cookieStore.getAll().forEach((cookie) => {
       cookieStore.delete(cookie.name);
     });
-    await signOut()
+
     return NextResponse.json({ success: true, message: "logout-successfully" }, { status: 200 });
 
   } catch (error) {
