@@ -10,7 +10,8 @@ const cookieOptions = {
   expires: new Date(
     Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
   ),
-  secure: false,
+   secure: process.env.NODE_ENV ? "production" : false,
+  httpOnly: true,
 };
 
 const authOptions = {
@@ -79,7 +80,7 @@ const authOptions = {
       const { name, email, role,image } = session.user;
       const exist = await User.findOne({ email
        });
-      let userToken;
+      let userToken = "";
       if (!exist) {
         const newUser = await User.create({
           name,
@@ -91,8 +92,10 @@ const authOptions = {
           isEmailValid: true,
         });
         userToken = await newUser.getSignedToken();
+        console.log(userToken, "userToken,newUser");
       } else {
         userToken = await exist.getSignedToken();
+        console.log(userToken, "userToken,exist");
       }
       session.token = userToken;
       session.user.role = token.role;
@@ -102,6 +105,8 @@ const authOptions = {
         httpOnly: true,
         path: "/",
         expires: cookieOptions.expires,
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Use "None" for cross-site cookies in production
+        secure: process.env.NODE_ENV === "production", // Secure cookies in production
       });
       return session;
     },
