@@ -61,6 +61,7 @@ const authOptions = {
           email: user.email,
           name: user.name,
           role: user.role,
+          token:user.token
         };
       },
     }),
@@ -99,7 +100,7 @@ const authOptions = {
       }
       session.token = userToken;
       session.user.role = token.role;
-      cookies().set({
+      const setcookies = cookies().set({
         name: "token",
         value: userToken,
         httpOnly: true,
@@ -108,6 +109,7 @@ const authOptions = {
         sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Use "None" for cross-site cookies in production
         secure: process.env.NODE_ENV === "production", // Secure cookies in production
       });
+      // console.log(setcookies,"cookies set")
       return session;
     },
     async jwt({ token, user }) {

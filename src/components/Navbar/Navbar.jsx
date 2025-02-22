@@ -10,7 +10,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import { Suspense } from "react";
 import { useSession } from "next-auth/react";
 import { useGetData } from "@/redux/api/useGetData";
-
+import Cookies from 'js-cookie';
 function Navbar() {
   const router = useRouter();
   const [show, setShow] = useState("translate-y-0");
@@ -32,8 +32,11 @@ function Navbar() {
 
   useEffect(() => {
     (async () => {
-     const res = await useGetData("api/category/with-subcategory");
+    //  const res = await useGetData("api/category/with-subcategory");
     //  console.log(res.data);
+    console.log(session,"status")
+    const token =  Cookies.get('token');
+    console.log(token,"token")
     })();
     setIsAuth(status);
     window.addEventListener("scroll", controlNavbar);

@@ -1,12 +1,19 @@
 
-import { getToken } from "next-auth/jwt";
+import { getToken, } from "next-auth/jwt";
 import { NextResponse } from "next/server";
+// import { useSession } from "next-auth/react";
 const secret = process.env.NEXTAUTH_SECRET;
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
   const response = NextResponse.next();
   const token = await getToken({ req: request, secret });
-  // console.log(token)
+  // const { data: session, status } = useSession();
+  console.log(token,"middleware.....................................................................")
+
+  // console.log(session,"middleware.....................................................................")  
+  
+
+
   if(!token){
     if (request.nextUrl.pathname.startsWith('/user/') ) {
         console.log(request.nextUrl.pathname.startsWith('/user/verify-email/'),"itshmee")
@@ -25,6 +32,7 @@ export async function middleware(request) {
   }
 }
 if(token) {
+  
   
   if (request.nextUrl.pathname.startsWith('/login') ) {
     return NextResponse.redirect(new URL('/', request.url))
