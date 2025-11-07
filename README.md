@@ -1,4 +1,4 @@
-<img width="2256" height="1377" alt="image" src="https://github.com/user-attachments/assets/05b2c3ff-037a-4912-a273-674c251890c1" /><img width="2256" height="1377" alt="image" src="https://github.com/user-attachments/assets/04a2af95-f18b-4355-a2f7-604ee2c73547" /># 🛍️ BeyondBazaar
+# 🛍️ BeyondBazaar
 
 <div align="center">
 
@@ -30,6 +30,7 @@
 <img width="2256" height="1377" alt="image" src="https://github.com/user-attachments/assets/ff913e6e-2b08-42a5-94a3-abe62a1acbe0" />
 <img width="2256" height="1377" alt="image" src="https://github.com/user-attachments/assets/d66adc2f-3ebd-44a2-84a5-777b84343e54" />
 <img width="2256" height="1377" alt="image" src="https://github.com/user-attachments/assets/f0e03083-68d8-49c0-b2bf-28ee105d8c6e" />
+<img width="2256" height="1377" alt="image" src="https://github.com/user-attachments/assets/04a2af95-f18b-4355-a2f7-604ee2c73547" />
 
 <div align="center"> Admin Features </div>
 
